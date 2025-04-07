@@ -11,3 +11,9 @@ Gamejam
 Did some homeworks in school and read a bit from Vilem's tower defense game design - currently on "Fuel"
 
 Did some homeworks in school and read a bit from Vilem's tower defense game design - currently on "Blueprints"
+
+homeworks
+
+homeworks
+
+Finished reading Vilem's tower defense game design
