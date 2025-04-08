@@ -17,3 +17,5 @@ homeworks
 homeworks
 
 Finished reading Vilem's tower defense game design
+
+Working on Game Design - currently on "Design Goals"
