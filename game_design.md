@@ -1,5 +1,7 @@
 ## 1. Introduction
 
+// TODO: Add intro
+
 ### 1.1 Genre
 
 #### 1.1.1 Sandbox
@@ -26,31 +28,52 @@ The primary goal is to develop a game that is enoyable, engaging, and easy to pl
 
 Each of these selected features will be explained in detail in the following sections. We will also use other games as references to explain how their implementation benefits our game. These features were: 
 
-1. World Exploration
+#### 2.1.1. World Exploration
 
-    Minecraft, Core Keeper, Terraria
+In many exploration-based games, it is common for player to have the desire to explore the unknown. We want to encourage the same motivation by providing a vast world with secrets to discover.
 
-2. Memory Mining and Resource Gathering
+Let's take Minecraft or Core Keeper as an example, in these games exploration has multiple purposes - it serves as a method of gathering materials, finding new biomes or new types of enemies. Players are not set towards a specific path they need to follow, they are free to explore, which creates a nice and relaxing feeling for the game.
 
-    TODO: Look at these games: Figment, Gris, Spiritfarer, The Longing, NieR: Automata
+In both of the mentioned games, the world is procedurally generated, but each in slightly different way. In Minecraft, the world is generated using a seed value, a starting number, based on which the algorithm chooses biomes, places structures and resources. This allows for basically an infinite world from the origin point. 
 
-3. Dream-Challange Realms
+In contrast, Core Keeper's world is finite. In figure 1.1, we can see a map of the world in Core Keeper. The grey thick line around the map represents the bound - a place where extremely difficult enemies are located to inform the player that they cannot go beyond. Inside the map there are 6 main biomes which have specified position and size, however the biomes themselves are then procedurally generated.
 
-    Celeste (B-Sites), Hollow Knight
+![core_keeper_map](https://github.com/user-attachments/assets/5c535b3a-36a0-44d2-9b09-0f7aff76528d)
+**Figure 1.1**  World map from Core Keeper
 
-4. Word-Spell Forging
+In our game, we would like to follow the Core Keeper's idea and have the world finite, with having each biome's position and size specified and biomes then being procedurally generated.  
 
-    TODO: Look at these games: Noita, Mages of Mystralia, Magicka
+#### 2.1.2 Memory Mining and Resource Gathering
 
-5. Customizable Spell Language
+TODO: Look at these games: Figment, Gris, Spiritfarer, The Longing, NieR: Automata
 
-    TODO: Look at these games: Magicka, Baba Is You
+#### 2.1.3 Dream-Challange Realms
 
-6. Base Building and Customization 
+Celeste (B-Sites), Hollow Knight
 
-    Minecraft, Core Keeper, Stardew Valley
+#### 2.1.4. Word-Spell Forging
 
-### Future Features
+TODO: Look at these games: Noita, Mages of Mystralia, Magicka
+
+#### 2.1.5. Customizable Spell Language
+
+TODO: Look at these games: Magicka, Baba Is You
+
+#### 2.1.6. Base Building and Customization 
+
+Minecraft, Core Keeper, Stardew Valley
+
+### 2.2 Procedural generation
+
+### 2.3 Mining
+
+### 2.4 Crafting
+
+### 2.5 Base-Building
+
+### 2.6 Battle
+
+### 2.7 Future Features
 
 ## 3. Analysis
 
