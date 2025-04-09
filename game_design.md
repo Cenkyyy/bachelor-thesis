@@ -65,15 +65,31 @@ Minecraft, Core Keeper, Stardew Valley
 
 ### 2.2 Procedural generation
 
-### 2.3 Mining
+### 2.3 Memory Mining 
 
-### 2.4 Crafting
+### 2.4 Resource Gathering
 
-### 2.5 Base-Building
+### 2.5 Crafting
 
-### 2.6 Battle
+### 2.6 Base-Building
 
-### 2.7 Future Features
+### 2.7 Dream world
+
+### 2.8 Battle
+
+#### 2.8.1 Words
+
+#### 2.8.2 Mana Points
+
+#### 2.8.3 Health Points
+
+#### 2.8.4 Spell customization
+
+### 2.9 GUI
+
+### 2.10 Saving the Game
+
+### 2.11 Future Features
 
 ## 3. Analysis
 
