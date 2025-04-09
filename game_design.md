@@ -14,6 +14,8 @@
 
 ### 1.2 Original Vision
 
+Now that we have introduced the game's genre and genres themselves, we can use them to create an overview of the game we intend to make. It will be a single-player game. 
+
 ### 1.3 Current Scope and Goals
 
 ## 2. Game Design
@@ -49,6 +51,7 @@ TODO: Look at these games: Figment, Gris, Spiritfarer, The Longing, NieR: Automa
 
 #### 2.1.3 Dream-Challange Realms
 
+In order to unlock words, we wanted 
 Celeste (B-Sites), Hollow Knight
 
 #### 2.1.4. Word-Spell Forging
