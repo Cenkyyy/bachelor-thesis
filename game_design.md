@@ -136,31 +136,33 @@ We aim to follow this mechanic by letting the player build its own base, with
 
 ### 2.9. Movement and Controls
 
+
+
 ### 2.10. Inventory
 
-### 2.11 Day and Night Cycle
+// TODO
 
-The implementation of a day and night cycle mechanic brings a great way for pacing of the game. It provides a natural rhythm to gameplay as well as a suport for the dream-realm mechanic, which is only accessible during the night.
+### 2.11 Bed mechanics
 
-Many games use the day and night cycle to introduce contrasting states of safety and threat. If we take Minecraft as an example, during the day, it gives the player the opportunity to gather resources freely without being attacked. However, at night, monsters emerge, creating sense of threat and forcing the player to either defend themselves or run away.
+The bed servers as a core element that connects several game mechanics we have decided to implement, namely the day and night cycle, saving of the game and accessing the dream-realm. Its design allows a smooth sense of gameloop while also maintaining balance and consistency.
 
-In contrast, Core keeper does not implement this mechanic at all, as the game takes place entirely underground.
+In Minecraft, the bed's purpose is to update player's spawn point and as a way to skip the night and advance to the next day. This mechanic adds a feeling od safety and great pacing of the game.
 
-In our game, we aim to to provide safety during the day, where player can freely explore and gather resources. At night, more dangerous enemies may appear, and the dream-realm becomes accessible, allowing player to attempt challenges inside the realm.
+While we want to follow that, we also want to connect few others mechanics connected. In our game, interacting with bed gives the player access to multiple actions. 
+
+First one is the option to skip the night. If the player is not interested in interacting during the nighttime, he can decide to advance to the next day.
+
+Second one is the option to enter the dream-realm, it will be only possible during the night. This option allows the player to spend memory XP and enter mini-games challenges to unlock new words. After finishing the challenge inside the dream-realm, the game will not automatically advance to the next day, but giving the player the choice of where to go again.
+
+Last one is to the option to return to the world and not advance to the new day.
+
+Additionally, the bed serves as a trigger for saving the game state. Whenever a player chooses to lie down, regardless of the option they choose to do, the game will automatically save their progress.
 
 ### 2.12 Graphical User Interface
 
 // TODO
 
-### 2.13 Saving the Game
-
-The ability to save progress during a game is a fundamental feature in sandbox-style games, where the game does not have a strict goal and encourages the player to play more than one run of the game. The player is expected to explore, gather resources and make small progress each run, thus, needing a way to save the last run.
-
-If we take Minecraft, there is a mechanic where the player sleeps in a bed during the night. By sleeping, player advances to the next day and updates its spawn point. This serves a great way to symbolize a checkpoint or a save state. 
-
-In our game, we will take inspiration from Minecraft, but instead of just updating the spawn point and advancing to the next day, we will save the whole state of the game and let this serve as the save point. One of the ways to save the game will be by exitting the game, other will be by sleeping in bed at player's base. (TODO: decide whether to advance to the next day as well or not)
-
-### 2.14 Future Features
+### 2.13 Future Features
 
 // TODO
 
