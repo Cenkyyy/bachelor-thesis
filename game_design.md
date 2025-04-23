@@ -81,7 +81,7 @@ While we want to follow that, we would also like to make this mechanic more uniq
 
 Memory XP can be also acquired upon discovering certain ruins or landmarks that the player used to remember before he lost his memories. These events can be triggered by stepping into a certain part of the map, where the player could for example say "I feel like I have been here before...but why?". This creates a great sense of discovery, where each landmark can have the potential to be more than just a part of the map.
 
-#### 2.1.3 Dream-Challange Realms
+#### 2.1.3 Dream-Challenge Realms
 
 Now that we have explained how memory XP are gathered, we should explain their purpose. We decided to take an inspiration from games, where alternate realms exist, because they are a great way to provide challenges outside the main gameplay loop for the player.  
 
@@ -140,11 +140,29 @@ We aim to follow this mechanic by letting the player build its own base, with
 
 ### 2.11 Day and Night Cycle
 
+The implementation of a day and night cycle mechanic brings a great way for pacing of the game. It provides a natural rhythm to gameplay as well as a suport for the dream-realm mechanic, which is only accessible during the night.
+
+Many games use the day and night cycle to introduce contrasting states of safety and threat. If we take Minecraft as an example, during the day, it gives the player the opportunity to gather resources freely without being attacked. However, at night, monsters emerge, creating sense of threat and forcing the player to either defend themselves or run away.
+
+In contrast, Core keeper does not implement this mechanic at all, as the game takes place entirely underground.
+
+In our game, we aim to to provide safety during the day, where player can freely explore and gather resources. At night, more dangerous enemies may appear, and the dream-realm becomes accessible, allowing player to attempt challenges inside the realm.
+
 ### 2.12 Graphical User Interface
+
+// TODO
 
 ### 2.13 Saving the Game
 
+The ability to save progress during a game is a fundamental feature in sandbox-style games, where the game does not have a strict goal and encourages the player to play more than one run of the game. The player is expected to explore, gather resources and make small progress each run, thus, needing a way to save the last run.
+
+If we take Minecraft, there is a mechanic where the player sleeps in a bed during the night. By sleeping, player advances to the next day and updates its spawn point. This serves a great way to symbolize a checkpoint or a save state. 
+
+In our game, we will take inspiration from Minecraft, but instead of just updating the spawn point and advancing to the next day, we will save the whole state of the game and let this serve as the save point. One of the ways to save the game will be by exitting the game, other will be by sleeping in bed at player's base. (TODO: decide whether to advance to the next day as well or not)
+
 ### 2.14 Future Features
+
+// TODO
 
 ## 3. Analysis
 
