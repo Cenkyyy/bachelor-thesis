@@ -30,7 +30,7 @@ The goal of each is battle is to survive. Player battles enemies using words, wo
 
 #### Procedural generation
 
-The world at the start will be procedurally generated, creating a new challenge in each game you create.
+The world at the start will be procedurally generated, creating a new challenge in each game world the player creates.
 
 #### Run progression
 
@@ -112,9 +112,15 @@ We aim to follow this mechanic by letting the player build its own base, with
 
 ### 2.2 Procedural Generation
 
+- Square-tile grid - reason: because it is more common for pixel art games
+
 ### 2.3 Memory Mining 
 
+
+
 #### 2.3.1 Memory Points
+
+- XP bar - each memory ore mined gives certain amount of XP
 
 ### 2.4 Resource Gathering
 
@@ -122,24 +128,43 @@ We aim to follow this mechanic by letting the player build its own base, with
 
 ### 2.6 Base-Building
 
+- Can build anywhere, free-placement of tiles
+
 ### 2.7 Dream world
+
+- Can be accessed only through bed and spending memory XP there
 
 ### 2.8 Battle
 
+// TODO
+
 #### 2.8.1 Words
+
+// TODO
 
 #### 2.8.2 Mana Points
 
+- Can be restored by sleeping or consuming mana regeneration potions
+
 #### 2.8.3 Health Points
 
-#### 2.8.4 Spell customization
+- Can be restored by sleeping or consuming health resotring types of foods
+
+#### 2.8.4 Hunger Bar
+
+- Food bar will slowly get depleted by amount of tiles travaled (1 point for every x tiles)
+
+#### 2.8.5 Spell customization
+
+- there is a given set of words and player continuously unlocks them
 
 ### 2.9. Movement and Controls
 
-
+- Eight directions (WASD + diagonals)
 
 ### 2.10. Inventory
 
+- Inspiration from Core Keeper
 // TODO
 
 ### 2.11 Bed mechanics
