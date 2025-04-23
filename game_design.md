@@ -30,7 +30,7 @@ The goal of each is battle is to survive. Player battles enemies using words, wo
 
 #### Procedural generation
 
-The world at the start will be procedurally generated, creating a new challange in each game you create.
+The world at the start will be procedurally generated, creating a new challenge in each game you create.
 
 #### Run progression
 
