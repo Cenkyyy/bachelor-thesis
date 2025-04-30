@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        SetVelocity();
+        UpdatePosition();
     }
 
     private void CheckInput()
@@ -27,8 +27,12 @@ public class PlayerMovement : MonoBehaviour
         _input.Normalize();
     }
 
-    private void SetVelocity()
+    private void UpdatePosition()
     {
-        body.linearVelocity = _input * speed;
+        // Calculate delta - the distance to move the frame based on input and speed
+        Vector2 delta = _input * speed * Time.fixedDeltaTime;
+        
+        // Add delta to current position of the body
+        body.MovePosition(body.position + delta);
     }
 }
