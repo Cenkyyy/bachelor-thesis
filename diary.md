@@ -21,3 +21,7 @@ Finished reading Vilem's tower defense game design
 Working on Game Design - currently on "Design Goals"
 
 Decided on camera size (640x360) and most of the character sprites (32x32) - watched this video: https://www.youtube.com/watch?v=upEGBGCiWEw
+
+Started working on the player movement inside the game
+
+Created a sprite for player
