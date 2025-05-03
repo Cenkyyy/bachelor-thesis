@@ -25,3 +25,9 @@ Decided on camera size (640x360) and most of the character sprites (32x32) - wat
 Started working on the player movement inside the game
 
 Created a sprite for player
+
+Work on sprites for idle and walking for the player
+
+Work on sprites for idle and walking for the player
+
+Implement the animations into the game when player's moving (watched this: https://www.youtube.com/watch?v=82U4ToJU-28&list=PLaaFfzxy_80HtVvBnpK_IjSC8_Y9AOhuP&index=5)
