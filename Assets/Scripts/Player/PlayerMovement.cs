@@ -3,15 +3,18 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Rigidbody2D body;
+    [SerializeField] Animator animator;
 
     [SerializeField] float speed;
 
     private Vector2 _input;
+    private Vector2 _lastInput;
 
     // Update is called once per frame
     void Update()
     {
         CheckInput();
+        UpdateAnimator();
     }
 
     private void FixedUpdate()
@@ -34,5 +37,21 @@ public class PlayerMovement : MonoBehaviour
         
         // Add delta to current position of the body
         body.MovePosition(body.position + delta);
+    }
+
+    private void UpdateAnimator()
+    {
+        bool isWalking = _input != Vector2.zero;
+
+        animator.SetBool("isWalking", isWalking);
+        animator.SetFloat("InputX", _input.x);
+        animator.SetFloat("InputY", _input.y);
+
+        if (isWalking)
+        {
+            _lastInput = _input;
+            animator.SetFloat("LastInputX", _input.x);
+            animator.SetFloat("LastInputY", _input.y);
+        }
     }
 }
