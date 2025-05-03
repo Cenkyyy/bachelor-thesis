@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float speed;
 
     private Vector2 _input;
-    private Vector2 _lastInput;
 
     // Update is called once per frame
     void Update()
@@ -44,12 +43,14 @@ public class PlayerMovement : MonoBehaviour
         bool isWalking = _input != Vector2.zero;
 
         animator.SetBool("isWalking", isWalking);
+
+        // Update current position
         animator.SetFloat("InputX", _input.x);
         animator.SetFloat("InputY", _input.y);
 
+        // Record the last position when the player moved
         if (isWalking)
         {
-            _lastInput = _input;
             animator.SetFloat("LastInputX", _input.x);
             animator.SetFloat("LastInputY", _input.y);
         }
