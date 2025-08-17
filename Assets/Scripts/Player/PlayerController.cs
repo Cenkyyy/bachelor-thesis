@@ -16,10 +16,17 @@ public class PlayerController : MonoBehaviour
         _playerAnimation = GetComponent<PlayerAnimation>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        CheckInput();
+        if (GameStateManager.IsGamePaused)
+        {
+            // zero the input so the player doesn't move while the game is paused
+            _input = Vector2.zero;
+        }
+        else
+        {
+            CheckInput();
+        }
 
         _playerMovement.SetInput(_input);
         _playerAnimation.SetInput(_input);

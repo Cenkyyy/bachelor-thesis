@@ -22,11 +22,11 @@ public class PlayerAnimation : MonoBehaviour
 
         animator.SetBool("isWalking", isWalking);
 
-        // Update current position
+        // update current position
         animator.SetFloat("InputX", _input.x);
         animator.SetFloat("InputY", _input.y);
 
-        // Record the last position when the player moved
+        // record the last position when the player moved
         if (isWalking)
         {
             animator.SetFloat("LastInputX", _input.x);
