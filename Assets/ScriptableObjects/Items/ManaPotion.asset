@@ -9,15 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1274d122e9a874d43b794507f82b4af0, type: 3}
-  m_Name: PlayerStats
+  m_Script: {fileID: 11500000, guid: c8760f91d0fa4674995063a3f37b49e3, type: 3}
+  m_Name: ManaPotion
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 100
-  maxMana: 100
-  currentMana: 100
-  maxXP: 200
-  currentXP: 0
-  currentLevel: 1
-  maxHunger: 100
-  currentHunger: 100
+  itemName: ManaPotion
+  icon: {fileID: 1352937985377501293, guid: 037e066397ae36d4183af298135237d4, type: 3}
+  isStackable: 1
+  maxStackSize: 32
+  restoreHealth: 0
+  restoreMana: 50
