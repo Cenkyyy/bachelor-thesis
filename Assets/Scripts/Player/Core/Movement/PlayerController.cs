@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
         _playerAnimation = GetComponent<PlayerAnimation>();
     }
 
-    void Update()
+    private void Update()
     {
         if (GameStateManager.IsGamePaused)
         {
@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
             CheckInput();
         }
 
-        _playerMovement.SetInput(_input);
-        _playerAnimation.SetInput(_input);
+        _playerMovement.SetMovementInput(_input);
+        _playerAnimation.SetWalkingState(_input != Vector2.zero);
     }
 
     private void CheckInput()

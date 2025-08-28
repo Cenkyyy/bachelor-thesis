@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
         UpdatePosition();
     }
 
-    public void SetInput(Vector2 input)
+    public void SetMovementInput(Vector2 input)
     {
         _input = input;
     }

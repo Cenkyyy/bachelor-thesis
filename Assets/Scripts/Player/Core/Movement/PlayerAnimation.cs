@@ -4,7 +4,8 @@ public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] Animator animator;
 
-    private Vector2 _input;
+    private Vector2 _lastAimDirection = Vector2.down; // last mouse direction
+    private bool _isWalking = false;
 
     private void Awake()
     {
@@ -14,31 +15,40 @@ public class PlayerAnimation : MonoBehaviour
         }
     }
 
-    public void SetInput(Vector2 input)
-    {
-        _input = input;
-    }
-
-    void Update()
+    private void Update()
     {
         UpdateAnimator();
     }
 
+    public void SetWalkingState(bool isWalking)
+    {
+        _isWalking = isWalking;
+    }
+
     private void UpdateAnimator()
     {
-        bool isWalking = _input != Vector2.zero;
+        Vector2 aimDirection = GetMouseDirection();
 
-        animator.SetBool("isWalking", isWalking);
+        // update last aim direction only when mouse moves noticeably
+        if (aimDirection.magnitude > 0.01f)
+            _lastAimDirection = aimDirection;
 
-        // update current position
-        animator.SetFloat("InputX", _input.x);
-        animator.SetFloat("InputY", _input.y);
+        animator.SetBool("isWalking", _isWalking);
 
-        // record the last position when the player moved
-        if (isWalking)
-        {
-            animator.SetFloat("LastInputX", _input.x);
-            animator.SetFloat("LastInputY", _input.y);
-        }
+        // update animator parameters for aiming
+        animator.SetFloat("InputX", aimDirection.x);
+        animator.SetFloat("InputY", aimDirection.y);
+
+        // record the last direction for idle animations
+        animator.SetFloat("LastInputX", _lastAimDirection.x);
+        animator.SetFloat("LastInputY", _lastAimDirection.y);
+    }
+
+    private Vector2 GetMouseDirection()
+    {
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPos.z = 0f;
+        Vector2 direction = (mouseWorldPos - transform.position).normalized;
+        return direction;
     }
 }
