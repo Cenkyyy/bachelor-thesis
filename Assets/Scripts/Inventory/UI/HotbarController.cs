@@ -2,48 +2,56 @@ using UnityEngine;
 
 public class HotbarController : MonoBehaviour
 {
-    [SerializeField] GameObject hotbarPanel;
-    [SerializeField] GameObject slotPrefab;
-    [SerializeField] int slotCount = 8;
+    [SerializeField] Transform hotbarPanel;
+    [SerializeField] Slot slotPrefab;
+    [SerializeField] PlayerInventoryWrapper playerInventory;
 
+    private HotbarSlot[] _slots;
     private int _selectedIndex = 0;
-    private HotbarSlot[] slots;
 
-    void Start()
+    private void Start()
     {
-        slots = new HotbarSlot[slotCount];
+        _slots = new HotbarSlot[playerInventory.Inventory.HotbarSize];
 
-        for (int i = 0; i < slotCount; i++)
+        // create hotbar slots
+        for (int i = 0; i < playerInventory.Inventory.HotbarSize; i++)
         {
-            GameObject slotObject = Instantiate(slotPrefab, hotbarPanel.transform);
-            HotbarSlot slot = slotObject.GetComponent<HotbarSlot>();
-            slots[i] = slot;
-
-            slot.SetToDefault();
+            _slots[i] = Instantiate(slotPrefab, hotbarPanel).GetComponent<HotbarSlot>();
+            _slots[i].Bind(i, playerInventory.Inventory.GetItemAt(i));
+            _slots[i].SetToDefault();
         }
 
-        slots[_selectedIndex].HighlightSlot();
+        // highlight the first slot by default
+        _slots[_selectedIndex].HighlightSlot();
     }
 
-    void Update()
+    private void Update()
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll > 0f)
         {
             // scroll up
-            ChangeSelectedSlot((_selectedIndex + 1) % slotCount);
+            ChangeSelectedSlot((_selectedIndex + 1) % _slots.Length);
         }
         else if (scroll < 0f)
         {
             // scroll down
-            ChangeSelectedSlot((_selectedIndex - 1 + slotCount) % slotCount);
+            ChangeSelectedSlot((_selectedIndex - 1 + _slots.Length) % _slots.Length);
         }
     }
 
     private void ChangeSelectedSlot(int newIndex)
     {
-        slots[_selectedIndex].SetToDefault();
+        _slots[_selectedIndex].SetToDefault();
         _selectedIndex = newIndex;
-        slots[_selectedIndex].HighlightSlot();
+        _slots[_selectedIndex].HighlightSlot();
+    }
+
+    public void RefreshSlot(int hotbarIndex)
+    {
+        if (hotbarIndex >= 0 && hotbarIndex < _slots.Length)
+        {
+            _slots[hotbarIndex].Refresh(playerInventory.Inventory.GetItemAt(hotbarIndex));
+        }
     }
 }
