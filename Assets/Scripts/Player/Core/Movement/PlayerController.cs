@@ -1,10 +1,8 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimation))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] Animator animator;
-    [SerializeField] Rigidbody2D body;
-
     private PlayerMovement _playerMovement;
     private PlayerAnimation _playerAnimation;
 

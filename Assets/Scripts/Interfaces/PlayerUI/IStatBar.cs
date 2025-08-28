@@ -1,5 +1,5 @@
 /// <summary>
-/// Interface for UI elements that display player stats, such as health, mana, or stamina bars.
+/// Interface for UI elements that display player stats, such as health, mana, or xp bars.
 /// </summary>
 public interface IStatBar
 {
@@ -7,10 +7,5 @@ public interface IStatBar
     /// Initializes the stat bar with the given player stats.
     /// </summary>
     /// <param name="data">The PlayerStats ScriptableObject to link to the bar.</param>
-    void Initialize(PlayerDataSO data);
-
-    /// <summary>
-    /// Updates the stat bar to reflect the current value of the associated stat.
-    /// </summary>
-    void UpdateBar();
+    void Initialize(PlayerData data);
 }

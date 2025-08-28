@@ -3,14 +3,16 @@ using UnityEngine;
 public class PlayerInventoryWrapper : MonoBehaviour
 {
     [Header("Inventory Settings")]
-    [SerializeField] PlayerDataSO playerData;
     [SerializeField] int hotbarSize = 8;
     [SerializeField] int inventorySize = 24;
 
     public PlayerInventory Inventory { get; private set; }
 
-    private void Awake()
+    public void InitializeFromPlayer(PlayerDataSO playerData)
     {
+        if (playerData == null)
+            return;
+
         Inventory = new PlayerInventory(hotbarSize, inventorySize);
 
         // fill hotbar with starting hotbar items (indices 0-7), truncate if more than hotbarSize

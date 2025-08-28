@@ -6,6 +6,14 @@ public class PlayerAnimation : MonoBehaviour
 
     private Vector2 _input;
 
+    private void Awake()
+    {
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+    }
+
     public void SetInput(Vector2 input)
     {
         _input = input;

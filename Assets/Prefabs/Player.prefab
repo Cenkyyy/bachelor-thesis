@@ -42,10 +42,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3689139185868277431}
   - component: {fileID: 6067396949842947324}
+  - component: {fileID: 8120486794298343527}
+  - component: {fileID: 6346193532357482055}
   - component: {fileID: 500235762407417466}
   - component: {fileID: 6858055649506359506}
   - component: {fileID: 5402159747806690286}
-  - component: {fileID: 6346193532357482055}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -97,6 +98,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &8120486794298343527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99bcc6f2153e0a4e928600eaf526d0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDataSO: {fileID: 11400000, guid: a1f7d4f498103bc4baf6dadc9cb30777, type: 2}
+--- !u!114 &6346193532357482055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d08013449c20e45ad96be06668adad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: a1f7d4f498103bc4baf6dadc9cb30777, type: 2}
+  hotbarSize: 8
+  inventorySize: 24
 --- !u!114 &500235762407417466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,20 +167,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1856092043942259651}
---- !u!114 &6346193532357482055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2259951683026114348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0d08013449c20e45ad96be06668adad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hotbarSize: 8
-  inventorySize: 24
 --- !u!1 &3653677619089745102
 GameObject:
   m_ObjectHideFlags: 0
