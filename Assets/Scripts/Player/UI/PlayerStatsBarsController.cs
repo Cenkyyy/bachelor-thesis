@@ -1,9 +1,10 @@
 using System.Linq;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class PlayerStatsBarsController : MonoBehaviour
 {
-    [SerializeField] PlayerStatsSO playerStats;
+    [SerializeField] PlayerDataSO playerData;
+
     private IStatBar[] _statBars;
 
     private void Awake()
@@ -11,7 +12,7 @@ public class UIManager : MonoBehaviour
         _statBars = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IStatBar>().ToArray();
         foreach (var statBar in _statBars)
         {
-            statBar.Initialize(playerStats);
+            statBar.Initialize(playerData);
         }
     }
 

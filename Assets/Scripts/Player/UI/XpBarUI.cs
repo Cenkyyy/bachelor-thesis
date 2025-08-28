@@ -8,24 +8,24 @@ public class XpBarUI : MonoBehaviour, IStatBar, IPointerEnterHandler, IPointerEx
     [SerializeField] Image xpFillImage;
     [SerializeField] TMP_Text xpLevelText;
 
-    private PlayerStatsSO _stats;
+    private PlayerDataSO _data;
     private bool _onHovered;
 
-    public void Initialize(PlayerStatsSO stats)
+    public void Initialize(PlayerDataSO data)
     {
-        _stats = stats;
+        _data = data;
         UpdateBar();
     }
 
     public void UpdateBar()
     {
-        if (_stats == null)
+        if (_data == null)
             return;
 
         // set current xp progress
         if (xpFillImage != null) 
         {
-            xpFillImage.fillAmount = Mathf.Clamp01((float)_stats.currentXP / Mathf.Max(1, _stats.maxXP));
+            xpFillImage.fillAmount = Mathf.Clamp01((float)_data.currentXP / Mathf.Max(1, _data.maxXP));
         }
 
         // set current level text
@@ -33,28 +33,28 @@ public class XpBarUI : MonoBehaviour, IStatBar, IPointerEnterHandler, IPointerEx
         {
             if (_onHovered)
             {
-                xpLevelText.text = $"{_stats.currentXP} / {_stats.maxXP}";
+                xpLevelText.text = $"{_data.currentXP} / {_data.maxXP}";
             }
             else
             {
-                xpLevelText.text = _stats.currentLevel.ToString();
+                xpLevelText.text = _data.currentLevel.ToString();
             }
         }
     }
 
     public void ShowOnHover()
     {
-        if (_stats == null || xpLevelText == null || xpFillImage == null) 
+        if (_data == null || xpLevelText == null || xpFillImage == null) 
             return;
-        xpLevelText.text = $"{_stats.currentXP} / {_stats.maxXP}";
+        xpLevelText.text = $"{_data.currentXP} / {_data.maxXP}";
         _onHovered = true;
     }
 
     public void HideOnHover()
     {
-        if (_stats == null || xpLevelText == null || xpFillImage == null) 
+        if (_data == null || xpLevelText == null || xpFillImage == null) 
             return;
-        xpLevelText.text = _stats.currentLevel.ToString();
+        xpLevelText.text = _data.currentLevel.ToString();
         _onHovered = false;
     }
 

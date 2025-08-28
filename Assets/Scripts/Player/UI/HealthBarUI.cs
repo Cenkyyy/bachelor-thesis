@@ -7,29 +7,29 @@ public class HealthBarUI : MonoBehaviour, IStatBar
     [SerializeField] Image healthFillImage;
     [SerializeField] TMP_Text healthText;
 
-    private PlayerStatsSO _stats;
+    private PlayerDataSO _data;
 
-    public void Initialize(PlayerStatsSO stats)
+    public void Initialize(PlayerDataSO data)
     {
-        _stats = stats;
+        _data = data;
         UpdateBar();
     }
 
     public void UpdateBar()
     {
-        if (_stats == null)
+        if (_data == null)
             return;
 
         // set current health bar's fill amount
         if (healthFillImage != null)
         {
-            healthFillImage.fillAmount = Mathf.Clamp01((float)_stats.currentHealth / Mathf.Max(1, _stats.maxHealth));
+            healthFillImage.fillAmount = Mathf.Clamp01((float)_data.currentHealth / Mathf.Max(1, _data.maxHealth));
         }
 
         // set current health text
         if (healthText != null)
         {
-            healthText.text = _stats.currentHealth.ToString();
+            healthText.text = _data.currentHealth.ToString();
         }
     }
 }

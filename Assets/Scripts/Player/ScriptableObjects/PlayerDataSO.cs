@@ -1,7 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerStats", menuName = "Game/Player Stats")]
-public class PlayerStatsSO : ScriptableObject
+[CreateAssetMenu(fileName = "PlayerData", menuName = "Game/Player Data")]
+public class PlayerDataSO : ScriptableObject
 {
     [Header("Health")]
     public int maxHealth = 100;
@@ -19,6 +20,10 @@ public class PlayerStatsSO : ScriptableObject
     [Header("Hunger")]
     public int maxHunger = 100;
     public int currentHunger = 100;
+
+    [Header("Starting Hotbar items")]
+    public List<Item> startingHotbarItems = new List<Item>();
+    public List<Item> startingBackpackItems = new List<Item>();
 
     public void ResetStats()
     {
