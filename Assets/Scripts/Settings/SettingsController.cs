@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class SettingsController : MonoBehaviour
 {
     [SerializeField] GameObject settingsPanel;
-    [SerializeField] InventoryController inventory;
+    [SerializeField] BackpackController backpackInventory;
     [SerializeField] Button resumeButton;
 
     void Start()
@@ -21,9 +21,9 @@ public class SettingsController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (inventory != null && inventory.IsInventoryOpen)
+            if (backpackInventory != null && backpackInventory.IsInventoryOpen)
             {
-                inventory.CloseInventory();
+                backpackInventory.CloseInventory();
                 return;
             }
 
