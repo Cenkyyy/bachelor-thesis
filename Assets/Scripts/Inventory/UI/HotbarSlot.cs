@@ -8,12 +8,10 @@ public class HotbarSlot : Slot
     /// <summary>
     /// Highlights this hotbar slot.
     /// </summary>
-    public void HighlightSlot()
+    public void HighlightSelected()
     {
         if (backgroundImage != null && highlightedBackgroundSprite != null)
-        {
             backgroundImage.sprite = highlightedBackgroundSprite;
-        }
     }
 
     /// <summary>
@@ -22,8 +20,6 @@ public class HotbarSlot : Slot
     public void SetToDefault()
     { 
         if (backgroundImage != null && backgroundSprite != null)
-        {
             backgroundImage.sprite = backgroundSprite;
-        }
     }
 }

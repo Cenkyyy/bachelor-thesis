@@ -1,8 +1,10 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[DisallowMultipleComponent]
 public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 {
     [Header("UI References")]
@@ -15,91 +17,79 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 
     public int SlotIndex { get; private set; } = -1;
 
+    // Events
+    public event Action<Slot, PointerEventData> OnPointerClicked;
+    public event Action<Slot> OnPointerEntered;
+
     private void Awake()
     {
-        // set default background sprite if assigned
         if (backgroundImage != null && backgroundSprite != null)
-        {
             backgroundImage.sprite = backgroundSprite;
-        }
 
-        // initialize ui slot
-        ClearSlot();
+        Clear();
     }
 
-    public void Bind(int index, Item item)
+    public virtual void Bind(int index, InventoryItem item)
     {
         SlotIndex = index;
         Refresh(item);
     }
 
-    public void Refresh(Item item)
+    public virtual void Refresh(InventoryItem item)
     {
-        if (item == null || item.item == null || SlotIndex < 0)
+        if (item.IsEmpty || SlotIndex < 0)
         {
-            ClearSlot();
+            Clear();
             return;
         }
 
         // show item icon
-        itemIconImage.enabled = true;
-        itemIconImage.sprite = item.item.icon;
+        if (itemIconImage != null)
+        {
+            itemIconImage.enabled = true;
+            itemIconImage.sprite = item.ItemSO.Icon;
+        }
 
-        if (item.item.IsStackable && item.amount > 1) 
+        if (item.ItemSO.IsStackable && item.Amount > 1) 
         {
             // show item amount text if amount is greater than 1
-            itemAmountText.text = item.amount.ToString();
-            itemAmountText.gameObject.SetActive(true);
+            if (itemAmountText != null)
+            {
+                itemAmountText.text = item.Amount.ToString();
+                itemAmountText.gameObject.SetActive(true);
+            }
         }
         else 
         {
             // hide item amount text if amount is 1 or less
-            itemAmountText.text = string.Empty;
-            itemAmountText.gameObject.SetActive(false);
+            if (itemAmountText != null)
+            {
+                itemAmountText.text = string.Empty;
+                itemAmountText.gameObject.SetActive(false);
+            }
         }
     }
 
-    public void ClearSlot()
-    {    
-        itemIconImage.sprite = null;
-        itemIconImage.enabled = false;
-        itemAmountText.text = string.Empty;
+    public virtual void Clear()
+    {
+        if (itemIconImage != null)
+        {
+            itemIconImage.sprite = null;
+            itemIconImage.enabled = false;
+        }
+        if (itemAmountText != null)
+        {
+            itemAmountText.text = string.Empty;
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            // handle double click
-            if (eventData.clickCount >= 2)
-            {
-                ItemInteractionManager.Instance.HandleDoubleLeftClick(this);
-                return;
-            }
-
-            // handle regular click or quick-transfer click using shift
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-            {
-                ItemInteractionManager.Instance.HandleQuickTransferLeftClick(this);
-            }
-            else
-            {
-                ItemInteractionManager.Instance.HandleRegularLeftClick(this);
-            }
-        }
-        else if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            // handle right click
-            ItemInteractionManager.Instance.HandleRegularRightClick(this);
-        }
+        OnPointerClicked?.Invoke(this, eventData);
     }
 
     public void OnPointerEnter(PointerEventData eventData) 
     {
-        if (Input.GetMouseButton(1))
-        {
-            // handle pointer enter for tooltip
-            ItemInteractionManager.Instance.HandleRightClickPointerEnter(this);
-        }
+        OnPointerEntered?.Invoke(this);
     }
 }

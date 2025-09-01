@@ -1,55 +1,57 @@
 using UnityEngine;
 
-public class BackpackController : MonoBehaviour
+public class BackpackController : SlotControllerBase<Slot>
 {
-    [SerializeField] Transform backpackPanel;
-    [SerializeField] Slot slotPrefab;
-    [SerializeField] PlayerInventoryWrapper playerInventory;
+    [SerializeField] private KeyCode toggleKey = KeyCode.E;
 
-    private Slot[] _slots;
+    public bool IsInventoryOpen => slotParent != null && slotParent.gameObject.activeSelf;
 
-    public bool IsInventoryOpen => backpackPanel != null && backpackPanel.gameObject.activeSelf;
+    protected override int SlotCount => playerInventory.Inventory.InventorySize;
 
-    private void Start()
+    protected override void Start()
     {
         // temporarly set the inventory panel active to instantiate slots
-        backpackPanel.gameObject.SetActive(true);
+        bool originallyActive = slotParent.gameObject.activeSelf;
+        slotParent.gameObject.SetActive(true);
 
-        _slots = new Slot[playerInventory.Inventory.InventorySize];
+        base.Start();
 
-        // create hotbar slots
-        for (int i = 0; i < playerInventory.Inventory.InventorySize; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
-            _slots[i] = Instantiate(slotPrefab, backpackPanel.transform).GetComponent<Slot>();
-            _slots[i].Bind(i + playerInventory.Inventory.HotbarSize, playerInventory.Inventory.GetItemAt(i + playerInventory.Inventory.HotbarSize));
+            slots[i].GetComponent<HotbarSlot>()?.SetToDefault();
         }
 
-        backpackPanel.gameObject.SetActive(false);
+        slotParent.gameObject.SetActive(originallyActive);
+    }
+
+    protected override void CreateAndBindSlots(int offset)
+    {
+        base.CreateAndBindSlots(playerInventory.Inventory.HotbarSize);
     }
 
     private void Update()
     {
         // toggle inventory with 'E' key while the game is not paused
-        if (!GameStateManager.IsGamePaused && Input.GetKeyDown(KeyCode.E))
+        if (!GameStateManager.IsGamePaused && Input.GetKeyDown(toggleKey))
         {
-            backpackPanel.gameObject.SetActive(!backpackPanel.gameObject.activeSelf);
+            slotParent.gameObject.SetActive(!slotParent.gameObject.activeSelf);
         }
     }
 
     public void CloseInventory()
     {
-        if (backpackPanel != null && IsInventoryOpen)
+        if (slotParent != null && IsInventoryOpen)
         {
-            backpackPanel.gameObject.SetActive(false);
+            slotParent.gameObject.SetActive(false);
         }
     }
 
-    public void RefreshSlot(int inventoryIndex)
+    public override void RefreshSlot(int backpackIndex)
     {
-        int slotIndex = inventoryIndex - playerInventory.Inventory.HotbarSize;
-        if (slotIndex >= 0 && slotIndex < _slots.Length)
+        int slotIndex = backpackIndex - playerInventory.Inventory.HotbarSize;
+        if (slotIndex >= 0 && slotIndex < slots.Length)
         {
-            _slots[slotIndex].Refresh(playerInventory.Inventory.GetItemAt(inventoryIndex));
+            slots[slotIndex].Refresh(playerInventory.Inventory.GetItemAt(backpackIndex));
         }
     }
 }
