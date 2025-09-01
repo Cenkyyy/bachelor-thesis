@@ -1570,9 +1570,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717c1182645212d4d88cdcbabf4f9c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backpackPanel: {fileID: 203007079}
   slotPrefab: {fileID: 3672516636108083546, guid: 965491b462a816446850da639c6b3fef, type: 3}
+  slotParent: {fileID: 203007079}
   playerInventory: {fileID: 2010244814}
+  toggleKey: 101
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -3007,6 +3008,7 @@ MonoBehaviour:
   playerInventory: {fileID: 2010244814}
   backpackController: {fileID: 570862299}
   hotbarController: {fileID: 1611478417}
+  doubleClickDelay: 0.2
 --- !u!1 &1436572154
 GameObject:
   m_ObjectHideFlags: 0
@@ -3212,8 +3214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9d3abbcdc9f2046818747e4a2c2923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hotbarPanel: {fileID: 121172469}
   slotPrefab: {fileID: -2390514043304085740, guid: d259688275a8b9249ab8506420c439a3, type: 3}
+  slotParent: {fileID: 121172469}
   playerInventory: {fileID: 2010244814}
 --- !u!1 &1613807269
 GameObject:
@@ -4482,6 +4484,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6346193532357482055, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: playerData
+      value: 
+      objectReference: {fileID: 11400000, guid: a1f7d4f498103bc4baf6dadc9cb30777, type: 2}
+    - target: {fileID: 8120486794298343527, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: playerDataSO
       value: 
       objectReference: {fileID: 11400000, guid: a1f7d4f498103bc4baf6dadc9cb30777, type: 2}
     m_RemovedComponents:
