@@ -1,47 +1,33 @@
 using UnityEngine;
 
-/// <summary>
-/// ScriptableObject representing a type of item in the game.
-/// Stores basic info, stacking rules, and category.
-/// </summary>
 [CreateAssetMenu(fileName = "NewItem", menuName = "Items/ItemType")]
 public abstract class ItemBaseSO : ScriptableObject
 {
     #region BasicInfo
-    [Header(UIStrings.ItemSO_BasicInfo__Title)]
-    
-    /// <summary>
-    /// The display name of the item.
-    /// </summary>
-    public string itemName;
 
-    /// <summary>
-    /// The icon representing the item in the UI.
-    /// </summary>
-    public Sprite icon;
+    [Header(UIStrings.ItemSO_BasicInfo__Title)]
+    [field: SerializeField] public string ItemName { get; private set; }
+    [field: SerializeField] public Sprite Icon { get; private set; }
+
     #endregion
 
     #region StackingRules
+
     [Header(UIStrings.ItemSO_StackingRules__Title)]
+    [field: SerializeField] public int MaxStackSize { get; private set; } = 999;
+    public bool IsStackable => MaxStackSize > 1;
 
-    /// <summary>
-    /// Maximum number of items that can be stacked together.
-    /// Only relevant if item is stackable.
-    /// </summary>
-    [SerializeField] protected int maxStackSize = 999;
-
-    public int MaxStackSize => maxStackSize;
-    public bool IsStackable => maxStackSize > 1;
     #endregion
 
     #region ItemCategory
+    
     [Header(UIStrings.ItemSO_ItemCategory__Title)]
+    [field: SerializeField] public ItemCategory Category { get; protected set; }
 
-    /// <summary>
-    /// The category this item belongs to.
-    /// </summary>
-    [SerializeField] protected ItemCategory category;
-
-    public ItemCategory Category => category;
     #endregion
+
+    public virtual bool CanStackWith(ItemBaseSO other)
+    {
+        return other != null && other.GetType() == GetType() && other.ItemName == ItemName;
+    }
 }

@@ -4,21 +4,21 @@ using UnityEngine;
 public class MaterialSO : ItemBaseSO, ICraftable
 {
     [Header(UIStrings.ItemSO_MaterialInfo__Title)]
-    public int quantity;
-    public string materialType;
+    [field: SerializeField] public int Quantity { get; private set; }
+    [field: SerializeField] public string MaterialType { get; private set; }
 
     public MaterialSO()
     {
-        category = ItemCategory.Material;
+        Category = ItemCategory.Material;
     }
 
     public void Craft(GameObject crafter)
     {
-        Debug.Log($"{itemName} crafted by {crafter.name}. Quantity: {quantity}, Type: {materialType}.");
+        Debug.Log($"{ItemName} crafted by {crafter.name}. Quantity: {Quantity}, Type: {MaterialType}.");
     }
     
     public void Deconstruct(GameObject crafter)
     {
-        Debug.Log($"{itemName} deconstructed by {crafter.name}. Quantity: {quantity}, Type: {materialType}.");
+        Debug.Log($"{ItemName} deconstructed by {crafter.name}. Quantity: {Quantity}, Type: {MaterialType}.");
     }
 }

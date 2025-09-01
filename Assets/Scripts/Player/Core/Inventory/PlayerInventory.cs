@@ -16,33 +16,32 @@ public class PlayerInventory
 
     /// <summary>
     /// Total list of items (hotbar first, then inventory).
-    /// Null entries mean empty slots.
     /// </summary>
-    private List<Item> _items;
+    private List<InventoryItem> _items;
 
     /// <summary>
     /// Initializes a new instance of PlayerInventory with specified sizes.
     /// </summary>
     /// <param name="hotbarSize">Size of player's hotbar</param>
-    /// <param name="inventorySize">Size of player's inventory (backpack)</param>
+    /// <param name="inventorySize">Size of player's backpack</param>
     public PlayerInventory(int hotbarSize, int inventorySize)
     {
         HotbarSize = hotbarSize;
         InventorySize = inventorySize;
 
-        _items = new List<Item>(TotalSize);
+        _items = new List<InventoryItem>(TotalSize);
         for (int i = 0; i < TotalSize; i++)
-            _items.Add(null);
+            _items.Add(InventoryItem.Empty);
     }
 
     /// <summary>
     /// Returns item at a specific slot index.
     /// </summary>
-    public Item GetItemAt(int index)
+    public InventoryItem GetItemAt(int index)
     {
         if (index < 0 || index >= _items.Count)
         {
-            return null;
+            return InventoryItem.Empty;
         }
         return _items[index];
     }
@@ -50,7 +49,7 @@ public class PlayerInventory
     /// <summary>
     /// Sets an item at a specific slot index.
     /// </summary>
-    public void SetItemAt(int index, Item item)
+    public void SetItemAt(int index, InventoryItem item)
     {
         if (index < 0 || index >= _items.Count)
         {
@@ -68,6 +67,6 @@ public class PlayerInventory
         {
             return;
         }
-        _items[index] = null;
+        _items[index] = InventoryItem.Empty;
     }
 }

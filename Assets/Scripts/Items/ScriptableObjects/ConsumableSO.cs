@@ -4,16 +4,16 @@ using UnityEngine;
 public class ConsumableSO : ItemBaseSO, IUsable
 {
     [Header(UIStrings.ItemSO_ConsumableInfo__Title)]
-    public int restoreHealth;
-    public int restoreMana;
+    [field: SerializeField] public int RestoreHealth { get; private set; }
+    [field: SerializeField] public int RestoreMana { get; private set; }
 
     public ConsumableSO()
     {
-        category = ItemCategory.Consumable;
+        Category = ItemCategory.Consumable;
     }
 
     public void Use(GameObject user)
     {
-        Debug.Log($"{itemName} used by {user.name}. Restores {restoreHealth} HP, {restoreMana} Mana.");
+        Debug.Log($"{ItemName} used by {user.name}. Restores {RestoreHealth} HP, {RestoreMana} Mana.");
     }
 }
