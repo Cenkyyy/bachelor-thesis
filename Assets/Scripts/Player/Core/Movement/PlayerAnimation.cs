@@ -4,7 +4,7 @@ public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] Animator animator;
 
-    private Vector2 _lastAimDirection = Vector2.down; // last mouse direction
+    private Vector2 _lastMouseAimedDirection = Vector2.down;
     private bool _isWalking = false;
 
     private void Awake()
@@ -31,7 +31,7 @@ public class PlayerAnimation : MonoBehaviour
 
         // update last aim direction only when mouse moves noticeably
         if (aimDirection.magnitude > 0.01f)
-            _lastAimDirection = aimDirection;
+            _lastMouseAimedDirection = aimDirection;
 
         animator.SetBool("isWalking", _isWalking);
 
@@ -40,8 +40,8 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetFloat("InputY", aimDirection.y);
 
         // record the last direction for idle animations
-        animator.SetFloat("LastInputX", _lastAimDirection.x);
-        animator.SetFloat("LastInputY", _lastAimDirection.y);
+        animator.SetFloat("LastInputX", _lastMouseAimedDirection.x);
+        animator.SetFloat("LastInputY", _lastMouseAimedDirection.y);
     }
 
     private Vector2 GetMouseDirection()

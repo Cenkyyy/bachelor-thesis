@@ -18,6 +18,6 @@ public class PlayerDataSO : ScriptableObject
     public int baseMaxHunger = 100;
 
     [Header("Starting Hotbar items")]
-    public List<Item> startingHotbarItems = new List<Item>();
-    public List<Item> startingBackpackItems = new List<Item>();
+    public List<InventoryItem> startingHotbarItems = new List<InventoryItem>();
+    public List<InventoryItem> startingBackpackItems = new List<InventoryItem>();
 }

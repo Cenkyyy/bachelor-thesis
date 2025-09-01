@@ -20,7 +20,7 @@ public class PlayerData
     public int CurrentHunger { get; private set; }
 
     // Events
-    public event Action<int,int> OnHealthChanged; // currentHealth, maxHealth
+    public event Action<int, int> OnHealthChanged; // currentHealth, maxHealth
     public event Action<int, int> OnManaChanged; // currentMana, maxMana
     public event Action<int, int> OnHungerChanged; // currentHunger, maxHunger
     public event Action<int, int, int> OnXPChanged; // currentXP, maxXP, currentLevel

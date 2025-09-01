@@ -51,12 +51,14 @@ public class XpBarUI : StatBarBase, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         _onHovered = true;
-        if (Data != null) OnXPChanged(Data.CurrentXP, Data.MaxXP, Data.CurrentLevel);
+        if (Data != null)
+            OnXPChanged(Data.CurrentXP, Data.MaxXP, Data.CurrentLevel);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         _onHovered = false;
-        if (Data != null) OnXPChanged(Data.CurrentXP, Data.MaxXP, Data.CurrentLevel);
+        if (Data != null) 
+            OnXPChanged(Data.CurrentXP, Data.MaxXP, Data.CurrentLevel);
     }
 }

@@ -9,12 +9,14 @@ public class HungerBarUI : StatBarBase
 
     protected override void Subscribe()
     {
-        if (Data != null) Data.OnHungerChanged += OnHungerChanged;
+        if (Data != null)
+            Data.OnHungerChanged += OnHungerChanged;
     }
 
     protected override void Unsubscribe()
     {
-        if (Data != null) Data.OnHungerChanged -= OnHungerChanged;
+        if (Data != null) 
+            Data.OnHungerChanged -= OnHungerChanged;
     }
 
     protected override void DrawInitial()
