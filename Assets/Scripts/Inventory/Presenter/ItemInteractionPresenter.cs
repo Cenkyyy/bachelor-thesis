@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemInteractionManager : MonoBehaviour
+public class ItemInteractionPresenter : MonoBehaviour
 {
-    public static ItemInteractionManager Instance { get; private set; }
+    public static ItemInteractionPresenter Instance { get; private set; }
 
     [Header("UI")]
     [SerializeField] private Canvas canvas;
@@ -16,8 +16,8 @@ public class ItemInteractionManager : MonoBehaviour
 
     [Header("Inventory Source")]
     [SerializeField] private PlayerInventoryWrapper playerInventory;
-    [SerializeField] private BackpackController backpackController;
-    [SerializeField] private HotbarController hotbarController;
+    [SerializeField] private BackpackPresenter backpackPresenter;
+    [SerializeField] private HotbarPresenter hotbarPresenter;
 
     [Header("Double click")]
     [SerializeField] private float doubleClickDelay = 0.2f;
@@ -171,7 +171,7 @@ public class ItemInteractionManager : MonoBehaviour
         // validation
         if (!IsValidSlot(slot))
             return;
-        if (!backpackController.IsInventoryOpen)
+        if (!backpackPresenter.IsInventoryOpen)
             return;
 
         var clickedSlotItem = playerInventory.Inventory.GetItemAt(slot.SlotIndex);
@@ -232,13 +232,11 @@ public class ItemInteractionManager : MonoBehaviour
             sourceItem = sourceItem.WithAmount(sourceItem.Amount - toMove);
 
             playerInventory.Inventory.SetItemAt(i, destItem);
-            RefreshSlot(i);
 
             // if the clicked slot item is fully moved, clear the slot and return
             if (sourceItem.Amount <= 0)
             {
                 playerInventory.Inventory.ClearItemAt(slot.SlotIndex);
-                RefreshSlot(slot.SlotIndex);
                 return true;
             }   
         }
@@ -247,10 +245,10 @@ public class ItemInteractionManager : MonoBehaviour
         var original = playerInventory.Inventory.GetItemAt(slot.SlotIndex);
         if (original.Amount != sourceItem.Amount || original.ItemSO != sourceItem.ItemSO)
         {
-            if (sourceItem.IsEmpty) playerInventory.Inventory.ClearItemAt(slot.SlotIndex);
-            else playerInventory.Inventory.SetItemAt(slot.SlotIndex, sourceItem);
-
-            RefreshSlot(slot.SlotIndex);
+            if (sourceItem.IsEmpty) 
+                playerInventory.Inventory.ClearItemAt(slot.SlotIndex);
+            else
+                playerInventory.Inventory.SetItemAt(slot.SlotIndex, sourceItem);
         }
 
         return false;
@@ -260,8 +258,6 @@ public class ItemInteractionManager : MonoBehaviour
     {
         playerInventory.Inventory.SetItemAt(destSlotIdx, item);
         playerInventory.Inventory.ClearItemAt(sourceSlotIdx);
-        RefreshSlot(sourceSlotIdx);
-        RefreshSlot(destSlotIdx);
     }
 
     #endregion
@@ -309,7 +305,6 @@ public class ItemInteractionManager : MonoBehaviour
         _heldItem = item;
         playerInventory.Inventory.ClearItemAt(slot.SlotIndex);
 
-        RefreshSlot(slot.SlotIndex);
         ShowHeldItem();
     }
 
@@ -318,7 +313,6 @@ public class ItemInteractionManager : MonoBehaviour
         playerInventory.Inventory.SetItemAt(slot.SlotIndex, _heldItem);
         _heldItem = InventoryItem.Empty;
 
-        RefreshSlot(slot.SlotIndex);
         HideHeldItem();
     }
 
@@ -333,7 +327,6 @@ public class ItemInteractionManager : MonoBehaviour
 
         playerInventory.Inventory.SetItemAt(slot.SlotIndex, item);
         UpdateHeldItem();
-        RefreshSlot(slot.SlotIndex);
     }
 
     private void SwapHeldWithSlot(Slot slot, InventoryItem item)
@@ -341,7 +334,6 @@ public class ItemInteractionManager : MonoBehaviour
         playerInventory.Inventory.SetItemAt(slot.SlotIndex, _heldItem);
         _heldItem = item;
 
-        RefreshSlot(slot.SlotIndex);
         UpdateHeldItem();
     }
 
@@ -375,7 +367,6 @@ public class ItemInteractionManager : MonoBehaviour
         // pick up the clicked item first
         int collected = clickedSlotItem.Amount;
         playerInventory.Inventory.ClearItemAt(slot.SlotIndex);
-        RefreshSlot(slot.SlotIndex);
 
         // try collecting other items of the same type across the inventory
         collected = CollectItemsFromInventory(clickedSlotItem.ItemSO, collected, clickedSlotItem.ItemSO.MaxStackSize);
@@ -408,7 +399,6 @@ public class ItemInteractionManager : MonoBehaviour
             else
                 playerInventory.Inventory.SetItemAt(i, currentItem);
 
-            RefreshSlot(i);
             remaining -= canTake;
         }
 
@@ -500,7 +490,6 @@ public class ItemInteractionManager : MonoBehaviour
         {
             playerInventory.Inventory.SetItemAt(slot.SlotIndex, newItem);
         }
-        RefreshSlot(slot.SlotIndex);
     }
 
     private void TryPlaceOneFromHeldIntoEmptySlot(Slot slot)
@@ -508,7 +497,6 @@ public class ItemInteractionManager : MonoBehaviour
         playerInventory.Inventory.SetItemAt(slot.SlotIndex, new InventoryItem(_heldItem.ItemSO));
         _heldItem = _heldItem.WithAmount(_heldItem.Amount - 1);
 
-        RefreshSlot(slot.SlotIndex);
         UpdateHeldItem();
     }
 
@@ -518,7 +506,6 @@ public class ItemInteractionManager : MonoBehaviour
         _heldItem = _heldItem.WithAmount(_heldItem.Amount - 1);
 
         playerInventory.Inventory.SetItemAt(slot.SlotIndex, item);
-        RefreshSlot(slot.SlotIndex);
         UpdateHeldItem();
     }
 
@@ -529,18 +516,6 @@ public class ItemInteractionManager : MonoBehaviour
     private bool IsValidSlot(Slot slot) => slot != null && slot.SlotIndex >= 0 && slot.SlotIndex < playerInventory.Inventory.TotalSize;
 
     private bool IsSameItem(InventoryItem a, InventoryItem b) => !a.IsEmpty && !b.IsEmpty && a.ItemSO == b.ItemSO;
-
-    private void RefreshSlot(int index)
-    {
-        if (index < playerInventory.Inventory.HotbarSize)
-        {
-            hotbarController.RefreshSlot(index);
-        }
-        else
-        {
-            backpackController.RefreshSlot(index);
-        }
-    }
 
     private void UpdateHeldItem()
     {

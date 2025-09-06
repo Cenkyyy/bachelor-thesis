@@ -21,9 +21,4 @@ public class Player : MonoBehaviour
             _playerInventoryWrapper.InitializeFromPlayer(playerDataSO);
         }
     }
-
-    public void TakeDamage(int amount) => PlayerData.TakeDamage(amount);
-    public void UseMana(int amount) => PlayerData.UseMana(amount);
-    public void EatFood(int amount) => PlayerData.EatFood(amount);
-    public void GainXP(int amount) => PlayerData.GainXP(amount);
 }

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class SettingsController : MonoBehaviour
 {
     [SerializeField] GameObject settingsPanel;
-    [SerializeField] BackpackController backpackInventory;
+    [SerializeField] BackpackPresenter backpackInventory;
     [SerializeField] Button resumeButton;
 
     void Start()

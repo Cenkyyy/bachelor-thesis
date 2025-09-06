@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8760f91d0fa4674995063a3f37b49e3, type: 3}
   m_Name: HealthPotion
   m_EditorClassIdentifier: 
-  itemName: HealthPotion
-  icon: {fileID: -728488644960612398, guid: 54f94ca4cc376f8489043e8900ec001e, type: 3}
-  isStackable: 1
-  maxStackSize: 32
-  restoreHealth: 50
-  restoreMana: 0
+  <ItemName>k__BackingField: Health Potion
+  <Icon>k__BackingField: {fileID: -728488644960612398, guid: 54f94ca4cc376f8489043e8900ec001e, type: 3}
+  <MaxStackSize>k__BackingField: 32
+  <Category>k__BackingField: 4
+  <RestoreHealth>k__BackingField: 50
+  <RestoreMana>k__BackingField: 0

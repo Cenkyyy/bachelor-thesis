@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 /// <summary>
@@ -5,9 +6,14 @@ using System.Collections.Generic;
 /// Acts as the single source for player's item storage.
 /// </summary>
 [System.Serializable]
-public class PlayerInventory
+public sealed class PlayerInventory
 {
+    private const int MinHotbarSize = 2;
+    private const int MaxHotbarSize = 12;
     private const int DefaultHotbarSize = 8;
+
+    private const int MinInventorySize = 8;
+    private const int MaxInventorySize = 40;
     private const int DefaultInventorySize = 24;
 
     public int HotbarSize { get; private set; } =  DefaultHotbarSize;
@@ -19,6 +25,8 @@ public class PlayerInventory
     /// </summary>
     private List<InventoryItem> _items;
 
+    public event Action<int> OnItemChanged; // int parameter is the slot index that changed
+
     /// <summary>
     /// Initializes a new instance of PlayerInventory with specified sizes.
     /// </summary>
@@ -26,6 +34,16 @@ public class PlayerInventory
     /// <param name="inventorySize">Size of player's backpack</param>
     public PlayerInventory(int hotbarSize, int inventorySize)
     {
+        if (hotbarSize < MinHotbarSize)
+            hotbarSize = MinHotbarSize;
+        else if (hotbarSize > MaxHotbarSize)
+            hotbarSize = MaxHotbarSize;
+
+        if (inventorySize < MinInventorySize)
+            inventorySize = MinInventorySize;
+        else if (inventorySize > MaxInventorySize)
+            inventorySize = MaxInventorySize;
+
         HotbarSize = hotbarSize;
         InventorySize = inventorySize;
 
@@ -55,7 +73,11 @@ public class PlayerInventory
         {
             return;
         }
-        _items[index] = item;
+        if (_items[index].ItemSO != item.ItemSO || _items[index].Amount != item.Amount)
+        {
+            _items[index] = item;
+            OnItemChanged?.Invoke(index);
+        }
     }
 
     /// <summary>
@@ -67,6 +89,10 @@ public class PlayerInventory
         {
             return;
         }
-        _items[index] = InventoryItem.Empty;
+        if (!_items[index].IsEmpty)
+        {
+            _items[index] = InventoryItem.Empty;
+            OnItemChanged?.Invoke(index);
+        }
     }
 }

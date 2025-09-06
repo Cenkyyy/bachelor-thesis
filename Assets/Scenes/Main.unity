@@ -3006,8 +3006,8 @@ MonoBehaviour:
   heldItemIcon: {fileID: 156252286}
   heldItemAmountText: {fileID: 1224626021}
   playerInventory: {fileID: 2010244814}
-  backpackController: {fileID: 570862299}
-  hotbarController: {fileID: 1611478417}
+  backpackPresenter: {fileID: 570862299}
+  hotbarPresenter: {fileID: 1611478417}
   doubleClickDelay: 0.2
 --- !u!1 &1436572154
 GameObject:

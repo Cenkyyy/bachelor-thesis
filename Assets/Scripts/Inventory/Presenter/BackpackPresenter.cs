@@ -1,32 +1,34 @@
 using UnityEngine;
 
-public class BackpackController : SlotControllerBase<Slot>
+public class BackpackPresenter : InventoryPresenterBase<Slot>
 {
     [SerializeField] private KeyCode toggleKey = KeyCode.E;
 
-    public bool IsInventoryOpen => slotParent != null && slotParent.gameObject.activeSelf;
-
     protected override int SlotCount => playerInventory.Inventory.InventorySize;
+
+    public bool IsInventoryOpen => slotParent != null && slotParent.gameObject.activeSelf;
 
     protected override void Start()
     {
-        // temporarly set the inventory panel active to instantiate slots
-        bool originallyActive = slotParent.gameObject.activeSelf;
-        slotParent.gameObject.SetActive(true);
-
         base.Start();
 
-        for (int i = 0; i < slots.Length; i++)
+        // temporarly set the inventory panel active to instantiate slots
+        bool wasActive = slotParent.gameObject.activeSelf;
+        slotParent.gameObject.SetActive(true);
+
+        int offset = playerInventory.Inventory.HotbarSize;
+        slots = new Slot[SlotCount];
+        for (int i = 0; i < SlotCount; i++)
         {
-            slots[i].GetComponent<HotbarSlot>()?.SetToDefault();
+            slots[i] = Instantiate(slotPrefab, slotParent);
+            slots[i].Bind(i + offset, playerInventory.Inventory.GetItemAt(i + offset));
+
+            // subscribe to events
+            slots[i].OnPointerClicked += HandleSlotClicked;
+            slots[i].OnPointerEntered += HandleSlotEnter;
         }
 
-        slotParent.gameObject.SetActive(originallyActive);
-    }
-
-    protected override void CreateAndBindSlots(int offset)
-    {
-        base.CreateAndBindSlots(playerInventory.Inventory.HotbarSize);
+        slotParent.gameObject.SetActive(wasActive);
     }
 
     private void Update()

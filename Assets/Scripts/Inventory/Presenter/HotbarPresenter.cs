@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HotbarController : SlotControllerBase<HotbarSlot>
+public class HotbarPresenter : InventoryPresenterBase<HotbarSlot>
 {
     protected override int SlotCount => playerInventory.Inventory.HotbarSize;
 
@@ -10,9 +10,16 @@ public class HotbarController : SlotControllerBase<HotbarSlot>
     {
         base.Start();
 
-        for (int i = 0; i < slots.Length; i++)
+        slots = new HotbarSlot[SlotCount];
+        for (int i = 0; i < SlotCount; i++)
         {
+            slots[i] = Instantiate(slotPrefab, slotParent);
+            slots[i].Bind(i, playerInventory.Inventory.GetItemAt(i));
             slots[i]?.SetToDefault();
+
+            // subscribe to events
+            slots[i].OnPointerClicked += HandleSlotClicked;
+            slots[i].OnPointerEntered += HandleSlotEnter;
         }
 
         if (slots.Length > 0)
