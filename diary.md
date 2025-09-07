@@ -38,4 +38,4 @@ Starting to implement UI - Player stat bars, settings
 
 Implementing inventory and understading and learning Unity in general - till 6.9
 
-Working on dropping and picking up of the items
+Working on dropping and picking up of the items - in Hierarchy, items size is set to 0.4 in the World/WordlItems, might add settable WorldSize later to ItemBaseSO.cs
