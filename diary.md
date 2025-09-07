@@ -31,3 +31,11 @@ Work on sprites for idle and walking for the player
 Work on sprites for idle and walking for the player
 
 Implement the animations into the game when player's moving (watched this: https://www.youtube.com/watch?v=82U4ToJU-28&list=PLaaFfzxy_80HtVvBnpK_IjSC8_Y9AOhuP&index=5)
+
+Long break
+
+Starting to implement UI - Player stat bars, settings
+
+Implementing inventory and understading and learning Unity in general - till 6.9
+
+Working on dropping and picking up of the items
