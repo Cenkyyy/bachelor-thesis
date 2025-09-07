@@ -42,13 +42,11 @@ public class SettingsController : MonoBehaviour
     {
         settingsPanel.SetActive(true);
         GameStateManager.SetPause(true);
-        Time.timeScale = 0f;
     }
 
     private void ResumeGame()
     {
         settingsPanel.SetActive(false);
         GameStateManager.SetPause(false);
-        Time.timeScale = 1f;
     }
 }

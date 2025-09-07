@@ -11,6 +11,7 @@ public class GameStateManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SetPause(false);
         }
         else
         {
@@ -20,6 +21,9 @@ public class GameStateManager : MonoBehaviour
 
     public static void SetPause(bool paused)
     {
+        if (IsGamePaused == paused) return;
+
         IsGamePaused = paused;
+        Time.timeScale = paused ? 0f : 1f;
     }
 }
