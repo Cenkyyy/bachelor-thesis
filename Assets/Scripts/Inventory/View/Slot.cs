@@ -19,7 +19,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 
     // Events
     public event Action<Slot, PointerEventData> OnPointerClicked;
-    public event Action<Slot> OnPointerEntered;
+    public event Action<Slot, PointerEventData> OnPointerEntered;
 
     private void Awake()
     {
@@ -80,6 +80,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         if (itemAmountText != null)
         {
             itemAmountText.text = string.Empty;
+            itemAmountText.gameObject.SetActive(false);
         }
     }
 
@@ -90,6 +91,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData) 
     {
-        OnPointerEntered?.Invoke(this);
+        OnPointerEntered?.Invoke(this, eventData);
     }
 }

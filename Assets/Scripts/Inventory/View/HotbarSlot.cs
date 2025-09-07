@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HotbarSlot : Slot
+public sealed class HotbarSlot : Slot
 {
     [Header("Hotbar Highlight")]
     [SerializeField] Sprite highlightedBackgroundSprite;
