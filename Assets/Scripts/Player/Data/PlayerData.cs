@@ -1,31 +1,62 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Mutable runtime player stats that raise change events on updates.
+/// </summary>
 [System.Serializable]
 public class PlayerData
 {
-    // Fields
+    // Properties
+
+    /// <summary> Maximum health at the current level/equipment state. </summary>
     public int MaxHealth { get; private set; }
+
+    /// <summary> Current health (0..MaxHealth). </summary>
     public int CurrentHealth { get; private set; }
 
+    /// <summary> Maximum mana at the current level/equipment state. </summary>
     public int MaxMana { get; private set; }
+    
+    /// <summary> Current mana (0..MaxMana). </summary>
     public int CurrentMana { get; private set; }
 
+    /// <summary> XP needed to reach the next level. Grows as you level up. </summary>
     public int MaxXP { get; private set; }
+    
+    /// <summary> Current XP progress toward the next level. </summary>
     public int CurrentXP { get; private set; }
+    
+    /// <summary> Maximum attainable player level (cap). </summary>
     public int MaxLevel { get; private set; }
+    
+    /// <summary> Current level. </summary>
     public int CurrentLevel { get; private set; }
 
+    /// <summary> Maximum hunger value. </summary>
     public int MaxHunger { get; private set; }
+    
+    /// <summary> Current hunger (0..MaxHunger). </summary>
     public int CurrentHunger { get; private set; }
 
     // Events
-    public event Action<int, int> OnHealthChanged; // currentHealth, maxHealth
-    public event Action<int, int> OnManaChanged; // currentMana, maxMana
-    public event Action<int, int> OnHungerChanged; // currentHunger, maxHunger
-    public event Action<int, int, int> OnXPChanged; // currentXP, maxXP, currentLevel
-    public event Action OnInitialized; // when initialized from PlayerDataSO
 
+    /// <summary> Raised after health changes; args: currentHealth, maxHealth. </summary>
+    public event Action<int, int> OnHealthChanged;
+    /// <summary> Raised after mana changes; args: currentMana, maxMana. </summary>
+    public event Action<int, int> OnManaChanged;
+    /// <summary> Raised after hunger changes; args: currentHunger, maxHunger. </summary>
+    public event Action<int, int> OnHungerChanged;
+    /// <summary> Raised after XP or level changes; args: currentXP, maxXP, currentLevel. </summary>
+    public event Action<int, int, int> OnXPChanged;
+    /// <summary> Raised after InitializeFrom() sets all defaults. </summary>
+    public event Action OnInitialized;
+
+    /// <summary>
+    /// Initializes all stats from <see cref="PlayerDataSO"/> and raises initial change events.
+    /// </summary>
+    /// <param name="defaultData">Source of default values.</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="defaultData"/> is null.</exception>
     public void InitializeFrom(PlayerDataSO defaultData) 
     {
         if (defaultData == null) 
@@ -46,83 +77,130 @@ public class PlayerData
         CurrentHunger = MaxHunger;
 
         OnInitialized?.Invoke();
-        RaiseAll();
-    }
-
-    private void RaiseHealth() => OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
-    private void RaiseMana() => OnManaChanged?.Invoke(CurrentMana, MaxMana);
-    private void RaiseHunger() => OnHungerChanged?.Invoke(CurrentHunger, MaxHunger);
-    private void RaiseXP() => OnXPChanged?.Invoke(CurrentXP, MaxXP, CurrentLevel);
-    private void RaiseAll()
-    {
-        RaiseHealth();
-        RaiseMana();
-        RaiseHunger();
-        RaiseXP();
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+        OnManaChanged?.Invoke(CurrentMana, MaxMana);
+        OnHungerChanged?.Invoke(CurrentHunger, MaxHunger);
+        OnXPChanged?.Invoke(CurrentXP, MaxXP, CurrentLevel);
     }
 
     // Health API
+
+    /// <summary>
+    /// Applies damage, clamping to zero, and raises OnHealthChanged event.
+    /// </summary>
+    /// <param name="amount">Damage to be taken.</param>
     public void TakeDamage(int amount)
     {
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
-        RaiseHealth();
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
 
+    /// <summary>
+    /// Heals by <paramref name="amount"/> up to MaxHealth and raises OnHealthChanged event.
+    /// </summary>
+    /// <param name="amount">Amout to be healed.</param>
     public void Heal(int amount)
     {
         CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
-        RaiseHealth();
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
 
-    public void ModifyMaxHealth(int delta, bool healWithIncrease = false)
+    /// <summary>
+    /// Modifies MaxHealth by <paramref name="amount"/> (min 1).
+    /// Optionally heals back to full health if <paramref name="healWithIncrease"/> is true.
+    /// Raises OnHealthChanged event.
+    /// </summary>
+    /// <param name="amount">Amount to be healed by.</param>
+    /// <param name="healWithIncrease">True if should restore to full health.</param>
+    public void ModifyMaxHealth(int amount, bool healWithIncrease = false)
     {
-        MaxHealth = Mathf.Max(1, MaxHealth + delta);
+        MaxHealth = Mathf.Max(1, MaxHealth + amount);
         if (healWithIncrease)
         {
-            CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + delta);
+            CurrentHealth = MaxHealth;
         }
         else
         {
             CurrentHealth = Mathf.Min(CurrentHealth, MaxHealth);
         }
-        RaiseHealth();
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
 
     // Mana API
+
+    /// <summary>
+    /// Spends mana, clamping to zero, and raises OnManaChanged event.
+    /// </summary>
+    /// <param name="amount">Mana to be spend.</param>
     public void UseMana(int amount)
     {
         CurrentMana = Mathf.Max(0, CurrentMana - amount);
-        RaiseMana();
+        OnManaChanged?.Invoke(CurrentMana, MaxMana);
     }
 
+    /// <summary>
+    /// Recoverts mana up to MaxMana and raises OnManaChanged event.
+    /// </summary>
+    /// <param name="amount">Mana to be recovered</param>
     public void RecoverMana(int amount)
     {
         CurrentMana = Mathf.Min(MaxMana, CurrentMana + amount);
-        RaiseMana();
+        OnManaChanged?.Invoke(CurrentMana, MaxMana);
     }
 
-    public void ModifyMaxMana(int delta)
+    /// <summary>
+    /// Modifies MaxMana by <paramref name="amount"/> (min 1).
+    /// Optionally restores back to full health if <paramref name="restoreWithIncrease"/> is true.
+    /// Raises OnManaChanged event.
+    /// </summary>
+    /// <param name="amount">Amount to be restored.</param>
+    /// <param name="restoreWithIncrease">True if should restore to full mana.</param>
+    public void ModifyMaxMana(int amount, bool restoreWithIncrease)
     {
-        MaxMana = Mathf.Max(1, MaxMana + delta);
-        CurrentMana = Mathf.Min(CurrentMana, MaxMana);
-        RaiseMana();
+        MaxMana = Mathf.Max(1, MaxMana + amount);
+        if (restoreWithIncrease)
+        {
+            CurrentMana = MaxMana;
+        }
+        else
+        {
+            CurrentMana = Mathf.Min(CurrentMana, MaxMana);
+        }
+        OnManaChanged?.Invoke(CurrentMana, MaxMana);
     }
 
     // Hunger API
+
+    /// <summary>
+    /// Increases hunger by <paramref name="amount"/> up to MaxHunger and raises OnHungerChanged event.
+    /// </summary>
+    /// <param name="amount">Amount to be increased by.</param>
     public void EatFood(int amount)
     {
         CurrentHunger = Mathf.Min(MaxHunger, CurrentHunger + amount);
-        RaiseHunger();
+        OnHungerChanged?.Invoke(CurrentHunger, MaxHunger);
     }
 
-    public void ModifyMaxHunger(int delta)
+    /// <summary>
+    /// Modifies MaxHealthby <paramref name="amount"/> (min 1).
+    /// Raises OnHungerChanged event.
+    /// </summary>
+    /// <param name="amount">Amount to be increased by.</param>
+    public void ModifyMaxHunger(int amount)
     {
-        MaxHunger = Mathf.Max(1, MaxHunger + delta);
+        MaxHunger = Mathf.Max(1, MaxHunger + amount);
         CurrentHunger = Mathf.Min(CurrentHunger, MaxHunger);
-        RaiseHunger();
+        OnHungerChanged?.Invoke(CurrentHunger, MaxHunger);
     }
 
     // XP / Leveling API
+
+    /// <summary>
+    /// Gains XP by <paramref name="amount"/>, levels up if enough XP is reached.
+    /// Each level up increases MaxXP, MaxHealth and MaxMana.
+    /// Raises OnXPChanged event.
+    /// </summary>
+    /// <param name="amount"></param>
     public void GainXP(int amount)
     {
         CurrentXP += amount;
@@ -131,15 +209,18 @@ public class PlayerData
         {
             CurrentXP -= MaxXP;
             CurrentLevel++;
+
+            // TODO: Modify next level stats upgrades
             MaxXP += 50;
             ModifyMaxHealth(10, healWithIncrease: false);
-            ModifyMaxMana(5);
+            ModifyMaxMana(5, restoreWithIncrease: false);
         }
 
         if (CurrentLevel >= MaxLevel)
         {
             CurrentXP = 0;
         }
-        RaiseXP();
+
+        OnXPChanged?.Invoke(CurrentXP, MaxXP, CurrentLevel);
     }
 }

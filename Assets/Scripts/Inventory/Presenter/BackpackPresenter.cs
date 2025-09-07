@@ -4,7 +4,7 @@ public class BackpackPresenter : InventoryPresenterBase<Slot>
 {
     [SerializeField] private KeyCode toggleKey = KeyCode.E;
 
-    protected override int SlotCount => playerInventory.Inventory.InventorySize;
+    protected override int SlotCount => player.Inventory.BackpackSize;
 
     public bool IsInventoryOpen => slotParent != null && slotParent.gameObject.activeSelf;
 
@@ -16,12 +16,12 @@ public class BackpackPresenter : InventoryPresenterBase<Slot>
         bool wasActive = slotParent.gameObject.activeSelf;
         slotParent.gameObject.SetActive(true);
 
-        int offset = playerInventory.Inventory.HotbarSize;
+        int offset = player.Inventory.HotbarSize;
         slots = new Slot[SlotCount];
         for (int i = 0; i < SlotCount; i++)
         {
             slots[i] = Instantiate(slotPrefab, slotParent);
-            slots[i].Bind(i + offset, playerInventory.Inventory.GetItemAt(i + offset));
+            slots[i].Bind(i + offset, player.Inventory.GetItemAt(i + offset));
 
             // subscribe to events
             slots[i].OnPointerClicked += HandleSlotClicked;
@@ -50,10 +50,10 @@ public class BackpackPresenter : InventoryPresenterBase<Slot>
 
     public override void RefreshSlot(int backpackIndex)
     {
-        int slotIndex = backpackIndex - playerInventory.Inventory.HotbarSize;
+        int slotIndex = backpackIndex - player.Inventory.HotbarSize;
         if (slotIndex >= 0 && slotIndex < slots.Length)
         {
-            slots[slotIndex].Refresh(playerInventory.Inventory.GetItemAt(backpackIndex));
+            slots[slotIndex].Refresh(player.Inventory.GetItemAt(backpackIndex));
         }
     }
 }

@@ -1537,7 +1537,7 @@ GameObject:
   - component: {fileID: 570862298}
   - component: {fileID: 570862299}
   m_Layer: 0
-  m_Name: BackpackController
+  m_Name: BackpackPresenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1572,7 +1572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotPrefab: {fileID: 3672516636108083546, guid: 965491b462a816446850da639c6b3fef, type: 3}
   slotParent: {fileID: 203007079}
-  playerInventory: {fileID: 2010244814}
+  player: {fileID: 2010244819}
   toggleKey: 101
 --- !u!1 &619394800
 GameObject:
@@ -2968,7 +2968,7 @@ GameObject:
   - component: {fileID: 1394616547}
   - component: {fileID: 1394616548}
   m_Layer: 0
-  m_Name: ItemInteractionManager
+  m_Name: ItemInteractionPresenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3005,7 +3005,7 @@ MonoBehaviour:
   heldItemContainer: {fileID: 1436572155}
   heldItemIcon: {fileID: 156252286}
   heldItemAmountText: {fileID: 1224626021}
-  playerInventory: {fileID: 2010244814}
+  player: {fileID: 2010244819}
   backpackPresenter: {fileID: 570862299}
   hotbarPresenter: {fileID: 1611478417}
   doubleClickDelay: 0.2
@@ -3181,7 +3181,7 @@ GameObject:
   - component: {fileID: 1611478416}
   - component: {fileID: 1611478417}
   m_Layer: 0
-  m_Name: HotbarController
+  m_Name: HotbarPresenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3216,7 +3216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotPrefab: {fileID: -2390514043304085740, guid: d259688275a8b9249ab8506420c439a3, type: 3}
   slotParent: {fileID: 121172469}
-  playerInventory: {fileID: 2010244814}
+  player: {fileID: 2010244819}
 --- !u!1 &1613807269
 GameObject:
   m_ObjectHideFlags: 0
@@ -4221,17 +4221,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3689139185868277431, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
   m_PrefabInstance: {fileID: 317918005633736356}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2010244814 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6346193532357482055, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-  m_PrefabInstance: {fileID: 317918005633736356}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0d08013449c20e45ad96be06668adad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2010244819 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8120486794298343527, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
@@ -4503,6 +4492,6 @@ SceneRoots:
   - {fileID: 288753444}
   - {fileID: 174293338}
   - {fileID: 850465700}
-  - {fileID: 1394616547}
   - {fileID: 671442515}
+  - {fileID: 1394616547}
   - {fileID: 1995305167}

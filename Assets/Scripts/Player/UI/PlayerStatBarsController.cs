@@ -10,12 +10,12 @@ public class PlayerStatBarsController : MonoBehaviour
 
     private void Start()
     {
-        if (player == null || player.PlayerData == null)
+        if (player == null || player.Data == null)
             return;
 
-        healthBar?.Initialize(player.PlayerData);
-        manaBar?.Initialize(player.PlayerData);
-        hungerBar?.Initialize(player.PlayerData);
-        xpBar?.Initialize(player.PlayerData);
+        healthBar?.Initialize(player.Data);
+        manaBar?.Initialize(player.Data);
+        hungerBar?.Initialize(player.Data);
+        xpBar?.Initialize(player.Data);
     }
 }

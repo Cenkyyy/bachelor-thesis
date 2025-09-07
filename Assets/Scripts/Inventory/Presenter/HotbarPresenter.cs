@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HotbarPresenter : InventoryPresenterBase<HotbarSlot>
 {
-    protected override int SlotCount => playerInventory.Inventory.HotbarSize;
+    protected override int SlotCount => player.Inventory.HotbarSize;
 
     private int _selectedIndex = 0;
 
@@ -14,16 +14,19 @@ public class HotbarPresenter : InventoryPresenterBase<HotbarSlot>
         for (int i = 0; i < SlotCount; i++)
         {
             slots[i] = Instantiate(slotPrefab, slotParent);
-            slots[i].Bind(i, playerInventory.Inventory.GetItemAt(i));
+            slots[i].Bind(i, player.Inventory.GetItemAt(i));
             slots[i]?.SetToDefault();
 
-            // subscribe to events
+            // subscribe to slot ui events
             slots[i].OnPointerClicked += HandleSlotClicked;
             slots[i].OnPointerEntered += HandleSlotEnter;
         }
 
         if (slots.Length > 0)
             slots[_selectedIndex].HighlightSelected();
+
+        // subscribe to hotbar selection changes
+        player.Inventory.OnHotbarSelectionChanged += ChangeSelectedSlot;
     }
 
     private void Update()
@@ -35,13 +38,21 @@ public class HotbarPresenter : InventoryPresenterBase<HotbarSlot>
         if (scroll > 0f)
         {
             // scroll up
-            ChangeSelectedSlot((_selectedIndex + 1) % slots.Length);
+            player.Inventory.SelectHotbar((_selectedIndex + 1) % slots.Length);
         }
         else if (scroll < 0f)
         {
             // scroll down
-            ChangeSelectedSlot((_selectedIndex - 1 + slots.Length) % slots.Length);
+            player.Inventory.SelectHotbar((_selectedIndex - 1 + slots.Length) % slots.Length);
         }
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+
+        if (player?.Inventory != null)
+            player.Inventory.OnHotbarSelectionChanged -= ChangeSelectedSlot;
     }
 
     private void ChangeSelectedSlot(int newIndex)
@@ -55,7 +66,7 @@ public class HotbarPresenter : InventoryPresenterBase<HotbarSlot>
     {
         if (hotbarIndex >= 0 && hotbarIndex < slots.Length)
         {
-            slots[hotbarIndex].Refresh(playerInventory.Inventory.GetItemAt(hotbarIndex));
+            slots[hotbarIndex].Refresh(player.Inventory.GetItemAt(hotbarIndex));
         }
     }
 }
