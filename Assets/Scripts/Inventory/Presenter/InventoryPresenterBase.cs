@@ -10,9 +10,10 @@ public abstract class InventoryPresenterBase<T> : MonoBehaviour where T : Slot
     [Header("Model")]
     [SerializeField] protected Player player;
 
-    protected T[] slots;
     protected abstract int SlotCount { get; }
 
+    protected T[] slots;
+    
     public abstract void RefreshSlot(int index);
 
     protected virtual void Start()

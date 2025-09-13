@@ -153,18 +153,18 @@ public sealed class PlayerInventory
     /// Raises <see cref="OnItemChanged"/> for each changed slot.
     /// </summary>
     /// <param name="item">Item to add (may be partially consumed).</param>
-    /// <param name="rangeStart">Inclusive start index.</param>
+    /// <param name="rangeStartInclusive">Inclusive start index.</param>
     /// <param name="rangeEndExclusive">Exclusive end index.</param>
-    /// <returns>true if the item was fully placed; otherwise false (range ran out of space).</returns>
-    public bool TryAddItemToRange(InventoryItem item, int rangeStart, int rangeEndExclusive)
+    /// <returns>Empty item if item was successfully placed, otherwise the rest of the item.</returns>
+    private InventoryItem TryAddItemCore(InventoryItem item, int rangeStartInclusive, int rangeEndExclusive)
     {
         if (item.IsEmpty)
-            return true;
+            return InventoryItem.Empty;
 
         // try stacking into existing stacks
         if (item.ItemSO.IsStackable)
         {
-            for (int i = rangeStart; i < rangeEndExclusive; i++)
+            for (int i = rangeStartInclusive; i < rangeEndExclusive; i++)
             {
                 if (!IsSameItem(_items[i], item)) 
                     continue;
@@ -184,23 +184,43 @@ public sealed class PlayerInventory
                 // reduce from incoming item
                 item = item.WithAmount(item.Amount - toMove);
                 if (item.IsEmpty)
-                    return true;
+                    return InventoryItem.Empty;
             }
         }
 
         // place into first empty slot
-        for (int i = rangeStart; i < rangeEndExclusive; i++)
+        for (int i = rangeStartInclusive; i < rangeEndExclusive; i++)
         {
             if (_items[i].IsEmpty)
             {
                 _items[i] = item;
                 OnItemChanged?.Invoke(i);
-                return true;
+                return InventoryItem.Empty;
             }
         }
 
         // range full
-        return false;
+        return item;
+    }
+
+    /// <summary>
+    /// Tries to add an item into a inventory's slot range [rangeStart, rangeEndExclusive).
+    /// First tries stacking into existing same type before placing into the first empty slot.
+    /// Raises <see cref="OnItemChanged"/> for each changed slot.
+    /// </summary>
+    /// <param name="item">Item to add (may be partially consumed).</param>
+    /// <param name="rangeStartinclusive">Inclusive start index.</param>
+    /// <param name="rangeEndExclusive">Exclusive end index.</param>
+    /// <returns>true if the item was fully placed; otherwise false (range ran out of space).</returns>
+    public bool TryAddItemToRange(InventoryItem item, int rangeStartinclusive, int rangeEndExclusive)
+    {
+        var leftover = TryAddItemCore(item, rangeStartinclusive, rangeEndExclusive);
+        return leftover.IsEmpty;
+    }
+
+    public InventoryItem TryAddItem(InventoryItem item, int rangeStartinclusive, int rangeEndExclusive)
+    {
+        return TryAddItemCore(item, rangeStartinclusive, rangeEndExclusive);
     }
 
     /// <summary>

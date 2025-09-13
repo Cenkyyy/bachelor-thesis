@@ -200,7 +200,7 @@ public class PlayerData
     /// Each level up increases MaxXP, MaxHealth and MaxMana.
     /// Raises OnXPChanged event.
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">Amount to gain.</param>
     public void GainXP(int amount)
     {
         CurrentXP += amount;

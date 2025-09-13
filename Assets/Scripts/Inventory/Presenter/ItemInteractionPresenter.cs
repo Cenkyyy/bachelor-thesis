@@ -23,6 +23,10 @@ public class ItemInteractionPresenter : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private BackpackPresenter backpackPresenter;
     [SerializeField] private HotbarPresenter hotbarPresenter;
+    [SerializeField] private RectTransform backpackPanelRect;
+    [SerializeField] private RectTransform hotbarPanelRect;
+    [SerializeField] private WorldItemSpawner worldItemSpawner;
+    [SerializeField] private float dropSpawnDistance = 0.6f;
 
     [Header(UIStrings.ItemInteraction_DoubleClick__Title)]
     [SerializeField] private float doubleClickDelay = 0.2f;
@@ -74,7 +78,39 @@ public class ItemInteractionPresenter : MonoBehaviour
         );
         heldItemContainer.anchoredPosition = pos;
 
-        // TODO: drop _heldItem into the world
+        // drop held stack when clicking outside inventory panels
+        if (backpackPresenter != null && backpackPresenter.IsInventoryOpen && !_heldItem.IsEmpty && Input.GetMouseButtonDown(0))
+        {
+            var mousePos = (Vector2)Input.mousePosition;
+            if (!IsPointerOverInventoryPanels(mousePos))
+            {
+                Vector3 playerPos = player.transform.position;
+                Vector3 mouseWorld = Camera.main ? Camera.main.ScreenToWorldPoint(mousePos) : playerPos + Vector3.down;
+                mouseWorld.z = 0f;
+
+                Vector2 dir = ((Vector2)(mouseWorld - playerPos)).normalized;
+                if (dir.sqrMagnitude < 0.0001f) 
+                    dir = Vector2.down;
+
+                Vector3 spawnPos = playerPos + (Vector3)(dir * dropSpawnDistance);
+                worldItemSpawner?.Spawn(_heldItem, spawnPos, dir);
+
+                // clear held cursor item
+                _heldItem = InventoryItem.Empty;
+                UpdateHeldItem();
+            }
+        }
+    }
+
+    private bool IsPointerOverInventoryPanels(Vector2 screenPoint)
+    {
+        bool overBackpack = backpackPanelRect != null &&
+            RectTransformUtility.RectangleContainsScreenPoint(backpackPanelRect, screenPoint, canvas ? canvas.worldCamera : null);
+
+        bool overHotbar = hotbarPanelRect != null &&
+            RectTransformUtility.RectangleContainsScreenPoint(hotbarPanelRect, screenPoint, canvas ? canvas.worldCamera : null);
+
+        return overBackpack || overHotbar;
     }
 
     /// <summary>

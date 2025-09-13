@@ -25,9 +25,4 @@ public abstract class ItemBaseSO : ScriptableObject
     [field: SerializeField] public ItemCategory Category { get; protected set; }
 
     #endregion
-
-    public virtual bool CanStackWith(ItemBaseSO other)
-    {
-        return other != null && other.GetType() == GetType() && other.ItemName == ItemName;
-    }
 }
