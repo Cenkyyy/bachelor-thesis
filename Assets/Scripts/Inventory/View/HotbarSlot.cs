@@ -3,15 +3,17 @@ using UnityEngine;
 public sealed class HotbarSlot : Slot
 {
     [Header("Hotbar Highlight")]
-    [SerializeField] Sprite highlightedBackgroundSprite;
+    [SerializeField] private Sprite _highlightedBackgroundSprite;
 
     /// <summary>
     /// Highlights this hotbar slot.
     /// </summary>
     public void HighlightSelected()
     {
-        if (backgroundImage != null && highlightedBackgroundSprite != null)
-            backgroundImage.sprite = highlightedBackgroundSprite;
+        if (backgroundImage != null && _highlightedBackgroundSprite != null)
+        {
+            backgroundImage.sprite = _highlightedBackgroundSprite;
+        }
     }
 
     /// <summary>
@@ -20,6 +22,8 @@ public sealed class HotbarSlot : Slot
     public void SetToDefault()
     { 
         if (backgroundImage != null && backgroundSprite != null)
+        {
             backgroundImage.sprite = backgroundSprite;
+        }
     }
 }

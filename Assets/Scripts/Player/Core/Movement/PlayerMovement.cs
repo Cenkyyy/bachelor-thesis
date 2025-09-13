@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] Rigidbody2D body;
-    [SerializeField] float speed = 4f;
+    [SerializeField] private Rigidbody2D _body;
+    [SerializeField] private float _speed = 4f;
 
     private Vector2 _input;
 
     private void Awake()
     {
-        if (body == null)
+        if (_body == null)
         {
-            body = GetComponent<Rigidbody2D>();
+            _body = GetComponent<Rigidbody2D>();
         }
     }
 
@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private void UpdatePosition()
     {
         // calculate delta - the distance to move the frame based on input and speed
-        Vector2 delta = _input * speed * Time.fixedDeltaTime;
-        body.MovePosition(body.position + delta);
+        Vector2 delta = _input * _speed * Time.fixedDeltaTime;
+        _body.MovePosition(_body.position + delta);
     }
 }

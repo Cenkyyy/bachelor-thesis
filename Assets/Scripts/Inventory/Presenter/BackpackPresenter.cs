@@ -5,7 +5,6 @@ public class BackpackPresenter : InventoryPresenterBase<Slot>
     [SerializeField] private KeyCode toggleKey = KeyCode.E;
 
     protected override int SlotCount => player.Inventory.BackpackSize;
-
     public bool IsInventoryOpen => slotParent != null && slotParent.gameObject.activeSelf;
 
     protected override void Start()

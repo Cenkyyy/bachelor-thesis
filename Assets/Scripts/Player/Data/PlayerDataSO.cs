@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Default stats and starting items of a player to be read from
+/// Default stats and starting items of a player to be read from.
 /// </summary>
 [CreateAssetMenu(fileName = "PlayerData", menuName = "Game/Player Data")]
 public class PlayerDataSO : ScriptableObject

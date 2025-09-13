@@ -59,7 +59,9 @@ public sealed class PlayerInventory
         // initialize empty inventory
         _items = new InventoryItem[TotalSize];
         for (int i = 0; i < TotalSize; i++)
+        {
             _items[i] = InventoryItem.Empty;
+        }
     }
 
     /// <summary>
@@ -74,11 +76,15 @@ public sealed class PlayerInventory
 
         // fill hotbar with starting hotbar items (indices 0-7), truncate if more than hotbarSize
         for (int i = 0; i < dataSO.startingHotbarItems.Count && i < HotbarSize; i++)
+        {
             SetItemAt(i, dataSO.startingHotbarItems[i]);
+        }
 
         // fill inventory with starting inventory items (indices 8-31), truncate if more than inventorySize
         for (int i = 0; i < dataSO.startingBackpackItems.Count && i < BackpackSize; i++)
+        {
             SetItemAt(i + HotbarSize, dataSO.startingBackpackItems[i]);
+        }
     }
 
     /// <summary>

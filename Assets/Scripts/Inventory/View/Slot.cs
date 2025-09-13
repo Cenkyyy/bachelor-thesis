@@ -24,7 +24,9 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     private void Awake()
     {
         if (backgroundImage != null && backgroundSprite != null)
+        {
             backgroundImage.sprite = backgroundSprite;
+        }
 
         Clear();
     }

@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    [SerializeField] Animator animator;
+    [SerializeField] private Animator _animator;
 
     private Vector2 _lastMouseAimedDirection = Vector2.down;
     private bool _isWalking = false;
 
     private void Awake()
     {
-        if (animator == null)
+        if (_animator == null)
         {
-            animator = GetComponent<Animator>();
+            _animator = GetComponent<Animator>();
         }
     }
 
@@ -33,15 +33,15 @@ public class PlayerAnimation : MonoBehaviour
         if (aimDirection.magnitude > 0.01f)
             _lastMouseAimedDirection = aimDirection;
 
-        animator.SetBool("isWalking", _isWalking);
+        _animator.SetBool("isWalking", _isWalking);
 
         // update animator parameters for aiming
-        animator.SetFloat("InputX", aimDirection.x);
-        animator.SetFloat("InputY", aimDirection.y);
+        _animator.SetFloat("InputX", aimDirection.x);
+        _animator.SetFloat("InputY", aimDirection.y);
 
         // record the last direction for idle animations
-        animator.SetFloat("LastInputX", _lastMouseAimedDirection.x);
-        animator.SetFloat("LastInputY", _lastMouseAimedDirection.y);
+        _animator.SetFloat("LastInputX", _lastMouseAimedDirection.x);
+        _animator.SetFloat("LastInputY", _lastMouseAimedDirection.y);
     }
 
     private Vector2 GetMouseDirection()

@@ -3,27 +3,27 @@ using UnityEngine.UI;
 
 public class SettingsController : MonoBehaviour
 {
-    [SerializeField] GameObject settingsPanel;
-    [SerializeField] BackpackPresenter backpackInventory;
-    [SerializeField] Button resumeButton;
+    [SerializeField] private GameObject _settingsPanel;
+    [SerializeField] private BackpackPresenter _backpackInventory;
+    [SerializeField] private Button _resumeButton;
 
-    void Start()
+    private void Start()
     {
-        if (resumeButton != null)
+        if (_resumeButton != null)
         {
-            resumeButton.onClick.AddListener(ResumeGame);
+            _resumeButton.onClick.AddListener(ResumeGame);
         }
 
-        settingsPanel.SetActive(false);
+        _settingsPanel.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (backpackInventory != null && backpackInventory.IsInventoryOpen)
+            if (_backpackInventory != null && _backpackInventory.IsInventoryOpen)
             {
-                backpackInventory.CloseInventory();
+                _backpackInventory.CloseInventory();
                 return;
             }
 
@@ -40,13 +40,13 @@ public class SettingsController : MonoBehaviour
 
     private void PauseGame()
     {
-        settingsPanel.SetActive(true);
+        _settingsPanel.SetActive(true);
         GameStateManager.SetPause(true);
     }
 
     private void ResumeGame()
     {
-        settingsPanel.SetActive(false);
+        _settingsPanel.SetActive(false);
         GameStateManager.SetPause(false);
     }
 }

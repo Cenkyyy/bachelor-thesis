@@ -6,11 +6,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header(UIStrings.Player_Data__Title)]
-    [SerializeField] private PlayerDataSO playerDataSO;
+    [SerializeField] private PlayerDataSO _playerDataSO;
 
     [Header(UIStrings.Player_InventorySettings__Title)]
-    [SerializeField] int hotbarSize = 8;
-    [SerializeField] int inventorySize = 24;
+    [SerializeField] private int _hotbarSize = 8;
+    [SerializeField] private int _inventorySize = 24;
 
     /// <summary> Runtime player stats (health, mana, xp, hunger...). </summary>
     public PlayerData Data { get; private set; } = new PlayerData();
@@ -21,10 +21,10 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         // initialize player's stats from defaults
-        Data.InitializeFrom(playerDataSO);
+        Data.InitializeFrom(_playerDataSO);
 
         // initialzie player's inventory with specified sizes and fill with starting items
-        Inventory = new PlayerInventory(hotbarSize, inventorySize);
-        Inventory.InitializeFromSO(playerDataSO);
+        Inventory = new PlayerInventory(_hotbarSize, _inventorySize);
+        Inventory.InitializeFromSO(_playerDataSO);
     }
 }

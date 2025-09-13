@@ -21,7 +21,8 @@ public class GameStateManager : MonoBehaviour
 
     public static void SetPause(bool paused)
     {
-        if (IsGamePaused == paused) return;
+        if (IsGamePaused == paused) 
+            return;
 
         IsGamePaused = paused;
         Time.timeScale = paused ? 0f : 1f;
