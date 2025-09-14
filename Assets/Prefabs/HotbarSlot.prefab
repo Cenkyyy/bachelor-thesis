@@ -146,7 +146,7 @@ MonoBehaviour:
   itemIconImage: {fileID: 5968595002210865188}
   itemAmountText: {fileID: 3502857181224049784}
   backgroundSprite: {fileID: 2969553486025641545, guid: 15a12f67fd5df204f9238db9789d4fd2, type: 3}
-  highlightedBackgroundSprite: {fileID: 5214554162266237324, guid: e13225e88ec1dcf4e825ec2ff94f84c2, type: 3}
+  _highlightedBackgroundSprite: {fileID: 5214554162266237324, guid: e13225e88ec1dcf4e825ec2ff94f84c2, type: 3}
 --- !u!114 &3502857181224049784 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7760605695221254100, guid: 965491b462a816446850da639c6b3fef, type: 3}

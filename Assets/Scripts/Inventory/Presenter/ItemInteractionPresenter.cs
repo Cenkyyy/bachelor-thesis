@@ -14,22 +14,22 @@ public class ItemInteractionPresenter : MonoBehaviour
     public static ItemInteractionPresenter Instance { get; private set; }
 
     [Header(UIStrings.ItemInteraction_UI__Title)]
-    [SerializeField] private Canvas canvas;
-    [SerializeField] private RectTransform heldItemContainer;
-    [SerializeField] private Image heldItemIcon;
-    [SerializeField] private TMP_Text heldItemAmountText;
+    [SerializeField] private Canvas _canvas;
+    [SerializeField] private RectTransform _heldItemContainer;
+    [SerializeField] private Image _heldItemIcon;
+    [SerializeField] private TMP_Text _heldItemAmountText;
 
     [Header(UIStrings.ItemInteraction_InventorySource__Title)]
-    [SerializeField] private Player player;
-    [SerializeField] private BackpackPresenter backpackPresenter;
-    [SerializeField] private HotbarPresenter hotbarPresenter;
-    [SerializeField] private RectTransform backpackPanelRect;
-    [SerializeField] private RectTransform hotbarPanelRect;
-    [SerializeField] private WorldItemSpawner worldItemSpawner;
-    [SerializeField] private float dropSpawnDistance = 0.6f;
+    [SerializeField] private Player _player;
+    [SerializeField] private BackpackPresenter _backpackPresenter;
+    [SerializeField] private HotbarPresenter _hotbarPresenter;
+    [SerializeField] private RectTransform _backpackPanelRect;
+    [SerializeField] private RectTransform _hotbarPanelRect;
+    [SerializeField] private WorldItemSpawner _worldItemSpawner;
+    [SerializeField] private float _dropSpawnDistance = 0.6f;
 
     [Header(UIStrings.ItemInteraction_DoubleClick__Title)]
-    [SerializeField] private float doubleClickDelay = 0.2f;
+    [SerializeField] private float _doubleClickDelay = 0.2f;
 
     // Double click detection fields
     private Coroutine _doubleClickCoroutine; // coroutine measuring the double-click time window
@@ -52,14 +52,14 @@ public class ItemInteractionPresenter : MonoBehaviour
         }
 
         // make sure the held item UI does not block raycasts
-        if (heldItemIcon != null)
-            heldItemIcon.raycastTarget = false;
-        if (heldItemAmountText != null)
-            heldItemAmountText.raycastTarget = false;
+        if (_heldItemIcon != null)
+            _heldItemIcon.raycastTarget = false;
+        if (_heldItemAmountText != null)
+            _heldItemAmountText.raycastTarget = false;
 
         // hide held item UI initially
-        if (heldItemContainer != null)
-            heldItemContainer.gameObject.SetActive(false);
+        if (_heldItemContainer != null)
+            _heldItemContainer.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -71,29 +71,21 @@ public class ItemInteractionPresenter : MonoBehaviour
         Vector2 pos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle
         (
-            canvas.transform as RectTransform,
+            _canvas.transform as RectTransform,
             Input.mousePosition,
-            canvas.worldCamera,
+            _canvas.worldCamera,
             out pos
         );
-        heldItemContainer.anchoredPosition = pos;
+        _heldItemContainer.anchoredPosition = pos;
 
         // drop held stack when clicking outside inventory panels
-        if (backpackPresenter != null && backpackPresenter.IsInventoryOpen && !_heldItem.IsEmpty && Input.GetMouseButtonDown(0))
+        if (_backpackPresenter != null && _backpackPresenter.IsInventoryOpen && !_heldItem.IsEmpty && Input.GetMouseButtonDown(0))
         {
-            var mousePos = (Vector2)Input.mousePosition;
-            if (!IsPointerOverInventoryPanels(mousePos))
+            if (!IsPointerOverInventoryPanels(Input.mousePosition))
             {
-                Vector3 playerPos = player.transform.position;
-                Vector3 mouseWorld = Camera.main ? Camera.main.ScreenToWorldPoint(mousePos) : playerPos + Vector3.down;
-                mouseWorld.z = 0f;
-
-                Vector2 dir = ((Vector2)(mouseWorld - playerPos)).normalized;
-                if (dir.sqrMagnitude < 0.0001f) 
-                    dir = Vector2.down;
-
-                Vector3 spawnPos = playerPos + (Vector3)(dir * dropSpawnDistance);
-                worldItemSpawner?.Spawn(_heldItem, spawnPos, dir);
+                // spawn the held item in the world
+                AimUtils.ComputeAim2D(_player.transform, _dropSpawnDistance, out var direction, out var spawnPos);
+                _worldItemSpawner?.Spawn(_heldItem, spawnPos, direction);
 
                 // clear held cursor item
                 _heldItem = InventoryItem.Empty;
@@ -104,11 +96,11 @@ public class ItemInteractionPresenter : MonoBehaviour
 
     private bool IsPointerOverInventoryPanels(Vector2 screenPoint)
     {
-        bool overBackpack = backpackPanelRect != null &&
-            RectTransformUtility.RectangleContainsScreenPoint(backpackPanelRect, screenPoint, canvas ? canvas.worldCamera : null);
+        bool overBackpack = _backpackPanelRect != null &&
+            RectTransformUtility.RectangleContainsScreenPoint(_backpackPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
 
-        bool overHotbar = hotbarPanelRect != null &&
-            RectTransformUtility.RectangleContainsScreenPoint(hotbarPanelRect, screenPoint, canvas ? canvas.worldCamera : null);
+        bool overHotbar = _hotbarPanelRect != null &&
+            RectTransformUtility.RectangleContainsScreenPoint(_hotbarPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
 
         return overBackpack || overHotbar;
     }
@@ -210,7 +202,7 @@ public class ItemInteractionPresenter : MonoBehaviour
     private IEnumerator ClickWindowCoroutine()
     {
         float time = 0f;
-        while (time < doubleClickDelay)
+        while (time < _doubleClickDelay)
         {
             time += Time.unscaledDeltaTime;
             yield return null;
@@ -234,36 +226,22 @@ public class ItemInteractionPresenter : MonoBehaviour
         // validation
         if (!IsValidSlot(slot))
             return;
-        if (!backpackPresenter.IsInventoryOpen)
+        if (!_backpackPresenter.IsInventoryOpen)
             return;
 
-        var clickedSlotItem = player.Inventory.GetItemAt(slot.SlotIndex);
+        var clickedSlotItem = _player.Inventory.GetItemAt(slot.SlotIndex);
         if (clickedSlotItem.IsEmpty)
             return;
 
         // get the target range - rangeStart included, rangeEnd excluded
-        (int rangeStart, int rangeEndExclusive) = GetTransferRanges(slot);
+        (int rangeStart, int rangeEnd) = GetTransferRanges(slot);
 
         // try adding item into the target range
-        bool fullyTransferred = player.Inventory.TryAddItemToRange(clickedSlotItem, rangeStart, rangeEndExclusive);
-
-        if (fullyTransferred)
-        {
-            // if everything was moved, clear original slot
-            player.Inventory.ClearItemAt(slot.SlotIndex);
-        }
+        _player.Inventory.TryAddItem(clickedSlotItem, rangeStart, rangeEnd, out var leftoverItem);
+        if (leftoverItem.IsEmpty)
+            _player.Inventory.ClearItemAt(slot.SlotIndex);
         else
-        {
-            // otherwise it was partially transferred, then update original slot
-            var original = player.Inventory.GetItemAt(slot.SlotIndex);
-            if (original.Amount != clickedSlotItem.Amount || original.ItemSO != clickedSlotItem.ItemSO)
-            {
-                if (clickedSlotItem.IsEmpty)
-                    player.Inventory.ClearItemAt(slot.SlotIndex);
-                else
-                    player.Inventory.SetItemAt(slot.SlotIndex, clickedSlotItem);
-            }
-        }
+            _player.Inventory.SetItemAt(slot.SlotIndex, leftoverItem);
     }
 
     /// <summary>
@@ -273,14 +251,14 @@ public class ItemInteractionPresenter : MonoBehaviour
     /// <returns> A tuple (rangeStart, rangeEndExclusive) describing the half-open index range of the target region. </returns>
     private (int, int) GetTransferRanges(Slot slot)
     {
-        bool fromHotbar = slot.SlotIndex < player.Inventory.HotbarSize;
+        bool fromHotbar = slot.SlotIndex < _player.Inventory.HotbarSize;
         if (fromHotbar)
         {
-            return (player.Inventory.HotbarSize, player.Inventory.TotalSize);
+            return (_player.Inventory.HotbarSize, _player.Inventory.TotalSize);
         }
         else
         {
-            return (0, player.Inventory.HotbarSize);
+            return (0, _player.Inventory.HotbarSize);
         }
     }
 
@@ -302,7 +280,7 @@ public class ItemInteractionPresenter : MonoBehaviour
         if (!IsValidSlot(slot))
             return;
 
-        var clickedSlotItem = player.Inventory.GetItemAt(slot.SlotIndex);
+        var clickedSlotItem = _player.Inventory.GetItemAt(slot.SlotIndex);
 
         // nothing in hand, then pick up the item
         if (_heldItem.IsEmpty)
@@ -335,14 +313,14 @@ public class ItemInteractionPresenter : MonoBehaviour
     private void PickWholeItemUp(Slot slot, InventoryItem item)
     {
         _heldItem = item;
-        player.Inventory.ClearItemAt(slot.SlotIndex);
+        _player.Inventory.ClearItemAt(slot.SlotIndex);
 
         UpdateHeldItem();
     }
 
     private void PlaceWholeHeldIntoSlot(Slot slot)
     {
-        player.Inventory.SetItemAt(slot.SlotIndex, _heldItem);
+        _player.Inventory.SetItemAt(slot.SlotIndex, _heldItem);
 
         _heldItem = InventoryItem.Empty;
         UpdateHeldItem();
@@ -350,15 +328,15 @@ public class ItemInteractionPresenter : MonoBehaviour
 
     private void TryMergeToSlotAndHideHeldIfEmpty(Slot slot)
     {
-        _heldItem = player.Inventory.TryMergeIntoSlot(slot.SlotIndex, _heldItem);
+        _heldItem = _player.Inventory.TryMergeIntoSlot(slot.SlotIndex, _heldItem);
         UpdateHeldItem();
     }
 
     private void SwapHeldWithSlot(Slot slot)
     {
-        var targetItem = player.Inventory.GetItemAt(slot.SlotIndex);
+        var targetItem = _player.Inventory.GetItemAt(slot.SlotIndex);
 
-        player.Inventory.SetItemAt(slot.SlotIndex, _heldItem);
+        _player.Inventory.SetItemAt(slot.SlotIndex, _heldItem);
         _heldItem = targetItem;
 
         UpdateHeldItem();
@@ -380,7 +358,7 @@ public class ItemInteractionPresenter : MonoBehaviour
             return;
 
         int collected = _heldItem.Amount;
-        collected += player.Inventory.TryRemoveItemFromRange(itemSO, maxToCollect, 0, player.Inventory.TotalSize);
+        collected += _player.Inventory.TryRemoveItemFromRange(itemSO, maxToCollect, 0, _player.Inventory.TotalSize);
 
         _heldItem = _heldItem.WithAmount(collected);
         UpdateHeldItem();
@@ -397,7 +375,7 @@ public class ItemInteractionPresenter : MonoBehaviour
         if (!IsValidSlot(slot)) 
             return;
 
-        var clickedSlotItem = player.Inventory.GetItemAt(slot.SlotIndex);
+        var clickedSlotItem = _player.Inventory.GetItemAt(slot.SlotIndex);
         
         if (clickedSlotItem.IsEmpty || !clickedSlotItem.ItemSO.IsStackable)
             return;
@@ -406,13 +384,13 @@ public class ItemInteractionPresenter : MonoBehaviour
 
         // pick up the clicked item first
         int collected = clickedSlotItem.Amount;
-        player.Inventory.ClearItemAt(slot.SlotIndex);
+        _player.Inventory.ClearItemAt(slot.SlotIndex);
 
         // try collecting other items of the same type across the inventory
         int remainingCapacity = clickedSlotItem.ItemSO.MaxStackSize - collected;
         if (remainingCapacity > 0)
         {
-            int removed = player.Inventory.TryRemoveItemFromRange(clickedSlotItem.ItemSO, remainingCapacity, 0, player.Inventory.TotalSize);
+            int removed = _player.Inventory.TryRemoveItemFromRange(clickedSlotItem.ItemSO, remainingCapacity, 0, _player.Inventory.TotalSize);
             collected += removed;
         }
 
@@ -441,7 +419,7 @@ public class ItemInteractionPresenter : MonoBehaviour
         if (!IsValidSlot(slot))
             return;
 
-        var clickedSlotItem = player.Inventory.GetItemAt(slot.SlotIndex);
+        var clickedSlotItem = _player.Inventory.GetItemAt(slot.SlotIndex);
 
         // nothing in hand, try picking the item up with half the amount if there is one
         if (_heldItem.IsEmpty)
@@ -487,7 +465,7 @@ public class ItemInteractionPresenter : MonoBehaviour
         if (!Input.GetMouseButton(1))
             return;
 
-        var enteredSlotItem = player.Inventory.GetItemAt(slot.SlotIndex);
+        var enteredSlotItem = _player.Inventory.GetItemAt(slot.SlotIndex);
 
         // hovering over an empty slot with item while holding right click, then place one into the empty slot
         if (enteredSlotItem.IsEmpty)
@@ -516,17 +494,17 @@ public class ItemInteractionPresenter : MonoBehaviour
         var newItem = item.WithAmount(item.Amount - half);
         if (newItem.IsEmpty)
         {
-            player.Inventory.ClearItemAt(slot.SlotIndex);
+            _player.Inventory.ClearItemAt(slot.SlotIndex);
         }
         else
         {
-            player.Inventory.SetItemAt(slot.SlotIndex, newItem);
+            _player.Inventory.SetItemAt(slot.SlotIndex, newItem);
         }
     }
 
     private void TryPlaceOneFromHeldIntoEmptySlot(Slot slot)
     {
-        player.Inventory.SetItemAt(slot.SlotIndex, new InventoryItem(_heldItem.ItemSO));
+        _player.Inventory.SetItemAt(slot.SlotIndex, new InventoryItem(_heldItem.ItemSO));
 
         _heldItem = _heldItem.WithAmount(_heldItem.Amount - 1);
         UpdateHeldItem();
@@ -534,16 +512,17 @@ public class ItemInteractionPresenter : MonoBehaviour
 
     private void TryPlaceOneFromHeldIntoStackableSlot(Slot slot)
     {
-        var item = player.Inventory.GetItemAt(slot.SlotIndex);
+        var item = _player.Inventory.GetItemAt(slot.SlotIndex);
+        if (item.IsEmpty || item.ItemSO != _heldItem.ItemSO)
+            return;
+        if (item.Amount >= item.ItemSO.MaxStackSize)
+            return;
+        
+        item = item.WithAmount(item.Amount + 1);
+        _heldItem = _heldItem.WithAmount(_heldItem.Amount - 1);
 
-        if (!item.IsEmpty && item.ItemSO == _heldItem.ItemSO)
-        {
-            item = item.WithAmount(item.Amount + 1);
-            _heldItem = _heldItem.WithAmount(_heldItem.Amount - 1);
-
-            player.Inventory.SetItemAt(slot.SlotIndex, item);
-            UpdateHeldItem();
-        }
+        _player.Inventory.SetItemAt(slot.SlotIndex, item);
+        UpdateHeldItem();
     }
 
     #endregion
@@ -555,7 +534,7 @@ public class ItemInteractionPresenter : MonoBehaviour
     /// </summary>
     /// <param name="slot">The slot to validate.</param>
     /// <returns>true if the slot is valid for the player's inventory; otherwise false.</returns>
-    private bool IsValidSlot(Slot slot) => slot != null && slot.SlotIndex >= 0 && slot.SlotIndex < player.Inventory.TotalSize;
+    private bool IsValidSlot(Slot slot) => slot != null && slot.SlotIndex >= 0 && slot.SlotIndex < _player.Inventory.TotalSize;
 
     /// <summary>
     /// Returns true if both items are non-empty and share the same <see cref="ItemBaseSO"/> reference.
@@ -591,23 +570,23 @@ public class ItemInteractionPresenter : MonoBehaviour
             return;
         }
 
-        heldItemContainer.gameObject.SetActive(true);
+        _heldItemContainer.gameObject.SetActive(true);
 
         // show icon
-        heldItemIcon.sprite = _heldItem.ItemSO.Icon;
-        heldItemIcon.gameObject.SetActive(true);
+        _heldItemIcon.sprite = _heldItem.ItemSO.Icon;
+        _heldItemIcon.gameObject.SetActive(true);
 
         if (_heldItem.ItemSO.IsStackable && _heldItem.Amount > 1)
         {
             // show item amount text if amount is greater than 1
-            heldItemAmountText.text = _heldItem.Amount.ToString();
-            heldItemAmountText.gameObject.SetActive(true);
+            _heldItemAmountText.text = _heldItem.Amount.ToString();
+            _heldItemAmountText.gameObject.SetActive(true);
         }
         else
         {
             // hide item amount text if amount is 1 or less
-            heldItemAmountText.text = string.Empty;
-            heldItemAmountText.gameObject.SetActive(false);
+            _heldItemAmountText.text = string.Empty;
+            _heldItemAmountText.gameObject.SetActive(false);
         }
     }
 
@@ -618,9 +597,9 @@ public class ItemInteractionPresenter : MonoBehaviour
     {
         _heldItem = InventoryItem.Empty;
 
-        heldItemIcon.gameObject.SetActive(false);
-        heldItemAmountText.gameObject.SetActive(false);
-        heldItemContainer.gameObject.SetActive(false);
+        _heldItemIcon.gameObject.SetActive(false);
+        _heldItemAmountText.gameObject.SetActive(false);
+        _heldItemContainer.gameObject.SetActive(false);
     }
 
     #endregion

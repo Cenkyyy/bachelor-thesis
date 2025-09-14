@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 /// <summary>
 /// Holds all items belonging to the player (hotbar + backpack inventory).
@@ -162,10 +163,13 @@ public sealed class PlayerInventory
     /// <param name="rangeStartInclusive">Inclusive start index.</param>
     /// <param name="rangeEndExclusive">Exclusive end index.</param>
     /// <returns>Empty item if item was successfully placed, otherwise the rest of the item.</returns>
-    private InventoryItem TryAddItemCore(InventoryItem item, int rangeStartInclusive, int rangeEndExclusive)
+    public bool TryAddItem(InventoryItem item, int rangeStartInclusive, int rangeEndExclusive, out InventoryItem leftoverItem)
     {
         if (item.IsEmpty)
-            return InventoryItem.Empty;
+        {
+            leftoverItem = InventoryItem.Empty;
+            return true;
+        }
 
         // try stacking into existing stacks
         if (item.ItemSO.IsStackable)
@@ -190,7 +194,10 @@ public sealed class PlayerInventory
                 // reduce from incoming item
                 item = item.WithAmount(item.Amount - toMove);
                 if (item.IsEmpty)
-                    return InventoryItem.Empty;
+                {
+                    leftoverItem = InventoryItem.Empty;
+                    return true;
+                }
             }
         }
 
@@ -201,32 +208,14 @@ public sealed class PlayerInventory
             {
                 _items[i] = item;
                 OnItemChanged?.Invoke(i);
-                return InventoryItem.Empty;
+                leftoverItem = InventoryItem.Empty;
+                return true;
             }
         }
 
         // range full
-        return item;
-    }
-
-    /// <summary>
-    /// Tries to add an item into a inventory's slot range [rangeStart, rangeEndExclusive).
-    /// First tries stacking into existing same type before placing into the first empty slot.
-    /// Raises <see cref="OnItemChanged"/> for each changed slot.
-    /// </summary>
-    /// <param name="item">Item to add (may be partially consumed).</param>
-    /// <param name="rangeStartinclusive">Inclusive start index.</param>
-    /// <param name="rangeEndExclusive">Exclusive end index.</param>
-    /// <returns>true if the item was fully placed; otherwise false (range ran out of space).</returns>
-    public bool TryAddItemToRange(InventoryItem item, int rangeStartinclusive, int rangeEndExclusive)
-    {
-        var leftover = TryAddItemCore(item, rangeStartinclusive, rangeEndExclusive);
-        return leftover.IsEmpty;
-    }
-
-    public InventoryItem TryAddItem(InventoryItem item, int rangeStartinclusive, int rangeEndExclusive)
-    {
-        return TryAddItemCore(item, rangeStartinclusive, rangeEndExclusive);
+        leftoverItem = item;
+        return false;
     }
 
     /// <summary>

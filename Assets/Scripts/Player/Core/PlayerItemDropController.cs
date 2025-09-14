@@ -6,42 +6,53 @@ using UnityEngine.UI;
 public sealed class PlayerItemDropController : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private Player player;
-    [SerializeField] private BackpackPresenter backpackPresenter;
-    [SerializeField] private WorldItemSpawner worldItemSpawner;
-    [SerializeField] private GraphicRaycaster uiRaycaster; //  UI Canvas
+    [SerializeField] private Player _player;
+    [SerializeField] private BackpackPresenter _backpackPresenter;
+    [SerializeField] private WorldItemSpawner _worldItemSpawner;
+    [SerializeField] private GraphicRaycaster _uiRaycaster; //  UI Canvas
 
     [Header("Input")]
-    [SerializeField] private KeyCode dropKey = KeyCode.Q;
+    [SerializeField] private KeyCode _dropKey = KeyCode.Q;
 
     [Header("Throw")]
-    [Tooltip("How far from the player to spawn the dropped item (towards the mouse).")]
-    [SerializeField] private float throwSpawnDistance = 0.6f;
-    [Tooltip("Impulse applied to the dropped item (if it has a Rigidbody2D).")]
-    [SerializeField] private float throwImpulse = 2.0f;
+    [SerializeField] private float _throwSpawnDistance = 0.6f;
 
+    // cached list for UI raycasting
     private readonly List<RaycastResult> _raycastResults = new List<RaycastResult>();
 
-    private void Reset()
+    private void Awake()
     {
-        if (player == null)
-            player = GetComponent<Player>();
-        if (uiRaycaster == null)
-            uiRaycaster = FindObjectsByType<GraphicRaycaster>(FindObjectsSortMode.None)[0];
-        if (backpackPresenter == null)
-            backpackPresenter = FindObjectsByType<BackpackPresenter>(FindObjectsSortMode.None)[0];
-        if (worldItemSpawner == null)
-            worldItemSpawner = FindObjectsByType<WorldItemSpawner>(FindObjectsSortMode.None)[0];
+        if (_player == null) 
+            _player = GetComponent<Player>() ?? GetComponentInParent<Player>();
+
+        if (_worldItemSpawner == null)
+        {
+            var arr = FindObjectsByType<WorldItemSpawner>(FindObjectsSortMode.None);
+            if (arr != null && arr.Length > 0)
+                _worldItemSpawner = arr[0];
+        }
+        if (_backpackPresenter == null)
+        {
+            var arr = FindObjectsByType<BackpackPresenter>(FindObjectsSortMode.None);
+            if (arr != null && arr.Length > 0)
+                _backpackPresenter = arr[0];
+        }
+        if (_uiRaycaster == null)
+        {
+            var arr = FindObjectsByType<GraphicRaycaster>(FindObjectsSortMode.None);
+            if (arr != null && arr.Length > 0)
+                _uiRaycaster = arr[0];
+        }
     }
 
     private void Update()
     {
-        if (player.Inventory == null) 
+        if (_player.Inventory == null) 
             return;
         if (GameStateManager.IsGamePaused) 
             return;
 
-        if (Input.GetKeyDown(dropKey))
+        if (Input.GetKeyDown(_dropKey))
         {
             bool dropAll = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             HandleDrop(dropAll);
@@ -50,34 +61,32 @@ public sealed class PlayerItemDropController : MonoBehaviour
 
     private void HandleDrop(bool dropAll)
     {
+        // determine source slot index (hotbar or backpack)
         var sourceIndex = ResolveSourceSlotIndex();
         if (sourceIndex < 0) 
             return;
 
-        var item = player.Inventory.GetItemAt(sourceIndex);
+        // get item from inventory
+        var item = _player.Inventory.GetItemAt(sourceIndex);
         if (item.IsEmpty) 
             return;
 
+        // spawn the dropping item in the world
         var toDrop = dropAll ? item.Amount : 1;
         var droppingItem = new InventoryItem(item.ItemSO, toDrop);
 
-        // spawn the dropped item in the world
-        var playerPos = player.transform.position;
-        var mouseWorld = Camera.main ? Camera.main.ScreenToWorldPoint(Input.mousePosition) : playerPos + Vector3.down;
-        mouseWorld.z = 0f;
-        var direction = ((Vector2)(mouseWorld - playerPos)).normalized;
-        if (direction.sqrMagnitude < 0.0001f)
-            direction = Vector2.down;
+        // compute spawn position and direction
+        AimUtils.ComputeAim2D(_player.transform, _throwSpawnDistance, out var direction, out var spawnPos);
 
-        var spawnPos = playerPos + (Vector3)(direction * throwSpawnDistance);
-        worldItemSpawner.Spawn(droppingItem, spawnPos, direction * throwImpulse);
+        // spawn the item in the world
+        _worldItemSpawner.Spawn(droppingItem, spawnPos, direction);
 
         // reduce or clear the source stack in inventory
         var remaining = item.Amount - toDrop;
         if (remaining <= 0)
-            player.Inventory.ClearItemAt(sourceIndex);
+            _player.Inventory.ClearItemAt(sourceIndex);
         else
-            player.Inventory.SetItemAt(sourceIndex, item.WithAmount(remaining));
+            _player.Inventory.SetItemAt(sourceIndex, item.WithAmount(remaining));
     }
 
     /// <summary>
@@ -87,14 +96,14 @@ public sealed class PlayerItemDropController : MonoBehaviour
     private int ResolveSourceSlotIndex()
     {
         // inventory open, then return on hovered slot index
-        if (backpackPresenter != null && backpackPresenter.IsInventoryOpen)
+        if (_backpackPresenter != null && _backpackPresenter.IsInventoryOpen)
         {
             var hovered = RaycastSlotUnderMouse();
             return hovered != null ? hovered.SlotIndex : -1;
         }
 
         // inventory closed, then return selected hotbar slot index
-        return player.Inventory.SelectedHotbarIndex;
+        return _player.Inventory.SelectedHotbarIndex;
     }
 
     /// <summary>
@@ -102,24 +111,23 @@ public sealed class PlayerItemDropController : MonoBehaviour
     /// </summary>
     private Slot RaycastSlotUnderMouse()
     {
-        if (uiRaycaster == null || EventSystem.current == null)
+        if (_uiRaycaster == null || EventSystem.current == null)
             return null;
 
-        var ped = new PointerEventData(EventSystem.current) 
+        var data = new PointerEventData(EventSystem.current) 
         { 
             position = Input.mousePosition
         };
 
         _raycastResults.Clear();
-        uiRaycaster.Raycast(ped, _raycastResults);
+        _uiRaycaster.Raycast(data, _raycastResults);
 
         for (int i = 0; i < _raycastResults.Count; i++)
         {
-            var go = _raycastResults[i].gameObject;
-            if (go == null) 
+            if (_raycastResults[i].gameObject == null) 
                 continue;
 
-            var slot = go.GetComponentInParent<Slot>();
+            var slot = _raycastResults[i].gameObject.GetComponentInParent<Slot>();
             if (slot != null)
                 return slot;
         }

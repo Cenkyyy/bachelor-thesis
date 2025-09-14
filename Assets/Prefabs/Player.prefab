@@ -110,9 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99bcc6f2153e0a4e928600eaf526d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDataSO: {fileID: 11400000, guid: a1f7d4f498103bc4baf6dadc9cb30777, type: 2}
-  hotbarSize: 8
-  inventorySize: 24
+  _playerDataSO: {fileID: 11400000, guid: a1f7d4f498103bc4baf6dadc9cb30777, type: 2}
+  _hotbarSize: 8
+  _inventorySize: 24
 --- !u!114 &500235762407417466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,8 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf8d7e971244e9944b43e318ca17d8e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 6067396949842947324}
-  speed: 4
+  _body: {fileID: 6067396949842947324}
+  _speed: 4
 --- !u!114 &5402159747806690286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85927478b43d3b04e97662fdeff14f4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 1856092043942259651}
+  _animator: {fileID: 1856092043942259651}
 --- !u!114 &3255990485141274289
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -30,6 +30,17 @@ public abstract class InventoryPresenterBase<T> : MonoBehaviour where T : Slot
         {
             player.Inventory.OnItemChanged -= HandleItemChanged;
         }
+
+        if (slots != null)
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (slots[i] == null)
+                    continue;
+                slots[i].OnPointerClicked -= HandleSlotClicked;
+                slots[i].OnPointerEntered -= HandleSlotEnter;
+            }
+        }
     }
 
     protected virtual void HandleItemChanged(int index) => RefreshSlot(index);

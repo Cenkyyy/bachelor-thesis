@@ -98,7 +98,7 @@ public class PlayerData
     /// <summary>
     /// Heals by <paramref name="amount"/> up to MaxHealth and raises OnHealthChanged event.
     /// </summary>
-    /// <param name="amount">Amout to be healed.</param>
+    /// <param name="amount">Amount to be healed.</param>
     public void Heal(int amount)
     {
         CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
@@ -139,7 +139,7 @@ public class PlayerData
     }
 
     /// <summary>
-    /// Recoverts mana up to MaxMana and raises OnManaChanged event.
+    /// Recovers mana up to MaxMana and raises OnManaChanged event.
     /// </summary>
     /// <param name="amount">Mana to be recovered</param>
     public void RecoverMana(int amount)

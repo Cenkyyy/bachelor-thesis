@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf7f30fa539e894c84fd5c22450f9ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconRenderer: {fileID: 6233144974217097816}
-  pickupDelay: 0.5
-  lifetimeSeconds: 300
+  _iconRenderer: {fileID: 6233144974217097816}
+  _pickupDelay: 0.5
+  _lifetimeSeconds: 300
 --- !u!212 &6233144974217097816
 SpriteRenderer:
   m_ObjectHideFlags: 0

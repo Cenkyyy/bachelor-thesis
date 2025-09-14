@@ -2215,9 +2215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fa0d3ebcdbade347bc9d2e57aa25122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settingsPanel: {fileID: 640336099}
-  backpackInventory: {fileID: 570862299}
-  resumeButton: {fileID: 118275428}
+  _settingsPanel: {fileID: 640336099}
+  _backpackInventory: {fileID: 570862299}
+  _resumeButton: {fileID: 118275428}
 --- !u!1 &823647454
 GameObject:
   m_ObjectHideFlags: 0
@@ -2467,8 +2467,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db6976d1c39ae7a439ac5e42f23f8ac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manaFillImage: {fileID: 1214555611}
-  manaText: {fileID: 54743639}
+  _manaFillImage: {fileID: 1214555611}
+  _manaText: {fileID: 54743639}
 --- !u!1 &1097722626
 GameObject:
   m_ObjectHideFlags: 0
@@ -2987,8 +2987,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4606289d70f213d4bb64120a19e51727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hungerFillImage: {fileID: 1564949939}
-  hungerText: {fileID: 1886872449}
+  _hungerFillImage: {fileID: 1564949939}
+  _hungerText: {fileID: 1886872449}
 --- !u!1 &1327090047
 GameObject:
   m_ObjectHideFlags: 0
@@ -3066,17 +3066,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7f7391a25741f479f034b5ba24e7ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 1695784271}
-  heldItemContainer: {fileID: 1436572155}
-  heldItemIcon: {fileID: 156252286}
-  heldItemAmountText: {fileID: 1224626021}
-  player: {fileID: 2010244819}
-  backpackPresenter: {fileID: 570862299}
-  hotbarPresenter: {fileID: 1611478417}
-  backpackPanelRect: {fileID: 203007079}
-  hotbarPanelRect: {fileID: 121172469}
-  worldItemSpawner: {fileID: 2031400805}
-  doubleClickDelay: 0.2
+  _canvas: {fileID: 1695784271}
+  _heldItemContainer: {fileID: 1436572155}
+  _heldItemIcon: {fileID: 156252286}
+  _heldItemAmountText: {fileID: 1224626021}
+  _player: {fileID: 2010244819}
+  _backpackPresenter: {fileID: 570862299}
+  _hotbarPresenter: {fileID: 1611478417}
+  _backpackPanelRect: {fileID: 203007079}
+  _hotbarPanelRect: {fileID: 121172469}
+  _worldItemSpawner: {fileID: 2031400805}
+  _dropSpawnDistance: 0.6
+  _doubleClickDelay: 0.2
 --- !u!1 &1436572154
 GameObject:
   m_ObjectHideFlags: 0
@@ -3143,11 +3144,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940adffd25b6a2145a22d849ca87eca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2010244819}
-  healthBar: {fileID: 1775447562}
-  manaBar: {fileID: 993087784}
-  hungerBar: {fileID: 1265745439}
-  xpBar: {fileID: 2104835319}
+  _player: {fileID: 2010244819}
+  _healthBar: {fileID: 1775447562}
+  _manaBar: {fileID: 993087784}
+  _hungerBar: {fileID: 1265745439}
+  _xpBar: {fileID: 2104835319}
 --- !u!4 &1479786970
 Transform:
   m_ObjectHideFlags: 0
@@ -4031,8 +4032,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a237e3977523248a7206fe2edcab53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthFillImage: {fileID: 685760853}
-  healthText: {fileID: 823647456}
+  _healthFillImage: {fileID: 685760853}
+  _healthText: {fileID: 823647456}
 --- !u!1 &1886872447
 GameObject:
   m_ObjectHideFlags: 0
@@ -4465,9 +4466,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de665899ab31e0444b13650d6206c8a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldItemPrefab: {fileID: 9095116602458889832, guid: 3c0c57e1281303742a8608169acddf62, type: 3}
-  dropParent: {fileID: 896982110}
-  scatterImpulse: 1.2
+  _worldItemPrefab: {fileID: 9095116602458889832, guid: 3c0c57e1281303742a8608169acddf62, type: 3}
+  _dropParent: {fileID: 896982110}
+  _scatterImpulse: 1.2
 --- !u!1 &2104835317
 GameObject:
   m_ObjectHideFlags: 0
@@ -4520,8 +4521,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 411ce494a38324a4ebaf3d0383b534d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xpFillImage: {fileID: 93094286}
-  xpLevelText: {fileID: 425652488}
+  _xpFillImage: {fileID: 93094286}
+  _xpLevelText: {fileID: 425652488}
 --- !u!222 &2104835320
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4563,7 +4564,15 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 2010244819}
+    - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: uiRaycaster
+      value: 
+      objectReference: {fileID: 1695784269}
+    - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _uiRaycaster
       value: 
       objectReference: {fileID: 1695784269}
     - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
@@ -4571,7 +4580,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2031400805}
     - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _worldItemSpawner
+      value: 
+      objectReference: {fileID: 2031400805}
+    - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: backpackPresenter
+      value: 
+      objectReference: {fileID: 570862299}
+    - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _backpackPresenter
       value: 
       objectReference: {fileID: 570862299}
     - target: {fileID: 3689139185868277431, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
