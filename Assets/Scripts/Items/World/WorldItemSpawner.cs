@@ -18,7 +18,7 @@ public sealed class WorldItemSpawner : MonoBehaviour
     /// <param name="item">Item to spawn.</param>
     /// <param name="worldPos">Item's position in the world.</param>
     /// <param name="direction">Direction to toss the item to, if null, choose randomly.</param>
-    /// <returns></returns>
+    /// <returns>The instance of WorldItem.</returns>
     public WorldItem Spawn(InventoryItem item, Vector3 worldPos, Vector2? direction = null)
     {
         if (item.IsEmpty || _worldItemPrefab == null) 
@@ -33,7 +33,7 @@ public sealed class WorldItemSpawner : MonoBehaviour
         if (inst.TryGetComponent<Rigidbody2D>(out var body))
         {
             // choose random direction if none provided
-            Vector2 dir = direction ?? (Random.insideUnitCircle.normalized);
+            var dir = direction ?? (Random.insideUnitCircle.normalized);
 
             // in case of clicking on the player, just drop to the right
             if (dir.sqrMagnitude < 0.0001f)
@@ -52,7 +52,7 @@ public sealed class WorldItemSpawner : MonoBehaviour
     /// <param name="amount">Amount to spawn.</param>
     /// <param name="worldPos">Current player's position</param>
     /// <param name="tossDirection">Direction to toss the item to, if null, choose randomly.</param>
-    /// <returns></returns>
+    /// <returns>The instance of WorldItem.</returns>
     public WorldItem Spawn(ItemBaseSO itemSO, int amount, Vector3 worldPos, Vector2? tossDirection = null) =>
         Spawn(new InventoryItem(itemSO, amount), worldPos, tossDirection);
 }

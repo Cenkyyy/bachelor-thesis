@@ -54,7 +54,7 @@ public sealed class PlayerItemDropController : MonoBehaviour
 
         if (Input.GetKeyDown(_dropKey))
         {
-            bool dropAll = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+            var dropAll = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             HandleDrop(dropAll);
         }
     }

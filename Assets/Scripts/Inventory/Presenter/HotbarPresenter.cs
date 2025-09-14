@@ -34,7 +34,7 @@ public class HotbarPresenter : InventoryPresenterBase<HotbarSlot>
         if (slots == null || slots.Length == 0) 
             return;
 
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        var scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll > 0f)
         {
             // scroll up

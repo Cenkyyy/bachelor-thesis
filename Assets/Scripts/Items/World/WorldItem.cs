@@ -57,7 +57,7 @@ public sealed class WorldItem : MonoBehaviour
         if (_lifetimeSeconds <= 0f)
             return;
 
-        float itemsTimeAlive = Time.time - _spawnTime;
+        var itemsTimeAlive = Time.time - _spawnTime;
         if (itemsTimeAlive >= _lifetimeSeconds)
         {
             Destroy(gameObject);
@@ -133,7 +133,7 @@ public sealed class WorldItem : MonoBehaviour
             return;
 
         // choose the item that stays on the ground and which is the donor
-        (WorldItem receivingItem, WorldItem incomingItem) = _spawnTime <= other._spawnTime ? (this, other) : (other, this);
+        (var receivingItem, var incomingItem) = _spawnTime <= other._spawnTime ? (this, other) : (other, this);
 
         // if anchor already full, don’t start an animation
         if (receivingItem.Item.Amount >= receivingItem.Item.ItemSO.MaxStackSize) 
@@ -164,21 +164,23 @@ public sealed class WorldItem : MonoBehaviour
         var startPos = transform.position;
         var startScale = transform.localScale;
 
-        float t = 0f;
-        while (t < _mergeDuration)
+        var elapsed = 0f;
+        while (elapsed < _mergeDuration)
         {
             // item is picked up, stop animating
             if (receivingItem == null) 
                 break;
 
-            t += Time.deltaTime;
-            float u = Mathf.Clamp01(t / _mergeDuration);
+            elapsed += Time.deltaTime;
+
+            // progress is 0 to 1 over the duration
+            var progress = Mathf.Clamp01(elapsed / _mergeDuration);
 
             // smoothstep easing
-            u = Mathf.SmoothStep(0f, 1f, u);
+            var easedProgress = Mathf.SmoothStep(0f, 1f, progress);
 
-            transform.position = Vector3.Lerp(startPos, receivingItem.transform.position, u);
-            transform.localScale = Vector3.Lerp(startScale, startScale * _mergeShrink, u);
+            transform.position = Vector3.Lerp(startPos, receivingItem.transform.position, easedProgress);
+            transform.localScale = Vector3.Lerp(startScale, startScale * _mergeShrink, easedProgress);
 
             yield return null;
         }
@@ -197,8 +199,8 @@ public sealed class WorldItem : MonoBehaviour
         }
 
         // apply transfer with current capacity to avoid overfill when multiple donors arrive
-        int freeSpace = Mathf.Max(0, receivingItem.Item.ItemSO.MaxStackSize - receivingItem.Item.Amount);
-        int toMove = Mathf.Min(freeSpace, Item.Amount);
+        var freeSpace = Mathf.Max(0, receivingItem.Item.ItemSO.MaxStackSize - receivingItem.Item.Amount);
+        var toMove = Mathf.Min(freeSpace, Item.Amount);
 
         if (toMove > 0)
         {

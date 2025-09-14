@@ -180,12 +180,12 @@ public sealed class PlayerInventory
                     continue;
 
                 // get free space for this stack
-                int freeSpace = item.ItemSO.MaxStackSize - _items[i].Amount;
+                var freeSpace = item.ItemSO.MaxStackSize - _items[i].Amount;
                 if (freeSpace <= 0)
                     continue;
 
                 // calculate how much we can move
-                int toMove = Math.Min(item.Amount, freeSpace);
+                var toMove = Math.Min(item.Amount, freeSpace);
 
                 // move it
                 _items[i] = _items[i].WithAmount(_items[i].Amount + toMove);
@@ -232,7 +232,7 @@ public sealed class PlayerInventory
         if (itemSO == null || amount <= 0)
             return 0;
 
-        int removed = 0;
+        var removed = 0;
         for (int i = rangeStart; i < rangeEndExclusive && removed < amount; i++)
         {
             // different item type
@@ -240,7 +240,7 @@ public sealed class PlayerInventory
                 continue;
 
             // calculate how much we can remove from this slot
-            int toRemove = Math.Min(_items[i].Amount, amount - removed);
+            var toRemove = Math.Min(_items[i].Amount, amount - removed);
 
             // remove it
             _items[i] = _items[i].WithAmount(_items[i].Amount - toRemove);
@@ -272,11 +272,12 @@ public sealed class PlayerInventory
             return item;
 
         // calculate free space in the destination stack
-        int freeSpace = _items[toIndex].ItemSO.MaxStackSize - _items[toIndex].Amount;
-        if (freeSpace <= 0) return item;
+        var freeSpace = _items[toIndex].ItemSO.MaxStackSize - _items[toIndex].Amount;
+        if (freeSpace <= 0) 
+            return item;
 
         // calculate how much we can move
-        int toMove = Math.Min(item.Amount, freeSpace);
+        var toMove = Math.Min(item.Amount, freeSpace);
 
         // move it
         _items[toIndex] = _items[toIndex].WithAmount(_items[toIndex].Amount + toMove);

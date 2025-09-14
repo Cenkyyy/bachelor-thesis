@@ -46,9 +46,9 @@ public class PlayerAnimation : MonoBehaviour
 
     private Vector2 GetMouseDirection()
     {
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0f;
-        Vector2 direction = (mouseWorldPos - transform.position).normalized;
+        var direction = (mouseWorldPos - transform.position).normalized;
         return direction;
     }
 }

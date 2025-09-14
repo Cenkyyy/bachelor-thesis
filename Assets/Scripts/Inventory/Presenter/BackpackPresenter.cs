@@ -15,7 +15,7 @@ public class BackpackPresenter : InventoryPresenterBase<Slot>
         bool wasActive = slotParent.gameObject.activeSelf;
         slotParent.gameObject.SetActive(true);
 
-        int offset = player.Inventory.HotbarSize;
+        var offset = player.Inventory.HotbarSize;
         slots = new Slot[SlotCount];
         for (int i = 0; i < SlotCount; i++)
         {
@@ -49,7 +49,7 @@ public class BackpackPresenter : InventoryPresenterBase<Slot>
 
     public override void RefreshSlot(int backpackIndex)
     {
-        int slotIndex = backpackIndex - player.Inventory.HotbarSize;
+        var slotIndex = backpackIndex - player.Inventory.HotbarSize;
         if (slotIndex >= 0 && slotIndex < slots.Length)
         {
             slots[slotIndex].Refresh(player.Inventory.GetItemAt(backpackIndex));

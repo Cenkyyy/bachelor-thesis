@@ -68,13 +68,12 @@ public class ItemInteractionPresenter : MonoBehaviour
             return;
 
         // make the item icon follow the mouse cursor
-        Vector2 pos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle
         (
             _canvas.transform as RectTransform,
             Input.mousePosition,
             _canvas.worldCamera,
-            out pos
+            out var pos
         );
         _heldItemContainer.anchoredPosition = pos;
 
@@ -96,10 +95,10 @@ public class ItemInteractionPresenter : MonoBehaviour
 
     private bool IsPointerOverInventoryPanels(Vector2 screenPoint)
     {
-        bool overBackpack = _backpackPanelRect != null &&
+        var overBackpack = _backpackPanelRect != null &&
             RectTransformUtility.RectangleContainsScreenPoint(_backpackPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
 
-        bool overHotbar = _hotbarPanelRect != null &&
+        var overHotbar = _hotbarPanelRect != null &&
             RectTransformUtility.RectangleContainsScreenPoint(_hotbarPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
 
         return overBackpack || overHotbar;
@@ -175,7 +174,7 @@ public class ItemInteractionPresenter : MonoBehaviour
         }
 
         // first click registered, process immediately
-        bool didPickUp = false;
+        var didPickUp = false;
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
             HandleQuickTransferLeftClick(slot);
@@ -201,7 +200,7 @@ public class ItemInteractionPresenter : MonoBehaviour
     /// <returns>An enumerator for the coroutine that measures the double-click window.</returns>
     private IEnumerator ClickWindowCoroutine()
     {
-        float time = 0f;
+        var time = 0f;
         while (time < _doubleClickDelay)
         {
             time += Time.unscaledDeltaTime;
@@ -234,7 +233,7 @@ public class ItemInteractionPresenter : MonoBehaviour
             return;
 
         // get the target range - rangeStart included, rangeEnd excluded
-        (int rangeStart, int rangeEnd) = GetTransferRanges(slot);
+        (var rangeStart, var rangeEnd) = GetTransferRanges(slot);
 
         // try adding item into the target range
         _player.Inventory.TryAddItem(clickedSlotItem, rangeStart, rangeEnd, out var leftoverItem);
@@ -251,7 +250,7 @@ public class ItemInteractionPresenter : MonoBehaviour
     /// <returns> A tuple (rangeStart, rangeEndExclusive) describing the half-open index range of the target region. </returns>
     private (int, int) GetTransferRanges(Slot slot)
     {
-        bool fromHotbar = slot.SlotIndex < _player.Inventory.HotbarSize;
+        var fromHotbar = slot.SlotIndex < _player.Inventory.HotbarSize;
         if (fromHotbar)
         {
             return (_player.Inventory.HotbarSize, _player.Inventory.TotalSize);
@@ -357,7 +356,7 @@ public class ItemInteractionPresenter : MonoBehaviour
         if (itemSO == null || _heldItem.IsEmpty || _heldItem.ItemSO != itemSO || maxToCollect <= 0) 
             return;
 
-        int collected = _heldItem.Amount;
+        var collected = _heldItem.Amount;
         collected += _player.Inventory.TryRemoveItemFromRange(itemSO, maxToCollect, 0, _player.Inventory.TotalSize);
 
         _heldItem = _heldItem.WithAmount(collected);
@@ -383,14 +382,14 @@ public class ItemInteractionPresenter : MonoBehaviour
             return;
 
         // pick up the clicked item first
-        int collected = clickedSlotItem.Amount;
+        var collected = clickedSlotItem.Amount;
         _player.Inventory.ClearItemAt(slot.SlotIndex);
 
         // try collecting other items of the same type across the inventory
-        int remainingCapacity = clickedSlotItem.ItemSO.MaxStackSize - collected;
+        var remainingCapacity = clickedSlotItem.ItemSO.MaxStackSize - collected;
         if (remainingCapacity > 0)
         {
-            int removed = _player.Inventory.TryRemoveItemFromRange(clickedSlotItem.ItemSO, remainingCapacity, 0, _player.Inventory.TotalSize);
+            var removed = _player.Inventory.TryRemoveItemFromRange(clickedSlotItem.ItemSO, remainingCapacity, 0, _player.Inventory.TotalSize);
             collected += removed;
         }
 
@@ -484,7 +483,7 @@ public class ItemInteractionPresenter : MonoBehaviour
 
     private void PickHalvedSlotItemUp(Slot slot, InventoryItem item)
     {
-        int half = Mathf.CeilToInt((item.Amount + 1) / 2);
+        var half = Mathf.CeilToInt((item.Amount + 1) / 2);
 
         // update held item
         _heldItem = new InventoryItem(item.ItemSO, half);

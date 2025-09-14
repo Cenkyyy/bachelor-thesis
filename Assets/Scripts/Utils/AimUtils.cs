@@ -2,10 +2,11 @@ using UnityEngine;
 
 public static class AimUtils
 {
+    /// <summary> Epsilon threshold for "almost zero direction", SQ represent squared magnitude.</summary>
     private const float AIM_EPSILON_SQ = 1e-4f;
 
     /// <summary>
-    /// From origin, compute a normalized mouse-aim direction and a spawn position offset by <paramref name="distance"/>.
+    /// From origin, computes a normalized mouse aim direction and a spawn position offset by <paramref name="distance"/>.
     /// Falls back to Vector2.down if mouse is exactly on origin.
     /// </summary>
     /// <param name="origin">Origin transform to compute from.</param>
@@ -21,7 +22,7 @@ public static class AimUtils
         var mouseWorld = cam ? cam.ScreenToWorldPoint(Input.mousePosition) : originPos + Vector3.down;
         mouseWorld.z = 0f;
 
-        direction = ((Vector2)(mouseWorld - originPos)).normalized;
+        direction = (mouseWorld - originPos).normalized;
         if (direction.sqrMagnitude < AIM_EPSILON_SQ)
             direction = Vector2.down;
 
