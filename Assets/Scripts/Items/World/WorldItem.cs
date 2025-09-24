@@ -80,14 +80,14 @@ public sealed class WorldItem : MonoBehaviour
     /// </summary>
     private void Render()
     {
-        if (Item.IsEmpty || Item.ItemSO == null)
+        if (Item.IsEmpty || Item.Item == null)
         {
             _iconRenderer.enabled = false;
             return;
         }
 
         _iconRenderer.enabled = true;
-        _iconRenderer.sprite = Item.ItemSO.Icon;
+        _iconRenderer.sprite = Item.Item.Icon;
     }
 
     /// <summary>
@@ -127,16 +127,16 @@ public sealed class WorldItem : MonoBehaviour
             return;
         if (Item.IsEmpty || other.Item.IsEmpty) 
             return;
-        if (Item.ItemSO != other.Item.ItemSO) 
+        if (Item.Item != other.Item.Item) 
             return;
-        if (!Item.ItemSO.IsStackable)
+        if (!Item.Item.IsStackable)
             return;
 
         // choose the item that stays on the ground and which is the donor
         (var receivingItem, var incomingItem) = _spawnTime <= other._spawnTime ? (this, other) : (other, this);
 
         // if anchor already full, don’t start an animation
-        if (receivingItem.Item.Amount >= receivingItem.Item.ItemSO.MaxStackSize) 
+        if (receivingItem.Item.Amount >= receivingItem.Item.Item.MaxStackSize) 
             return;
 
         // only the donor runs the animation
@@ -199,7 +199,7 @@ public sealed class WorldItem : MonoBehaviour
         }
 
         // apply transfer with current capacity to avoid overfill when multiple donors arrive
-        var freeSpace = Mathf.Max(0, receivingItem.Item.ItemSO.MaxStackSize - receivingItem.Item.Amount);
+        var freeSpace = Mathf.Max(0, receivingItem.Item.Item.MaxStackSize - receivingItem.Item.Amount);
         var toMove = Mathf.Min(freeSpace, Item.Amount);
 
         if (toMove > 0)
@@ -246,7 +246,7 @@ public sealed class WorldItem : MonoBehaviour
         }
 
         // add across the whole inventory and get leftover (if any).
-        inventory.TryAddItem(Item, 0, inventory.TotalSize, out var leftoverItem);
+        inventory.TryAddItemToRange(Item, new SlotRange(0, inventory.Capacity), out var leftoverItem);
 
         if (leftoverItem.IsEmpty)
         {

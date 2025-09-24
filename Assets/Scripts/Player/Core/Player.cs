@@ -5,10 +5,8 @@ using UnityEngine;
 /// </summary>
 public class Player : MonoBehaviour
 {
-    [Header(UIStrings.Player_Data__Title)]
     [SerializeField] private PlayerDataSO _playerDataSO;
 
-    [Header(UIStrings.Player_InventorySettings__Title)]
     [SerializeField] private int _hotbarSize = 8;
     [SerializeField] private int _inventorySize = 24;
 
@@ -25,6 +23,6 @@ public class Player : MonoBehaviour
 
         // initialzie player's inventory with specified sizes and fill with starting items
         Inventory = new PlayerInventory(_hotbarSize, _inventorySize);
-        Inventory.InitializeFromSO(_playerDataSO);
+        Inventory.InitializeFrom(_playerDataSO);
     }
 }

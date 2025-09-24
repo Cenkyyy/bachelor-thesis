@@ -7,20 +7,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerData", menuName = "Game/Player Data")]
 public class PlayerDataSO : ScriptableObject
 {
-    [Header(UIStrings.PlayerData_Health__Title)]
     public int baseMaxHealth = 100;
 
-    [Header(UIStrings.PlayerData_Mana__Title)]
     public int baseMaxMana = 100;
 
-    [Header(UIStrings.PlayerData_XP__Title)]
     public int baseMaxXP = 100;
     public int maxLevel = 200;
 
-    [Header(UIStrings.PlayerData_Hunger__Title)]
     public int baseMaxHunger = 100;
 
-    [Header(UIStrings.PlayerData_StartingItems__Title)]
     public List<InventoryItem> startingHotbarItems = new List<InventoryItem>();
     public List<InventoryItem> startingBackpackItems = new List<InventoryItem>();
 }

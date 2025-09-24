@@ -15,6 +15,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     [Header("Sprites")]
     [SerializeField] protected Sprite backgroundSprite;
 
+    public IReadOnlyInventory Owner { get; private set; }
     public int SlotIndex { get; private set; } = -1;
 
     // Events
@@ -31,8 +32,9 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         Clear();
     }
 
-    public virtual void Bind(int index, InventoryItem item)
+    public virtual void Bind(IReadOnlyInventory owner, int index, InventoryItem item)
     {
+        Owner = owner;
         SlotIndex = index;
         Refresh(item);
     }
@@ -49,10 +51,10 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         if (itemIconImage != null)
         {
             itemIconImage.enabled = true;
-            itemIconImage.sprite = item.ItemSO.Icon;
+            itemIconImage.sprite = item.Item.Icon;
         }
 
-        if (item.ItemSO.IsStackable && item.Amount > 1) 
+        if (item.Item.IsStackable && item.Amount > 1) 
         {
             // show item amount text if amount is greater than 1
             if (itemAmountText != null)

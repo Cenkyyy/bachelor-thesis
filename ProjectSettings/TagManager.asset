@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - WorldItem
   layers:
   - Default
   - TransparentFX
@@ -49,6 +50,9 @@ TagManager:
     locked: 0
   - name: Items
     uniqueID: 2163695611
+    locked: 0
+  - name: WorldObjects
+    uniqueID: 3057186141
     locked: 0
   - name: Characters
     uniqueID: 3620165257

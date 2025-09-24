@@ -18,14 +18,14 @@ MonoBehaviour:
   maxLevel: 200
   baseMaxHunger: 100
   startingHotbarItems:
-  - <ItemSO>k__BackingField: {fileID: 11400000, guid: 461db32e3697c78489869a09a4507074, type: 2}
+  - <Item>k__BackingField: {fileID: 11400000, guid: 461db32e3697c78489869a09a4507074, type: 2}
     <Amount>k__BackingField: 32
-  - <ItemSO>k__BackingField: {fileID: 11400000, guid: fe297c69801e0e6498c41b3f8161ba9e, type: 2}
+  - <Item>k__BackingField: {fileID: 11400000, guid: fe297c69801e0e6498c41b3f8161ba9e, type: 2}
     <Amount>k__BackingField: 1
-  - <ItemSO>k__BackingField: {fileID: 11400000, guid: f24487d0b82945d4aafa94cbb26667cf, type: 2}
+  - <Item>k__BackingField: {fileID: 11400000, guid: 461db32e3697c78489869a09a4507074, type: 2}
     <Amount>k__BackingField: 1
   startingBackpackItems:
-  - <ItemSO>k__BackingField: {fileID: 11400000, guid: 461db32e3697c78489869a09a4507074, type: 2}
+  - <Item>k__BackingField: {fileID: 11400000, guid: f24487d0b82945d4aafa94cbb26667cf, type: 2}
     <Amount>k__BackingField: 1
-  - <ItemSO>k__BackingField: {fileID: 11400000, guid: fe297c69801e0e6498c41b3f8161ba9e, type: 2}
+  - <Item>k__BackingField: {fileID: 11400000, guid: fe297c69801e0e6498c41b3f8161ba9e, type: 2}
     <Amount>k__BackingField: 3

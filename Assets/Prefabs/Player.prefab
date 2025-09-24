@@ -164,13 +164,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25a51d77f43a3ec4e9cb0b959cc4eac6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8120486794298343527}
-  backpackPresenter: {fileID: 0}
-  worldItemSpawner: {fileID: 0}
-  uiRaycaster: {fileID: 0}
-  dropKey: 113
-  throwSpawnDistance: 0.6
-  throwImpulse: 2
+  _player: {fileID: 8120486794298343527}
+  _backpackPanel: {fileID: 0}
+  _worldItemSpawner: {fileID: 0}
+  _uiRaycaster: {fileID: 0}
+  _dropKey: 113
+  _throwSpawnDistance: 0.6
 --- !u!1 &3653677619089745102
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +267,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -674802039
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -6739235203362528288, guid: 74f6bde8288b4b442a9468175af95f19, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
