@@ -96,7 +96,7 @@ public sealed class PlayerItemDropController : MonoBehaviour
     private int ResolveSourceSlotIndex()
     {
         // inventory open, then return on hovered slot index
-        if (_backpackPanel != null && _backpackPanel.IsInventoryOpen)
+        if (_backpackPanel != null && _backpackPanel.IsOpen)
         {
             var hovered = RaycastSlotUnderMouse();
             return hovered != null ? hovered.SlotIndex : -1;

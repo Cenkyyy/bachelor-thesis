@@ -56,7 +56,7 @@ public sealed class ChestInteractable : MonoBehaviour
         if (_chestPanel.IsOpen)
         {
             _chestPanel.Close();
-            _backpackPanel?.CloseInventory();
+            _backpackPanel?.Close();
         }
         else
         {

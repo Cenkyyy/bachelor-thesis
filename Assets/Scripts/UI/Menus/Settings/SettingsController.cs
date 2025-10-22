@@ -21,9 +21,9 @@ public class SettingsController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (_backpackPanel && _backpackPanel.IsInventoryOpen)
+            if (_backpackPanel && _backpackPanel.IsOpen)
             {
-                _backpackPanel.CloseInventory();
+                _backpackPanel.Close();
                 return;
             }
 

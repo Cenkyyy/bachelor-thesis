@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class BackpackPanel : InventoryPanelBase<Slot>
 {
-    [SerializeField] private KeyCode toggleKey = KeyCode.E;
+    [SerializeField] private CharacterPanel _characterPanel;
 
     protected override int SlotCount => player.Inventory.BackpackSize;
-    public bool IsInventoryOpen => slotParent != null && slotParent.gameObject.activeSelf;
+    public bool IsOpen => slotParent != null && slotParent.gameObject.activeSelf;
 
     protected override void Start()
     {
@@ -30,28 +30,21 @@ public class BackpackPanel : InventoryPanelBase<Slot>
         slotParent.gameObject.SetActive(wasActive);
     }
 
-    private void Update()
-    {
-        // toggle inventory with 'E' key while the game is not paused
-        if (!GameStateManager.IsGamePaused && Input.GetKeyDown(toggleKey))
-        {
-            slotParent.gameObject.SetActive(!slotParent.gameObject.activeSelf);
-        }
-    }
-
     public void OpenInventory()
     {
-        if (slotParent != null && !IsInventoryOpen)
+        if (slotParent != null && !IsOpen)
         {
             slotParent.gameObject.SetActive(true);
+            _characterPanel?.Open();
         }
     }
 
-    public void CloseInventory()
+    public void Close()
     {
-        if (slotParent != null && IsInventoryOpen)
+        if (slotParent != null && IsOpen)
         {
             slotParent.gameObject.SetActive(false);
+            _characterPanel?.Close();
         }
     }
 
