@@ -8,7 +8,7 @@ public class ConsumableItem : Item, IUsable
 
     public ConsumableItem()
     {
-        Category = ItemCategory.Consumable;
+        Category = ItemType.Consumable;
     }
 
     public void Use(GameObject user)

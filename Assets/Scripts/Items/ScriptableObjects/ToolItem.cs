@@ -8,7 +8,7 @@ public class ToolItem : Item, IUsable
 
     public ToolItem()
     {
-        Category = ItemCategory.Tool;
+        Category = ItemType.Tool;
     }
 
     public void Use(GameObject user)

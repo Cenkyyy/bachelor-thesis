@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     /// <summary> Runtime player inventory (hotbar + backpack). </summary>
     public PlayerInventory Inventory { get; private set; }
 
+    /// <summary> Runtime player equipment (strictly typed equipment slots). </summary>
+    public EquipmentInventory Equipment { get; private set; }
+
     private void Awake()
     {
         // initialize player's stats from defaults
@@ -24,5 +27,7 @@ public class Player : MonoBehaviour
         // initialzie player's inventory with specified sizes and fill with starting items
         Inventory = new PlayerInventory(_hotbarSize, _inventorySize);
         Inventory.InitializeFrom(_playerDataSO);
+
+        Equipment = new EquipmentInventory();
     }
 }

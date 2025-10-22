@@ -8,7 +8,7 @@ public class MaterialItem : Item, ICraftable
 
     public MaterialItem()
     {
-        Category = ItemCategory.Material;
+        Category = ItemType.Material;
     }
 
     public void Craft(GameObject crafter)

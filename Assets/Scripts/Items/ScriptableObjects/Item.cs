@@ -19,7 +19,7 @@ public abstract class Item : ScriptableObject
 
     #region ItemCategory
     
-    [field: SerializeField] public ItemCategory Category { get; protected set; }
+    [field: SerializeField] public ItemType Category { get; protected set; }
 
     #endregion
 }

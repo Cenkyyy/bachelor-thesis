@@ -10,6 +10,6 @@ public class WeaponItem : Item
 
     public WeaponItem()
     {
-        Category = ItemCategory.Weapon;
+        Category = ItemType.Weapon;
     }
 }

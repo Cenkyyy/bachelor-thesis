@@ -1,0 +1,10 @@
+using UnityEngine;
+
+/// <summary>
+/// UI slot for an equipment position. Inherits all visuals from Slot, adds a typed slot indicator.
+/// </summary>
+public sealed class EquipmentSlot : Slot
+{
+    [Header("Equipment")]
+    [field: SerializeField] public EquipmentSlotType SlotType { get; private set; }
+}

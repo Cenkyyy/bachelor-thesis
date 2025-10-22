@@ -29,6 +29,9 @@ public class ItemInteractionController : MonoBehaviour
     [SerializeField] private ChestPanel _chestPanel;
     [SerializeField] private RectTransform _chestPanelRect;
 
+    [SerializeField] private CharacterPanel _characterPanel;
+    [SerializeField] private RectTransform _characterPanelRect;
+
     // Item dropping
     [SerializeField] private Player _player;
 
@@ -44,6 +47,18 @@ public class ItemInteractionController : MonoBehaviour
 
     // Currently held (cursor) item
     private InventoryItem _heldItem = InventoryItem.Empty;
+
+    private bool AnyPanelOpen =>
+    (_backpackPanel != null && _backpackPanel.IsOpen) ||
+    (_chestPanel != null && _chestPanel.IsOpen) ||
+    (_characterPanel != null && _characterPanel.IsOpen);
+
+    private void CloseAllPanels()
+    {
+        if (_chestPanel != null && _chestPanel.IsOpen) _chestPanel.Close();
+        if (_backpackPanel != null && _backpackPanel.IsOpen) _backpackPanel.Close();
+        if (_characterPanel != null && _characterPanel.IsOpen) _characterPanel.Close();
+    }
 
     private void Awake()
     {
@@ -70,24 +85,27 @@ public class ItemInteractionController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (AnyPanelOpen)
+            {
+                CloseAllPanels();
+            }
+            else
+            {
+                _backpackPanel?.OpenInventory();
+            }
+
+            _heldItem = InventoryItem.Empty;
+            UpdateHeldItem();
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            var closedAny = false;
-
-            if (_chestPanel != null && _chestPanel.IsOpen)
+            if (AnyPanelOpen)
             {
-                _chestPanel.Close();
-                closedAny = true;
-            }
-
-            if (_backpackPanel != null && _backpackPanel.IsInventoryOpen)
-            {
-                _backpackPanel.CloseInventory();
-                closedAny = true;
-            }
-
-            if (closedAny)
-            {
+                CloseAllPanels();
                 _heldItem = InventoryItem.Empty;
                 UpdateHeldItem();
                 return;
@@ -108,7 +126,7 @@ public class ItemInteractionController : MonoBehaviour
         _heldItemContainer.anchoredPosition = pos;
 
         // drop held stack when clicking outside inventory panels
-        if (_backpackPanel != null && _backpackPanel.IsInventoryOpen && !_heldItem.IsEmpty && Input.GetMouseButtonDown(0))
+        if (_backpackPanel != null && _backpackPanel.IsOpen && !_heldItem.IsEmpty && Input.GetMouseButtonDown(0))
         {
             if (!IsPointerOverInventoryPanels(Input.mousePosition))
             {
@@ -134,7 +152,10 @@ public class ItemInteractionController : MonoBehaviour
         var overChest = _chestPanelRect != null && 
             RectTransformUtility.RectangleContainsScreenPoint(_chestPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
 
-        return overBackpack || overHotbar || overChest;
+        var overCharacter = _characterPanelRect != null &&
+            RectTransformUtility.RectangleContainsScreenPoint(_characterPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
+
+        return overBackpack || overHotbar || overChest || overCharacter;
     }
 
     /// <summary>
@@ -151,13 +172,39 @@ public class ItemInteractionController : MonoBehaviour
                 HandleSimpleChestTransferLeftClick(slot);
                 return;
             }
+            if (ReferenceEquals(slot.Owner, _player.Equipment))
+            {
+                HandleEquipmentLeftClick(slot);
+                return;
+            }
 
             ProcessLeftClickImmediateThenMaybeDouble(slot, eventData);
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
+            if (ReferenceEquals(slot.Owner, _player.Equipment))
+            {
+                HandleEquipmentRightClick(slot);
+                return;
+            }
+
             HandleRegularRightClick(slot);
         }
+    }
+
+    /// <summary>
+    /// Supports right mouse dragging placement.
+    /// </summary>
+    /// <param name="slot">The slot the pointer entered.</param>
+    /// <param name="eventData">Pointer event data.</param>
+    public void OnSlotPointerEnter(Slot slot, PointerEventData eventData)
+    {
+        if (ReferenceEquals(slot.Owner, _player.Equipment))
+        {
+            return;
+        }
+
+        HandleRightClickPointerEnter(slot);
     }
 
     private void HandleSimpleChestTransferLeftClick(Slot slot)
@@ -172,6 +219,63 @@ public class ItemInteractionController : MonoBehaviour
         TransferStack((IInventory)slot.Owner, slot.SlotIndex, dst);
     }
 
+    private void HandleEquipmentLeftClick(Slot slot)
+    {
+        var eq = _player.Equipment;
+        int index = slot.SlotIndex;
+
+        // Place from cursor into this slot
+        if (!_heldItem.IsEmpty)
+        {
+            // Only EquipmentItem can go into equipment slots
+            if (!(_heldItem.Item is EquipmentItem))
+                return;
+
+            // Try to place exactly 1 into this specific slot
+            if (eq.TryMergeInto(new InventoryItem(_heldItem.Item, 1), index, out var leftoverOnce))
+            {
+                _heldItem = _heldItem.WithAmount(_heldItem.Amount - 1);
+                UpdateHeldItem();
+            }
+            return;
+        }
+
+        // Pick from slot to cursor (if anything there)
+        var slotItem = eq.GetItemAt(index);
+        if (!slotItem.IsEmpty)
+        {
+            _heldItem = slotItem;
+            eq.ClearItemAt(index);
+            UpdateHeldItem();
+        }
+    }
+
+    private void HandleEquipmentRightClick(Slot slot)
+    {
+        var eq = _player.Equipment;
+        int index = slot.SlotIndex;
+
+        var slotItem = eq.GetItemAt(index);
+
+        // Quick-unequip to inventory
+        if (_heldItem.IsEmpty)
+        {
+            if (slotItem.IsEmpty) return; // do nothing on empty equipment slot
+            TransferStack(eq, index, _player.Inventory);
+            return;
+        }
+
+        // Holding something: allow quick place of ONE equipment item if compatible
+        if (_heldItem.Item is EquipmentItem)
+        {
+            if (eq.TryMergeInto(new InventoryItem(_heldItem.Item, 1), index, out var leftoverOnce))
+            {
+                _heldItem = _heldItem.WithAmount(_heldItem.Amount - 1);
+                UpdateHeldItem();
+            }
+        }
+    }
+
     private void TransferStack(IInventory src, int index, IInventory dst)
     {
         var item = src.GetItemAt(index);
@@ -182,16 +286,6 @@ public class ItemInteractionController : MonoBehaviour
             src.ClearItemAt(index);
         else
             src.SetItemAt(index, leftover);
-    }
-
-    /// <summary>
-    /// Supports right mouse dragging placement.
-    /// </summary>
-    /// <param name="slot">The slot the pointer entered.</param>
-    /// <param name="eventData">Pointer event data.</param>
-    public void OnSlotPointerEnter(Slot slot, PointerEventData eventData)
-    {
-        HandleRightClickPointerEnter(slot);
     }
 
     /// <summary>
@@ -288,7 +382,7 @@ public class ItemInteractionController : MonoBehaviour
         // validation
         if (!IsValidSlot(slot))
             return;
-        if (!_backpackPanel.IsInventoryOpen)
+        if (!_backpackPanel.IsOpen)
             return;
 
         var clickedSlotItem = _player.Inventory.GetItemAt(slot.SlotIndex);
