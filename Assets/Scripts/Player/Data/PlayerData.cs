@@ -29,7 +29,12 @@ public class PlayerData
     
     /// <summary> Maximum attainable player level (cap). </summary>
     public int MaxLevel { get; private set; }
-    
+
+    public int MemoryMaxXP { get; private set; }
+    public int CurrentMemoryXP { get; private set; }
+    public int CurrentMemoryXPLevel { get; private set; }
+    public int MaxMemoryXPLevel { get; private set; }
+
     /// <summary> Current level. </summary>
     public int CurrentLevel { get; private set; }
 
@@ -49,6 +54,8 @@ public class PlayerData
     public event Action<int, int> OnHungerChanged;
     /// <summary> Raised after XP or level changes; args: currentXP, maxXP, currentLevel. </summary>
     public event Action<int, int, int> OnXPChanged;
+    /// <summary> Raised after memory XP or level changes; args:  </summary>
+    public event Action<int, int, int> OnMemoryXPChanged;
     /// <summary> Raised after InitializeFrom() sets all defaults. </summary>
     public event Action OnInitialized;
 
@@ -71,7 +78,12 @@ public class PlayerData
         MaxXP = defaultData.baseMaxXP;
         CurrentXP = 0;
         MaxLevel = defaultData.maxLevel;
-        CurrentLevel = 1;
+        CurrentLevel = 0;
+
+        MemoryMaxXP = defaultData.baseMaxMemoryXP;
+        CurrentMemoryXP = 0;
+        MaxMemoryXPLevel = defaultData.baseMaxMemoryXP;
+        CurrentMemoryXPLevel = 0;
 
         MaxHunger = defaultData.baseMaxHunger;
         CurrentHunger = MaxHunger;
@@ -81,6 +93,7 @@ public class PlayerData
         OnManaChanged?.Invoke(CurrentMana, MaxMana);
         OnHungerChanged?.Invoke(CurrentHunger, MaxHunger);
         OnXPChanged?.Invoke(CurrentXP, MaxXP, CurrentLevel);
+        OnMemoryXPChanged?.Invoke(CurrentMemoryXP, MemoryMaxXP, CurrentMemoryXPLevel);
     }
 
     // Health API
@@ -222,5 +235,39 @@ public class PlayerData
         }
 
         OnXPChanged?.Invoke(CurrentXP, MaxXP, CurrentLevel);
+    }
+
+    public void GainMemoryXP(int amount, int growthPerLevel = 25)
+    {
+        if (amount <= 0) return;
+
+        CurrentMemoryXP += amount;
+
+        while (CurrentMemoryXP >= MemoryMaxXP && CurrentMemoryXPLevel < MaxMemoryXPLevel)
+        {
+            CurrentMemoryXP -= MemoryMaxXP;
+            CurrentMemoryXPLevel++;
+            MemoryMaxXP += growthPerLevel;
+        }
+
+        if (CurrentMemoryXPLevel >= MaxMemoryXPLevel)
+            CurrentMemoryXP = 0;
+
+        OnMemoryXPChanged?.Invoke(CurrentMemoryXP, MemoryMaxXP, CurrentMemoryXPLevel);
+    }
+
+    public bool TrySpendMemoryLevels(int levels, int baseMax = 100, int growthPerLevel = 25)
+    {
+        if (levels <= 0) return true;
+        if (CurrentMemoryXPLevel < levels) return false;
+
+        CurrentMemoryXPLevel -= levels;
+
+        MemoryMaxXP = baseMax + growthPerLevel * CurrentMemoryXPLevel;
+
+        CurrentMemoryXP = Mathf.Min(CurrentMemoryXP, MemoryMaxXP - 1);
+
+        OnMemoryXPChanged?.Invoke(CurrentMemoryXP, MemoryMaxXP, CurrentMemoryXPLevel);
+        return true;
     }
 }

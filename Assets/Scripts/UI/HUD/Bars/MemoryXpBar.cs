@@ -1,0 +1,72 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+public class MemoryXpBarUI : StatBarBase, IPointerEnterHandler, IPointerExitHandler
+{
+    [SerializeField] private Image _memoryXpFillImage;
+    [SerializeField] private TMP_Text _memoryXpLevelText;
+
+    private bool _onHovered;
+
+    protected override void Subscribe()
+    {
+        if (Data != null)
+        {
+            Data.OnMemoryXPChanged += OnMemoryXPChanged;
+        }
+    }
+
+    protected override void Unsubscribe()
+    {
+        if (Data != null)
+        {
+            Data.OnMemoryXPChanged -= OnMemoryXPChanged;
+        }
+    }
+
+    protected override void DrawInitial()
+    {
+        if (Data != null)
+        {
+            OnMemoryXPChanged(Data.CurrentXP, Data.MaxXP, Data.CurrentLevel);
+        }
+    }
+
+    private void OnMemoryXPChanged(int currentXP, int maxXP, int level)
+    {
+        if (_memoryXpFillImage != null)
+            _memoryXpFillImage.fillAmount = Mathf.Clamp01((float)currentXP / Mathf.Max(1, maxXP));
+
+        if (_memoryXpLevelText != null)
+        {
+            if (_onHovered)
+            {
+                _memoryXpLevelText.text = $"{currentXP} / {maxXP}";
+            }
+            else
+            {
+                _memoryXpLevelText.text = level.ToString();
+            }
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _onHovered = true;
+        if (Data != null)
+        {
+            OnMemoryXPChanged(Data.CurrentXP, Data.MaxXP, Data.CurrentLevel);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _onHovered = false;
+        if (Data != null)
+        {
+            OnMemoryXPChanged(Data.CurrentXP, Data.MaxXP, Data.CurrentLevel);
+        }
+    }
+}

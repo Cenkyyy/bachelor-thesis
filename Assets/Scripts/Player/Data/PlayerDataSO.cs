@@ -14,6 +14,9 @@ public class PlayerDataSO : ScriptableObject
     public int baseMaxXP = 100;
     public int maxLevel = 200;
 
+    public int baseMaxMemoryXP = 100;
+    public int memoryMaxLevel = 200;
+
     public int baseMaxHunger = 100;
 
     public List<InventoryItem> startingHotbarItems = new List<InventoryItem>();
