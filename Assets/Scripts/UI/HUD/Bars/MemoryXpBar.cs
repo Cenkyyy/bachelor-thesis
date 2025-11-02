@@ -30,7 +30,7 @@ public class MemoryXpBarUI : StatBarBase, IPointerEnterHandler, IPointerExitHand
     {
         if (Data != null)
         {
-            OnMemoryXPChanged(Data.CurrentXP, Data.MaxXP, Data.CurrentLevel);
+            OnMemoryXPChanged(Data.CurrentMemoryXP, Data.MaxMemoryXP, Data.CurrentMemoryLevel);
         }
     }
 
@@ -57,7 +57,7 @@ public class MemoryXpBarUI : StatBarBase, IPointerEnterHandler, IPointerExitHand
         _onHovered = true;
         if (Data != null)
         {
-            OnMemoryXPChanged(Data.CurrentXP, Data.MaxXP, Data.CurrentLevel);
+            OnMemoryXPChanged(Data.CurrentMemoryXP, Data.MaxMemoryXP, Data.CurrentMemoryLevel);
         }
     }
 
@@ -66,7 +66,7 @@ public class MemoryXpBarUI : StatBarBase, IPointerEnterHandler, IPointerExitHand
         _onHovered = false;
         if (Data != null)
         {
-            OnMemoryXPChanged(Data.CurrentXP, Data.MaxXP, Data.CurrentLevel);
+            OnMemoryXPChanged(Data.CurrentMemoryXP, Data.MaxMemoryXP, Data.CurrentMemoryLevel);
         }
     }
 }

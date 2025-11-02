@@ -95,9 +95,9 @@ public sealed class ParallelWorldPanel : MonoBehaviour
     {
         if (_player?.Data == null) return;
 
-        var lvl = _player.Data.CurrentMemoryXPLevel;
+        var lvl = _player.Data.CurrentMemoryLevel;
         var cur = _player.Data.CurrentMemoryXP;
-        var max = _player.Data.MemoryMaxXP;
+        var max = _player.Data.MaxMemoryXP;
 
         if (_memoryLevelText)
         {
@@ -114,7 +114,7 @@ public sealed class ParallelWorldPanel : MonoBehaviour
         if (_player?.Data == null)
             return;
 
-        var lvl = _player.Data.CurrentMemoryXPLevel;
+        var lvl = _player.Data.CurrentMemoryLevel;
 
         // TODO: Modify level requirements
         if (_mazeButton)
@@ -128,7 +128,7 @@ public sealed class ParallelWorldPanel : MonoBehaviour
         if (_player?.Data == null) 
             return;
 
-        if (!_player.Data.TrySpendMemoryLevels(levelCost, baseMax: _player.Data.MemoryMaxXP, growthPerLevel: 25))
+        if (!_player.Data.TrySpendMemoryLevels(levelCost, baseMax: _player.Data.MaxMemoryXP, growthPerLevel: 25))
         {
             Debug.Log($"[ParallelWorld] Not enough Memory levels for '{minigameId}' (cost {levelCost}).");
             return;

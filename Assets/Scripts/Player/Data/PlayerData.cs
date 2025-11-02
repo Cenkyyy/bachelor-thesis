@@ -30,13 +30,20 @@ public class PlayerData
     /// <summary> Maximum attainable player level (cap). </summary>
     public int MaxLevel { get; private set; }
 
-    public int MemoryMaxXP { get; private set; }
-    public int CurrentMemoryXP { get; private set; }
-    public int CurrentMemoryXPLevel { get; private set; }
-    public int MaxMemoryXPLevel { get; private set; }
-
     /// <summary> Current level. </summary>
     public int CurrentLevel { get; private set; }
+
+    /// <summary> Memory XP needed to reach the next level. Grows as you level up. </summary>
+    public int MaxMemoryXP { get; private set; }
+
+    /// <summary> Current Memory XP progress toward the next level. </summary>
+    public int CurrentMemoryXP { get; private set; }
+
+    /// <summary> Maximum attainable memory level (cap). </summary>
+    public int MaxMemoryLevel { get; private set; }
+
+    /// <summary> Current memory level. </summary>
+    public int CurrentMemoryLevel { get; private set; }
 
     /// <summary> Maximum hunger value. </summary>
     public int MaxHunger { get; private set; }
@@ -54,7 +61,7 @@ public class PlayerData
     public event Action<int, int> OnHungerChanged;
     /// <summary> Raised after XP or level changes; args: currentXP, maxXP, currentLevel. </summary>
     public event Action<int, int, int> OnXPChanged;
-    /// <summary> Raised after memory XP or level changes; args:  </summary>
+    /// <summary> Raised after memory XP or level changes; args: currentMemoryXP, maxMemoryXP, currentMemoryLevel  </summary>
     public event Action<int, int, int> OnMemoryXPChanged;
     /// <summary> Raised after InitializeFrom() sets all defaults. </summary>
     public event Action OnInitialized;
@@ -80,10 +87,10 @@ public class PlayerData
         MaxLevel = defaultData.maxLevel;
         CurrentLevel = 0;
 
-        MemoryMaxXP = defaultData.baseMaxMemoryXP;
+        MaxMemoryXP = defaultData.baseMaxMemoryXP;
         CurrentMemoryXP = 0;
-        MaxMemoryXPLevel = defaultData.baseMaxMemoryXP;
-        CurrentMemoryXPLevel = 0;
+        MaxMemoryLevel = defaultData.baseMaxMemoryXP;
+        CurrentMemoryLevel = 0;
 
         MaxHunger = defaultData.baseMaxHunger;
         CurrentHunger = MaxHunger;
@@ -93,7 +100,7 @@ public class PlayerData
         OnManaChanged?.Invoke(CurrentMana, MaxMana);
         OnHungerChanged?.Invoke(CurrentHunger, MaxHunger);
         OnXPChanged?.Invoke(CurrentXP, MaxXP, CurrentLevel);
-        OnMemoryXPChanged?.Invoke(CurrentMemoryXP, MemoryMaxXP, CurrentMemoryXPLevel);
+        OnMemoryXPChanged?.Invoke(CurrentMemoryXP, MaxMemoryXP, CurrentMemoryLevel);
     }
 
     // Health API
@@ -243,31 +250,31 @@ public class PlayerData
 
         CurrentMemoryXP += amount;
 
-        while (CurrentMemoryXP >= MemoryMaxXP && CurrentMemoryXPLevel < MaxMemoryXPLevel)
+        while (CurrentMemoryXP >= MaxMemoryXP && CurrentMemoryLevel < MaxMemoryLevel)
         {
-            CurrentMemoryXP -= MemoryMaxXP;
-            CurrentMemoryXPLevel++;
-            MemoryMaxXP += growthPerLevel;
+            CurrentMemoryXP -= MaxMemoryXP;
+            CurrentMemoryLevel++;
+            MaxMemoryXP += growthPerLevel;
         }
 
-        if (CurrentMemoryXPLevel >= MaxMemoryXPLevel)
+        if (CurrentMemoryLevel >= MaxMemoryLevel)
             CurrentMemoryXP = 0;
 
-        OnMemoryXPChanged?.Invoke(CurrentMemoryXP, MemoryMaxXP, CurrentMemoryXPLevel);
+        OnMemoryXPChanged?.Invoke(CurrentMemoryXP, MaxMemoryXP, CurrentMemoryLevel);
     }
 
     public bool TrySpendMemoryLevels(int levels, int baseMax = 100, int growthPerLevel = 25)
     {
         if (levels <= 0) return true;
-        if (CurrentMemoryXPLevel < levels) return false;
+        if (CurrentMemoryLevel < levels) return false;
 
-        CurrentMemoryXPLevel -= levels;
+        CurrentMemoryLevel -= levels;
 
-        MemoryMaxXP = baseMax + growthPerLevel * CurrentMemoryXPLevel;
+        MaxMemoryXP = baseMax + growthPerLevel * CurrentMemoryLevel;
 
-        CurrentMemoryXP = Mathf.Min(CurrentMemoryXP, MemoryMaxXP - 1);
+        CurrentMemoryXP = Mathf.Min(CurrentMemoryXP, MaxMemoryXP - 1);
 
-        OnMemoryXPChanged?.Invoke(CurrentMemoryXP, MemoryMaxXP, CurrentMemoryXPLevel);
+        OnMemoryXPChanged?.Invoke(CurrentMemoryXP, MaxMemoryXP, CurrentMemoryLevel);
         return true;
     }
 }
