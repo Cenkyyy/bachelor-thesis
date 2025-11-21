@@ -10,14 +10,6 @@ public sealed class TimeOfDayText : MonoBehaviour
     [SerializeField] private DayNightSystem _time;
     [SerializeField] private TMP_Text _text;
 
-    private void Awake()
-    {
-        if (_time == null)
-            _time = FindFirstObjectByType<DayNightSystem>();
-        if (_text == null)
-            _text = GetComponent<TMP_Text>();
-    }
-
     private void OnEnable()
     {
         if (_time != null)

@@ -34,21 +34,21 @@ public sealed class PlayerInventory : IInventory
         _inventory = new Inventory(HotbarSize + BackpackSize);
     }
 
-    public void InitializeFrom(PlayerDataSO dataSO)
+    public void InitializeFrom(PlayerDataBaseStats data)
     {
-        if (dataSO == null)
+        if (data == null)
             return;
 
         // fill hotbar with starting hotbar items (indices 0-7), truncate if more than hotbarSize
-        for (int i = 0; i < dataSO.startingHotbarItems.Count && i < HotbarSize; i++)
+        for (int i = 0; i < data.startingHotbarItems.Count && i < HotbarSize; i++)
         {
-            _inventory.SetItemAt(i, dataSO.startingHotbarItems[i]);
+            _inventory.SetItemAt(i, data.startingHotbarItems[i]);
         }
 
         // fill inventory with starting inventory items (indices 8-31), truncate if more than inventorySize
-        for (int i = 0; i < dataSO.startingBackpackItems.Count && i < BackpackSize; i++)
+        for (int i = 0; i < data.startingBackpackItems.Count && i < BackpackSize; i++)
         {
-            _inventory.SetItemAt(i + HotbarSize, dataSO.startingBackpackItems[i]);
+            _inventory.SetItemAt(i + HotbarSize, data.startingBackpackItems[i]);
         }
     }
 

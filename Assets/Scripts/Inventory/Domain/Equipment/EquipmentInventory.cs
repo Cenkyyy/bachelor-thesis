@@ -152,7 +152,7 @@ public sealed class EquipmentInventory : IInventory
 
         if (equip.Slot == EquipmentSlotType.RingLeft || equip.Slot == EquipmentSlotType.RingRight)
         {
-            // Rings are mutually compatible: a "ring" SO can target either left or right.
+            // Rings are mutually compatible: a "ring" scriptable object can target either left or right.
             return slotType == EquipmentSlotType.RingLeft || slotType == EquipmentSlotType.RingRight;
         }
 

@@ -16,27 +16,21 @@ public sealed class DarknessOverlay : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float _maxAlpha = 0.65f;
     [SerializeField] private Color _tint = Color.black;
 
-    private void Awake()
-    {
-        if (_time == null) _time = FindFirstObjectByType<DayNightSystem>();
-        if (_uiImage == null) _uiImage = GetComponent<Image>();
-
-        if (_uiImage != null) _uiImage.raycastTarget = false;
-    }
-
     private void OnEnable()
     {
-        if (_time != null)
+        if (_time != null) 
+        {
             _time.OnBrightnessChanged += HandleBrightnessChanged;
-
-        if (_time != null)
             HandleBrightnessChanged(_time.Brightness);
+        }
     }
 
     private void OnDisable()
     {
-        if (_time != null)
+        if (_time != null) 
+        {
             _time.OnBrightnessChanged -= HandleBrightnessChanged;
+        }
     }
 
     private void HandleBrightnessChanged(float brightness)
@@ -44,8 +38,8 @@ public sealed class DarknessOverlay : MonoBehaviour
         float alpha = Mathf.Clamp01((1f - brightness) * _maxAlpha);
         if (_uiImage != null)
         {
-            var c = _tint; c.a = alpha;
-            _uiImage.color = c;
+            _tint.a = alpha;
+            _uiImage.color = _tint;
         }
     }
 }

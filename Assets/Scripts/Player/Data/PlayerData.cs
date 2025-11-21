@@ -67,11 +67,11 @@ public class PlayerData
     public event Action OnInitialized;
 
     /// <summary>
-    /// Initializes all stats from <see cref="PlayerDataSO"/> and raises initial change events.
+    /// Initializes all stats from <see cref="PlayerDataBaseStats"/> and raises initial change events.
     /// </summary>
     /// <param name="defaultData">Source of default values.</param>
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="defaultData"/> is null.</exception>
-    public void InitializeFrom(PlayerDataSO defaultData) 
+    public void InitializeFrom(PlayerDataBaseStats defaultData) 
     {
         if (defaultData == null) 
             throw new ArgumentNullException(nameof(defaultData));

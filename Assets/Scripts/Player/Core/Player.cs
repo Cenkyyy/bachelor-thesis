@@ -5,7 +5,7 @@ using UnityEngine;
 /// </summary>
 public class Player : MonoBehaviour
 {
-    [SerializeField] private PlayerDataSO _playerDataSO;
+    [SerializeField] private PlayerDataBaseStats _playerData;
 
     [SerializeField] private int _hotbarSize = 8;
     [SerializeField] private int _inventorySize = 24;
@@ -22,11 +22,11 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         // initialize player's stats from defaults
-        Data.InitializeFrom(_playerDataSO);
+        Data.InitializeFrom(_playerData);
 
         // initialzie player's inventory with specified sizes and fill with starting items
         Inventory = new PlayerInventory(_hotbarSize, _inventorySize);
-        Inventory.InitializeFrom(_playerDataSO);
+        Inventory.InitializeFrom(_playerData);
 
         Equipment = new EquipmentInventory();
     }

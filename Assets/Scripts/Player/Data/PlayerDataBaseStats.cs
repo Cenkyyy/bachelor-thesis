@@ -5,7 +5,7 @@ using UnityEngine;
 /// Default stats and starting items of a player to be read from.
 /// </summary>
 [CreateAssetMenu(fileName = "PlayerData", menuName = "Game/Player Data")]
-public class PlayerDataSO : ScriptableObject
+public class PlayerDataBaseStats : ScriptableObject
 {
     public int baseMaxHealth = 100;
 

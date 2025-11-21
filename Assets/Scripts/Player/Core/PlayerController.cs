@@ -8,12 +8,6 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 _input;
 
-    private void Awake()
-    {
-        _playerMovement = GetComponent<PlayerMovement>();
-        _playerAnimation = GetComponent<PlayerAnimation>();
-    }
-
     private void Update()
     {
         if (GameStateManager.IsGamePaused)

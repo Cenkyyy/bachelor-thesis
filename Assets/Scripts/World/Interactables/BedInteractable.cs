@@ -14,12 +14,6 @@ public sealed class BedInteractable : MonoBehaviour
 
     private bool _playerInside;
 
-    private void Awake()
-    {
-        if (_sleepPanel == null)
-            _sleepPanel = FindObjectsByType<ParallelWorldPanel>(FindObjectsSortMode.None).Single();
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
