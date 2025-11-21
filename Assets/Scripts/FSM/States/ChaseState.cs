@@ -6,6 +6,9 @@ public sealed class ChaseState : State
 
     [Header("Transitions")]
     [SerializeField] private State _patrolState;
+    [SerializeField] private State _attackState;
+
+    [SerializeField] private float _attackTriggerRange = 0.9f;
 
     private AgentCore _core;
     private float _lostTimer;
@@ -21,6 +24,16 @@ public sealed class ChaseState : State
     {
         if (_core.CanSeeTarget(out _))
         {
+            if (_attackState != null)
+            {
+                var dist = Vector2.Distance(_core.transform.position, _core.Target.position);
+                if (dist <= _attackTriggerRange)
+                {
+                    Set(_attackState, true);
+                    return;
+                }
+            }
+
             _lostTimer = 0f;
             _core.MoveTowards(_core.Target.position);
         }
