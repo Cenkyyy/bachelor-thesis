@@ -31,7 +31,7 @@ public sealed class DayNightSystem : MonoBehaviour
     public event Action<int, int> OnMinuteChanged;
     /// <summary>Raised when a new day begins: args(day).</summary>
     public event Action<int> OnDayChanged;
-    /// <summary>Raised whenever the brightness value changes (per-frame or when different): args(brightness).</summary>
+    /// <summary>Raised whenever the brightness value changes: args(brightness).</summary>
     public event Action<float> OnBrightnessChanged;
 
     private int _prevMinute = -1;
@@ -44,13 +44,14 @@ public sealed class DayNightSystem : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
         CurrentDay = Mathf.Max(1, _startDay);
         Time01 = Mathf.Repeat(_initialTime01, 1f);
         RecomputeHhMm();
-        RecomputeBrightness(true);
+        RecomputeBrightness(forceInvoke: true);
     }
 
     private void Update()
@@ -71,7 +72,7 @@ public sealed class DayNightSystem : MonoBehaviour
         }
 
         RecomputeHhMm();
-        RecomputeBrightness(false);
+        RecomputeBrightness(forceInvoke: false);
     }
 
     private void RecomputeHhMm()
@@ -117,7 +118,7 @@ public sealed class DayNightSystem : MonoBehaviour
         }
     }
 
-    // Narrow bell used to add a soft bump around sunrise/sunset.
+    // Adds a soft bump around sunrise/sunset.
     private static float Gaussian01(float x, float mean, float sigma)
     {
         float d = Mathf.DeltaAngle(x * 360f, mean * 360f) / 180f * Mathf.PI;

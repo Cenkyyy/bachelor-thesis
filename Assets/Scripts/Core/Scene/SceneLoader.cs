@@ -36,13 +36,11 @@ public sealed class SceneLoader : MonoBehaviour
             return;
 
         Time.timeScale = 1f;
-
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
     public void LoadMenu() => Load(_menuScene);
     public void LoadGameplay() => Load(_gameplayScene);
-
     public void QuitGame()
     {
 #if UNITY_EDITOR
