@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f85ee97c470b9134ca2abdf8b8273357, type: 3}
+  m_Name: HumanNPCDialogue
+  m_EditorClassIdentifier: 
+  <NpcName>k__BackingField: Human
+  <NpcPortrait>k__BackingField: {fileID: 7721919526164143042, guid: 9fecd170054307d4e9a06c8510674d6c, type: 3}
+  <DialogueLines>k__BackingField:
+  - Hello traveler!
+  - Can I help you with something?
+  <AutoProgressLines>k__BackingField: 0100
+  <AutoProgressDelay>k__BackingField: 1.5
+  <TypingSpeed>k__BackingField: 0.05
+  <VoiceSound>k__BackingField: {fileID: 0}
+  <VoicePitch>k__BackingField: 1

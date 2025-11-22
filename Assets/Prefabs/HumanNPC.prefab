@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 883380505258911063}
   - component: {fileID: 1516021767800348595}
   - component: {fileID: 7065532651209444681}
+  - component: {fileID: 2868605513937771418}
   m_Layer: 7
   m_Name: HumanNPC
   m_TagString: Untagged
@@ -178,6 +179,19 @@ MonoBehaviour:
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &2868605513937771418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193628248400522689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619ad875c50d23543969cbf431b1ed0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogue: {fileID: 11400000, guid: 682d0a02de7c22d4394447906b472ab3, type: 2}
 --- !u!1 &206182832279829709
 GameObject:
   m_ObjectHideFlags: 0
