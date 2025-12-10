@@ -533,7 +533,7 @@ The crafting system should feel powerful and convenient, but not abusable. The p
 The crafting book is a unique item associated with the player. It is not just another object that can be dropped or lost; it is more like a permanent tool or menu:
 
 - The book is always available to the player. It may be shown as an item in a special slot, or as a separate button or hotkey, but the key point is that it cannot be dropped or destroyed.
-- Opening the book reveals the crafting interface. This is the single, unified place where the player can see what can be crafted and with which ingredients.
+- Opening the book reveals the crafting interface (see 1.8.). This is the single, unified place where the player can see what can be crafted and with which ingredients.
 - The book reinforces the fantasy that the wizard is slowly rebuilding their knowledge: recipes represent things they have “remembered” or learned, rather than random combinations.
 
 The expectation is that once the player understands that all crafting happens through this book, they no longer need to search the world for special crafting stations for basic tasks. Additional specialized stations can still exist later, but the standard way to craft is always through the book.
@@ -564,6 +564,11 @@ The design goal is that the player can open the book and instantly answer two qu
 
 This means the book doubles as both a crafting interface and a visual recipe encyclopedia.
 
+<img width="1283" height="727" alt="image" src="https://github.com/user-attachments/assets/46cf6211-355c-4276-a80d-fd3ee8e1b1f7" />
+
+Picture 1.8.
+
+
 ### 6.3 Crafting rules and constraints
 
 Crafting with the book is intentionally restricted by a few rules so it does not trivialize the survival aspects:
@@ -588,52 +593,25 @@ Crafting with the book is intentionally restricted by a few rules so it does not
 
 These rules should make crafting feel like a powerful tool that the player can use almost anywhere, but only when they have earned a safe moment and gathered enough resources.
 
-### 6.4 Crafting and progression
-
-The crafting book is tightly connected to progression:
-
-- New recipes can be unlocked by:
-  - Discovering new resources in distant biomes.
-  - Completing certain scenes or minigames in the parallel world.
-  - Meeting NPCs who teach recipes.
-- Higher tier equipment, potions and building pieces require materials from deeper parts of the world or the parallel world.
-
-The player should feel a clear arc:
-
-- At the start, the book only contains a small set of simple recipes (basic tools, basic food, a starter chest and bed).
-- Over time, the book fills with more complex options, but everything remains organized in the same interface, so it never becomes confusing.
-
-The **Building** category is especially important because it bridges directly into the building system described next.
-
 ---
 
 ## 7. Building system
 
-Building allows the player to place functional structures and simple architectural elements in the world. The goal is not to recreate a full voxel building game, but to give the player enough tools to create a recognizable home base with a bed, storage, doors and a bit of structure around it.
-
-### 7.1 Scope and philosophy
-
 The building system is intentionally limited in scope:
 
-- The focus is on **functional structures** and **simple walls and floors**.
+- The focus is on **functional (interactable) structures** and **simple walls and floors**.
 - There are no trenches, tall mountains or complex vertical constructions.
-- There are no dozens of block shapes and micro building parts.
 
-This limitation keeps the implementation realistic for the thesis while still supporting:
-
-- A sense of “this is my place” when the player looks at their base.
-- Basic protection from enemies, if doors and walls block movement as designed.
-- A physical location for important objects like beds and chests.
-
-The player should feel that building is useful and satisfying, but not be overwhelmed by a massive building catalog.
+The player should feel that building is simple, useful and satisfying, but not be overwhelming.
 
 ### 7.2 Building items and the Building category
 
 All building items are obtained through the **Building** category in the crafting book. Typical building items include:
 
-- **Bed** – lets the player sleep and enter the parallel world.
-- **Door** – allows passage through walls and can potentially block enemies.
-- **Chest** – provides storage for items (as described in the inventory section).
+- **Interactable items**:
+  - **Bed** – lets the player sleep and enter the parallel world.
+  - **Door** – allows passage through walls and can potentially block enemies.
+  - **Chest** – provides storage for items (as described in the inventory section).
 - **Walls** – simple segments used to form rooms or enclosures.
 - **Floors** – tiles used to visually mark interior areas or walkable surfaces.
 
@@ -661,23 +639,9 @@ When the player right clicks:
 
 - If the position is invalid, nothing happens and some feedback (for example a small sound or visual) indicates that placement is not allowed.
 
-Examples of invalid positions:
-
-- Another solid object (like an existing wall or chest) already occupies that space.
-- The position is out of bounds, too far away from the player, or on an unsuitable ground type if such constraints are defined.
-
 Removal and modification:
 
 - The system should allow placed structures (except possibly certain special ones) to be removed or mined later, returning either the item or some of the materials. The exact rules can be adjusted, but players generally expect to be able to fix mistakes when building.
-- For the thesis, even a simple “destroy and drop item” behavior is enough, as long as it is consistent.
-
-The building experience should be simple:
-
-- Players craft building items from resources.
-- They put them on the hotbar.
-- They right click to place them and shape a small base over time.
-
-No separate building mode is necessary; building is just another action performed via items.
 
 ---
 
@@ -748,10 +712,6 @@ The intended behavior is:
 
 - The player must occasionally look around and make sure the area is clear before committing to longer mining sessions.
 - If enemies appear, the player should interrupt mining, deal with the threat, and then continue.
-
-This keeps mining integrated into the survival loop instead of being a completely separate, risk free activity.
-
-By connecting mining visually to magic (floating tools), logically to crafting (resource flow) and mechanically to risk management (time spent in dangerous areas), the game maintains coherence between the wizard fantasy and the standard survival sandbox mechanics.
 
 ---
 
