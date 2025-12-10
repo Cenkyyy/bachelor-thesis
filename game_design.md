@@ -379,334 +379,383 @@ Picture 1.7.
 The tutorial explicitly teaches these controls and should explain the difference between panels that pause the game (pause/settings) and panels that do not (inventory, chests, map, crafting book). This helps players form correct expectations about when it is safe to manage items or read the map and when they need to be ready to react to enemies.
 
 ---
+## 5. Items, inventory, equipment and chests
 
-## 6. Items, inventory, equipment and chests
+Items are at the center of progression in the game. The player gathers resources, turns them into tools, equipment, food and building pieces, and stores them in inventories and chests. This section describes how items are represented, how the inventory and hotbar behave, how equipment slots work and how chests are used both as storage and as loot containers.
 
-### 6.1 Item model and expectations
+### 5.1 Item definition and categories
 
-Items are central to the game. Each item should at least define:
+Each item in the game is defined by a small set of properties that describe how it should look and behave. At a minimum, an item has:
 
-- **Name**  
-  Descriptive, used in UI.
+- A **name**  
+  Shown in tooltips, crafting recipes and inventory slots. The name should clearly indicate what the item is and, if possible, hint at its function (for example "Simple Wand", "Cooked Chicken", "Wooden Pickaxe").
 
-- **Icon**  
-  Distinctive and readable at small sizes.
+- An **icon**  
+  A small pixel art representation used in the inventory, hotbar and crafting book. Icons must be recognizable at a glance and distinguishable from other items, especially when multiple item types share similar colors (for example several different ores).
 
-- **Category**  
-  Examples: weapon, armor, tool, consumable, resource, building, crafting material.
+- A **category**  
+  A classification that groups items by their role. Typical categories include:
+  - Weapon
+  - Armor
+  - Tool
+  - Consumable (food, potions)
+  - Resource (wood, stone, ore, memory fragments)
+  - Building (bed, chest, walls, floors)
+  - Other / Miscellaneous  
+  The category determines where the item can be used (for example in equipment slots or in the building system) and which systems care about it (for example the hunger system cares about food, the crafting system cares about resources).
 
 - **Stacking rules**  
-  - Maximum stack size (for example 1 for equipment, higher for resources).
-  - Whether it can be stacked at all.
+  Each item defines:
+  - A maximum stack size (1 for equipment that cannot stack, higher values for resources and consumables).
+  - Whether the item can be stacked at all.  
+  These rules influence how much of each resource the player can carry in a single inventory and how often they need to manage space.
 
-- **Basic behavior flags**  
-  For example:
-  - Consumable: can be used to apply an effect.
-  - Placeable: creates a structure when used.
-  - Tool: can mine or interact with specific world elements.
+### 5.2 Player inventory and hotbar
 
-Expectations:
+The player has a personal inventory that consists of:
 
-- The item system should be generic and data driven so that new items are mostly added by creating new data entries rather than new code.
-- Items should be self explanatory in the UI: the player should understand what an item does from its icon, name and tooltip.
+- A **backpack grid** for general storage.
+- A **hotbar** that exposes a subset of items for quick access.
 
-### 6.2 Player inventory and hotbar
+The backpack is used for carrying all the items the player picks up or crafts. It is shown as a grid of slots. Each slot can contain one stack of items or be empty. The exact size of the backpack (number of slots) can be adjusted during balancing, but it should be large enough to allow exploration without constant backtracking, while still forcing some decisions about what to keep and what to leave behind.
 
-The player has:
+The hotbar is a row of slots, usually displayed at the bottom of the screen as part of the HUD. It is directly connected to the inventory:
 
-- **Backpack inventory**  
-  A grid of slots that can store items.
+- Each hotbar slot corresponds to a specific slot in the backpack.
+- Selecting a hotbar slot changes which item is currently "active".
+- The active item is used for context actions:
+  - Mining (if the active item is a mining tool).
+  - Attacking (if the active item is a weapon).
+  - Placing structures (if the active item is a building piece).
+  - Using consumables like food or potions.
 
-- **Hotbar**  
-  A row of slots linked to the backpack, representing quick access items.
+The interaction patterns for moving items between slots, splitting stacks and quickly transferring items should follow the conventions players know from games like Minecraft:
+
+- Left click, right click, shift-click, double-click and dragging behavior are designed to feel familiar.
+- Players should be able to:
+  - Quickly move whole stacks between inventory and chests.
+  - Split stacks into smaller parts.
+  - Combine stacks of the same item.
+  - Rearrange the hotbar without friction.
+
+The goal is for inventory management to feel smooth and efficient. The player should not feel like they are fighting the UI to move items where they want; instead, they should spend most of their time exploring and playing, with inventory interactions happening quickly when needed.
+
+### 5.3 Equipment panel and character slots
+
+In addition to the general inventory, the player has an equipment panel that represents what they are currently wearing or holding. This panel is typically shown as part of the inventory screen and contains dedicated slots for different equipment types.
+
+- Head slot (helmets, hoods, hats).
+- Chest slot (armor).
+- Legs slot (pants).
+- Boots slot (boots).
+- Accessory slots (rings, amulets, necklaces).
+
+Only compatible items can be placed into each slot. For example:
+
+- A helmet item can be placed into the head slot but not into the legs slot.
+- A wand or staff can go into the main hand slot, but not into the chest slot.
+
+Equipping an item from the inventory into an equipment slot:
+
+- Updates the players stats (for example increases armor, health, damage or mana).
+- May change the players visual appearance if there are sprites or overlays for that piece of equipment.
+
+Removing an item from a slot places it back into the inventory, assuming there is space. If the inventory is full, removing equipment can be blocked or might require the player to free space first, depending on the chosen rules.
+
+The equipment panel should:
+
+- Give a clear overview of what the player is currently wearing.
+- Make it easy to compare equipment by showing simple stats or differences in a tooltip.
+- Integrate with the crafting system so that newly crafted gear can be equipped quickly.
+
+### 5.4 Chests: storage and loot
+
+Chests provide additional storage in the world and are used both for player made bases and for rewarding exploration in dungeons and special scenes. There are two main types of chests in the current design.
+
+#### Regular storage chests
+
+Regular chests are crafted by the player from materials such as wood and other basic resources. They are part of the Building category in the crafting book and, once crafted, can be placed in the world like other building items.
 
 Behavior:
 
-- Items can be moved between slots, equipped to the character panel, or moved between inventory and chests.
-- The hotbar displays which items are usable quickly. One of the hotbar slots is always selected and used for context actions such as mining or placing blocks.
-- The interaction behavior for moving items (left click, right click, shift click, etc.) follows the same conventions as Minecraft:
-  - Players can split stacks, move full stacks quickly, and combine stacks efficiently.
-  - The intention is that experienced players feel at home and new players can learn from existing knowledge of other games.
+- After placement, a chest appears as an interactable object in the world.
+- The player can open a chest by right clicking it.
+- Opening a chest brings up a chest panel that shows:
+  - The chest’s internal storage slots.
+  - The player’s inventory on the side, to make moving items between them easy.
+- The player can move items between chest and inventory using the same interaction patterns as inside the inventory.
+- The chest panel can be closed by pressing `E` or `Esc`.
+- If the player walks away from the chest beyond a certain radius, the chest panel closes automatically, and interaction stops.
 
-Expectations:
+Regular chests are used to:
 
-- Inventory operations should feel smooth and responsive, without surprising restrictions.
-- Players should be able to manage inventory and move items between chests and backpack efficiently, without fighting the UI.
+- Store surplus resources and items that the player does not want to carry.
+- Organize items by type across multiple chests (for example one chest for ores, one for food).
+- Build a sense of a growing base with storage.
 
-Implementation notes:
+#### Dungeon and loot chests
 
-- Inventory UI does not pause the game, so interactions must be possible while the player character is standing in the world.
-- The system should support more inventory space in the future if needed.
+Dungeon or loot chests are placed by world generation in specific structures and scenes, such as shrines, dungeons or boss arenas. They are not crafted by the player. Instead, they act as one-time rewards for reaching specific locations.
 
-### 6.3 Equipment panel
+Characteristics:
 
-The player has a character panel with equipment slots for:
+- Dungeon chests contain pre spawned items that are generally stronger or rarer than what the player could craft at that moment.
+- The contents can be fixed per chest type or randomized within a defined loot table (for example "snow shrine chest" has a set of possible items appropriate for that area).
+- Once a dungeon chest has been looted, it may remain empty if opened again, or visually change to indicate it has been used.
 
-- Head.
-- Chest.
-- Legs.
-- Weapon or main hand.
-- Off hand (if used later).
-- Possible accessory slots.
+Interactions with dungeon chests are identical to regular chests (right click to open, `E`/`Esc` to close, auto close when moving away), so the player does not need to learn a new UI. The difference is purely in how the chest appears (world placement) and what items it contains.
 
-Behavior:
+In the future, additional chest tiers (for example silver, gold, rainbow) can be added to signal different loot quality or storage capacity.
 
-- Only compatible items can be placed into a slot (for example only helmets into the head slot).
-- Equipping an item updates the players stats and, if possible, their visual appearance.
-- Removing an item returns it to the inventory if there is space.
+### 5.5 Relationship to other systems
 
-Expectations:
+The item and inventory system described here is closely connected to several other parts of the game:
 
-- The equipment panel should clearly show which slots exist, what is equipped where, and any obvious stat changes.
-- For the thesis, a small number of equipment pieces is enough to demonstrate the system.
+- The **crafting book** creates items and building pieces and puts them into the inventory. It relies on item categories and stack rules to work correctly.
+- The **building system** uses placeable items from the Building category and the hotbar to place structures like beds, chests, doors, walls and floors into the world.
+- The **mining system** consumes and produces items:
+  - Tools (pickaxes and similar items) are held in the hotbar and used to mine nodes.
+  - Mining drops resource items that go into the inventory and later become ingredients for crafting.
+- The **hunger and survival system** uses food items as consumables, stored and moved through inventory and chests.
 
-### 6.4 Chests
-
-There are two main chest types:
-
-1. **Regular storage chest**
-   - Crafted by the player using materials.
-   - Used to store items persistently in the world.
-   - Can be placed as a structure from the Building category of the crafting book.
-   - Opened with right click, closed with `E` or `Esc`, or automatically when the player walks away.
-
-2. **Dungeon or loot chest**
-   - Spawned by world generation in specific scenes (for example near shrines, in dungeons).
-   - Contains pre defined or randomly selected loot that is better than what the player can craft at that point.
-   - May be a one time reward; once looted, it may remain empty.
-
-Future extension:
-
-- Additional chest tiers (for example silver, gold, rainbow) could indicate better loot quality and larger storage, but this is not required for the thesis.
-
-Expectations:
-
-- Chest interactions should mirror inventory behavior to avoid confusion.
-- Auto closing chests when leaving a radius prevent the player from forgetting open windows and losing context.
+Because of this, the item and inventory system must remain stable and predictable. Once its basic behavior is implemented and feels smooth, all higher level systems can be built on top of it without needing to change how players move and manage items.
 
 ---
 
-## 7. Crafting system - Crafting book
+## 6. Crafting system
 
-### 7.1 Concept
+Crafting lets the player turn gathered resources into tools, equipment, potions, food and building pieces. In this game, crafting is centered around a special object: the **crafting book**. The book acts as an in universe explanation for how the wizard remembers recipes and, at the same time, as the main user interface for all crafting operations.
 
-Crafting is handled through a special **crafting book** item. This book functions as a universal crafting interface that the player always has access to.
+The crafting system should feel powerful and convenient, but not abusable. The player should be able to open the book almost anywhere and turn raw materials into useful items, but only if they have created a safe moment and are not in immediate danger.
 
-Key characteristics:
+### 6.1 Crafting book concept
 
-- The crafting book can be opened to show a crafting UI.
-- Inside, recipes are grouped into categories such as:
-  - Equipment.
-  - Building.
-  - Food.
-  - Potions.
-  - Other or Miscellaneous.
-- The player browses categories and sees all known recipes in that category.
+The crafting book is a unique item associated with the player. It is not just another object that can be dropped or lost; it is more like a permanent tool or menu:
 
-The crafting book is intentionally strong, because it allows the player to craft complex items anywhere in the world. To balance this:
+- The book is always available to the player. It may be shown as an item in a special slot, or as a separate button or hotkey, but the key point is that it cannot be dropped or destroyed.
+- Opening the book reveals the crafting interface. This is the single, unified place where the player can see what can be crafted and with which ingredients.
+- The book reinforces the fantasy that the wizard is slowly rebuilding their knowledge: recipes represent things they have “remembered” or learned, rather than random combinations.
 
-- The book cannot be dropped from the inventory.
-- Crafting is restricted based on nearby enemies and time.
+The expectation is that once the player understands that all crafting happens through this book, they no longer need to search the world for special crafting stations for basic tasks. Additional specialized stations can still exist later, but the standard way to craft is always through the book.
 
-Expectations:
+### 6.2 Categories and recipe display
 
-- The crafting system is easy to understand and does not require remembering hidden patterns.
-- The crafting book acts as an in universe explanation of how the wizard remembers recipes.
+Inside the crafting book, recipes are organized into clear categories so the player can quickly find what they are looking for. Planned categories include:
 
-Implementation notes:
+- **Equipment** – weapons, armor, tools and other items that change stats or combat power.
+- **Building** – structures and placeable objects such as beds, doors, chests, walls and floors.
+- **Food** – raw and cooked food items that restore hunger and sometimes health.
+- **Potions** – consumable items that restore mana, grant temporary buffs or have other magical effects.
+- **Other / Miscellaneous** – items that do not fit neatly into the previous categories (for example special components, keys, or one off quest items).
 
-- The book may live in a special non droppable slot or exist as an always available function, but the UI should make it clear how to access it.
-- Recipes are data driven and can be extended after thesis work.
+When the player selects a category, the book shows all known recipes in that category as a grid or list of icons. For each recipe:
 
-### 7.2 Recipe presentation and feedback
+- Hovering over the recipe brings up a detail panel with:
+  - Name and icon of the resulting item.
+  - Short description.
+  - List of required ingredients and amounts, using the same icons and names as in the inventory.
+- Recipes for which the player currently has all the required ingredients are displayed normally and are interactable.
+- Recipes for which the player is missing some ingredients are displayed in a dimmed or slightly transparent style, indicating that they are currently unavailable.
 
-When the crafting book is open:
+The design goal is that the player can open the book and instantly answer two questions:
 
-- The player selects a category.
-- The UI shows all recipes in that category as icons or rows.
-- When the player hovers over a recipe, a detail panel shows:
-  - The name and description of the resulting item.
-  - The required ingredients, including amounts and icons.
+1. “What can I craft right now with what I have?”
+2. “What would I need to craft item X?”
 
-Visual feedback:
+This means the book doubles as both a crafting interface and a visual recipe encyclopedia.
 
-- Recipes that are currently craftable (all ingredients available) are fully lit and interactable.
-- Recipes that are not craftable are shown darker or with reduced opacity to signal that they are unavailable right now.
-- This gives a quick overview of what is possible with the resources in the inventory and chests.
+### 6.3 Crafting rules and constraints
 
-Expectations:
+Crafting with the book is intentionally restricted by a few rules so it does not trivialize the survival aspects:
 
-- The player does not have to guess unknown recipes. Everything they know is visible.
-- The UI should be fast to read and not require navigating deep hierarchies.
+- The player can only start crafting when there are **no enemies nearby**.  
+  The game checks for hostile entities within a certain radius around the player. If any are detected, the “Craft” action is blocked or disabled, and the player must first move to safety or deal with the threat.
 
-### 7.3 Crafting rules and constraints
+- Crafting takes **time** rather than being instantaneous.  
+  When the player chooses to craft an item:
+  - A short progress indication is shown.
+  - The player character is considered busy. They cannot start another craft until the current one finishes.
+  - Higher level or more complex items can take longer than simple ones.
 
-Crafting through the book follows several rules to keep it balanced and connected to gameplay:
+- The game is **not paused** while crafting.  
+  Enemies and other world events continue to update. If an enemy approaches while the player is crafting, they might be in danger once the craft finishes. This creates a similar tension to Ornn’s in field crafting in League of Legends: crafting in the open is convenient but risky.
 
-- The player can only craft if **no enemies are nearby**. If an enemy comes within a defined radius, crafting actions are blocked or canceled.
-- Crafting takes **time**, not instantaneous:
-  - When the player chooses to craft an item, a short crafting animation or progress is played.
-  - High value or complex items can take slightly longer.
-- The player remains vulnerable during crafting, because the game is not paused.
-- Crafted items are placed into the inventory if there is space; otherwise crafting may be blocked or must be confirmed if it results in dropping items.
+- Crafting consumes ingredients from the player’s inventory.  
+  If an item requires, for example, 5 pieces of wood and 2 pieces of ore, those exact items must be present. After crafting, the ingredients are removed and the resulting item is added to the inventory, assuming there is space.
 
-Expectations:
+- If the inventory has no free slot for the crafted item, crafting may be prevented or must clearly warn the player.  
+  Dropping crafted items on the ground is possible but should not happen silently.
 
-- Crafting feels like a deliberate action that must be done in relatively safe conditions, similar to Ornn's in field crafting from League of Legends.
-- Crafting times must be short enough to avoid feeling tedious, especially for basic items.
+These rules should make crafting feel like a powerful tool that the player can use almost anywhere, but only when they have earned a safe moment and gathered enough resources.
 
-Implementation notes:
+### 6.4 Crafting and progression
 
-- The radius for "no enemies nearby" can be tuned later.
-- Recipes can be unlocked over time based on world progression, parallel world progression or NPC interactions.
+The crafting book is tightly connected to progression:
 
-### 7.4 Building category
+- New recipes can be unlocked by:
+  - Discovering new resources in distant biomes.
+  - Completing certain scenes or minigames in the parallel world.
+  - Meeting NPCs who teach recipes.
+- Higher tier equipment, potions and building pieces require materials from deeper parts of the world or the parallel world.
 
-The Building category of the crafting book is special and is described in more detail in the next section. It contains only items that result in placeable structures when used, such as:
+The player should feel a clear arc:
 
-- Beds.
-- Doors.
-- Chests.
-- Simple walls and floors.
+- At the start, the book only contains a small set of simple recipes (basic tools, basic food, a starter chest and bed).
+- Over time, the book fills with more complex options, but everything remains organized in the same interface, so it never becomes confusing.
 
----
-
-## 8. Building system
-
-### 8.1 Scope and expectations
-
-Building in this game is intentionally limited compared to fully voxel based sandboxes. The focus is on:
-
-- Placing functional structures that support survival and progression.
-- Creating simple shelters and rooms using walls and floors.
-
-There are no trenches, vertical mountains or complex block architecture. Full block style terrain building with many block types is out of scope for the thesis.
-
-### 8.2 Building items
-
-All building related items are obtained via the Building category in the crafting book. Examples include:
-
-- **Bed**  
-  Used for sleeping and entering the parallel world.
-
-- **Door**  
-  Allows entrances to rooms; potentially blocks enemies if desired.
-
-- **Chest**  
-  Persistent storage, as described earlier.
-
-- **Walls and floors**  
-  Simple tiles that allow the player to create enclosed spaces.
-
-Expectations:
-
-- The set of building items for the thesis is small but representative.
-- Building items clearly indicate their function through icon and description.
-
-### 8.3 Placement and interaction
-
-Building works as follows:
-
-- The player crafts a building item from the crafting book.
-- The item appears in the inventory and can be placed in the hotbar.
-- While holding a building item in the hotbar, the player can **right click** on the world to place it at the targeted valid position.
-
-Rules:
-
-- Certain building items may only be placed on specific ground types or within a certain radius of the player.
-- Placement fails (with feedback) if:
-  - Another blocking object is present.
-  - The location is invalid (for example outside the playable area).
-
-Expectations:
-
-- Building placement must feel responsive and predictable.
-- The system should support removing or mining placed structures later, at least for simple tiles, but detailed destruction rules can be decided later.
-
-Implementation notes:
-
-- Since only walls and floors are planned, the world remains mostly 2D topdown without vertical building.
-- Beds, chests and doors are more complex objects with interaction scripts.
+The **Building** category is especially important because it bridges directly into the building system described next.
 
 ---
 
-## 9. Mining and resources
+## 7. Building system
 
-### 9.1 Concept and fantasy
+Building allows the player to place functional structures and simple architectural elements in the world. The goal is not to recreate a full voxel building game, but to give the player enough tools to create a recognizable home base with a bed, storage, doors and a bit of structure around it.
 
-Mining allows the player to extract resources from the environment, such as stone, ore and special materials. It serves two purposes:
+### 7.1 Scope and philosophy
 
-- Provides resources for crafting tools, equipment and building items.
-- Supports the wizard fantasy by showing how the wizard manipulates tools magically rather than using them by hand.
+The building system is intentionally limited in scope:
 
-### 9.2 Tools and mining behavior
+- The focus is on **functional structures** and **simple walls and floors**.
+- There are no trenches, tall mountains or complex vertical constructions.
+- There are no dozens of block shapes and micro building parts.
 
-The player can mine using:
+This limitation keeps the implementation realistic for the thesis while still supporting:
 
-- **Tools**  
-  Special items such as pickaxes or similar mining tools.
+- A sense of “this is my place” when the player looks at their base.
+- Basic protection from enemies, if doors and walls block movement as designed.
+- A physical location for important objects like beds and chests.
 
-- **Bare hands**  
-  Allowed, but slower and possibly limited to weaker materials.
+The player should feel that building is useful and satisfying, but not be overwhelmed by a massive building catalog.
 
-To preserve the wizard theme:
+### 7.2 Building items and the Building category
 
-- Tools are not swung manually by the character. Instead, when mining, the tool is visualized as floating next to the player and hitting the target, controlled by magic.
-- Mining is performed by **holding left click** while a tool type item is active in the hotbar.
+All building items are obtained through the **Building** category in the crafting book. Typical building items include:
 
-Expectations:
+- **Bed** – lets the player sleep and enter the parallel world.
+- **Door** – allows passage through walls and can potentially block enemies.
+- **Chest** – provides storage for items (as described in the inventory section).
+- **Walls** – simple segments used to form rooms or enclosures.
+- **Floors** – tiles used to visually mark interior areas or walkable surfaces.
 
-- Mining should be straightforward: aim at a mineable object and hold the mining input until it breaks and drops resources.
-- Using proper tools should feel significantly more efficient than bare hands, so there is a clear incentive to craft and upgrade tools.
+Each of these items behaves like a normal item when in the inventory:
 
-Implementation notes:
+- It has an icon and stack rules.
+- It can be placed into the hotbar.
+- It can be moved between inventory and chests.
 
-- Different materials can have different hardness and drop tables, but for the thesis a small set of materials is enough.
-- Mining may also be used in the parallel world to gather Memory related resources, but those details are specified later.
+The difference is that using a building item in the world does not consume it like a potion; instead, it places a persistent structure in the game world.
 
----
+### 7.3 Placement and use
 
-## 10. Hunger and food
+The general rule for building is:
 
-### 10.1 Motivation and expectations
+- To place a building item, the player selects it in the hotbar and **right clicks** on a valid position in the world.
 
-Hunger adds a lightweight survival pressure to the game. It should:
+When the player right clicks:
 
-- Encourage the player to obtain food regularly.
-- Create interesting decisions about when to explore, when to return to base and when to seek food.
-- Interact with other systems without overshadowing them.
+- If the position is valid and empty, the corresponding structure appears:
+  - Placing a bed creates a bed object that the player can later interact with to sleep.
+  - Placing a chest creates a chest that can be opened and used for storage.
+  - Placing a wall segment creates a piece of wall.
+  - Placing a floor tile changes the ground under the player to a floor.
 
-Hunger is not intended to be a punishing micromanagement system. It should be simple enough to understand and handle, especially with the help of NPCs that provide food.
+- If the position is invalid, nothing happens and some feedback (for example a small sound or visual) indicates that placement is not allowed.
 
-### 10.2 Basic behavior
+Examples of invalid positions:
 
-- The player has a **hunger bar** visible in the HUD.
-- Hunger gradually decreases over time as the player performs actions.
-- When hunger is above a certain threshold, the player behaves normally.
-- When hunger falls too low:
-  - The player may suffer penalties such as slower movement, reduced regeneration, or periodic health loss.
-  - The exact effect can be tuned so that it is noticeable but not immediately fatal.
+- Another solid object (like an existing wall or chest) already occupies that space.
+- The position is out of bounds, too far away from the player, or on an unsuitable ground type if such constraints are defined.
 
-The player can refill hunger by:
+Removal and modification:
 
-- Eating food items obtained from:
-  - NPCs that provide food or drop food when defeated.
-  - Loot from chests.
-  - Later possibly crafted recipes.
+- The system should allow placed structures (except possibly certain special ones) to be removed or mined later, returning either the item or some of the materials. The exact rules can be adjusted, but players generally expect to be able to fix mistakes when building.
+- For the thesis, even a simple “destroy and drop item” behavior is enough, as long as it is consistent.
 
-Expectations:
+The building experience should be simple:
 
-- The player should not be forced to eat every few seconds. Hunger depletion speed must be balanced to allow meaningful exploration.
-- Food variety can be minimal at first, focusing on a few basic items with clear effects.
+- Players craft building items from resources.
+- They put them on the hotbar.
+- They right click to place them and shape a small base over time.
 
-Implementation notes:
-
-- NPC design and food item definitions will be elaborated in later chapters.
-- The crafting book will contain a Food category once there are enough recipes.
+No separate building mode is necessary; building is just another action performed via items.
 
 ---
 
-## 11. Topics to be defined later
+## 8. Mining and resource gathering
+
+Mining connects the world to the crafting and building systems by providing the raw materials needed for tools, equipment and structures. At the same time, it should reinforce the wizard fantasy rather than feeling like ordinary manual labor.
+
+### 8.1 Mining fantasy
+
+In many survival games, the player swings a pickaxe manually to mine. Here, the character is a wizard, so the mining animation and feeling should be different:
+
+- When the player mines with a tool, the tool should appear to **float** and strike the target under magical control.
+- The player character stands near the resource node and channels their magic through the tool rather than physically swinging it.
+
+This subtle change helps maintain the idea that everything the player does, even mundane tasks like mining, is mediated by magic.
+
+### 8.2 Tools, hands and mining input
+
+Mining can be performed in two ways:
+
+- With a **tool** (for example a magical pickaxe or another mining implement).
+- With **bare hands**, for very weak or soft materials.
+
+The interaction rule is:
+
+- To mine, the player holds a mining capable item in the hotbar and **holds left click** while aiming at a mineable object in the world.
+
+While left click is held:
+
+- A mining action is performed repeatedly or as a continuous progress until the resource node is broken and drops items.
+- Using a proper tool makes mining significantly faster and allows mining of harder materials.
+- Using bare hands is permitted, but:
+  - It is much slower.
+  - It may be limited to basic blocks like very soft stone or dirt.
+
+The expectation is that mining without tools is only used in emergencies or at the very beginning of the game. As soon as the player can craft or find a basic mining tool, they should prefer it.
+
+### 8.3 Resource nodes and drops
+
+Resource nodes are world objects or tiles that can be mined. Typical examples:
+
+- Stone nodes that drop stone or rock items.
+- Ore nodes that drop metal ore of various types.
+- Special nodes in the parallel world that drop Memory related materials.
+
+Each node defines:
+
+- What tool or minimum tool “strength” is needed to mine it efficiently (for example some nodes might be extremely slow with bare hands).
+- How many hits or how much time is required to break it with a given tool type.
+- What items it drops on destruction and in what quantities.
+
+The relationship between mining and crafting is straightforward:
+
+- The player explores the world and finds nodes.
+- Mining nodes produces resource items that go into the inventory.
+- These items become ingredients in the crafting book for tools, equipment, building items, potions and so on.
+
+Even with a small number of node types and resources, this creates a basic progression: better tools and equipment require rarer materials from deeper or more dangerous parts of the world.
+
+### 8.4 Mining, combat and safety
+
+Mining does not pause the game, so it carries similar risks to crafting:
+
+- While the player is focused on mining, enemies may approach from off screen.
+- Mining in exposed locations is dangerous; mining in caves or near the base might be safer but still not perfectly safe.
+
+The intended behavior is:
+
+- The player must occasionally look around and make sure the area is clear before committing to longer mining sessions.
+- If enemies appear, the player should interrupt mining, deal with the threat, and then continue.
+
+This keeps mining integrated into the survival loop instead of being a completely separate, risk free activity.
+
+By connecting mining visually to magic (floating tools), logically to crafting (resource flow) and mechanically to risk management (time spent in dangerous areas), the game maintains coherence between the wizard fantasy and the standard survival sandbox mechanics.
+
+---
+
+## 9. Topics to be defined later
 
 The following systems are acknowledged but not yet fully specified. They will each receive their own chapters or sections later:
 
