@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class BackpackPanel : InventoryPanelBase<Slot>
+public class BackpackPanel : InventoryPanelBase<Slot>, IMajorPanel
 {
-    [SerializeField] private CharacterPanel _characterPanel;
-
     protected override int SlotCount => player.Inventory.BackpackSize;
-    public bool IsOpen => slotParent != null && slotParent.gameObject.activeSelf;
+    public bool IsOpen => slotParent.gameObject.activeSelf;
+    public PanelId Id => PanelId.Inventory;
+    public bool PausesGame => false;
+    public bool BlocksGameplayInput => true;
 
     protected override void Start()
     {
@@ -30,22 +31,14 @@ public class BackpackPanel : InventoryPanelBase<Slot>
         slotParent.gameObject.SetActive(wasActive);
     }
 
-    public void OpenInventory()
+    public void Open()
     {
-        if (slotParent != null && !IsOpen)
-        {
-            slotParent.gameObject.SetActive(true);
-            _characterPanel?.Open();
-        }
+        slotParent.gameObject.SetActive(true);
     }
 
     public void Close()
     {
-        if (slotParent != null && IsOpen)
-        {
-            slotParent.gameObject.SetActive(false);
-            _characterPanel?.Close();
-        }
+        slotParent.gameObject.SetActive(false);
     }
 
     public override void RefreshSlot(int backpackIndex)

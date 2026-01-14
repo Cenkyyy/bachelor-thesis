@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public sealed class CharacterPanel : MonoBehaviour
+public sealed class CharacterPanel : MonoBehaviour, IPanel
 {
     [Header("View")]
     [SerializeField] private EquipmentSlot _slotPrefab;
@@ -55,14 +55,12 @@ public sealed class CharacterPanel : MonoBehaviour
 
     public void Open()
     {
-        if (_slotParent != null)
-            _slotParent.gameObject.SetActive(true);
+        _slotParent.gameObject.SetActive(true);
     }
 
     public void Close()
     {
-        if (_slotParent != null)
-            _slotParent.gameObject.SetActive(false);
+        _slotParent.gameObject.SetActive(false);
     }
 
     public void RefreshSlot(int index)

@@ -1,14 +1,17 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public sealed class ChestPanel : MonoBehaviour
+public sealed class ChestPanel : MonoBehaviour, IMajorPanel
 {
     [Header("View")]
     [SerializeField] private Slot _slotPrefab;
     [SerializeField] private Transform _slotParent;
 
     public IInventory Inventory { get; private set; }
-    public bool IsOpen => _slotParent != null && _slotParent.gameObject.activeSelf;
+    public bool IsOpen => _slotParent.gameObject.activeSelf;
+    public PanelId Id => PanelId.Chest;
+    public bool PausesGame => false;
+    public bool BlocksGameplayInput => true;
 
     private Slot[] _slots;
 
@@ -31,13 +34,11 @@ public sealed class ChestPanel : MonoBehaviour
 
     public void Open()
     { 
-        if (_slotParent != null)
-            _slotParent.gameObject.SetActive(true);
+        _slotParent.gameObject.SetActive(true);
     }
     public void Close() 
     { 
-        if (_slotParent != null)
-            _slotParent.gameObject.SetActive(false);
+        _slotParent.gameObject.SetActive(false);
     }
 
     private void BuildSlots()

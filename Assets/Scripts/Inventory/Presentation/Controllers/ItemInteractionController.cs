@@ -48,17 +48,7 @@ public class ItemInteractionController : MonoBehaviour
     // Currently held (cursor) item
     private InventoryItem _heldItem = InventoryItem.Empty;
 
-    private bool AnyPanelOpen =>
-    (_backpackPanel != null && _backpackPanel.IsOpen) ||
-    (_chestPanel != null && _chestPanel.IsOpen) ||
-    (_characterPanel != null && _characterPanel.IsOpen);
-
-    private void CloseAllPanels()
-    {
-        if (_chestPanel != null && _chestPanel.IsOpen) _chestPanel.Close();
-        if (_backpackPanel != null && _backpackPanel.IsOpen) _backpackPanel.Close();
-        if (_characterPanel != null && _characterPanel.IsOpen) _characterPanel.Close();
-    }
+    private bool IsAnyInventoryUiOpen => _backpackPanel.IsOpen || _chestPanel.IsOpen || _characterPanel.IsOpen;
 
     private void Awake()
     {
@@ -85,35 +75,11 @@ public class ItemInteractionController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (AnyPanelOpen)
-            {
-                CloseAllPanels();
-            }
-            else
-            {
-                _backpackPanel?.OpenInventory();
-            }
-
-            _heldItem = InventoryItem.Empty;
-            UpdateHeldItem();
+        if (GameStateManager.IsGamePaused)
             return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (AnyPanelOpen)
-            {
-                CloseAllPanels();
-                _heldItem = InventoryItem.Empty;
-                UpdateHeldItem();
-                return;
-            }
-        }
 
         if (_heldItem.IsEmpty)
-            return;
+            return;        
 
         // make the item icon follow the mouse cursor
         RectTransformUtility.ScreenPointToLocalPointInRectangle
@@ -126,19 +92,19 @@ public class ItemInteractionController : MonoBehaviour
         _heldItemContainer.anchoredPosition = pos;
 
         // drop held stack when clicking outside inventory panels
-        if (_backpackPanel != null && _backpackPanel.IsOpen && !_heldItem.IsEmpty && Input.GetMouseButtonDown(0))
-        {
-            if (!IsPointerOverInventoryPanels(Input.mousePosition))
-            {
-                // spawn the held item in the world
-                AimUtils.ComputeAim2D(_player.transform, _dropSpawnDistance, out var direction, out var spawnPos);
-                _worldItemSpawner?.Spawn(_heldItem, spawnPos, direction);
+        if (!Input.GetMouseButtonDown(0))
+            return;
 
-                // clear held cursor item
-                _heldItem = InventoryItem.Empty;
-                UpdateHeldItem();
-            }
-        }
+        if (IsPointerOverInventoryPanels(Input.mousePosition))
+            return;
+
+        // spawn the held item in the world
+        AimUtils.ComputeAim2D(_player.transform, _dropSpawnDistance, out var direction, out var spawnPos);
+        _worldItemSpawner?.Spawn(_heldItem, spawnPos, direction);
+
+        // clear held cursor item
+        _heldItem = InventoryItem.Empty;
+        UpdateHeldItem();
     }
 
     private bool IsPointerOverInventoryPanels(Vector2 screenPoint)
@@ -701,6 +667,24 @@ public class ItemInteractionController : MonoBehaviour
     /// <param name="b">Second item to compare.</param>
     /// <returns>true if both are non-empty and of the same type; otherwise false.</returns>
     private bool IsSameItem(InventoryItem a, InventoryItem b) => !a.IsEmpty && !b.IsEmpty && a.Item == b.Item;
+
+    public void ResolveHeldItemToInventoryOrDrop()
+    {
+        if (_heldItem.IsEmpty)
+            return;
+
+        _player.Inventory.TryAddItemToRange(_heldItem, new SlotRange(0, _player.Inventory.Capacity), out var leftover);
+
+        if (!leftover.IsEmpty)
+        {
+            AimUtils.ComputeAim2D(_player.transform, _dropSpawnDistance, out var direction, out var spawnPos);
+            _worldItemSpawner.Spawn(leftover, spawnPos, direction);
+        }
+
+        _heldItem = InventoryItem.Empty;
+        UpdateHeldItem();
+    }
+
 
     /// <summary>
     /// Updates the held-item UI visibility and content based on the current held item.

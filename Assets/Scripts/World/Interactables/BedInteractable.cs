@@ -5,9 +5,6 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D))]
 public sealed class BedInteractable : MonoBehaviour
 {
-    [Header("UI")]
-    [SerializeField] private ParallelWorldPanel _sleepPanel;
-
     [Header("Rules")]
     [SerializeField] private bool _requireNight = true;
     [SerializeField] private bool _allowDaytimeTesting = false;
@@ -37,7 +34,7 @@ public sealed class BedInteractable : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            _sleepPanel.Open();
+            PanelManager.Instance.OpenMajorPanel(PanelId.ParallelWorld);
         }
     }
 

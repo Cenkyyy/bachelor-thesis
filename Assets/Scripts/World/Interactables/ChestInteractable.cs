@@ -4,9 +4,6 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(ChestInventory))]
 public sealed class ChestInteractable : MonoBehaviour
 {
-    [SerializeField] private ChestPanel _chestPanel;
-    [SerializeField] private BackpackPanel _backpackPanel;
-
     private ChestInventory _inventory;
     private bool _playerInside;
 
@@ -31,7 +28,7 @@ public sealed class ChestInteractable : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _playerInside = false;
-            _chestPanel?.Close();
+            PanelManager.Instance.CloseChestIfBoundTo(_inventory.Inventory);
         }
     }
 
@@ -45,23 +42,7 @@ public sealed class ChestInteractable : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            ToggleChestAndInventory();
-        }
-    }
-
-    private void ToggleChestAndInventory()
-    {
-        _chestPanel.Bind(_inventory.Inventory);
-
-        if (_chestPanel.IsOpen)
-        {
-            _chestPanel.Close();
-            _backpackPanel?.Close();
-        }
-        else
-        {
-            _chestPanel.Open();
-            _backpackPanel?.OpenInventory();
+            PanelManager.Instance.InteractWithChest(_inventory.Inventory);
         }
     }
 }

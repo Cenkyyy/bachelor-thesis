@@ -22,8 +22,7 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
             slots[i].OnPointerEntered += HandleSlotEnter;
         }
 
-        if (slots.Length > 0)
-            slots[_selectedIndex].HighlightSelected();
+        slots[_selectedIndex].HighlightSelected();
 
         // subscribe to hotbar selection changes
         player.Inventory.OnHotbarSelectionChanged += ChangeSelectedSlot;
@@ -31,7 +30,9 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
 
     private void Update()
     {
-        if (slots == null || slots.Length == 0) 
+        if (GameStateManager.IsGamePaused)
+            return;
+        if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
             return;
 
         var scroll = Input.GetAxis("Mouse ScrollWheel");
@@ -51,8 +52,7 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
     {
         base.OnDestroy();
 
-        if (player?.Inventory != null)
-            player.Inventory.OnHotbarSelectionChanged -= ChangeSelectedSlot;
+        player.Inventory.OnHotbarSelectionChanged -= ChangeSelectedSlot;
     }
 
     private void ChangeSelectedSlot(int newIndex)
