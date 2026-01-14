@@ -21,6 +21,9 @@ public class WorldGeneratorBehaviour : MonoBehaviour
     [Header("Player")]
     [SerializeField] private Transform playerTransform;
 
+    [Header("Minimap")]
+    [SerializeField] private MinimapController _minimap;
+
     private void Start()
     {
         GenerateAndRender();
@@ -44,6 +47,7 @@ public class WorldGeneratorBehaviour : MonoBehaviour
 
         RenderWorld(data);
         PositionPlayer(data);
+        _minimap.Initialize(data);
     }
 
     private List<WorldGenerator.BiomeCenter> CreateBiomeCenters(int diameter)
@@ -83,7 +87,7 @@ public class WorldGeneratorBehaviour : MonoBehaviour
                 if (tileAsset == null)
                     continue;
 
-                var tilePos = new Vector3Int(x + offsetX, y + offsetY, 0);
+                var tilePos = data.DataToCell(x, y);
                 groundTilemap.SetTile(tilePos, tileAsset);
             }
         }
@@ -115,18 +119,13 @@ public class WorldGeneratorBehaviour : MonoBehaviour
         // Uniform distribution
         return array[UnityEngine.Random.Range(0, array.Length)];
     }
-
+    
     private void PositionPlayer(WorldData data)
     {
         if (playerTransform == null || groundTilemap == null)
             return;
 
-        var spawnTile = data.SpawnTile;
-
-        var offsetX = -data.Width / 2;
-        var offsetY = -data.Height / 2;
-
-        var cellPos = new Vector3Int(spawnTile.x + offsetX, spawnTile.y + offsetY, 0);
+        var cellPos = data.DataToCell(data.SpawnTile.x, data.SpawnTile.y);
 
         var cellWorldPos = groundTilemap.CellToWorld(cellPos);
         var worldPos = cellWorldPos + new Vector3(0.5f, 0.5f, 0f);
