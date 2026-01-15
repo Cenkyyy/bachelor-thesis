@@ -2354,11 +2354,11 @@ MonoBehaviour:
   - TileType: 0
     Color:
       serializedVersion: 2
-      rgba: 9047133
+      rgba: 4287237213
   - TileType: 1
     Color:
       serializedVersion: 2
-      rgba: 16250588
+      rgba: 4294440668
   - TileType: 2
     Color:
       serializedVersion: 2
@@ -4375,6 +4375,7 @@ MonoBehaviour:
   _zoomSpeed: 0.15
   _maxZoom: 4
   _panSpeed: 1
+  _panScalesWithZoom: 1
 --- !u!114 &869825507 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3949894963783754967, guid: 4ca522be27f3ae34b88054763713a6bb, type: 3}
@@ -5509,20 +5510,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 346859df2cbd09a4196975bf51ad2fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundTilemap: {fileID: 188757767}
-  voidTile: {fileID: 11400000, guid: 632e47e4e982710458379b2684ab9fdb, type: 2}
-  winterTiles:
-  - {fileID: 11400000, guid: ffb4c23b2b711dd42a822dc08c935e4e, type: 2}
+  _groundTilemap: {fileID: 188757767}
+  _voidTile: {fileID: 11400000, guid: 632e47e4e982710458379b2684ab9fdb, type: 2}
+  _winterTiles:
   - {fileID: 11400000, guid: f8c6e33961806014896ec5804b92a287, type: 2}
+  - {fileID: 11400000, guid: ffb4c23b2b711dd42a822dc08c935e4e, type: 2}
   - {fileID: 11400000, guid: 5fe4f71fb0dfa104982a465b7a2bcb09, type: 2}
-  grassTiles:
-  - {fileID: 11400000, guid: 841ac58e2349f204aae2305ffbee50b2, type: 2}
+  _grassTiles:
   - {fileID: 11400000, guid: a7bce5abe99d5fb49ab632bfd33de968, type: 2}
   - {fileID: 11400000, guid: 0753aaac2f78c654caa1b841ba369cc9, type: 2}
-  worldRadius: 128
-  worldPadding: 4
-  seed: 12345
-  playerTransform: {fileID: 2010244813}
+  - {fileID: 11400000, guid: 841ac58e2349f204aae2305ffbee50b2, type: 2}
+  _worldRadius: 128
+  _worldPadding: 4
+  _defaultSeed: 12345
+  _randomizeSeedOnPlay: 0
+  _playerTransform: {fileID: 2010244813}
   _minimap: {fileID: 503899696}
 --- !u!1 &1102986733
 GameObject:
