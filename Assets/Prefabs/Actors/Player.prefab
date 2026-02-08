@@ -93,6 +93,8 @@ GameObject:
   - component: {fileID: 5402159747806690286}
   - component: {fileID: 3255990485141274289}
   - component: {fileID: 1937574750648150484}
+  - component: {fileID: 3428453546330940767}
+  - component: {fileID: 4403078374656698331}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -237,6 +239,42 @@ MonoBehaviour:
   _interactionMask:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &3428453546330940767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f542d2b2d49c9b47b14a40898b515c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 8120486794298343527}
+  _toolDurability: {fileID: 0}
+  _itemDropSpawner: {fileID: 0}
+  _camera: {fileID: 0}
+  _mouseButton: 0
+  _mineableMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _miningRange: 1.5
+  _allowHandMining: 1
+  _handMiningPower: 1
+--- !u!114 &4403078374656698331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6883eac39f5c3a1469a0c2bf1fdc7bd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 8120486794298343527}
 --- !u!1 &3653677619089745102
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(menuName = "World/Mineable Node")]
+public sealed class MineableNodeDefinition : ScriptableObject
+{
+    [Header("Requirements")]
+    [field: SerializeField] public ToolType RequiredToolType { get; private set; } = ToolType.Pickaxe;
+    [field: SerializeField] public ToolTier MinimumTier { get; private set; } = ToolTier.Wooden;
+    [field: SerializeField] public bool AllowHandMining { get; private set; } = true;
+
+    [Header("Durability")]
+    [field: SerializeField] public float MaxDurability { get; private set; } = 10f;
+    [field: SerializeField] public float ToolPowerMultiplier { get; private set; } = 1f;
+
+    [Header("Drops")]
+    [SerializeField] private List<MiningDropEntry> _drops = new List<MiningDropEntry>();
+    public IReadOnlyList<MiningDropEntry> Drops => _drops;
+
+    [Header("Memory Ore")]
+    [field: SerializeField] public bool GrantsMemoryXP { get; private set; }
+    [field: SerializeField] public int MemoryXpAmount { get; private set; } = 10;
+}
+
+[Serializable]
+public struct MiningDropEntry
+{
+    [SerializeField] private Item _item;
+    [SerializeField] private int _minAmount;
+    [SerializeField] private int _maxAmount;
+
+    public Item Item => _item;
+
+    public int RollAmount()
+    {
+        if (_item == null)
+            return 0;
+
+        var min = Mathf.Max(0, _minAmount);
+        var max = Mathf.Max(min, _maxAmount);
+        return UnityEngine.Random.Range(min, max + 1);
+    }
+}

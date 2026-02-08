@@ -1,10 +1,14 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "Items/Tool")]
 public class ToolItem : Item, IUsable
 {
-    [field: SerializeField] public int Durability { get; private set; }
-    [field: SerializeField] public string ToolType { get; private set; }
+    [field: SerializeField] public int MaxDurability { get; private set; } = 25;
+    [field: SerializeField] public ToolType ToolType { get; private set; } = ToolType.None;
+    [field: SerializeField] public ToolTier Tier { get; private set; } = ToolTier.Wooden;
+    [field: SerializeField] public float MiningPower { get; private set; } = 3f;
+    [field: SerializeField] public float DurabilityLossPerSecond { get; private set; } = 1f;
 
     public ToolItem()
     {
@@ -13,20 +17,6 @@ public class ToolItem : Item, IUsable
 
     public void Use(GameObject user)
     {
-        if (Durability > 0)
-        {
-            Debug.Log($"{ItemName} used by {user.name}. Type: {ToolType}. Remaining durability: {Durability}.");
-            Durability--;
-        }
-        else
-        {
-            Debug.Log($"{ItemName} is broken and cannot be used.");
-        }
-    }
-
-    public void Repair(int amount)
-    {
-        Durability += amount;
-        Debug.Log($"{ItemName} repaired. New durability: {Durability}.");
+        Debug.Log($"{ItemName} used by {user.name}. Type: {ToolType} Tier: {Tier}.");
     }
 }
