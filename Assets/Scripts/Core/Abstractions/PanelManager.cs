@@ -14,6 +14,7 @@ public sealed class PanelManager : MonoBehaviour
     [SerializeField] private WorldMapPanelController _mapPanel;
     [SerializeField] private SettingsController _settingsPanel;
     [SerializeField] private ParallelWorldPanel _parallelWorldPanel;
+    [SerializeField] private CraftingPanel _craftingPanel;
 
     [Header("Panels - Secondary")]
     [SerializeField] private CharacterPanel _characterPanel;
@@ -26,6 +27,7 @@ public sealed class PanelManager : MonoBehaviour
     private IPanel[] _mapGroup;
     private IPanel[] _settingsGroup;
     private IPanel[] _parallelWorldGroup;
+    private IPanel[] _craftingGroup;
 
     public bool BlocksGameplayInput =>
         _currentPanelId.HasValue && GetMajorPanel(_currentPanelId.Value).BlocksGameplayInput;
@@ -45,6 +47,7 @@ public sealed class PanelManager : MonoBehaviour
         _mapGroup = new IPanel[] { _mapPanel };
         _settingsGroup = new IPanel[] { _settingsPanel };
         _parallelWorldGroup = new IPanel[] { _parallelWorldPanel };
+        _craftingGroup = new IPanel[] { _craftingPanel };
 
         _currentPanelId = null;
         _currentChestInventory = null;
@@ -183,7 +186,7 @@ public sealed class PanelManager : MonoBehaviour
             PanelId.Map => _mapGroup,
             PanelId.Settings => _settingsGroup,
             PanelId.ParallelWorld => _parallelWorldGroup,
-            PanelId.Crafting => throw new InvalidOperationException("Crafting is not wired in PanelManager yet."),
+            PanelId.Crafting => _craftingGroup,
             _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)
         };
     }
@@ -213,7 +216,7 @@ public sealed class PanelManager : MonoBehaviour
             PanelId.Map => _mapPanel,
             PanelId.Settings => _settingsPanel,
             PanelId.ParallelWorld => _parallelWorldPanel,
-            PanelId.Crafting => throw new InvalidOperationException("Crafting is not wired in PanelManager yet."),
+            PanelId.Crafting => _craftingPanel,
             _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)
         };
     }

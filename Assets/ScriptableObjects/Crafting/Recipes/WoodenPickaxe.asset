@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88c623f404c9cc428b917a762222950, type: 3}
+  m_Name: WoodenPickaxe
+  m_EditorClassIdentifier: 
+  _outputItem: {fileID: 11400000, guid: 060efcd3a6a82654b95f4712b362e893, type: 2}
+  _outputAmount: 1
+  _displayName: Wooden Pickaxe
+  _description: Pickaxe made out of wood. Lowest rank of the pickaxes, but essential
+    for mining stone and copper.
+  _category: 0
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: 060efcd3a6a82654b95f4712b362e893, type: 2}
+    <Amount>k__BackingField: 1
+  - <Item>k__BackingField: {fileID: 11400000, guid: 461db32e3697c78489869a09a4507074, type: 2}
+    <Amount>k__BackingField: 3
+  _craftDurationSeconds: 1.5

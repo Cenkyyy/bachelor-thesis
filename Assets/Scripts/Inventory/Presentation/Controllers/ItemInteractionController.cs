@@ -32,6 +32,9 @@ public class ItemInteractionController : MonoBehaviour
     [SerializeField] private CharacterPanel _characterPanel;
     [SerializeField] private RectTransform _characterPanelRect;
 
+    [SerializeField] private CraftingPanel _craftingPanel;
+    [SerializeField] private RectTransform _craftingPanelRect;
+
     // Item dropping
     [SerializeField] private Player _player;
 
@@ -47,8 +50,6 @@ public class ItemInteractionController : MonoBehaviour
 
     // Currently held (cursor) item
     private InventoryItem _heldItem = InventoryItem.Empty;
-
-    private bool IsAnyInventoryUiOpen => _backpackPanel.IsOpen || _chestPanel.IsOpen || _characterPanel.IsOpen;
 
     private void Awake()
     {
@@ -121,7 +122,10 @@ public class ItemInteractionController : MonoBehaviour
         var overCharacter = _characterPanelRect != null &&
             RectTransformUtility.RectangleContainsScreenPoint(_characterPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
 
-        return overBackpack || overHotbar || overChest || overCharacter;
+        var overCrafting = _craftingPanelRect != null &&
+            RectTransformUtility.RectangleContainsScreenPoint(_craftingPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
+
+        return overBackpack || overHotbar || overChest || overCharacter || overCrafting;
     }
 
     /// <summary>

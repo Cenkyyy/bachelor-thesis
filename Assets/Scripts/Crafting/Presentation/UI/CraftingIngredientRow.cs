@@ -1,0 +1,23 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public sealed class CraftingIngredientRow : MonoBehaviour
+{
+    [SerializeField] private Image _icon;
+    [SerializeField] private TMP_Text _label;
+    [SerializeField] private TMP_Text _amount;
+    [SerializeField] private CanvasGroup _canvasGroup;
+
+    public void Bind(Item item, int requiredAmount, int availableAmount)
+    {
+        _icon.sprite = item != null ? item.Icon : null;
+        _icon.enabled = _icon.sprite != null;
+     
+        _label.text = item != null ? item.ItemName : "Unknown";
+
+        _amount.text = $"{availableAmount}/{requiredAmount}";
+
+        _canvasGroup.alpha = availableAmount >= requiredAmount ? 1f : 0.5f;
+    }
+}

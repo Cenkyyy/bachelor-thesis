@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b20d55cfd28c47240b46f895e90886b0, type: 3}
   m_Name: WoodenPickaxe
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: WoodenPickaxe
+  <ItemName>k__BackingField: Wooden Pickaxe
   <Icon>k__BackingField: {fileID: -6448221919121275678, guid: d8e21400704d5db4da356c909a6da235, type: 3}
   <MaxStackSize>k__BackingField: 1
   <Category>k__BackingField: 2
