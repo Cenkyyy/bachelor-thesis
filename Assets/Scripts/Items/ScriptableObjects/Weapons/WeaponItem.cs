@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Items/Weapon")]
+[CreateAssetMenu(menuName = "Items/Weapon Item")]
 public class WeaponItem : Item
 {
     [field: SerializeField] public WeaponArchetype Archetype { get; private set; } = WeaponArchetype.Wand;

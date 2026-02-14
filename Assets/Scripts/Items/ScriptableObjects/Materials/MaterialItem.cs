@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Items/Material")]
+[CreateAssetMenu(menuName = "Items/Material Item")]
 public class MaterialItem : Item
 {
     [field: SerializeField] public MaterialKind Kind { get; private set; } = MaterialKind.Generic;

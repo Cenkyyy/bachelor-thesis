@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Items/Consumable")]
+[CreateAssetMenu(menuName = "Items/Consumable Item")]
 public class ConsumableItem : Item
 {
     [field: SerializeField] public ConsumableKind Kind { get; private set; } = ConsumableKind.Food;
