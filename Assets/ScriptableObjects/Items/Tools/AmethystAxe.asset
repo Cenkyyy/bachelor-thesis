@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b20d55cfd28c47240b46f895e90886b0, type: 3}
   m_Name: AmethystAxe
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: WoodenPickaxe
+  <ItemName>k__BackingField: Wooden Pickaxe
   <Icon>k__BackingField: {fileID: 0}
   <MaxStackSize>k__BackingField: 1
   <Category>k__BackingField: 2
