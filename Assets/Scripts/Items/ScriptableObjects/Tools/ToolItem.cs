@@ -1,8 +1,8 @@
 using UnityEngine;
-using UnityEngine.Serialization;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 [CreateAssetMenu(menuName = "Items/Tool")]
-public class ToolItem : Item, IUsable
+public class ToolItem : Item, IMiningTool
 {
     [field: SerializeField] public int MaxDurability { get; private set; } = 25;
     [field: SerializeField] public ToolType ToolType { get; private set; } = ToolType.None;
@@ -10,13 +10,19 @@ public class ToolItem : Item, IUsable
     [field: SerializeField] public float MiningPower { get; private set; } = 3f;
     [field: SerializeField] public float DurabilityLossPerSecond { get; private set; } = 1f;
 
-    public ToolItem()
-    {
-        Category = ItemType.Tool;
-    }
+    protected override ItemType? ExpectedCategory => ItemType.Tool;
 
-    public void Use(GameObject user)
+    protected override void OnValidate()
     {
-        Debug.Log($"{ItemName} used by {user.name}. Type: {ToolType} Tier: {Tier}.");
+        base.OnValidate();
+
+        if (MaxDurability < 1)
+            MaxDurability = 1;
+
+        if (MiningPower < 0f)
+            MiningPower = 0f;
+
+        if (DurabilityLossPerSecond < 0f)
+            DurabilityLossPerSecond = 0f;
     }
 }

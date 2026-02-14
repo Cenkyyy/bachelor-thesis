@@ -4,5 +4,7 @@ public enum ItemType
     Weapon,
     Tool,
     Material,
-    Consumable
+    Consumable,
+    Accessory,
+    Special
 }

@@ -10,7 +10,7 @@ public sealed class PlayerToolDurability : MonoBehaviour
 
     private struct ToolDurabilityState
     {
-        public ToolItem Tool;
+        public Item ToolDefinition;
         public float Current;
         public float Max;
     }
@@ -35,9 +35,9 @@ public sealed class PlayerToolDurability : MonoBehaviour
             _player.Inventory.OnItemChanged -= HandleItemChanged;
     }
 
-    public bool TryGetToolState(int slotIndex, out ToolItem tool, out float current, out float max)
+    public bool TryGetToolState(int slotIndex, out Item toolDefinition, out float current, out float max)
     {
-        tool = null;
+        toolDefinition = null;
         current = 0f;
         max = 0f;
 
@@ -46,9 +46,9 @@ public sealed class PlayerToolDurability : MonoBehaviour
 
         RefreshSlot(slotIndex);
 
-        if (_durabilityBySlot.TryGetValue(slotIndex, out var state) && state.Tool != null)
+        if (_durabilityBySlot.TryGetValue(slotIndex, out var state) && state.ToolDefinition != null)
         {
-            tool = state.Tool;
+            toolDefinition = state.ToolDefinition;
             current = state.Current;
             max = state.Max;
             return true;
@@ -107,13 +107,13 @@ public sealed class PlayerToolDurability : MonoBehaviour
             return;
 
         var item = _player.Inventory.GetItemAt(index);
-        if (item.Item is ToolItem tool)
+        if (item.Item is IMiningTool miningTool && item.Item != null)
         {
-            if (_durabilityBySlot.TryGetValue(index, out var state) && state.Tool == tool)
+            if (_durabilityBySlot.TryGetValue(index, out var state) && state.ToolDefinition == item.Item)
             {
-                if (!Mathf.Approximately(state.Max, tool.MaxDurability))
+                if (!Mathf.Approximately(state.Max, miningTool.MaxDurability))
                 {
-                    state.Max = tool.MaxDurability;
+                    state.Max = miningTool.MaxDurability;
                     state.Current = Mathf.Min(state.Current, state.Max);
                     _durabilityBySlot[index] = state;
                 }
@@ -122,9 +122,9 @@ public sealed class PlayerToolDurability : MonoBehaviour
             {
                 _durabilityBySlot[index] = new ToolDurabilityState
                 {
-                    Tool = tool,
-                    Max = tool.MaxDurability,
-                    Current = tool.MaxDurability
+                    ToolDefinition = item.Item,
+                    Max = miningTool.MaxDurability,
+                    Current = miningTool.MaxDurability
                 };
             }
         }

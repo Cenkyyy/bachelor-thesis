@@ -100,7 +100,7 @@ public sealed class PlayerMiningController : MonoBehaviour
         var slotIndex = _player.Inventory.SelectedHotbarIndex;
         var item = _player.Inventory.GetItemAt(slotIndex);
 
-        if (item.Item is ToolItem tool)
+        if (item.Item is IMiningTool tool)
         {
             if (_toolDurability != null && _toolDurability.TryGetToolState(slotIndex, out _, out var currentDurability, out _))
             {

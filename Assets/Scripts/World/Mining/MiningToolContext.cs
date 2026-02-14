@@ -24,7 +24,7 @@ public readonly struct MiningToolContext
         return new MiningToolContext(true, ToolType.None, ToolTier.None, power, 0f, -1);
     }
 
-    public static MiningToolContext Tool(int slotIndex, ToolItem tool)
+    public static MiningToolContext Tool(int slotIndex, IMiningTool tool)
     {
         return new MiningToolContext(false, tool.ToolType, tool.Tier, tool.MiningPower, tool.DurabilityLossPerSecond, slotIndex);
     }
