@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 1937574750648150484}
   - component: {fileID: 3428453546330940767}
   - component: {fileID: 4403078374656698331}
+  - component: {fileID: 6731827953367733980}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -162,6 +163,7 @@ MonoBehaviour:
   _playerData: {fileID: 0}
   _hotbarSize: 8
   _inventorySize: 24
+  _spellWordInventory: {fileID: 0}
 --- !u!114 &4361287354850156806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +277,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
+--- !u!114 &6731827953367733980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16794312120646341bdf9ea7e8a76238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unlockedModifiers: 00000000
+  unlockedElements: 0000000001000000
+  unlockedForms: 020000000000000003000000
 --- !u!1 &3653677619089745102
 GameObject:
   m_ObjectHideFlags: 0
