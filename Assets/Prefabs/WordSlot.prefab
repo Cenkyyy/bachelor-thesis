@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Word
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 76c353c1671c9194fac249ac9967f94c, type: 2}
-  m_sharedMaterial: {fileID: 795256020291355783, guid: 76c353c1671c9194fac249ac9967f94c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b38523a5958474b49b379ba60931379c, type: 2}
+  m_sharedMaterial: {fileID: 1000948134824358958, guid: b38523a5958474b49b379ba60931379c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -92,8 +92,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -170,8 +170,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -1.1101, y: 0}
+  m_SizeDelta: {x: -2.2204, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3157280088742417407
 CanvasRenderer:
@@ -203,8 +203,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 76c353c1671c9194fac249ac9967f94c, type: 2}
-  m_sharedMaterial: {fileID: 795256020291355783, guid: 76c353c1671c9194fac249ac9967f94c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b38523a5958474b49b379ba60931379c, type: 2}
+  m_sharedMaterial: {fileID: 1000948134824358958, guid: b38523a5958474b49b379ba60931379c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -228,8 +228,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
-  m_fontSizeBase: 8
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -362,8 +362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097751cbe32392e4482e110af72b9f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indexLabel: {fileID: 9198690962638525135}
-  wordLabel: {fileID: 7001920816716500883}
-  background: {fileID: 2231640431598637241}
-  enabledColor: {r: 1, g: 1, b: 1, a: 1}
-  disabledColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+  _indexLabel: {fileID: 9198690962638525135}
+  _wordLabel: {fileID: 7001920816716500883}
+  _background: {fileID: 2231640431598637241}
+  _enabledColor: {r: 1, g: 1, b: 1, a: 1}
+  _disabledColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}

@@ -96,6 +96,8 @@ GameObject:
   - component: {fileID: 3428453546330940767}
   - component: {fileID: 4403078374656698331}
   - component: {fileID: 6731827953367733980}
+  - component: {fileID: 4319894653538523301}
+  - component: {fileID: 3171962435665915792}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -160,10 +162,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99bcc6f2153e0a4e928600eaf526d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerData: {fileID: 0}
+  _playerData: {fileID: 11400000, guid: a1f7d4f498103bc4baf6dadc9cb30777, type: 2}
   _hotbarSize: 8
   _inventorySize: 24
-  _spellWordInventory: {fileID: 0}
+  _spellWordInventory: {fileID: 6731827953367733980}
 --- !u!114 &4361287354850156806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
-  _toolDurability: {fileID: 0}
+  _toolDurability: {fileID: 4403078374656698331}
   _itemDropSpawner: {fileID: 0}
   _camera: {fileID: 0}
   _mouseButton: 0
@@ -289,9 +291,93 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16794312120646341bdf9ea7e8a76238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlockedModifiers: 00000000
-  unlockedElements: 0000000001000000
-  unlockedForms: 020000000000000003000000
+  _unlockedModifiers: 
+  _unlockedElements: 
+  _unlockedForms: 
+--- !u!114 &4319894653538523301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 146dd73e2fd5abd4ea89385a3bc034c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 8120486794298343527}
+  _castingPanel: {fileID: 0}
+  _targetMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _settings:
+    Range: 8
+    HitRadius: 0.5
+    WaveArcAngle: 80
+    Shard:
+      ManaCost: 8
+      CooldownSeconds: 0.25
+      BaseDamage: 18
+    Beam:
+      ManaCost: 14
+      CooldownSeconds: 0.9
+      BaseDamage: 8
+    Wave:
+      ManaCost: 12
+      CooldownSeconds: 0.6
+      BaseDamage: 14
+    Barrage:
+      ManaCost: 15
+      CooldownSeconds: 0.7
+      BaseDamage: 8
+    BeamDuration: 1
+    BeamTickInterval: 0.2
+    BarrageProjectileCount: 4
+    BarrageInterval: 0.08
+    LightningBonusMultiplier: 1.35
+    DotDamagePerSecond: 5
+    StatusDuration: 3
+    Piercing:
+      AdditionalManaCost: 2
+      AdditionalCooldownSeconds: 0.1
+    Stunning:
+      AdditionalManaCost: 3
+      AdditionalCooldownSeconds: 0.2
+    Exploding:
+      AdditionalManaCost: 4
+      AdditionalCooldownSeconds: 0.25
+    Reclaiming:
+      AdditionalManaCost: 2
+      AdditionalCooldownSeconds: 0.1
+    Splitting:
+      AdditionalManaCost: 3
+      AdditionalCooldownSeconds: 0.2
+    StunBuildupPerHit: 1
+    StunThreshold: 3
+    StunDuration: 1.25
+    ExplosionRadius: 1.8
+    ExplosionDamageMultiplier: 0.7
+    ReclaimManaPerHit: 2
+    MaxReclaimsPerCast: 2
+    PoisonCloudRadius: 1.9
+    PoisonCloudDuration: 4
+--- !u!114 &3171962435665915792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 950b57fd1e315c14e8b91016ffc7fdb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  castingPanel: {fileID: 0}
+  library: {fileID: 11400000, guid: d596ae22048838d4ba36735254e29ae2, type: 2}
+  spawnOrigin: {fileID: 3689139185868277431}
+  barrageInterval: 0.08
 --- !u!1 &3653677619089745102
 GameObject:
   m_ObjectHideFlags: 0

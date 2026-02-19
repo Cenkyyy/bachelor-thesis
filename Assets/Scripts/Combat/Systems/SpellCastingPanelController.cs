@@ -33,20 +33,20 @@ public class SpellCastingPanelController : MonoBehaviour
     }
 
     [Header("References")]
-    [SerializeField] private Player player;
-    [SerializeField] private WordPanelView modifierPanel;
-    [SerializeField] private WordPanelView elementPanel;
-    [SerializeField] private WordPanelView formPanel;
+    [SerializeField] private Player _player;
+    [SerializeField] private WordPanelView _modifierPanel;
+    [SerializeField] private WordPanelView _elementPanel;
+    [SerializeField] private WordPanelView _formPanel;
 
     [Header("HUD")]
-    [SerializeField] private TMP_Text currentPhraseText;
+    [SerializeField] private TMP_Text _currentPhraseText;
 
     [Header("Input")]
-    [SerializeField] private WordSelectionKeys selectionKeys = default;
-    [SerializeField] private KeyCode cancelKey = KeyCode.Escape;
+    [SerializeField] private WordSelectionKeys _selectionKeys = default;
+    [SerializeField] private KeyCode _cancelKey = KeyCode.Escape;
 
     [Header("Casting")]
-    [SerializeField, Min(0f)] private float castLockDurationSeconds = 0.2f;
+    [SerializeField, Min(0f)] private float _castLockDurationSeconds = 0.2f;
 
     private SpellWordInventory _wordInventory;
     private SpellPhrase _currentPhrase;
@@ -57,7 +57,7 @@ public class SpellCastingPanelController : MonoBehaviour
 
     private void Awake()
     {
-        _wordInventory = player.GetComponent<SpellWordInventory>();
+        _wordInventory = _player.GetComponent<SpellWordInventory>();
         _wordInventory.OnWordsChanged += RefreshPanels;
 
         RefreshPanels();
@@ -78,13 +78,13 @@ public class SpellCastingPanelController : MonoBehaviour
         if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
             return;
 
-        if (Input.GetKeyDown(cancelKey))
+        if (Input.GetKeyDown(_cancelKey))
         {
             CancelCasting();
             return;
         }
 
-        var pressedIndex = selectionKeys.TryGetPressedIndex();
+        var pressedIndex = _selectionKeys.TryGetPressedIndex();
         if (!pressedIndex.HasValue)
             return;
 
@@ -93,9 +93,9 @@ public class SpellCastingPanelController : MonoBehaviour
 
     private void RefreshPanels()
     {
-        modifierPanel.Bind(_wordInventory.UnlockedModifiers, CombatWordDefinitions.GetLabel);
-        elementPanel.Bind(_wordInventory.UnlockedElements, CombatWordDefinitions.GetLabel);
-        formPanel.Bind(_wordInventory.UnlockedForms, CombatWordDefinitions.GetLabel);
+        _modifierPanel.Bind(_wordInventory.UnlockedModifiers, CombatWordDefinitions.GetLabel);
+        _elementPanel.Bind(_wordInventory.UnlockedElements, CombatWordDefinitions.GetLabel);
+        _formPanel.Bind(_wordInventory.UnlockedForms, CombatWordDefinitions.GetLabel);
         ApplyStageVisuals();
     }
 
@@ -155,12 +155,12 @@ public class SpellCastingPanelController : MonoBehaviour
         _isCastLocked = true;
 
         // all slots disabled while the spell commit is active
-        modifierPanel.SetPanelInteractable(false);
-        elementPanel.SetPanelInteractable(false);
-        formPanel.SetPanelInteractable(false);
+        _modifierPanel.SetPanelInteractable(false);
+        _elementPanel.SetPanelInteractable(false);
+        _formPanel.SetPanelInteractable(false);
 
-        if (castLockDurationSeconds > 0f)
-            yield return new WaitForSeconds(castLockDurationSeconds);
+        if (_castLockDurationSeconds > 0f)
+            yield return new WaitForSeconds(_castLockDurationSeconds);
 
         _isCastLocked = false;
         ResetCastingState();
@@ -187,22 +187,22 @@ public class SpellCastingPanelController : MonoBehaviour
         var showElementPanel = _stage == CastingStage.Element && !_isCastLocked;
         var showFormPanel = _stage == CastingStage.Form && !_isCastLocked;
 
-        modifierPanel.gameObject.SetActive(showModifierPanel);
-        elementPanel.gameObject.SetActive(showElementPanel);
-        formPanel.gameObject.SetActive(showFormPanel);
+        _modifierPanel.gameObject.SetActive(showModifierPanel);
+        _elementPanel.gameObject.SetActive(showElementPanel);
+        _formPanel.gameObject.SetActive(showFormPanel);
 
-        modifierPanel.SetPanelInteractable(showModifierPanel);
-        elementPanel.SetPanelInteractable(showElementPanel);
-        formPanel.SetPanelInteractable(showFormPanel);
+        _modifierPanel.SetPanelInteractable(showModifierPanel);
+        _elementPanel.SetPanelInteractable(showElementPanel);
+        _formPanel.SetPanelInteractable(showFormPanel);
     }
 
     private void UpdateText()
     {
-        currentPhraseText.text = _currentPhrase.ToString();
+        _currentPhraseText.text = _currentPhrase.ToString();
     }
 
     private void SetPhraseTextVisible(bool visible)
     {
-        currentPhraseText.gameObject.SetActive(visible);
+        _currentPhraseText.gameObject.SetActive(visible);
     }
 }
