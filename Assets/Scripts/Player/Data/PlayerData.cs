@@ -89,7 +89,7 @@ public class PlayerData
 
         MaxMemoryXP = defaultData.baseMaxMemoryXP;
         CurrentMemoryXP = 0;
-        MaxMemoryLevel = defaultData.baseMaxMemoryXP;
+        MaxMemoryLevel = defaultData.memoryMaxLevel;
         CurrentMemoryLevel = 0;
 
         MaxHunger = defaultData.baseMaxHunger;
