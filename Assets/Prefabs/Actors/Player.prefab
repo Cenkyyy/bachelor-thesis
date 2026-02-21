@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 6731827953367733980}
   - component: {fileID: 4319894653538523301}
   - component: {fileID: 3171962435665915792}
+  - component: {fileID: 2737436318412507732}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -378,6 +379,21 @@ MonoBehaviour:
   library: {fileID: 11400000, guid: d596ae22048838d4ba36735254e29ae2, type: 2}
   spawnOrigin: {fileID: 3689139185868277431}
   barrageInterval: 0.08
+--- !u!114 &2737436318412507732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af23734f6ee8a7d41bb71190ef041f29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 8120486794298343527}
+  _playerTransform: {fileID: 3689139185868277431}
+  _defaultSpawnPoint: {fileID: 3689139185868277431}
 --- !u!1 &3653677619089745102
 GameObject:
   m_ObjectHideFlags: 0

@@ -51,6 +51,10 @@ public class PlayerData
     /// <summary> Current hunger (0..MaxHunger). </summary>
     public int CurrentHunger { get; private set; }
 
+    /// <summary> World-space point where the player respawns after defeat. </summary>
+    public Vector3 SpawnPoint { get; private set; }
+
+
     // Events
 
     /// <summary> Raised after health changes; args: currentHealth, maxHealth. </summary>
@@ -63,6 +67,8 @@ public class PlayerData
     public event Action<int, int, int> OnXPChanged;
     /// <summary> Raised after memory XP or level changes; args: currentMemoryXP, maxMemoryXP, currentMemoryLevel  </summary>
     public event Action<int, int, int> OnMemoryXPChanged;
+    /// <summary> Raised after spawn point changes; arg: world-space spawn point. </summary>
+    public event Action<Vector3> OnSpawnPointChanged;
     /// <summary> Raised after InitializeFrom() sets all defaults. </summary>
     public event Action OnInitialized;
 
@@ -95,12 +101,15 @@ public class PlayerData
         MaxHunger = defaultData.baseMaxHunger;
         CurrentHunger = MaxHunger;
 
+        SpawnPoint = Vector3.zero;
+
         OnInitialized?.Invoke();
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
         OnManaChanged?.Invoke(CurrentMana, MaxMana);
         OnHungerChanged?.Invoke(CurrentHunger, MaxHunger);
         OnXPChanged?.Invoke(CurrentXP, MaxXP, CurrentLevel);
         OnMemoryXPChanged?.Invoke(CurrentMemoryXP, MaxMemoryXP, CurrentMemoryLevel);
+        OnSpawnPointChanged?.Invoke(SpawnPoint);
     }
 
     // Health API
@@ -276,5 +285,13 @@ public class PlayerData
 
         OnMemoryXPChanged?.Invoke(CurrentMemoryXP, MaxMemoryXP, CurrentMemoryLevel);
         return true;
+    }
+
+    // Spawn Point API
+
+    public void SetSpawnPoint(Vector3 spawnPoint)
+    {
+        SpawnPoint = spawnPoint;
+        OnSpawnPointChanged?.Invoke(SpawnPoint);
     }
 }
