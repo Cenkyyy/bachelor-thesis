@@ -13,7 +13,6 @@ public sealed class PanelManager : MonoBehaviour
     [SerializeField] private ChestPanel _chestPanel;
     [SerializeField] private WorldMapPanelController _mapPanel;
     [SerializeField] private SettingsController _settingsPanel;
-    [SerializeField] private ParallelWorldPanel _parallelWorldPanel;
     [SerializeField] private CraftingPanel _craftingPanel;
 
     [Header("Panels - Secondary")]
@@ -26,7 +25,6 @@ public sealed class PanelManager : MonoBehaviour
     private IPanel[] _chestGroup;
     private IPanel[] _mapGroup;
     private IPanel[] _settingsGroup;
-    private IPanel[] _parallelWorldGroup;
     private IPanel[] _craftingGroup;
 
     public bool BlocksGameplayInput =>
@@ -46,7 +44,6 @@ public sealed class PanelManager : MonoBehaviour
         _chestGroup = new IPanel[] { _chestPanel, _backpackPanel, _characterPanel };
         _mapGroup = new IPanel[] { _mapPanel };
         _settingsGroup = new IPanel[] { _settingsPanel };
-        _parallelWorldGroup = new IPanel[] { _parallelWorldPanel };
         _craftingGroup = new IPanel[] { _craftingPanel };
 
         _currentPanelId = null;
@@ -83,12 +80,6 @@ public sealed class PanelManager : MonoBehaviour
         if (Input.GetKeyDown(_panelKeybinds.Map))
         {
             HandlePanelInteraction(PanelId.Map);
-            return;
-        }
-
-        if (Input.GetKeyDown(_panelKeybinds.ParallelWorld))
-        {
-            HandlePanelInteraction(PanelId.ParallelWorld);
             return;
         }
 
@@ -185,7 +176,6 @@ public sealed class PanelManager : MonoBehaviour
             PanelId.Chest => _chestGroup,
             PanelId.Map => _mapGroup,
             PanelId.Settings => _settingsGroup,
-            PanelId.ParallelWorld => _parallelWorldGroup,
             PanelId.Crafting => _craftingGroup,
             _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)
         };
@@ -215,7 +205,6 @@ public sealed class PanelManager : MonoBehaviour
             PanelId.Chest => _chestPanel,
             PanelId.Map => _mapPanel,
             PanelId.Settings => _settingsPanel,
-            PanelId.ParallelWorld => _parallelWorldPanel,
             PanelId.Crafting => _craftingPanel,
             _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)
         };
