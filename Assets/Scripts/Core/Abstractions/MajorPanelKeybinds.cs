@@ -5,7 +5,6 @@ public sealed class MajorPanelKeybinds : ScriptableObject
 {
     public KeyCode Inventory = KeyCode.E;
     public KeyCode Map = KeyCode.M;
-    public KeyCode ParallelWorld = KeyCode.P;
-    public KeyCode Crafting = KeyCode.B;
+    public KeyCode Crafting = KeyCode.C;
     public KeyCode CloseOrPause = KeyCode.Escape;
 }
