@@ -245,8 +245,15 @@ public sealed class WorldItem : MonoBehaviour
             return;
         }
 
+        var pickedItemDefinition = Item.Item;
+        var amountBeforePickup = Item.Amount;
+
         // add across the whole inventory and get leftover (if any).
         inventory.TryAddItemToRange(Item, new SlotRange(0, inventory.Capacity), out var leftoverItem);
+
+        var pickedAmount = amountBeforePickup - leftoverItem.Amount;
+        if (pickedAmount > 0)
+            ItemPickupFeed.Instance?.ShowPickup(pickedItemDefinition, pickedAmount);
 
         if (leftoverItem.IsEmpty)
         {
