@@ -47,6 +47,7 @@ public class ItemInteractionController : MonoBehaviour
     private Coroutine _doubleClickCoroutine; // coroutine measuring the double-click time window
     private Slot _firstClickSlot; // slot that was clicked first
     private bool _firstClickPickedUp; // boolean that remembers if first click picked up an item via regular left click
+    private IInventory _firstClickInventory; // inventory of the first clicked slot
 
     // Currently held (cursor) item
     private InventoryItem _heldItem = InventoryItem.Empty;
@@ -110,22 +111,25 @@ public class ItemInteractionController : MonoBehaviour
 
     private bool IsPointerOverInventoryPanels(Vector2 screenPoint)
     {
-        var overBackpack = _backpackPanelRect != null &&
-            RectTransformUtility.RectangleContainsScreenPoint(_backpackPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
+        var uiCamera = _canvas ? _canvas.worldCamera : null;
 
+        // hotbar is always visible/interactive in gameplay
         var overHotbar = _hotbarPanelRect != null &&
-            RectTransformUtility.RectangleContainsScreenPoint(_hotbarPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
+            RectTransformUtility.RectangleContainsScreenPoint(_hotbarPanelRect, screenPoint, uiCamera);
 
-        var overChest = _chestPanelRect != null && 
-            RectTransformUtility.RectangleContainsScreenPoint(_chestPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
+        var overBackpack = _backpackPanel != null && _backpackPanel.IsOpen && _backpackPanelRect != null &&
+            RectTransformUtility.RectangleContainsScreenPoint(_backpackPanelRect, screenPoint, uiCamera);
 
-        var overCharacter = _characterPanelRect != null &&
-            RectTransformUtility.RectangleContainsScreenPoint(_characterPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
+        var overChest = _chestPanel != null && _chestPanel.IsOpen && _chestPanelRect != null &&
+            RectTransformUtility.RectangleContainsScreenPoint(_chestPanelRect, screenPoint, uiCamera);
 
-        var overCrafting = _craftingPanelRect != null &&
-            RectTransformUtility.RectangleContainsScreenPoint(_craftingPanelRect, screenPoint, _canvas ? _canvas.worldCamera : null);
+        var overCharacter = _characterPanel != null && _characterPanel.IsOpen && _characterPanelRect != null &&
+            RectTransformUtility.RectangleContainsScreenPoint(_characterPanelRect, screenPoint, uiCamera);
 
-        return overBackpack || overHotbar || overChest || overCharacter || overCrafting;
+        var overCrafting = _craftingPanel != null && _craftingPanel.IsOpen && _craftingPanelRect != null &&
+            RectTransformUtility.RectangleContainsScreenPoint(_craftingPanelRect, screenPoint, uiCamera);
+
+        return overHotbar || overBackpack || overChest || overCharacter || overCrafting;
     }
 
     /// <summary>
@@ -137,11 +141,6 @@ public class ItemInteractionController : MonoBehaviour
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (_chestPanel != null && _chestPanel.IsOpen)
-            {
-                HandleSimpleChestTransferLeftClick(slot);
-                return;
-            }
             if (ReferenceEquals(slot.Owner, _player.Equipment))
             {
                 HandleEquipmentLeftClick(slot);
@@ -175,18 +174,6 @@ public class ItemInteractionController : MonoBehaviour
         }
 
         HandleRightClickPointerEnter(slot);
-    }
-
-    private void HandleSimpleChestTransferLeftClick(Slot slot)
-    {
-        if (!IsValidSlot(slot)) 
-            return;
-        if (_chestPanel == null || !_chestPanel.IsOpen) 
-            return;
-
-        var dst = ReferenceEquals(slot.Owner, _player.Inventory) ? _chestPanel.Inventory : _player.Inventory;
-
-        TransferStack((IInventory)slot.Owner, slot.SlotIndex, dst);
     }
 
     private void HandleEquipmentLeftClick(Slot slot)
@@ -278,7 +265,7 @@ public class ItemInteractionController : MonoBehaviour
                 if (_firstClickPickedUp && !_heldItem.IsEmpty && _heldItem.Item != null)
                 {
                     // if the first click picked up an item, then collect more of the same type into the held item
-                    HandleDoubleLeftClickAfterRegularLeftClick(_heldItem.Item, _heldItem.Item.MaxStackSize - _heldItem.Amount);
+                    HandleDoubleLeftClickAfterRegularLeftClick(_firstClickInventory, _heldItem.Item, _heldItem.Item.MaxStackSize - _heldItem.Amount);
                 }
                 else
                 {
@@ -288,6 +275,7 @@ public class ItemInteractionController : MonoBehaviour
 
                 _firstClickSlot = null;
                 _firstClickPickedUp = false;
+                _firstClickInventory = null;
                 return;
             }
             else
@@ -295,6 +283,7 @@ public class ItemInteractionController : MonoBehaviour
                 // different slot clicked, cancel pending double-click and process as a new single click
                 _firstClickSlot = null;
                 _firstClickPickedUp = false;
+                _firstClickInventory = null;
                 StopCoroutine(_doubleClickCoroutine);
                 _doubleClickCoroutine = null;
             }
@@ -313,6 +302,7 @@ public class ItemInteractionController : MonoBehaviour
             HandleRegularLeftClick(slot);
             var isHoldingAfter = !_heldItem.IsEmpty;
             didPickUp = !wasHoldingBefore && isHoldingAfter;
+            _firstClickInventory = didPickUp ? slot.Owner as IInventory : null;
         }
 
         // start waiting for a possible second click
@@ -338,6 +328,7 @@ public class ItemInteractionController : MonoBehaviour
         _doubleClickCoroutine = null;
         _firstClickSlot = null;
         _firstClickPickedUp = false;
+        _firstClickInventory = null;
     }
 
     #region Quick-transfer handler and its helpers
@@ -350,12 +341,26 @@ public class ItemInteractionController : MonoBehaviour
     public void HandleQuickTransferLeftClick(Slot slot)
     {
         // validation
-        if (!IsValidSlot(slot))
-            return;
-        if (!_backpackPanel.IsOpen)
+        if (!IsValidSlot(slot) || !TryGetInventoryOwner(slot, out var sourceInventory))
             return;
 
-        var clickedSlotItem = _player.Inventory.GetItemAt(slot.SlotIndex);
+        if (_chestPanel != null && _chestPanel.IsOpen && _chestPanel.Inventory != null)
+        {
+            if (ReferenceEquals(sourceInventory, _chestPanel.Inventory))
+            {
+                TransferStackFromChestToPlayerInventory(sourceInventory, slot.SlotIndex);
+            }
+            else
+            {
+                TransferStack(sourceInventory, slot.SlotIndex, _chestPanel.Inventory);
+            }
+            return;
+        }
+
+        if (!_backpackPanel.IsOpen || !ReferenceEquals(sourceInventory, _player.Inventory))
+            return;
+
+        var clickedSlotItem = sourceInventory.GetItemAt(slot.SlotIndex);
         if (clickedSlotItem.IsEmpty)
             return;
 
@@ -363,11 +368,28 @@ public class ItemInteractionController : MonoBehaviour
         (var rangeStart, var rangeEnd) = GetTransferRanges(slot);
 
         // try adding item into the target range
-        _player.Inventory.TryAddItemToRange(clickedSlotItem, new SlotRange(rangeStart, rangeEnd), out var leftoverItem);
+        sourceInventory.TryAddItemToRange(clickedSlotItem, new SlotRange(rangeStart, rangeEnd), out var leftoverItem);
         if (leftoverItem.IsEmpty)
-            _player.Inventory.ClearItemAt(slot.SlotIndex);
+            sourceInventory.ClearItemAt(slot.SlotIndex);
         else
-            _player.Inventory.SetItemAt(slot.SlotIndex, leftoverItem);
+            sourceInventory.ClearItemAt(slot.SlotIndex);
+    }
+
+    private void TransferStackFromChestToPlayerInventory(IInventory chestInventory, int sourceIndex)
+    {
+        var item = chestInventory.GetItemAt(sourceIndex);
+        if (item.IsEmpty)
+            return;
+
+        // fill hotbar first, then backpack.
+        _player.Inventory.TryAddItemToRange(item, new SlotRange(0, _player.Inventory.HotbarSize), out var leftoverAfterHotbar);
+        if (!leftoverAfterHotbar.IsEmpty)
+            _player.Inventory.TryAddItemToRange(leftoverAfterHotbar, new SlotRange(_player.Inventory.HotbarSize, _player.Inventory.Capacity), out leftoverAfterHotbar);
+
+        if (leftoverAfterHotbar.IsEmpty)
+            chestInventory.ClearItemAt(sourceIndex);
+        else
+            chestInventory.SetItemAt(sourceIndex, leftoverAfterHotbar);
     }
 
     /// <summary>
@@ -403,17 +425,17 @@ public class ItemInteractionController : MonoBehaviour
     public void HandleRegularLeftClick(Slot slot)
     {
         // validation
-        if (!IsValidSlot(slot))
+        if (!IsValidSlot(slot) || !TryGetInventoryOwner(slot, out var inventory))
             return;
 
-        var clickedSlotItem = _player.Inventory.GetItemAt(slot.SlotIndex);
+        var clickedSlotItem = inventory.GetItemAt(slot.SlotIndex);
 
         // nothing in hand, then pick up the item
         if (_heldItem.IsEmpty)
         {
             if (!clickedSlotItem.IsEmpty)
             {
-                PickWholeItemUp(slot, clickedSlotItem);
+                PickWholeItemUp(inventory, slot.SlotIndex, clickedSlotItem);
             }
             return;
         }
@@ -421,49 +443,49 @@ public class ItemInteractionController : MonoBehaviour
         // holding something and clicked on a empty slot, place item
         if (clickedSlotItem.IsEmpty)
         {
-            PlaceWholeHeldIntoSlot(slot);
+            PlaceWholeHeldIntoSlot(inventory, slot.SlotIndex);
             return;
         }
 
         // holding something and items are of same type and are stackable, then merge
         if (IsSameItem(clickedSlotItem, _heldItem) && _heldItem.Item.IsStackable)
         {
-            TryMergeToSlotAndHideHeldIfEmpty(slot);
+            TryMergeToSlotAndHideHeldIfEmpty(inventory, slot.SlotIndex);
             return;
         }
 
         // different, then swap
-        SwapHeldWithSlot(slot);
+        SwapHeldWithSlot(inventory, slot.SlotIndex);
     }
 
-    private void PickWholeItemUp(Slot slot, InventoryItem item)
+    private void PickWholeItemUp(IInventory inventory, int slotIndex, InventoryItem item)
     {
         _heldItem = item;
-        _player.Inventory.ClearItemAt(slot.SlotIndex);
+        inventory.ClearItemAt(slotIndex);
 
         UpdateHeldItem();
     }
 
-    private void PlaceWholeHeldIntoSlot(Slot slot)
+    private void PlaceWholeHeldIntoSlot(IInventory inventory, int slotIndex)
     {
-        _player.Inventory.SetItemAt(slot.SlotIndex, _heldItem);
+        inventory.SetItemAt(slotIndex, _heldItem);
 
         _heldItem = InventoryItem.Empty;
         UpdateHeldItem();
     }
 
-    private void TryMergeToSlotAndHideHeldIfEmpty(Slot slot)
+    private void TryMergeToSlotAndHideHeldIfEmpty(IInventory inventory, int slotIndex)
     {
-        _player.Inventory.TryMergeInto(_heldItem, slot.SlotIndex, out var leftover);
+        inventory.TryMergeInto(_heldItem, slotIndex, out var leftover);
         _heldItem = leftover;
         UpdateHeldItem();
     }
 
-    private void SwapHeldWithSlot(Slot slot)
+    private void SwapHeldWithSlot(IInventory inventory, int slotIndex)
     {
-        var targetItem = _player.Inventory.GetItemAt(slot.SlotIndex);
+        var targetItem = inventory.GetItemAt(slotIndex);
 
-        _player.Inventory.SetItemAt(slot.SlotIndex, _heldItem);
+        inventory.SetItemAt(slotIndex, _heldItem);
         _heldItem = targetItem;
 
         UpdateHeldItem();
@@ -479,13 +501,13 @@ public class ItemInteractionController : MonoBehaviour
     /// </summary>
     /// <param name="itemSO">The item type to collect.</param>
     /// <param name="maxToCollect">Maximum additional units to collect into the held stack.</param>
-    private void HandleDoubleLeftClickAfterRegularLeftClick(Item itemSO, int maxToCollect)
+    private void HandleDoubleLeftClickAfterRegularLeftClick(IInventory inventory, Item itemSO, int maxToCollect)
     {
-        if (itemSO == null || _heldItem.IsEmpty || _heldItem.Item != itemSO || maxToCollect <= 0) 
+        if (inventory == null || itemSO == null || _heldItem.IsEmpty || _heldItem.Item != itemSO || maxToCollect <= 0)
             return;
 
         var collected = _heldItem.Amount;
-        _player.Inventory.TryRemoveFromRange(new InventoryItem(itemSO, maxToCollect), new SlotRange(0, _player.Inventory.Capacity), out var removed);
+        inventory.TryRemoveFromRange(new InventoryItem(itemSO, maxToCollect), new SlotRange(0, inventory.Capacity), out var removed);
         collected += removed.Amount;
 
         _heldItem = _heldItem.WithAmount(collected);
@@ -500,11 +522,11 @@ public class ItemInteractionController : MonoBehaviour
     /// <param name="slot">The slot that was double-clicked.</param>
     public void HandleDoubleLeftClick(Slot slot)
     {
-        if (!IsValidSlot(slot)) 
+        if (!IsValidSlot(slot) || !TryGetInventoryOwner(slot, out var inventory))
             return;
 
-        var clickedSlotItem = _player.Inventory.GetItemAt(slot.SlotIndex);
-        
+        var clickedSlotItem = inventory.GetItemAt(slot.SlotIndex);
+
         if (clickedSlotItem.IsEmpty || !clickedSlotItem.Item.IsStackable)
             return;
         if (!_heldItem.IsEmpty && _heldItem.Item != clickedSlotItem.Item)
@@ -512,13 +534,13 @@ public class ItemInteractionController : MonoBehaviour
 
         // pick up the clicked item first
         var collected = clickedSlotItem.Amount;
-        _player.Inventory.ClearItemAt(slot.SlotIndex);
+        inventory.ClearItemAt(slot.SlotIndex);
 
         // try collecting other items of the same type across the inventory
         var remainingCapacity = clickedSlotItem.Item.MaxStackSize - collected;
         if (remainingCapacity > 0)
         {
-            _player.Inventory.TryRemoveFromRange(new InventoryItem(clickedSlotItem.Item, remainingCapacity), new SlotRange(0, _player.Inventory.Capacity), out var removed);
+            inventory.TryRemoveFromRange(new InventoryItem(clickedSlotItem.Item, remainingCapacity), new SlotRange(0, inventory.Capacity), out var removed);
             collected += removed.Amount;
         }
 
@@ -544,17 +566,17 @@ public class ItemInteractionController : MonoBehaviour
     public void HandleRegularRightClick(Slot slot)
     {
         // validation
-        if (!IsValidSlot(slot))
+        if (!IsValidSlot(slot) || !TryGetInventoryOwner(slot, out var inventory))
             return;
 
-        var clickedSlotItem = _player.Inventory.GetItemAt(slot.SlotIndex);
+        var clickedSlotItem = inventory.GetItemAt(slot.SlotIndex);
 
         // nothing in hand, try picking the item up with half the amount if there is one
         if (_heldItem.IsEmpty)
         {
             if (!clickedSlotItem.IsEmpty && clickedSlotItem.Item.IsStackable)
             {
-                PickHalvedSlotItemUp(slot, clickedSlotItem);
+                PickHalvedSlotItemUp(inventory, slot.SlotIndex, clickedSlotItem);
                 return;
             }
         }
@@ -562,19 +584,19 @@ public class ItemInteractionController : MonoBehaviour
         // holding an item and clicked on an empty slot, then place one into the empty slot
         if (clickedSlotItem.IsEmpty)
         {
-            TryPlaceOneFromHeldIntoEmptySlot(slot);
+            TryPlaceOneFromHeldIntoEmptySlot(inventory, slot.SlotIndex);
             return;
         }
 
         // holding an item and clicked on the same type stackable item, then add one to the slot's item
         if (IsSameItem(clickedSlotItem, _heldItem) && clickedSlotItem.Item.IsStackable)
         {
-            TryPlaceOneFromHeldIntoStackableSlot(slot);
+            TryPlaceOneFromHeldIntoStackableSlot(inventory, slot.SlotIndex);
             return;
         }
 
         // different item or non-stackable item, then fully swap the items
-        SwapHeldWithSlot(slot);
+        SwapHeldWithSlot(inventory, slot.SlotIndex);
     }
 
     /// <summary>
@@ -586,31 +608,31 @@ public class ItemInteractionController : MonoBehaviour
     public void HandleRightClickPointerEnter(Slot slot)
     {
         // validation
-        if (!IsValidSlot(slot)) 
+        if (!IsValidSlot(slot) || !TryGetInventoryOwner(slot, out var inventory))
             return;
         if (_heldItem.IsEmpty)
             return;
         if (!Input.GetMouseButton(1))
             return;
 
-        var enteredSlotItem = _player.Inventory.GetItemAt(slot.SlotIndex);
+        var enteredSlotItem = inventory.GetItemAt(slot.SlotIndex);
 
         // hovering over an empty slot with item while holding right click, then place one into the empty slot
         if (enteredSlotItem.IsEmpty)
         {
-            TryPlaceOneFromHeldIntoEmptySlot(slot);
+            TryPlaceOneFromHeldIntoEmptySlot(inventory, slot.SlotIndex);
             return;
         }
 
         // hovering over the same type stackable slot item while holding right click, then add one to the slot
         if (IsSameItem(enteredSlotItem, _heldItem) && enteredSlotItem.Item.IsStackable)
         {
-            TryPlaceOneFromHeldIntoStackableSlot(slot);
+            TryPlaceOneFromHeldIntoStackableSlot(inventory, slot.SlotIndex);
             return;
         }
     }
 
-    private void PickHalvedSlotItemUp(Slot slot, InventoryItem item)
+    private void PickHalvedSlotItemUp(IInventory inventory, int slotIndex, InventoryItem item)
     {
         var half = Mathf.CeilToInt((item.Amount + 1) / 2);
 
@@ -622,25 +644,25 @@ public class ItemInteractionController : MonoBehaviour
         var newItem = item.WithAmount(item.Amount - half);
         if (newItem.IsEmpty)
         {
-            _player.Inventory.ClearItemAt(slot.SlotIndex);
+            inventory.ClearItemAt(slotIndex);
         }
         else
         {
-            _player.Inventory.SetItemAt(slot.SlotIndex, newItem);
+            inventory.SetItemAt(slotIndex, newItem);
         }
     }
 
-    private void TryPlaceOneFromHeldIntoEmptySlot(Slot slot)
+    private void TryPlaceOneFromHeldIntoEmptySlot(IInventory inventory, int slotIndex)
     {
-        _player.Inventory.SetItemAt(slot.SlotIndex, new InventoryItem(_heldItem.Item));
+        inventory.SetItemAt(slotIndex, new InventoryItem(_heldItem.Item));
 
         _heldItem = _heldItem.WithAmount(_heldItem.Amount - 1);
         UpdateHeldItem();
     }
 
-    private void TryPlaceOneFromHeldIntoStackableSlot(Slot slot)
+    private void TryPlaceOneFromHeldIntoStackableSlot(IInventory inventory, int slotIndex)
     {
-        var item = _player.Inventory.GetItemAt(slot.SlotIndex);
+        var item = inventory.GetItemAt(slotIndex);
         if (item.IsEmpty || item.Item != _heldItem.Item)
             return;
         if (item.Amount >= item.Item.MaxStackSize)
@@ -649,7 +671,7 @@ public class ItemInteractionController : MonoBehaviour
         item = item.WithAmount(item.Amount + 1);
         _heldItem = _heldItem.WithAmount(_heldItem.Amount - 1);
 
-        _player.Inventory.SetItemAt(slot.SlotIndex, item);
+        inventory.SetItemAt(slotIndex, item);
         UpdateHeldItem();
     }
 
@@ -663,6 +685,12 @@ public class ItemInteractionController : MonoBehaviour
     /// <param name="slot">The slot to validate.</param>
     /// <returns>true if the slot is valid for the player's inventory; otherwise false.</returns>
     private bool IsValidSlot(Slot slot) => slot != null && slot.Owner != null && slot.SlotIndex >= 0 && slot.SlotIndex < slot.Owner.Capacity;
+
+    private bool TryGetInventoryOwner(Slot slot, out IInventory inventory)
+    {
+        inventory = slot?.Owner as IInventory;
+        return inventory != null;
+    }
 
     /// <summary>
     /// Returns true if both items are non-empty and share the same <see cref="Item"/> reference.
