@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(ChestInventory))]
-public sealed class ChestInteractable : MonoBehaviour
+public sealed class ChestInteractable : MonoBehaviour, IInteractable
 {
     private ChestInventory _inventory;
     private bool _playerInside;
@@ -32,17 +32,22 @@ public sealed class ChestInteractable : MonoBehaviour
         }
     }
 
-    private bool CanInteractNow() =>
+    public bool CanInteract() =>
         _playerInside && !GameStateManager.IsGamePaused && (EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject());
+
+    public void Interact()
+    {
+        if (!CanInteract())
+            return;
+
+        PanelManager.Instance.InteractWithChest(_inventory.Inventory);
+    }
 
     private void OnMouseOver()
     {
-        if (!CanInteractNow())
-            return;
-
         if (Input.GetMouseButtonDown(1))
         {
-            PanelManager.Instance.InteractWithChest(_inventory.Inventory);
+            Interact();
         }
     }
 }
