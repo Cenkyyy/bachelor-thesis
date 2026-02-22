@@ -372,7 +372,7 @@ public class ItemInteractionController : MonoBehaviour
         if (leftoverItem.IsEmpty)
             sourceInventory.ClearItemAt(slot.SlotIndex);
         else
-            sourceInventory.ClearItemAt(slot.SlotIndex);
+            sourceInventory.SetItemAt(slot.SlotIndex, leftoverItem);
     }
 
     private void TransferStackFromChestToPlayerInventory(IInventory chestInventory, int sourceIndex)
