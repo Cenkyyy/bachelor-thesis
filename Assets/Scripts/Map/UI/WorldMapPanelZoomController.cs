@@ -32,14 +32,16 @@ public sealed class WorldMapPanelZoomController : MonoBehaviour
         }
 
         var cam = GetCanvasCamera();
+        bool pointerInViewport = RectTransformUtility.RectangleContainsScreenPoint(_viewport, Input.mousePosition, cam);
 
-        if (!RectTransformUtility.RectangleContainsScreenPoint(_viewport, Input.mousePosition, cam))
+        if (!pointerInViewport && !_dragging)
         {
-            _dragging = false;
             return;
         }
 
-        HandleZoom(cam);
+        if (pointerInViewport)
+            HandleZoom(cam);
+
         HandlePan(cam);
     }
 
@@ -112,7 +114,8 @@ public sealed class WorldMapPanelZoomController : MonoBehaviour
 
         Vector2 mouseDelta = mouseLocal - _dragStartMouse;
 
-        float panMultiplier = _panScalesWithZoom ? _content.localScale.x : 1f;
+        float zoom = Mathf.Max(_content.localScale.x, 0.0001f);
+        float panMultiplier = _panScalesWithZoom ? 1f / zoom : 1f;
         _content.anchoredPosition = _dragStartContentPos + mouseDelta * (_panSpeed * panMultiplier);
 
         ClampContentToViewport();

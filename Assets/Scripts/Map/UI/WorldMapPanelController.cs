@@ -84,22 +84,30 @@ public sealed class WorldMapPanelController : MonoBehaviour, IMajorPanel
 
     private void UpdatePlayerMarker()
     {
-        var cell = _groundTilemap.WorldToCell(_playerTransform.position);
-        var dataPos = _minimap.WorldData.CellToData(cell);
-
-        int w = _minimap.WorldData.Width;
-        int h = _minimap.WorldData.Height;
-
-        dataPos.x = Mathf.Clamp(dataPos.x, 0, w - 1);
-        dataPos.y = Mathf.Clamp(dataPos.y, 0, h - 1);
+        Vector2 dataPos = GetPlayerDataPositionContinuous();
 
         var contentSize = _mapContent.rect.size;
         var contentOffset = new Vector2(-contentSize.x * _mapContent.pivot.x, -contentSize.y * _mapContent.pivot.y);
 
         _playerMarker.anchorMin = _playerMarker.anchorMax = new Vector2(0.5f, 0.5f);
-        _playerMarker.anchoredPosition = contentOffset + new Vector2(dataPos.x + 0.5f, dataPos.y + 0.5f);
+        _playerMarker.anchoredPosition = contentOffset + dataPos;
 
         float z = _playerTransform.eulerAngles.z;
         _playerMarker.localRotation = Quaternion.Euler(0f, 0f, z);
+    }
+
+    private Vector2 GetPlayerDataPositionContinuous()
+    {
+        var grid = _groundTilemap.layoutGrid;
+        Vector3 playerLocalInGrid = grid.transform.InverseTransformPoint(_playerTransform.position);
+        Vector3 cellPos = grid.LocalToCellInterpolated(playerLocalInGrid);
+
+        float dataX = cellPos.x - _minimap.WorldData.OffsetX;
+        float dataY = cellPos.y - _minimap.WorldData.OffsetY;
+
+        float clampedX = Mathf.Clamp(dataX, 0f, _minimap.WorldData.Width);
+        float clampedY = Mathf.Clamp(dataY, 0f, _minimap.WorldData.Height);
+
+        return new Vector2(clampedX, clampedY);
     }
 }
