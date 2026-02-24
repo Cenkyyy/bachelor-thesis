@@ -104,6 +104,7 @@ public sealed class MineableNode : MonoBehaviour
 
             var dropItem = new InventoryItem(entry.Item, amount);
             player.Inventory.TryAddItemToRange(dropItem, new SlotRange(0, player.Inventory.Capacity), out var leftoverItem);
+            ItemPickupFeedReporter.ReportAddedToInventory(dropItem, leftoverItem);
 
             if (!leftoverItem.IsEmpty && dropSpawner != null)
                 dropSpawner.Spawn(leftoverItem, dropPosition);

@@ -121,6 +121,7 @@ public sealed class CraftingController : MonoBehaviour
 
         var range = new SlotRange(0, inventory.Capacity);
         inventory.TryAddItemToRange(output, range, out var leftover);
+        ItemPickupFeedReporter.ReportAddedToInventory(output, leftover);
 
         if (leftover.IsEmpty)
         {

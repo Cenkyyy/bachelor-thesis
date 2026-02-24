@@ -37,8 +37,6 @@ public sealed class WorldItem : MonoBehaviour
     private void Awake()
     {
         _spawnTime = Time.time;
-        if (_iconRenderer == null) 
-            _iconRenderer = GetComponent<SpriteRenderer>();
         TryGetComponent(out _body);
         TryGetComponent(out _col);
     }
@@ -245,15 +243,11 @@ public sealed class WorldItem : MonoBehaviour
             return;
         }
 
-        var pickedItemDefinition = Item.Item;
-        var amountBeforePickup = Item.Amount;
+        var pickupAttempt = Item;
 
         // add across the whole inventory and get leftover (if any).
         inventory.TryAddItemToRange(Item, new SlotRange(0, inventory.Capacity), out var leftoverItem);
-
-        var pickedAmount = amountBeforePickup - leftoverItem.Amount;
-        if (pickedAmount > 0)
-            ItemPickupFeed.Instance?.ShowPickup(pickedItemDefinition, pickedAmount);
+        ItemPickupFeedReporter.ReportAddedToInventory(pickupAttempt, leftoverItem);
 
         if (leftoverItem.IsEmpty)
         {
