@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f4d32e1c0fe08742885b1e1efe5bc8e, type: 3}
+  m_Name: Bedroll
+  m_EditorClassIdentifier: 
+  <ItemName>k__BackingField: Bedroll
+  <Icon>k__BackingField: {fileID: 5214554162266237324, guid: e13225e88ec1dcf4e825ec2ff94f84c2, type: 3}
+  <Description>k__BackingField: A bedroll for sleeping, to enter the parallel world
+  <Category>k__BackingField: 6
+  <Rarity>k__BackingField: 0
+  <BiomeAffinity>k__BackingField: 0
+  <MaxStackSize>k__BackingField: 1
+  <BedrollPrefab>k__BackingField: {fileID: 1143963826679536962, guid: b92248b1a6281594ebe5ace7394ad5a5, type: 3}
+  <PlacementCheckSize>k__BackingField: {x: 1, y: 1}

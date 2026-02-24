@@ -19,8 +19,8 @@ public sealed class MineableNodeDefinition : ScriptableObject
     public IReadOnlyList<MiningDropEntry> Drops => _drops;
 
     [Header("Memory Ore")]
-    [field: SerializeField] public bool GrantsMemoryXP { get; private set; }
-    [field: SerializeField] public int MemoryXpAmount { get; private set; } = 10;
+    [field: SerializeField] public bool GrantsMemoryXP { get; private set; } = false;
+    [field: SerializeField] public int MemoryXpAmount { get; private set; } = 0;
 }
 
 [Serializable]

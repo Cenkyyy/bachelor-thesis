@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D))]
-public sealed class BedInteractable : MonoBehaviour, IInteractable
+[RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(MineableNode))]
+public sealed class BedrollInteractable : MonoBehaviour, IInteractable
 {
     [Header("Rules")]
     [SerializeField] private bool _requireNight = true;

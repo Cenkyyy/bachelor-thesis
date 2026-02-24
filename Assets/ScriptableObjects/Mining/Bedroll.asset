@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46989a09e1edfd74594f4a6f05ebb304, type: 3}
-  m_Name: CopperOre
+  m_Name: Bedroll
   m_EditorClassIdentifier: 
-  <RequiredToolType>k__BackingField: 1
-  <MinimumTier>k__BackingField: 1
+  <RequiredToolType>k__BackingField: 0
+  <MinimumTier>k__BackingField: 0
   <AllowHandMining>k__BackingField: 1
-  <MaxDurability>k__BackingField: 10
+  <MaxDurability>k__BackingField: 3
   <ToolPowerMultiplier>k__BackingField: 1
   _drops:
-  - _item: {fileID: 11400000, guid: 461db32e3697c78489869a09a4507074, type: 2}
+  - _item: {fileID: 11400000, guid: 4183219e1d68b954bb6a5a7414b07b18, type: 2}
     _minAmount: 1
-    _maxAmount: 5
+    _maxAmount: 1
   <GrantsMemoryXP>k__BackingField: 0
   <MemoryXpAmount>k__BackingField: 0
