@@ -3,11 +3,6 @@ using UnityEngine;
 public sealed class ChaseState : State
 {
     [SerializeField] private float loseSightGrace = 1.0f;
-
-    [Header("Transitions")]
-    [SerializeField] private State _patrolState;
-    [SerializeField] private State _attackState;
-
     [SerializeField] private float _attackTriggerRange = 0.9f;
 
     private AgentCore _core;
@@ -24,14 +19,11 @@ public sealed class ChaseState : State
     {
         if (_core.CanSeeTarget(out _))
         {
-            if (_attackState != null)
+            var dist = Vector2.Distance(_core.transform.position, _core.Target.position);
+            if (dist <= _attackTriggerRange)
             {
-                var dist = Vector2.Distance(_core.transform.position, _core.Target.position);
-                if (dist <= _attackTriggerRange)
-                {
-                    Set(_attackState, true);
-                    return;
-                }
+                Set(ActorStateId.Attack, true);
+                return;
             }
 
             _lostTimer = 0f;
@@ -42,7 +34,7 @@ public sealed class ChaseState : State
             _lostTimer += Time.fixedDeltaTime;
             if (_lostTimer >= loseSightGrace)
             {
-                Set(_patrolState, true);
+                Set(ActorStateId.Patrol, true);
                 return;
             }
             _core.Stop();

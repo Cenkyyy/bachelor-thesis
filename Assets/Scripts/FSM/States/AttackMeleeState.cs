@@ -7,10 +7,6 @@ public sealed class AttackMeleeState : State
     [SerializeField] private float _attackRange = 0.9f;
     [SerializeField] private float _cooldown = 0.8f;
 
-    [Header("Transitions (assign)")]
-    [SerializeField] private State _chaseState;
-    [SerializeField] private State _patrolState;
-
     private AgentCore _core;
     private Player _player;
     private float _cooldownTimer;
@@ -43,12 +39,12 @@ public sealed class AttackMeleeState : State
             }
             else // out of range
             {
-                Set(_chaseState, true);
+                Set(ActorStateId.Chase, true);
             }
         }
         else
         {
-            Set(_patrolState, true);
+            Set(ActorStateId.Patrol, true);
         }
     }
 

@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d09897c3f821754aafc575876602ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveState: {fileID: 7217983184597216533}
+  <StateId>k__BackingField: 100
 --- !u!1 &2259951683026114348
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735e06ba823cb694d9837a5669f4d955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _idleState: {fileID: 3277094677444135463}
+  <StateId>k__BackingField: 101
 --- !u!1 &5407647752350887211
 GameObject:
   m_ObjectHideFlags: 0

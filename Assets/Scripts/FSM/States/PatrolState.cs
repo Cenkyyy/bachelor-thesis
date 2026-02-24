@@ -2,10 +2,6 @@ using UnityEngine;
 
 public sealed class PatrolState : State
 {
-    [Header("Transitions")]
-    [SerializeField] private State _idleState;
-    [SerializeField] private State _chaseState;
-
     private AgentCore _core;
     private int _index;
 
@@ -24,7 +20,7 @@ public sealed class PatrolState : State
         {
             _core.Stop();
             _core.PatrolIndex = (_index + 1) % _core.PatrolPoints.Length;
-            Set(_idleState, true);
+            Set(ActorStateId.Idle, true);
             return;
         }
 
@@ -36,7 +32,7 @@ public sealed class PatrolState : State
         if (_core.CanSeeTarget(out _))
         {
             _core.PatrolIndex = _index;
-            Set(_chaseState, true);
+            Set(ActorStateId.Chase, true);
         }
     }
 

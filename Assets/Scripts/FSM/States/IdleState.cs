@@ -5,10 +5,6 @@ public sealed class IdleState : State
     [SerializeField] private float _minIdle = 0.7f;
     [SerializeField] private float _maxIdle = 2.0f;
 
-    [Header("Transitions")]
-    [SerializeField] private State _patrolState;
-    [SerializeField] private State _chaseState;
-
     private AgentCore _core;
     private float _wait;
 
@@ -24,14 +20,14 @@ public sealed class IdleState : State
     {
         if (_core.CanSeeTarget(out _))
         { 
-            Set(_chaseState, true);
+            Set(ActorStateId.Chase, true);
             return;
         }
 
         _wait -= Time.deltaTime;
         if (_wait <= 0f)
         {
-            Set(_patrolState, true);
+            Set(ActorStateId.Patrol, true);
         }
     }
 

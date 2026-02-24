@@ -222,11 +222,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 854cfda62bbde4741ad746b66e1c9728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateId>k__BackingField: 5
   _damage: 10
   _attackRange: 0.9
   _cooldown: 0.8
-  _chaseState: {fileID: 4298304426043227101}
-  _patrolState: {fileID: 3949894963783754967}
 --- !u!1 &4253895686464194668
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,10 +305,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0962ab4274f5704abab397d6cecb497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateId>k__BackingField: 1
   _minIdle: 0.7
   _maxIdle: 2
-  _patrolState: {fileID: 3949894963783754967}
-  _chaseState: {fileID: 4298304426043227101}
 --- !u!1 &7220177973232180702
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,9 +352,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee408e85639e494ea40dfb921e1f916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <StateId>k__BackingField: 4
   loseSightGrace: 1
-  _patrolState: {fileID: 3949894963783754967}
-  _attackState: {fileID: 2764359428427223829}
   _attackTriggerRange: 0.9
 --- !u!1 &7783554020712254444
 GameObject:
@@ -402,5 +399,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1067dc91bfded7d4ea41ee7dd76f2836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _idleState: {fileID: 4167680093526656910}
-  _chaseState: {fileID: 4298304426043227101}
+  <StateId>k__BackingField: 2

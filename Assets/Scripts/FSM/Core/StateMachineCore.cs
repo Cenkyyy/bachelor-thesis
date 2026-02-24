@@ -1,10 +1,13 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class StateMachineCore : MonoBehaviour
 {
     public StateMachine machine;
     public State initialState;
+
+    private readonly Dictionary<ActorStateId, State> _stateByIdLookup = new();
 
     protected virtual void Start()
     {
@@ -25,6 +28,7 @@ public abstract class StateMachineCore : MonoBehaviour
     public void SetUpInstances()
     {
         machine = new StateMachine();
+        _stateByIdLookup.Clear();
 
         var allChildStates = GetComponentsInChildren<State>(true);
         foreach (var state in allChildStates)
@@ -34,6 +38,29 @@ public abstract class StateMachineCore : MonoBehaviour
             {
                 state.machine = new StateMachine();
             }
+
+            if (state.StateId == ActorStateId.None)
+            {
+                continue;
+            }
+
+            if (_stateByIdLookup.ContainsKey(state.StateId))
+            {
+                // Duplicate state IDs are not allowed
+                continue;
+            }
+
+            _stateByIdLookup.Add(state.StateId, state);
         }
+    }
+
+    public bool RequestState(ActorStateId stateId, bool forceReset = false)
+    {
+        if (_stateByIdLookup.TryGetValue(stateId, out var state))
+        {
+            machine.Set(state, forceReset);
+            return true;
+        }
+        return false;
     }
 }

@@ -5,9 +5,6 @@ namespace Assets.Scripts.FSM.States
 {
     public class PlayerMoveState : State
     {
-        [Header("Transitions")]
-        [SerializeField] private PlayerIdleState _idleState;
-
         private PlayerCore _core;
 
         public override void OnEnter()
@@ -21,7 +18,7 @@ namespace Assets.Scripts.FSM.States
             var input = _core.ReadMoveInput();
             if (input == Vector2.zero)
             {
-                Set(_idleState, forceReset: true);
+                Set(ActorStateId.PlayerIdle, forceReset: true);
                 return;
             }
             _core.ApplyMovement(input);

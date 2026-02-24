@@ -2,6 +2,8 @@ using UnityEngine;
 
 public abstract class State : MonoBehaviour
 {
+    [field: SerializeField] public ActorStateId StateId { get; private set; } = ActorStateId.None;
+
     public bool IsComplete { get; protected set; } = false;
 
     public float startTime { get; private set; }
@@ -22,6 +24,10 @@ public abstract class State : MonoBehaviour
         parent.Set(newState, forceReset);
     }
 
+    protected void Set(ActorStateId newStateId, bool forceReset = false)
+    {
+        core.RequestState(newStateId, forceReset);
+    }
     public void SetCore(StateMachineCore core)
     {
         this.core = core;
