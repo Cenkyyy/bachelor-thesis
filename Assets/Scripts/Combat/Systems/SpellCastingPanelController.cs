@@ -52,6 +52,7 @@ public class SpellCastingPanelController : MonoBehaviour
     private SpellPhrase _currentPhrase;
     private CastingStage _stage;
     private bool _isCastLocked;
+    private bool _canInteractWithSpellcasting;
 
     public event Action<SpellPhrase> OnPhraseCompleted;
 
@@ -63,16 +64,32 @@ public class SpellCastingPanelController : MonoBehaviour
         RefreshPanels();
         SetPhraseTextVisible(false);
         ResetCastingState();
+        RefreshInteractionAvailability();
+    }
+
+    private void Start()
+    {
+        if (_player != null && _player.Inventory != null)
+        {
+            _player.Inventory.OnHotbarSelectionChanged += HandleSelectedHotbarChanged;
+            _player.Inventory.OnItemChanged += HandleInventoryItemChanged;
+        }
     }
 
     private void OnDestroy()
     {
         _wordInventory.OnWordsChanged -= RefreshPanels;
+
+        if (_player != null && _player.Inventory != null)
+        {
+            _player.Inventory.OnHotbarSelectionChanged -= HandleSelectedHotbarChanged;
+            _player.Inventory.OnItemChanged -= HandleInventoryItemChanged;
+        }
     }
 
     private void Update()
     {
-        if (_isCastLocked || GameStateManager.IsGamePaused)
+        if (_isCastLocked || GameStateManager.IsGamePaused || !_canInteractWithSpellcasting)
             return;
 
         if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
@@ -96,7 +113,47 @@ public class SpellCastingPanelController : MonoBehaviour
         _modifierPanel.Bind(_wordInventory.UnlockedModifiers, CombatWordDefinitions.GetLabel);
         _elementPanel.Bind(_wordInventory.UnlockedElements, CombatWordDefinitions.GetLabel);
         _formPanel.Bind(_wordInventory.UnlockedForms, CombatWordDefinitions.GetLabel);
+        RefreshInteractionAvailability();
         ApplyStageVisuals();
+    }
+
+    private void HandleSelectedHotbarChanged(int _)
+    {
+        RefreshInteractionAvailability();
+    }
+
+    private void HandleInventoryItemChanged(int changedIndex)
+    {
+        if (_player == null || _player.Inventory == null)
+            return;
+
+        if (changedIndex != _player.Inventory.SelectedHotbarIndex)
+            return;
+
+        RefreshInteractionAvailability();
+    }
+
+    private void RefreshInteractionAvailability()
+    {
+        var canInteractNow = IsHoldingWeaponItem();
+        if (_canInteractWithSpellcasting == canInteractNow)
+            return;
+
+        _canInteractWithSpellcasting = canInteractNow;
+
+        if (!_canInteractWithSpellcasting)
+            CancelCasting();
+
+        ApplyStageVisuals();
+    }
+
+    private bool IsHoldingWeaponItem()
+    {
+        if (_player == null || _player.Inventory == null)
+            return false;
+
+        var selectedItem = _player.Inventory.GetItemAt(_player.Inventory.SelectedHotbarIndex);
+        return selectedItem.Item is WeaponItem;
     }
 
     private void TrySelectWord(int index)
@@ -183,17 +240,17 @@ public class SpellCastingPanelController : MonoBehaviour
 
     private void ApplyStageVisuals()
     {
-        var showModifierPanel = _stage == CastingStage.Modifier && !_isCastLocked;
-        var showElementPanel = _stage == CastingStage.Element && !_isCastLocked;
-        var showFormPanel = _stage == CastingStage.Form && !_isCastLocked;
+        var showModifierPanel = _stage == CastingStage.Modifier;
+        var showElementPanel = _stage == CastingStage.Element;
+        var showFormPanel = _stage == CastingStage.Form;
 
         _modifierPanel.gameObject.SetActive(showModifierPanel);
         _elementPanel.gameObject.SetActive(showElementPanel);
         _formPanel.gameObject.SetActive(showFormPanel);
 
-        _modifierPanel.SetPanelInteractable(showModifierPanel);
-        _elementPanel.SetPanelInteractable(showElementPanel);
-        _formPanel.SetPanelInteractable(showFormPanel);
+        _modifierPanel.SetPanelInteractable(showModifierPanel && !_isCastLocked && _canInteractWithSpellcasting);
+        _elementPanel.SetPanelInteractable(showElementPanel && !_isCastLocked && _canInteractWithSpellcasting);
+        _formPanel.SetPanelInteractable(showFormPanel && !_isCastLocked && _canInteractWithSpellcasting);
     }
 
     private void UpdateText()

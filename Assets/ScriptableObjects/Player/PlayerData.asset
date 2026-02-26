@@ -30,6 +30,8 @@ MonoBehaviour:
     <Amount>k__BackingField: 1
   - <Item>k__BackingField: {fileID: 11400000, guid: 4183219e1d68b954bb6a5a7414b07b18, type: 2}
     <Amount>k__BackingField: 1
+  - <Item>k__BackingField: {fileID: 11400000, guid: 277f53f4a2fb6ee45bd69c23abdc00dc, type: 2}
+    <Amount>k__BackingField: 1
   startingBackpackItems:
   - <Item>k__BackingField: {fileID: 11400000, guid: 060efcd3a6a82654b95f4712b362e893, type: 2}
     <Amount>k__BackingField: 1
