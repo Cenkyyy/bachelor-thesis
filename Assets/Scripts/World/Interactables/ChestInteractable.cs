@@ -2,10 +2,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(ChestInventory))]
-public sealed class ChestInteractable : MonoBehaviour, IInteractable
+public sealed class ChestInteractable : InteractableBase
 {
     private ChestInventory _inventory;
-    private bool _playerInside;
 
     private void Awake()
     {
@@ -15,39 +14,19 @@ public sealed class ChestInteractable : MonoBehaviour, IInteractable
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected override void OnPlayerExitTrigger(Collider2D playerCollider)
     {
-        if (other.CompareTag("Player"))
-        {
-            _playerInside = true;
-        }
+        PanelManager.Instance.CloseChestIfBoundTo(_inventory.Inventory);
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            _playerInside = false;
-            PanelManager.Instance.CloseChestIfBoundTo(_inventory.Inventory);
-        }
-    }
+    public override bool CanInteract() =>
+        IsPlayerInside && !GameStateManager.IsGamePaused && (EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject());
 
-    public bool CanInteract() =>
-        _playerInside && !GameStateManager.IsGamePaused && (EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject());
-
-    public void Interact()
+    public override void Interact()
     {
         if (!CanInteract())
             return;
 
         PanelManager.Instance.InteractWithChest(_inventory.Inventory);
-    }
-
-    private void OnMouseOver()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Interact();
-        }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(MineableNode))]
-public sealed class BedrollInteractable : MonoBehaviour, IInteractable
+public sealed class BedrollInteractable : InteractableBase
 {
     [Header("Rules")]
     [SerializeField] private bool _requireNight = true;
@@ -10,35 +10,9 @@ public sealed class BedrollInteractable : MonoBehaviour, IInteractable
     [SerializeField] private LayerMask _enemyLayerMask;
     [SerializeField] private float _enemyCheckRadius = 5f;
 
-    private bool _playerInside;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override bool CanInteract()
     {
-        if (!collision.CompareTag("Player"))
-            return;
-
-        _playerInside = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (!collision.CompareTag("Player"))
-            return;
-
-        _playerInside = false;
-    }
-
-    private void OnMouseOver()
-    {
-        if (!Input.GetMouseButtonDown(1))
-            return;
-
-        Interact();
-    }
-
-    public bool CanInteract()
-    {
-        if (!_playerInside || GameStateManager.IsGamePaused)
+        if (!IsPlayerInside || GameStateManager.IsGamePaused)
             return false;
         if (Event.current != null && EventSystem.current.IsPointerOverGameObject())
             return false;
@@ -50,7 +24,7 @@ public sealed class BedrollInteractable : MonoBehaviour, IInteractable
         return true;
     }
 
-    public void Interact()
+    public override void Interact()
     {
         if (!CanInteract())
             return;
