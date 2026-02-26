@@ -35,7 +35,7 @@ public sealed class SceneLoader : MonoBehaviour
         if (SceneManager.GetActiveScene().name == sceneName)
             return;
 
-        Time.timeScale = 1f;
+        GameStateManager.SetPause(false);
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 

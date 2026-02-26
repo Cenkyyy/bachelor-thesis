@@ -5731,6 +5731,7 @@ MonoBehaviour:
   _resumeButton: {fileID: 118275428}
   _audioSettingsButton: {fileID: 1209509825}
   _uiSettingsButton: {fileID: 1631508460}
+  _returnToMenuButton: {fileID: 886667196}
   _exitGameButton: {fileID: 1962377499}
 --- !u!114 &784491455
 MonoBehaviour:

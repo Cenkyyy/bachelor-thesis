@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +15,7 @@ public sealed class SettingsController : MonoBehaviour, IMajorPanel
     [SerializeField] private Button _resumeButton;
     [SerializeField] private Button _audioSettingsButton;
     [SerializeField] private Button _uiSettingsButton;
+    [SerializeField] private Button _returnToMenuButton;
     [SerializeField] private Button _exitGameButton;
 
     public PanelId Id => PanelId.Settings;
@@ -28,6 +28,7 @@ public sealed class SettingsController : MonoBehaviour, IMajorPanel
         _resumeButton.onClick.AddListener(Resume);
         _audioSettingsButton.onClick.AddListener(ShowAudioPage);
         _uiSettingsButton.onClick.AddListener(ShowUiPage);
+        _returnToMenuButton.onClick.AddListener(ReturnToMenu);
         _exitGameButton.onClick.AddListener(ExitGame);
 
         _settingsPanel.SetActive(false);
@@ -69,6 +70,14 @@ public sealed class SettingsController : MonoBehaviour, IMajorPanel
     private void Resume()
     {
         PanelManager.Instance.CloseCurrentMajorPanel();
+    }
+
+    private void ReturnToMenu()
+    {
+        if (SceneLoader.Instance != null)
+        {
+            SceneLoader.Instance.LoadMenu();
+        }
     }
 
     private void ExitGame()

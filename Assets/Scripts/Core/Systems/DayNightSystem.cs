@@ -46,12 +46,17 @@ public sealed class DayNightSystem : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
 
         CurrentDay = Mathf.Max(1, _startDay);
         Time01 = Mathf.Repeat(_initialTime01, 1f);
         RecomputeHhMm();
         RecomputeBrightness(forceInvoke: true);
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 
     private void Update()

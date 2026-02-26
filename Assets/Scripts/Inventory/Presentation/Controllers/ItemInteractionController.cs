@@ -57,7 +57,6 @@ public class ItemInteractionController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -73,6 +72,12 @@ public class ItemInteractionController : MonoBehaviour
         // hide held item UI initially
         if (_heldItemContainer != null)
             _heldItemContainer.gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 
     private void Update()
