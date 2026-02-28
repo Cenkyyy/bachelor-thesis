@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7848584458507764234}
   - component: {fileID: 6378461991433492054}
   - component: {fileID: 5169284183821684176}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,8 +62,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34a4acb058267d45843007a0dd41b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chestPanel: {fileID: 0}
-  _backpackPanel: {fileID: 0}
 --- !u!61 &3429509149576730832
 BoxCollider2D:
   m_ObjectHideFlags: 0
