@@ -43,7 +43,6 @@ public class SpellCastingPanelController : MonoBehaviour
 
     [Header("Input")]
     [SerializeField] private WordSelectionKeys _selectionKeys = default;
-    [SerializeField] private KeyCode _cancelKey = KeyCode.Escape;
 
     [Header("Casting")]
     [SerializeField, Min(0f)] private float _castLockDurationSeconds = 0.2f;
@@ -94,12 +93,6 @@ public class SpellCastingPanelController : MonoBehaviour
 
         if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
             return;
-
-        if (Input.GetKeyDown(_cancelKey))
-        {
-            CancelCasting();
-            return;
-        }
 
         var pressedIndex = _selectionKeys.TryGetPressedIndex();
         if (!pressedIndex.HasValue)
@@ -226,6 +219,22 @@ public class SpellCastingPanelController : MonoBehaviour
     private void CancelCasting()
     {
         ResetCastingState();
+    }
+
+    public bool TryCancelActiveCasting()
+    {
+        if (!IsCastingInProgress())
+            return false;
+
+        CancelCasting();
+        return true;
+    }
+
+    private bool IsCastingInProgress()
+    {
+        return _currentPhrase.Modifier.HasValue ||
+               _currentPhrase.Element.HasValue ||
+               _currentPhrase.Form.HasValue;
     }
 
     private void ResetCastingState()

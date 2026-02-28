@@ -8,6 +8,9 @@ public sealed class PanelManager : MonoBehaviour
     [Header("Input")]
     [SerializeField] private MajorPanelKeybinds _panelKeybinds;
 
+    [Header("Input Handlers")]
+    [SerializeField] private SpellCastingPanelController _spellCastingPanel;
+
     [Header("Panels - Major")]
     [SerializeField] private BackpackPanel _backpackPanel;
     [SerializeField] private ChestPanel _chestPanel;
@@ -40,6 +43,9 @@ public sealed class PanelManager : MonoBehaviour
 
         Instance = this;
 
+        if (_spellCastingPanel == null)
+            _spellCastingPanel = FindFirstObjectByType<SpellCastingPanelController>();
+
         _inventoryGroup = new IPanel[] { _backpackPanel, _characterPanel };
         _chestGroup = new IPanel[] { _chestPanel, _backpackPanel, _characterPanel };
         _mapGroup = new IPanel[] { _mapPanel };
@@ -66,6 +72,9 @@ public sealed class PanelManager : MonoBehaviour
                 CloseCurrentMajorPanel();
                 return;
             }
+
+            if (_spellCastingPanel != null && _spellCastingPanel.TryCancelActiveCasting())
+                return;
 
             OpenMajorPanel(PanelId.Settings);
             return;
