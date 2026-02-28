@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4463165593056693915}
   - component: {fileID: 2882478927631929144}
   - component: {fileID: 1060301774912592183}
+  - component: {fileID: 6707003018897083608}
   - component: {fileID: 5612931613348441123}
   - component: {fileID: 7763932207607994953}
   - component: {fileID: 7869315640484421834}
@@ -57,6 +58,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _enemyCheckRadius: 2
+  _feedbackPopup: {fileID: 6707003018897083608}
+  _cannotSleepMessage: Cannot sleep, enemies nearby
 --- !u!114 &1060301774912592183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,6 +74,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _definition: {fileID: 11400000, guid: c7dd4c3ce4843ca488e616e3ece0d218, type: 2}
   _dropAnchor: {fileID: 3382344007120526757}
+  _feedbackPopup: {fileID: 6707003018897083608}
+  _higherToolRequiredMessage: Higher tool is required
+--- !u!114 &6707003018897083608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143963826679536962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1971731234e694f4ab34acd03d85fe09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localOffset: {x: 0, y: 0.5, z: 0}
+  _textColor: {r: 1, g: 1, b: 1, a: 1}
+  _fontSize: 2.5
+  _fontAsset: {fileID: 11400000, guid: b38523a5958474b49b379ba60931379c, type: 2}
+  _inheritHostRendererSorting: 1
+  _sortingOrderOffset: 10
+  _sortingLayerName: Default
+  _sortingOrder: 50
+  _duration: 1.2
+  _riseDistance: 0.5
+  _cooldownSeconds: 2.5
 --- !u!61 &5612931613348441123
 BoxCollider2D:
   m_ObjectHideFlags: 0

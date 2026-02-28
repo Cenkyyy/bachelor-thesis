@@ -10,6 +10,19 @@ public sealed class BedrollInteractable : InteractableBase
     [SerializeField] private LayerMask _enemyLayerMask;
     [SerializeField] private float _enemyCheckRadius = 5f;
 
+    [Header("Feedback")]
+    [SerializeField] private WorldTextPopupEmitter _feedbackPopup;
+    [SerializeField] private string _cannotSleepMessage = "Cannot sleep, enemies nearby";
+
+    private void Awake()
+    {
+        if (_feedbackPopup == null)
+            _feedbackPopup = GetComponent<WorldTextPopupEmitter>();
+
+        if (_feedbackPopup == null)
+            _feedbackPopup = gameObject.AddComponent<WorldTextPopupEmitter>();
+    }
+
     public override bool CanInteract()
     {
         if (!IsPlayerInside || GameStateManager.IsGamePaused)
@@ -27,7 +40,13 @@ public sealed class BedrollInteractable : InteractableBase
     public override void Interact()
     {
         if (!CanInteract())
+        {
+            if (IsPlayerInside && HasEnemiesNearby())
+                _feedbackPopup.ShowMessage(_cannotSleepMessage);
+
             return;
+        }
+            
 
         // Load Parallel World from SceneLoader
     }

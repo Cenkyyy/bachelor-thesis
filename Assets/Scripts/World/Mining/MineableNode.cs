@@ -8,6 +8,10 @@ public sealed class MineableNode : MonoBehaviour
     [SerializeField] private MineableNodeDefinition _definition;
     [SerializeField] private Transform _dropAnchor;
 
+    [Header("Feedback")]
+    [SerializeField] private WorldTextPopupEmitter _feedbackPopup;
+    [SerializeField] private string _higherToolRequiredMessage = "Higher tool is required";
+
     private float _currentDurability;
     private bool _isDepleted;
 
@@ -21,6 +25,12 @@ public sealed class MineableNode : MonoBehaviour
     private void Awake()
     {
         _currentDurability = Mathf.Max(0f, _definition.MaxDurability);
+
+        if (_feedbackPopup == null)
+            _feedbackPopup = GetComponent<WorldTextPopupEmitter>();
+
+        if (_feedbackPopup == null)
+            _feedbackPopup = gameObject.AddComponent<WorldTextPopupEmitter>();
     }
 
     public bool CanBeMinedWith(MiningToolContext tool)
@@ -32,6 +42,11 @@ public sealed class MineableNode : MonoBehaviour
             return false;
 
         return tool.Tier >= _definition.MinimumTier;
+    }
+
+    public void ShowHigherToolRequiredFeedback()
+    {
+        _feedbackPopup.ShowMessage(_higherToolRequiredMessage);
     }
 
     public void ApplyMiningDamage(float basePower, Player miner, ItemDropSpawner dropSpawner)

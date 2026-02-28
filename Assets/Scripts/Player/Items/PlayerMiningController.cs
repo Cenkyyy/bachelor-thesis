@@ -45,6 +45,7 @@ public sealed class PlayerMiningController : MonoBehaviour
 
         if (!node.CanBeMinedWith(toolContext))
         {
+            node.ShowHigherToolRequiredFeedback();
             ResetMining();
             return;
         }
