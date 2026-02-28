@@ -1977,7 +1977,6 @@ MonoBehaviour:
     Slot3: 51
     Slot4: 52
     Slot5: 53
-  _cancelKey: 27
   _castLockDurationSeconds: 0.2
 --- !u!1 &201006413
 GameObject:
@@ -5797,21 +5796,21 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 121172469}
+  - {fileID: 201006414}
+  - {fileID: 1467100168}
+  - {fileID: 2105585047}
+  - {fileID: 999410526}
+  - {fileID: 698191203}
+  - {fileID: 220659262}
   - {fileID: 203007079}
   - {fileID: 719520325}
   - {fileID: 527170256}
-  - {fileID: 698191203}
-  - {fileID: 1467100168}
-  - {fileID: 1436572155}
-  - {fileID: 733404019}
-  - {fileID: 220659262}
-  - {fileID: 999410526}
-  - {fileID: 2105585047}
   - {fileID: 2139804741}
-  - {fileID: 201006414}
+  - {fileID: 121172469}
+  - {fileID: 1436572155}
   - {fileID: 191605558}
   - {fileID: 173466841}
+  - {fileID: 733404019}
   m_Father: {fileID: 1695784272}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -14629,6 +14628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _panelKeybinds: {fileID: 11400000, guid: a590f4fae19e2ea4c8d8936378ed7432, type: 2}
+  _spellCastingPanel: {fileID: 192015840}
   _backpackPanel: {fileID: 570862299}
   _chestPanel: {fileID: 517984392}
   _mapPanel: {fileID: 185817031}
@@ -15070,6 +15070,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4232027223563771452, guid: c81bea4e62ab3f44a95c9e2014450722, type: 3}
+      propertyPath: _duration
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4232027223563771452, guid: c81bea4e62ab3f44a95c9e2014450722, type: 3}
+      propertyPath: _fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b38523a5958474b49b379ba60931379c, type: 2}
     - target: {fileID: 5965792816487423154, guid: c81bea4e62ab3f44a95c9e2014450722, type: 3}
       propertyPath: m_SortingLayer
       value: 3
@@ -17238,7 +17246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5999568118665831840, guid: 9ae8e68182fbe8a40b871d5768156549, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

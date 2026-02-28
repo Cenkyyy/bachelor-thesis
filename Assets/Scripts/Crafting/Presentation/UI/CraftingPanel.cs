@@ -213,9 +213,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
         if (recipe == null || _player == null || _player.Inventory == null)
             return false;
 
-        var inventory = _player.Inventory;
-        return CraftingInventoryUtility.HasIngredients(inventory, recipe.Ingredients) &&
-            CraftingInventoryUtility.CanFitOutput(inventory, recipe.GetOutputStack());
+        return CraftingInventoryUtility.HasIngredients(_player.Inventory, recipe.Ingredients);
     }
 
     private void HandleCraftStarted(CraftingRecipe recipe)

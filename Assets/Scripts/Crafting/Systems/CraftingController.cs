@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class CraftingController : MonoBehaviour
@@ -20,7 +19,6 @@ public sealed class CraftingController : MonoBehaviour
     public CraftingRecipe CurrentRecipe => _activeCraft?.Recipe;
 
     private CraftingProcess _activeCraft;
-    private readonly List<InventoryItem> _consumedIngredients = new();
 
     private void Update()
     {
@@ -71,12 +69,6 @@ public sealed class CraftingController : MonoBehaviour
             return false;
         }
 
-        if (!CraftingInventoryUtility.CanFitOutput(inventory, output))
-        {
-            OnCraftFailed?.Invoke(recipe, CraftingFailureReason.InventoryFull);
-            return false;
-        }
-
         ConsumeIngredients(inventory, recipe);
 
         var duration = recipe.CraftDurationSeconds > 0f ? recipe.CraftDurationSeconds : _defaultCraftDurationSeconds;
@@ -88,7 +80,6 @@ public sealed class CraftingController : MonoBehaviour
 
     private void ConsumeIngredients(IInventory inventory, CraftingRecipe recipe)
     {
-        _consumedIngredients.Clear();
         var range = new SlotRange(0, inventory.Capacity);
 
         foreach (var ingredient in recipe.Ingredients)
@@ -97,11 +88,7 @@ public sealed class CraftingController : MonoBehaviour
                 continue;
 
             var toRemove = ingredient.ToInventoryItem();
-            inventory.TryRemoveFromRange(toRemove, range, out var removed);
-            if (!removed.IsEmpty)
-            {
-                _consumedIngredients.Add(removed);
-            }
+            inventory.TryRemoveFromRange(toRemove, range, out _);
         }
     }
 
@@ -122,35 +109,13 @@ public sealed class CraftingController : MonoBehaviour
         var range = new SlotRange(0, inventory.Capacity);
         inventory.TryAddItemToRange(output, range, out var leftover);
         ItemPickupFeedReporter.ReportAddedToInventory(output, leftover);
-
-        if (leftover.IsEmpty)
+            
+        if (!leftover.IsEmpty)
         {
-            _consumedIngredients.Clear();
-            OnCraftCompleted?.Invoke(recipe);
-            return;
+            SpawnOverflow(leftover);
         }
 
-        RefundIngredients(inventory);
-        SpawnOverflow(leftover);
-        OnCraftFailed?.Invoke(recipe, CraftingFailureReason.InventoryFull);
-    }
-
-    private void RefundIngredients(IInventory inventory)
-    {
-        if (_consumedIngredients.Count == 0)
-            return;
-
-        var range = new SlotRange(0, inventory.Capacity);
-        foreach (var item in _consumedIngredients)
-        {
-            inventory.TryAddItemToRange(item, range, out var leftover);
-            if (!leftover.IsEmpty)
-            {
-                SpawnOverflow(leftover);
-            }
-        }
-
-        _consumedIngredients.Clear();
+        OnCraftCompleted?.Invoke(recipe);
     }
 
     private void SpawnOverflow(InventoryItem item)
