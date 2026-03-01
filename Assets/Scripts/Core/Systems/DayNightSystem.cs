@@ -130,5 +130,12 @@ public sealed class DayNightSystem : MonoBehaviour
         return Mathf.Exp(-(d * d) / (2f * sigma * sigma));
     }
 
+    public float GetHudTimeBarPosition01() => GetHudTimeBarPosition01(Time01);
+    public float GetHudTimeBarPosition01(float time01)
+    {
+        const float sixAm01 = 6f / 24f;
+        return Mathf.Repeat(time01 - sixAm01, 1f);
+    }
+
     public string GetTimeString() => $"{Hour:00}:{Minute:00}";
 }
