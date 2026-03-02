@@ -2,7 +2,7 @@ using UnityEngine;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 [CreateAssetMenu(menuName = "Items/Tool Item")]
-public class ToolItem : Item, IMiningTool
+public class ToolItemData : ItemData, IMiningTool
 {
     [field: SerializeField] public int MaxDurability { get; private set; } = 25;
     [field: SerializeField] public ToolType ToolType { get; private set; } = ToolType.None;

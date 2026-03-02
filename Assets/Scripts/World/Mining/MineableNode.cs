@@ -5,7 +5,7 @@ using UnityEngine;
 public sealed class MineableNode : MonoBehaviour
 {
     [Header("Definition")]
-    [SerializeField] private MineableNodeDefinition _definition;
+    [SerializeField] private MineableNodeData _data;
     [SerializeField] private Transform _dropAnchor;
 
     [Header("Feedback")]
@@ -15,16 +15,16 @@ public sealed class MineableNode : MonoBehaviour
     private float _currentDurability;
     private bool _isDepleted;
 
-    public MineableNodeDefinition Definition => _definition;
+    public MineableNodeData Data => _data;
     public float CurrentDurability => _currentDurability;
-    public float MaxDurability => _definition ? _definition.MaxDurability : 0f;
+    public float MaxDurability => _data ? _data.MaxDurability : 0f;
 
     public event Action<float> OnMiningProgressChanged;
     public event Action OnMiningStopped;
 
     private void Awake()
     {
-        _currentDurability = Mathf.Max(0f, _definition.MaxDurability);
+        _currentDurability = Mathf.Max(0f, _data.MaxDurability);
 
         if (_feedbackPopup == null)
             _feedbackPopup = GetComponent<WorldTextPopupEmitter>();
@@ -36,12 +36,12 @@ public sealed class MineableNode : MonoBehaviour
     public bool CanBeMinedWith(MiningToolContext tool)
     {
         if (tool.IsHand)
-            return _definition.AllowHandMining;
+            return _data.AllowHandMining;
 
-        if (tool.ToolType != _definition.RequiredToolType)
+        if (tool.ToolType != _data.RequiredToolType)
             return false;
 
-        return tool.Tier >= _definition.MinimumTier;
+        return tool.Tier >= _data.MinimumTier;
     }
 
     public void ShowHigherToolRequiredFeedback()
@@ -54,7 +54,7 @@ public sealed class MineableNode : MonoBehaviour
         if (_isDepleted)
             return;
 
-        var powerMultiplier = Mathf.Max(0f, _definition.ToolPowerMultiplier);
+        var powerMultiplier = Mathf.Max(0f, _data.ToolPowerMultiplier);
         var power = Mathf.Max(0f, basePower * powerMultiplier);
         if (power <= 0f)
             return;
@@ -89,9 +89,9 @@ public sealed class MineableNode : MonoBehaviour
 
     private void HandleBreak(Player player, ItemDropSpawner dropSpawner)
     {
-        if (player != null && _definition.GrantsMemoryXP)
+        if (player != null && _data.GrantsMemoryXP)
         {
-            player.Data.GainMemoryXP(_definition.MemoryXpAmount);
+            player.Data.GainMemoryXP(_data.MemoryXpAmount);
         }
         else if (player != null)
         {
@@ -104,15 +104,15 @@ public sealed class MineableNode : MonoBehaviour
 
     private void TryDropLoot(Player player, ItemDropSpawner dropSpawner)
     {
-        if (_definition.Drops == null || _definition.Drops.Count == 0)
+        if (_data.Drops == null || _data.Drops.Count == 0)
             return;
 
         var dropPosition = _dropAnchor ? _dropAnchor.position : transform.position;
         dropPosition.z = 0f;
 
-        for (int i = 0; i < _definition.Drops.Count; i++)
+        for (int i = 0; i < _data.Drops.Count; i++)
         {
-            var entry = _definition.Drops[i];
+            var entry = _data.Drops[i];
             var amount = entry.RollAmount();
             if (amount <= 0 || entry.Item == null)
                 continue;

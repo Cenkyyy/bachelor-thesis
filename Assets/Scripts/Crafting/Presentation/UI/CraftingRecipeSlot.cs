@@ -8,11 +8,11 @@ public sealed class CraftingRecipeSlot : MonoBehaviour
     [SerializeField] private Button _button;
     [SerializeField] private CanvasGroup _canvasGroup;
 
-    public event Action<CraftingRecipe> OnSelected;
+    public event Action<CraftingRecipeData> OnSelected;
 
-    private CraftingRecipe _recipe;
+    private CraftingRecipeData _recipe;
 
-    public CraftingRecipe Recipe => _recipe;
+    public CraftingRecipeData Recipe => _recipe;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public sealed class CraftingRecipeSlot : MonoBehaviour
         }
     }
 
-    public void Bind(CraftingRecipe recipe, bool craftable)
+    public void Bind(CraftingRecipeData recipe, bool craftable)
     {
         _recipe = recipe;
         if (_icon != null)

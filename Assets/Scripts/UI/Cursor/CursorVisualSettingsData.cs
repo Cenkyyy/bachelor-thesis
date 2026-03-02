@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game/UI/Cursor Visual Settings", fileName = "CursorVisualSettings")]
-public sealed class CursorVisualSettings : ScriptableObject
+[CreateAssetMenu(menuName = "Game/UI/Cursor Visual Settings", fileName = "CursorVisualSettingsData")]
+public sealed class CursorVisualSettingsData : ScriptableObject
 {
     [field: SerializeField] public Color FillColor { get; private set; } = new Color(1f, 1f, 1f, 1f);
     [field: SerializeField, Min(0.1f)] public float Scale { get; private set; } = 1f;

@@ -10,13 +10,13 @@ public sealed class CraftingController : MonoBehaviour
     [Header("Defaults")]
     [SerializeField] private float _defaultCraftDurationSeconds = 1.5f;
 
-    public event Action<CraftingRecipe> OnCraftStarted;
-    public event Action<CraftingRecipe, float> OnCraftProgress;
-    public event Action<CraftingRecipe> OnCraftCompleted;
-    public event Action<CraftingRecipe, CraftingFailureReason> OnCraftFailed;
+    public event Action<CraftingRecipeData> OnCraftStarted;
+    public event Action<CraftingRecipeData, float> OnCraftProgress;
+    public event Action<CraftingRecipeData> OnCraftCompleted;
+    public event Action<CraftingRecipeData, CraftingFailureReason> OnCraftFailed;
 
     public bool IsCrafting => _activeCraft != null;
-    public CraftingRecipe CurrentRecipe => _activeCraft?.Recipe;
+    public CraftingRecipeData CurrentRecipe => _activeCraft?.Recipe;
 
     private CraftingProcess _activeCraft;
 
@@ -35,7 +35,7 @@ public sealed class CraftingController : MonoBehaviour
         CompleteCraft();
     }
 
-    public bool TryStartCraft(CraftingRecipe recipe)
+    public bool TryStartCraft(CraftingRecipeData recipe)
     {
         if (recipe == null)
         {
@@ -78,7 +78,7 @@ public sealed class CraftingController : MonoBehaviour
         return true;
     }
 
-    private void ConsumeIngredients(IInventory inventory, CraftingRecipe recipe)
+    private void ConsumeIngredients(IInventory inventory, CraftingRecipeData recipe)
     {
         var range = new SlotRange(0, inventory.Capacity);
 
@@ -128,11 +128,11 @@ public sealed class CraftingController : MonoBehaviour
 
     private sealed class CraftingProcess
     {
-        public CraftingRecipe Recipe { get; }
+        public CraftingRecipeData Recipe { get; }
         public float DurationSeconds { get; }
         public float ElapsedSeconds { get; set; }
 
-        public CraftingProcess(CraftingRecipe recipe, float durationSeconds)
+        public CraftingProcess(CraftingRecipeData recipe, float durationSeconds)
         {
             Recipe = recipe;
             DurationSeconds = durationSeconds;

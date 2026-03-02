@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Items/Special/Bedroll Item")]
-public sealed class BedrollItem : Item, IPlaceableItem
+public sealed class BedrollItemData : ItemData, IPlaceableItem
 {
     [field: Header("Placement")]
     [field: SerializeField] public GameObject BedrollPrefab { get; private set; }

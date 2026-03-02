@@ -10,7 +10,7 @@ public sealed class PlayerToolDurability : MonoBehaviour
 
     private struct ToolDurabilityState
     {
-        public Item ToolDefinition;
+        public ItemData ToolDefinition;
         public float Current;
         public float Max;
     }
@@ -35,7 +35,7 @@ public sealed class PlayerToolDurability : MonoBehaviour
             _player.Inventory.OnItemChanged -= HandleItemChanged;
     }
 
-    public bool TryGetToolState(int slotIndex, out Item toolDefinition, out float current, out float max)
+    public bool TryGetToolState(int slotIndex, out ItemData toolDefinition, out float current, out float max)
     {
         toolDefinition = null;
         current = 0f;

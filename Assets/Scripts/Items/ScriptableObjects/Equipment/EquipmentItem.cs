@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewEquipmentItem", menuName = "Items/Equipment Item")]
-public sealed class EquipmentItem : Item
+public sealed class EquipmentItem : ItemData
 {
     [field: SerializeField] public EquipmentSlotType Slot { get; private set; }
     [field: SerializeField] public ToolTier ProgressionTier { get; private set; } = ToolTier.Copper;

@@ -6,7 +6,7 @@ public sealed class PanelManager : MonoBehaviour
     public static PanelManager Instance { get; private set; }
 
     [Header("Input")]
-    [SerializeField] private MajorPanelKeybinds _panelKeybinds;
+    [SerializeField] private MajorPanelKeybindsData _panelKeybinds;
 
     [Header("Input Handlers")]
     [SerializeField] private SpellCastingPanelController _spellCastingPanel;

@@ -1,18 +1,18 @@
 using UnityEngine;
 
-public abstract class Item : ScriptableObject
+public abstract class ItemData : ScriptableObject
 {
-    [Header("Basic Info")]
+    [field: Header("Basic Info")]
     [field: SerializeField] public string ItemName { get; private set; }
     [field: SerializeField] public Sprite Icon { get; private set; }
     [field: SerializeField][TextArea(2, 4)] public string Description { get; private set; }
 
-    [Header("Classfication")]
+    [field: Header("Classfication")]
     [field: SerializeField] public ItemType Category { get; protected set; }
     [field: SerializeField] public ItemRarity Rarity { get; private set; } = ItemRarity.Common;
     [field: SerializeField] public BiomeAffinity BiomeAffinity { get; private set; } = BiomeAffinity.None;
 
-    [Header("Stacking")]
+    [field: Header("Stacking")]
     [field: SerializeField] public int MaxStackSize { get; private set; } = 999;
     public bool IsStackable => MaxStackSize > 1;
 

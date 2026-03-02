@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a015de4907bc674fbe86a016fd29c87, type: 3}
   m_Name: SpellVfxLibrary_Temp
   m_EditorClassIdentifier: 
-  baseSpellPrefab: {fileID: 2466419868598153168, guid: 2568ace020054b74ba8c2b842e09a9c0, type: 3}
-  shardLifetime: 0.35
-  beamLifetime: 0.9
-  waveLifetime: 0.45
-  barrageLifetime: 0.3
-  shardSpeed: 14
-  beamSpeed: 0
-  waveSpeed: 6
-  barrageSpeed: 12
-  shardScale: {x: 0.35, y: 0.35, z: 1}
-  beamScale: {x: 3, y: 0.2, z: 1}
-  waveScale: {x: 1.8, y: 0.8, z: 1}
-  barrageScale: {x: 0.25, y: 0.25, z: 1}
-  lightningColor: {r: 0.8451041, g: 0.85660374, b: 0.08242789, a: 1}
-  poisonColor: {r: 0.6226415, g: 0.15389816, b: 0.36618373, a: 1}
-  frostColor: {r: 0.7, g: 0.95, b: 1, a: 1}
-  emberColor: {r: 1, g: 0.45, b: 0.2, a: 1}
-  darkColor: {r: 0.20363468, g: 0.1685083, b: 0.2603773, a: 1}
+  <BaseSpellPrefab>k__BackingField: {fileID: 2466419868598153168, guid: 2568ace020054b74ba8c2b842e09a9c0, type: 3}
+  _shardLifetime: 0.35
+  _beamLifetime: 0.9
+  _waveLifetime: 0.45
+  _barrageLifetime: 0.3
+  _shardSpeed: 14
+  _beamSpeed: 2
+  _waveSpeed: 6
+  _barrageSpeed: 12
+  _shardScale: {x: 0.35, y: 0.35, z: 1}
+  _beamScale: {x: 3, y: 0.2, z: 1}
+  _waveScale: {x: 1.8, y: 0.8, z: 1}
+  _barrageScale: {x: 0.25, y: 0.25, z: 1}
+  _lightningColor: {r: 0.8060002, g: 0.8867924, b: 0.08784264, a: 1}
+  _poisonColor: {r: 0.5377358, g: 0.16487184, b: 0.32918715, a: 1}
+  _frostColor: {r: 0.16789784, g: 0.7264151, b: 0.6949241, a: 1}
+  _emberColor: {r: 0.8207547, g: 0.355797, b: 0.14324492, a: 1}
+  _darkColor: {r: 0.1721397, g: 0.15606087, b: 0.1981132, a: 1}

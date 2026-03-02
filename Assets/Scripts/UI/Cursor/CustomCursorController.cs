@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public sealed class CustomCursorController : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private CursorVisualSettings _settings;
+    [SerializeField] private CursorVisualSettingsData _settings;
     [SerializeField] private RectTransform _cursorRoot;
     [SerializeField] private Image _fillImage;
     [SerializeField] private Image _outlineImage;

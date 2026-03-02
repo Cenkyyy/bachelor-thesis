@@ -5,8 +5,10 @@ using UnityEngine;
 /// </summary>
 public class Player : MonoBehaviour
 {
-    [SerializeField] private PlayerDataBaseStats _playerData;
+    [Header("Data")]
+    [SerializeField] private PlayerData _playerData;
 
+    [Header("Inventory")]
     [SerializeField] private int _hotbarSize = 8;
     [SerializeField] private int _inventorySize = 24;
 
@@ -14,7 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] private SpellWordInventory _spellWordInventory;
 
     /// <summary> Runtime player stats (health, mana, xp, hunger...). </summary>
-    public PlayerData Data { get; private set; } = new PlayerData();
+    public PlayerRuntimeData Data { get; private set; } = new PlayerRuntimeData();
 
     /// <summary> Runtime player inventory (hotbar + backpack). </summary>
     public PlayerInventory Inventory { get; private set; }

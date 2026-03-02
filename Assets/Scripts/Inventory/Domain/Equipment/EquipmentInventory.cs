@@ -139,7 +139,7 @@ public sealed class EquipmentInventory : IInventory
 
     private bool IsValidIndex(int i) => i >= 0 && i < Capacity;
 
-    private static bool IsEquipment(Item item, out EquipmentItem eq)
+    private static bool IsEquipment(ItemData item, out EquipmentItem eq)
     {
         eq = item as EquipmentItem;
         return eq != null;

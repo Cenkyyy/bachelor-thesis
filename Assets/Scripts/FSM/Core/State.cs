@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class State : MonoBehaviour
+public abstract class State : MonoBehaviour, IState
 {
     [field: SerializeField] public ActorStateId StateId { get; private set; } = ActorStateId.None;
 

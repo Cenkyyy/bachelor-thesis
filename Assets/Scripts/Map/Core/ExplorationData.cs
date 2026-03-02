@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public sealed class ExplorationData
 {
     private readonly int _width;

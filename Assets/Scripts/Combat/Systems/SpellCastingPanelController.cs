@@ -146,7 +146,7 @@ public class SpellCastingPanelController : MonoBehaviour
             return false;
 
         var selectedItem = _player.Inventory.GetItemAt(_player.Inventory.SelectedHotbarIndex);
-        return selectedItem.Item is WeaponItem;
+        return selectedItem.Item is WeaponItemData;
     }
 
     private void TrySelectWord(int index)

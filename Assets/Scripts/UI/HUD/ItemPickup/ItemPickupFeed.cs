@@ -29,7 +29,7 @@ public sealed class ItemPickupFeed : MonoBehaviour
         Instance = this;
     }
 
-    public void ShowPickup(Item itemDefinition, int pickedAmount)
+    public void ShowPickup(ItemData itemDefinition, int pickedAmount)
     {
         if (_entriesRoot == null || _entryPrefab == null)
             return;

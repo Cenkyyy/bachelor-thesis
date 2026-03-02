@@ -9,7 +9,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
 
     [Header("References")]
     [SerializeField] private Player _player;
-    [SerializeField] private CraftingBook _craftingBook;
+    [SerializeField] private CraftingBookData _craftingBook;
     [SerializeField] private CraftingController _craftingController;
 
     [Header("Tabs")]
@@ -32,7 +32,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
 
     private CraftingCategory _currentCategory = CraftingCategory.ToolsAndEquipment;
     private readonly List<CraftingRecipeSlot> _slots = new();
-    private CraftingRecipe _selectedRecipe;
+    private CraftingRecipeData _selectedRecipe;
 
     private void Awake()
     {
@@ -158,7 +158,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
         _slots.Clear();
     }
 
-    private void HandleRecipeSelected(CraftingRecipe recipe)
+    private void HandleRecipeSelected(CraftingRecipeData recipe)
     {
         _selectedRecipe = recipe;
         if (_detailsView == null)
@@ -208,7 +208,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
         }
     }
 
-    private bool CanCraft(CraftingRecipe recipe)
+    private bool CanCraft(CraftingRecipeData recipe)
     {
         if (recipe == null || _player == null || _player.Inventory == null)
             return false;
@@ -216,7 +216,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
         return CraftingInventoryUtility.HasIngredients(_player.Inventory, recipe.Ingredients);
     }
 
-    private void HandleCraftStarted(CraftingRecipe recipe)
+    private void HandleCraftStarted(CraftingRecipeData recipe)
     {
         if (_detailsView != null && recipe == _selectedRecipe)
         {
@@ -224,7 +224,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
         }
     }
 
-    private void HandleCraftProgress(CraftingRecipe recipe, float progress)
+    private void HandleCraftProgress(CraftingRecipeData recipe, float progress)
     {
         if (_detailsView != null && recipe == _selectedRecipe)
         {
@@ -232,7 +232,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
         }
     }
 
-    private void HandleCraftFinished(CraftingRecipe recipe)
+    private void HandleCraftFinished(CraftingRecipeData recipe)
     {
         if (_detailsView != null && recipe == _selectedRecipe)
         {
@@ -242,7 +242,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
         RefreshRecipeAvailability();
     }
 
-    private void HandleCraftFailed(CraftingRecipe recipe, CraftingFailureReason _)
+    private void HandleCraftFailed(CraftingRecipeData recipe, CraftingFailureReason _)
     {
         if (_detailsView != null && recipe == _selectedRecipe)
         {

@@ -9,7 +9,7 @@ public sealed class CraftingIngredientRow : MonoBehaviour
     [SerializeField] private TMP_Text _amount;
     [SerializeField] private CanvasGroup _canvasGroup;
 
-    public void Bind(Item item, int requiredAmount, int availableAmount)
+    public void Bind(ItemData item, int requiredAmount, int availableAmount)
     {
         _icon.sprite = item != null ? item.Icon : null;
         _icon.enabled = _icon.sprite != null;

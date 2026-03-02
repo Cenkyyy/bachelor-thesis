@@ -22,7 +22,7 @@ public sealed class CraftingRecipeDetailsView : MonoBehaviour
 
     public Button CraftButton => _craftButton;
 
-    public void SetRecipe(CraftingRecipe recipe, IReadOnlyInventory inventory)
+    public void SetRecipe(CraftingRecipeData recipe, IReadOnlyInventory inventory)
     {
         if (_icon != null)
         {
@@ -66,7 +66,7 @@ public sealed class CraftingRecipeDetailsView : MonoBehaviour
         SetCraftButtonEnabled(false);
     }
 
-    private void RebuildIngredients(CraftingRecipe recipe, IReadOnlyInventory inventory)
+    private void RebuildIngredients(CraftingRecipeData recipe, IReadOnlyInventory inventory)
     {
         foreach (var row in _rows)
         {

@@ -2,9 +2,9 @@ using UnityEngine;
 
 public abstract class StatBarBase : MonoBehaviour, IStatBar
 {
-    protected PlayerData Data { get; private set; }
+    protected PlayerRuntimeData Data { get; private set; }
 
-    public virtual void Initialize(PlayerData data)
+    public virtual void Initialize(PlayerRuntimeData data)
     {
         if (Data == data) 
             return;

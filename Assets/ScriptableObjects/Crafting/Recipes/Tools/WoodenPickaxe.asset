@@ -12,15 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88c623f404c9cc428b917a762222950, type: 3}
   m_Name: WoodenPickaxe
   m_EditorClassIdentifier: 
-  _outputItem: {fileID: 11400000, guid: 060efcd3a6a82654b95f4712b362e893, type: 2}
-  _outputAmount: 1
-  _displayName: Wooden Pickaxe
-  _description: Pickaxe made out of wood. Lowest rank of the pickaxes, but essential
-    for mining stone and copper.
-  _category: 0
+  <OutputItem>k__BackingField: {fileID: 11400000, guid: 060efcd3a6a82654b95f4712b362e893, type: 2}
+  <OutputAmount>k__BackingField: 1
+  <Description>k__BackingField: Tool that hep player mine copper
+  <Category>k__BackingField: 0
+  CraftDurationSeconds: 1.5
   _ingredients:
   - <Item>k__BackingField: {fileID: 11400000, guid: 060efcd3a6a82654b95f4712b362e893, type: 2}
     <Amount>k__BackingField: 1
   - <Item>k__BackingField: {fileID: 11400000, guid: 461db32e3697c78489869a09a4507074, type: 2}
     <Amount>k__BackingField: 3
-  _craftDurationSeconds: 1.5
+  _displayName: Wooden Pickaxe

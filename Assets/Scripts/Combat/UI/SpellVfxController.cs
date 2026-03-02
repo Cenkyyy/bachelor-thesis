@@ -5,34 +5,34 @@ using UnityEngine;
 public class SpellVfxController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private SpellCastingPanelController castingPanel;
-    [SerializeField] private SpellVfxLibrary library;
+    [SerializeField] private SpellCastingPanelController _castingPanel;
+    [SerializeField] private SpellVfxData _vfxData;
 
     [Header("Spawning")]
-    [SerializeField] private Transform spawnOrigin;
-    [SerializeField, Min(0.01f)] private float barrageInterval = 0.08f;
+    [SerializeField] private Transform _spawnOrigin;
+    [SerializeField, Min(0.01f)] private float _barrageInterval = 0.08f;
 
     private void OnEnable()
     {
-        if (castingPanel != null)
-            castingPanel.OnPhraseCompleted += HandlePhraseCompleted;
+        if (_castingPanel != null)
+            _castingPanel.OnPhraseCompleted += HandlePhraseCompleted;
     }
 
     private void OnDisable()
     {
-        if (castingPanel != null)
-            castingPanel.OnPhraseCompleted -= HandlePhraseCompleted;
+        if (_castingPanel != null)
+            _castingPanel.OnPhraseCompleted -= HandlePhraseCompleted;
     }
 
     private void HandlePhraseCompleted(SpellPhrase phrase)
     {
-        if (!phrase.IsComplete || library == null || library.BaseSpellPrefab == null)
+        if (!phrase.IsComplete || _vfxData == null || _vfxData.BaseSpellPrefab == null)
             return;
 
         var direction = GetForwardDirection();
         var directions = BuildDirections(direction, phrase.Modifier.Value);
-        var profile = library.GetProfile(phrase.Form.Value);
-        var tint = library.GetElementColor(phrase.Element.Value);
+        var profile = _vfxData.GetProfile(phrase.Form.Value);
+        var tint = _vfxData.GetElementColor(phrase.Element.Value);
 
         if (phrase.Form == FormWord.Barrage)
         {
@@ -49,7 +49,7 @@ public class SpellVfxController : MonoBehaviour
         for (var i = 0; i < defaultShots; i++)
         {
             SpawnBatch(directions, profile, tint);
-            yield return new WaitForSeconds(barrageInterval);
+            yield return new WaitForSeconds(_barrageInterval);
         }
     }
 
@@ -57,7 +57,7 @@ public class SpellVfxController : MonoBehaviour
     {
         for (var i = 0; i < directions.Count; i++)
         {
-            var spellObject = Instantiate(library.BaseSpellPrefab, spawnOrigin.position, Quaternion.identity);
+            var spellObject = Instantiate(_vfxData.BaseSpellPrefab, _spawnOrigin.position, Quaternion.identity);
             var instance = spellObject.GetComponent<SpellVfxInstance>();
             if (instance == null)
                 instance = spellObject.AddComponent<SpellVfxInstance>();
@@ -81,11 +81,9 @@ public class SpellVfxController : MonoBehaviour
 
     private Vector2 GetForwardDirection()
     {
-        var mouseWorld = Camera.main != null
-            ? (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)
-            : (Vector2)spawnOrigin.position + Vector2.right;
+        var mouseWorld = Camera.main != null ? (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) : (Vector2)_spawnOrigin.position + Vector2.right;
 
-        var forward = (mouseWorld - (Vector2)spawnOrigin.position).normalized;
+        var forward = (mouseWorld - (Vector2)_spawnOrigin.position).normalized;
         return forward == Vector2.zero ? Vector2.right : forward;
     }
 

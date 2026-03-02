@@ -506,7 +506,7 @@ public class ItemInteractionController : MonoBehaviour
     /// </summary>
     /// <param name="itemSO">The item type to collect.</param>
     /// <param name="maxToCollect">Maximum additional units to collect into the held stack.</param>
-    private void HandleDoubleLeftClickAfterRegularLeftClick(IInventory inventory, Item itemSO, int maxToCollect)
+    private void HandleDoubleLeftClickAfterRegularLeftClick(IInventory inventory, ItemData itemSO, int maxToCollect)
     {
         if (inventory == null || itemSO == null || _heldItem.IsEmpty || _heldItem.Item != itemSO || maxToCollect <= 0)
             return;
@@ -698,7 +698,7 @@ public class ItemInteractionController : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns true if both items are non-empty and share the same <see cref="Item"/> reference.
+    /// Returns true if both items are non-empty and share the same <see cref="ItemData"/> reference.
     /// </summary>
     /// <param name="a">First item to compare.</param>
     /// <param name="b">Second item to compare.</param>

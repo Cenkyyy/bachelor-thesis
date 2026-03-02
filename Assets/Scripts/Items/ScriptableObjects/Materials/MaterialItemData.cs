@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Items/Material Item")]
-public class MaterialItem : Item
+public class MaterialItemData : ItemData
 {
     [field: SerializeField] public MaterialKind Kind { get; private set; } = MaterialKind.Generic;
     [field: SerializeField] public ToolTier TierTag { get; private set; } = ToolTier.None;

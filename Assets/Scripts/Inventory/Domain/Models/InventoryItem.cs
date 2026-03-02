@@ -3,13 +3,13 @@ using UnityEngine;
 [System.Serializable]
 public struct InventoryItem
 {
-    [field: SerializeField] public Item Item { get; private set; }
+    [field: SerializeField] public ItemData Item { get; private set; }
     [field: SerializeField] public int Amount { get; private set; }
 
     public bool IsEmpty => Item == null || Amount <= 0;
     public static InventoryItem Empty => new InventoryItem(null, 0);
 
-    public InventoryItem(Item itemSO, int amount = 1)
+    public InventoryItem(ItemData itemSO, int amount = 1)
     {
         Item = itemSO;
         Amount = Mathf.Max(0, amount);

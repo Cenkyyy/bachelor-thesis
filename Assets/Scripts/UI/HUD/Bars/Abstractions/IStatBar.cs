@@ -1,4 +1,4 @@
 public interface IStatBar
 {
-    void Initialize(PlayerData data);
+    void Initialize(PlayerRuntimeData data);
 }

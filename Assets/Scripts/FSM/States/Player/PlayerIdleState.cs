@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.FSM.Actors.Player;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.FSM.States
 {

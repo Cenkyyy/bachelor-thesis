@@ -2,15 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Crafting/Book", fileName = "CraftingBook")]
-public class CraftingBook : ScriptableObject
+public class CraftingBookData : ScriptableObject
 {
-    [SerializeField] private List<CraftingRecipe> _recipes = new();
+    [SerializeField] private List<CraftingRecipeData> _recipes = new();
 
-    public IReadOnlyList<CraftingRecipe> Recipes => _recipes;
+    public IReadOnlyList<CraftingRecipeData> Recipes => _recipes;
 
-    public List<CraftingRecipe> GetRecipesByCategory(CraftingCategory category)
+    public List<CraftingRecipeData> GetRecipesByCategory(CraftingCategory category)
     {
-        var result = new List<CraftingRecipe>();
+        var result = new List<CraftingRecipeData>();
         foreach (var recipe in _recipes)
         {
             if (recipe == null || recipe.Category != category)

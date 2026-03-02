@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <RequiredToolType>k__BackingField: 1
   <MinimumTier>k__BackingField: 1
-  <AllowHandMining>k__BackingField: 1
+  <AllowHandMining>k__BackingField: 0
   <MaxDurability>k__BackingField: 10
   <ToolPowerMultiplier>k__BackingField: 1
   _drops:
-  - _item: {fileID: 11400000, guid: 461db32e3697c78489869a09a4507074, type: 2}
+  - _item: {fileID: 11400000, guid: 454d9a3282a1dad439c8064255e7761b, type: 2}
     _minAmount: 1
-    _maxAmount: 5
+    _maxAmount: 3
   <GrantsMemoryXP>k__BackingField: 0
   <MemoryXpAmount>k__BackingField: 0

@@ -19,9 +19,9 @@ public static class CraftingInventoryUtility
         return true;
     }
 
-    public static Dictionary<Item, int> GetMissingIngredients(IReadOnlyInventory inventory, IReadOnlyList<CraftingIngredient> ingredients)
+    public static Dictionary<ItemData, int> GetMissingIngredients(IReadOnlyInventory inventory, IReadOnlyList<CraftingIngredient> ingredients)
     {
-        var missing = new Dictionary<Item, int>();
+        var missing = new Dictionary<ItemData, int>();
         if (inventory == null || ingredients == null)
             return missing;
 
@@ -40,7 +40,7 @@ public static class CraftingInventoryUtility
         return missing;
     }
 
-    public static int CountItem(IReadOnlyInventory inventory, Item item)
+    public static int CountItem(IReadOnlyInventory inventory, ItemData item)
     {
         if (inventory == null || item == null)
             return 0;

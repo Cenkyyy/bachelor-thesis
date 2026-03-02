@@ -2,21 +2,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Items/Consumable Item")]
-public class ConsumableItem : Item
+public class ConsumableItemData : ItemData
 {
     [field: SerializeField] public ConsumableKind Kind { get; private set; } = ConsumableKind.Food;
 
-    [Header("Instant Effects")]
+    [field: Header("Instant Effects")]
     [field: SerializeField] public int RestoreHealth { get; private set; }
     [field: SerializeField] public int RestoreMana { get; private set; }
     [field: SerializeField] public int RestoreHunger { get; private set; }
 
-    [Header("Optional Timed Effects")]
+    [field: Header("Optional Timed Effects")]
     [field: SerializeField] public float EffectDurationSeconds { get; private set; }
     [SerializeField] private List<ItemStatModifier> _timedModifiers = new();
     public IReadOnlyList<ItemStatModifier> TimedModifiers => _timedModifiers;
 
-    public ConsumableItem()
+    public ConsumableItemData()
     {
         Category = ItemType.Consumable;
     }
