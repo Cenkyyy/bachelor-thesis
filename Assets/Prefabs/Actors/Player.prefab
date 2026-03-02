@@ -264,7 +264,7 @@ MonoBehaviour:
   _mouseButton: 0
   _mineableMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   _miningRange: 1.5
   _allowHandMining: 1
   _handMiningPower: 1
@@ -293,9 +293,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16794312120646341bdf9ea7e8a76238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unlockedModifiers: 
-  _unlockedElements: 
-  _unlockedForms: 
+  _unlockedModifiers: 0000000001000000020000000300000004000000
+  _unlockedElements: 0000000001000000020000000300000004000000
+  _unlockedForms: 00000000010000000200000003000000
 --- !u!114 &4319894653538523301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,10 +376,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950b57fd1e315c14e8b91016ffc7fdb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  castingPanel: {fileID: 0}
-  library: {fileID: 11400000, guid: d596ae22048838d4ba36735254e29ae2, type: 2}
-  spawnOrigin: {fileID: 3689139185868277431}
-  barrageInterval: 0.08
+  _castingPanel: {fileID: 0}
+  _vfxData: {fileID: 11400000, guid: d596ae22048838d4ba36735254e29ae2, type: 2}
+  _spawnOrigin: {fileID: 3689139185868277431}
+  _barrageInterval: 0.08
 --- !u!114 &2737436318412507732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,7 +413,8 @@ MonoBehaviour:
   _placeMouseButton: 1
   _blockingLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1408
+  _placementRadius: 2
 --- !u!1 &3653677619089745102
 GameObject:
   m_ObjectHideFlags: 0

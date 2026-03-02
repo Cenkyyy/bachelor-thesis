@@ -298,7 +298,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Troll_SpriteSheet_0
+      name: Troll_Front_Idle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -306,7 +306,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -320,7 +320,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_1
+      name: Troll_Front_Idle_1
       rect:
         serializedVersion: 2
         x: 64
@@ -328,7 +328,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -342,7 +342,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_2
+      name: Troll_Front_Idle_2
       rect:
         serializedVersion: 2
         x: 128
@@ -350,7 +350,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -364,7 +364,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_3
+      name: Troll_Front_Idle_3
       rect:
         serializedVersion: 2
         x: 192
@@ -372,7 +372,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -386,7 +386,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_4
+      name: Troll_Front_Idle_4
       rect:
         serializedVersion: 2
         x: 256
@@ -394,7 +394,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -408,7 +408,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_5
+      name: Troll_Back_Idle_0
       rect:
         serializedVersion: 2
         x: 320
@@ -416,7 +416,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -430,7 +430,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_6
+      name: Troll_Back_Idle_1
       rect:
         serializedVersion: 2
         x: 384
@@ -438,7 +438,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -452,7 +452,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_7
+      name: Troll_Back_Idle_2
       rect:
         serializedVersion: 2
         x: 0
@@ -460,7 +460,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -474,7 +474,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_8
+      name: Troll_Back_Idle_3
       rect:
         serializedVersion: 2
         x: 64
@@ -482,7 +482,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -496,7 +496,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_9
+      name: Troll_Back_Idle_4
       rect:
         serializedVersion: 2
         x: 128
@@ -504,7 +504,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -518,7 +518,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_10
+      name: Troll_Side_Idle_0
       rect:
         serializedVersion: 2
         x: 192
@@ -526,7 +526,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -540,7 +540,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_11
+      name: Troll_Side_Idle_1
       rect:
         serializedVersion: 2
         x: 256
@@ -548,7 +548,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -562,7 +562,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_12
+      name: Troll_Side_Idle_2
       rect:
         serializedVersion: 2
         x: 320
@@ -570,7 +570,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -584,7 +584,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_13
+      name: Troll_Side_Idle_3
       rect:
         serializedVersion: 2
         x: 384
@@ -592,7 +592,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -606,7 +606,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_14
+      name: Troll_Side_Idle_4
       rect:
         serializedVersion: 2
         x: 0
@@ -614,7 +614,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -628,7 +628,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_15
+      name: Troll_Front_Walk_0
       rect:
         serializedVersion: 2
         x: 64
@@ -636,7 +636,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -650,7 +650,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_16
+      name: Troll_Front_Walk_1
       rect:
         serializedVersion: 2
         x: 128
@@ -658,7 +658,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -672,7 +672,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_17
+      name: Troll_Front_Walk_2
       rect:
         serializedVersion: 2
         x: 192
@@ -680,7 +680,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -694,7 +694,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_18
+      name: Troll_Front_Walk_3
       rect:
         serializedVersion: 2
         x: 256
@@ -702,7 +702,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -716,7 +716,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_19
+      name: Troll_Front_Walk_4
       rect:
         serializedVersion: 2
         x: 320
@@ -724,7 +724,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -738,7 +738,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_20
+      name: Troll_Front_Walk_5
       rect:
         serializedVersion: 2
         x: 384
@@ -746,7 +746,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -760,7 +760,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_21
+      name: Troll_Back_Walk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -768,7 +768,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -782,7 +782,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_22
+      name: Troll_Back_Walk_1
       rect:
         serializedVersion: 2
         x: 64
@@ -790,7 +790,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -804,7 +804,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_23
+      name: Troll_Back_Walk_2
       rect:
         serializedVersion: 2
         x: 128
@@ -812,7 +812,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -826,7 +826,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_24
+      name: Troll_Back_Walk_3
       rect:
         serializedVersion: 2
         x: 192
@@ -834,7 +834,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -848,7 +848,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_25
+      name: Troll_Back_Walk_4
       rect:
         serializedVersion: 2
         x: 256
@@ -856,7 +856,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -870,7 +870,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_26
+      name: Troll_Back_Walk_5
       rect:
         serializedVersion: 2
         x: 320
@@ -878,7 +878,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -892,7 +892,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_27
+      name: Troll_Side_Walk_0
       rect:
         serializedVersion: 2
         x: 384
@@ -900,7 +900,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -914,7 +914,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_28
+      name: Troll_Side_Walk_1
       rect:
         serializedVersion: 2
         x: 0
@@ -922,7 +922,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -936,7 +936,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_29
+      name: Troll_Side_Walk_2
       rect:
         serializedVersion: 2
         x: 64
@@ -944,7 +944,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -958,7 +958,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_30
+      name: Troll_Side_Walk_3
       rect:
         serializedVersion: 2
         x: 128
@@ -966,7 +966,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -980,7 +980,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_31
+      name: Troll_Side_Walk_4
       rect:
         serializedVersion: 2
         x: 192
@@ -988,7 +988,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1002,7 +1002,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_32
+      name: Troll_Side_Walk_5
       rect:
         serializedVersion: 2
         x: 256
@@ -1010,7 +1010,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1024,7 +1024,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_33
+      name: Troll_Front_Attack_0
       rect:
         serializedVersion: 2
         x: 320
@@ -1032,7 +1032,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1046,7 +1046,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_34
+      name: Troll_Front_Attack_1
       rect:
         serializedVersion: 2
         x: 384
@@ -1054,7 +1054,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1068,7 +1068,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_35
+      name: Troll_Front_Attack_2
       rect:
         serializedVersion: 2
         x: 0
@@ -1076,7 +1076,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1090,7 +1090,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_36
+      name: Troll_Front_Attack_3
       rect:
         serializedVersion: 2
         x: 64
@@ -1098,7 +1098,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1112,7 +1112,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_37
+      name: Troll_Front_Attack_4
       rect:
         serializedVersion: 2
         x: 128
@@ -1120,7 +1120,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1134,7 +1134,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_38
+      name: Troll_Front_Attack_5
       rect:
         serializedVersion: 2
         x: 192
@@ -1142,7 +1142,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1156,7 +1156,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_39
+      name: Troll_Back_Attack_0
       rect:
         serializedVersion: 2
         x: 256
@@ -1164,7 +1164,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1178,7 +1178,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_40
+      name: Troll_Back_Attack_1
       rect:
         serializedVersion: 2
         x: 320
@@ -1186,7 +1186,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1200,7 +1200,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_41
+      name: Troll_Back_Attack_2
       rect:
         serializedVersion: 2
         x: 384
@@ -1208,7 +1208,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1222,7 +1222,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_42
+      name: Troll_Back_Attack_3
       rect:
         serializedVersion: 2
         x: 0
@@ -1230,7 +1230,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1244,7 +1244,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_43
+      name: Troll_Back_Attack_4
       rect:
         serializedVersion: 2
         x: 64
@@ -1252,7 +1252,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1266,7 +1266,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_44
+      name: Troll_Back_Attack_5
       rect:
         serializedVersion: 2
         x: 128
@@ -1274,7 +1274,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1288,7 +1288,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_45
+      name: Troll_Side_Attack_0
       rect:
         serializedVersion: 2
         x: 192
@@ -1296,7 +1296,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1310,7 +1310,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_46
+      name: Troll_Side_Attack_1
       rect:
         serializedVersion: 2
         x: 256
@@ -1318,7 +1318,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1332,7 +1332,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_47
+      name: Troll_Side_Attack_2
       rect:
         serializedVersion: 2
         x: 320
@@ -1340,7 +1340,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1354,7 +1354,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_48
+      name: Troll_Side_Attack_3
       rect:
         serializedVersion: 2
         x: 384
@@ -1362,7 +1362,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1376,7 +1376,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_49
+      name: Troll_Side_Attack_4
       rect:
         serializedVersion: 2
         x: 0
@@ -1384,7 +1384,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1398,7 +1398,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_50
+      name: Troll_Side_Attack_5
       rect:
         serializedVersion: 2
         x: 64
@@ -1406,7 +1406,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1420,7 +1420,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_51
+      name: Troll_Dead_00
       rect:
         serializedVersion: 2
         x: 128
@@ -1428,7 +1428,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1442,7 +1442,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_52
+      name: Troll_Dead_01
       rect:
         serializedVersion: 2
         x: 192
@@ -1450,7 +1450,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1464,7 +1464,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_53
+      name: Troll_Dead_02
       rect:
         serializedVersion: 2
         x: 256
@@ -1472,7 +1472,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1486,7 +1486,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_54
+      name: Troll_Dead_03
       rect:
         serializedVersion: 2
         x: 320
@@ -1494,7 +1494,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1508,7 +1508,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_55
+      name: Troll_Dead_04
       rect:
         serializedVersion: 2
         x: 384
@@ -1516,7 +1516,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1530,7 +1530,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_56
+      name: Troll_Dead_05
       rect:
         serializedVersion: 2
         x: 0
@@ -1538,7 +1538,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1552,7 +1552,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_57
+      name: Troll_Dead_06
       rect:
         serializedVersion: 2
         x: 64
@@ -1560,7 +1560,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1574,7 +1574,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_58
+      name: Troll_Dead_07
       rect:
         serializedVersion: 2
         x: 128
@@ -1582,7 +1582,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1596,7 +1596,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_59
+      name: Troll_Dead_08
       rect:
         serializedVersion: 2
         x: 192
@@ -1604,7 +1604,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1618,7 +1618,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_60
+      name: Troll_Dead_09
       rect:
         serializedVersion: 2
         x: 256
@@ -1626,7 +1626,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1640,7 +1640,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_61
+      name: Troll_Dead_10
       rect:
         serializedVersion: 2
         x: 320
@@ -1648,7 +1648,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1662,7 +1662,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Troll_SpriteSheet_62
+      name: Troll_Dead_11
       rect:
         serializedVersion: 2
         x: 384
@@ -1670,7 +1670,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1697,69 +1697,69 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Troll_SpriteSheet_0: 642152297239799996
-      Troll_SpriteSheet_1: -5632210561917517105
-      Troll_SpriteSheet_10: -275635073548113940
-      Troll_SpriteSheet_11: -2998900579962539312
-      Troll_SpriteSheet_12: -1113159352264302371
-      Troll_SpriteSheet_13: 5886232679731021579
-      Troll_SpriteSheet_14: 7479162024546115512
-      Troll_SpriteSheet_15: -399894199994676103
-      Troll_SpriteSheet_16: 1309247587645746806
-      Troll_SpriteSheet_17: -1954749860790663342
-      Troll_SpriteSheet_18: -6141769625523492864
-      Troll_SpriteSheet_19: 6970298360898725083
-      Troll_SpriteSheet_2: -9061180785725007716
-      Troll_SpriteSheet_20: 5188301865044794552
-      Troll_SpriteSheet_21: 392881157598472479
-      Troll_SpriteSheet_22: -7556436216980983262
-      Troll_SpriteSheet_23: -3683371990583466409
-      Troll_SpriteSheet_24: 756920212338502770
-      Troll_SpriteSheet_25: -1383747212820326023
-      Troll_SpriteSheet_26: -5657250341439079333
-      Troll_SpriteSheet_27: -5156707475297350221
-      Troll_SpriteSheet_28: 2202731935129212057
-      Troll_SpriteSheet_29: -4799345749819113401
-      Troll_SpriteSheet_3: -1068953367970554231
-      Troll_SpriteSheet_30: -1415995195574015035
-      Troll_SpriteSheet_31: 5808914689401750321
-      Troll_SpriteSheet_32: 8429939974791156007
-      Troll_SpriteSheet_33: -2303509248251306720
-      Troll_SpriteSheet_34: 4592620055426765163
-      Troll_SpriteSheet_35: -7014360903828449492
-      Troll_SpriteSheet_36: 8536669112982300840
-      Troll_SpriteSheet_37: -5423909365256505936
-      Troll_SpriteSheet_38: -1038211080093461637
-      Troll_SpriteSheet_39: 4706152485055542071
-      Troll_SpriteSheet_4: -4319124076289129257
-      Troll_SpriteSheet_40: 5082724001107873982
-      Troll_SpriteSheet_41: -4854940604492156285
-      Troll_SpriteSheet_42: -2014714451137756733
-      Troll_SpriteSheet_43: -2356822111466013272
-      Troll_SpriteSheet_44: 4523057112327796689
-      Troll_SpriteSheet_45: -872101476536044577
-      Troll_SpriteSheet_46: 9206156812941498803
-      Troll_SpriteSheet_47: -3647321433482565427
-      Troll_SpriteSheet_48: 2532402425900559079
-      Troll_SpriteSheet_49: 8078333207921795907
-      Troll_SpriteSheet_5: -6952599056751997159
-      Troll_SpriteSheet_50: -4178767907058474658
-      Troll_SpriteSheet_51: 2813058879748906318
-      Troll_SpriteSheet_52: 342456635390790396
-      Troll_SpriteSheet_53: 5514866618118347312
-      Troll_SpriteSheet_54: 2038725828321679057
-      Troll_SpriteSheet_55: -8215647897607282178
-      Troll_SpriteSheet_56: 3160928868165499284
-      Troll_SpriteSheet_57: 8942573800954208685
-      Troll_SpriteSheet_58: -3859065337022811989
-      Troll_SpriteSheet_59: -5495731362653557834
-      Troll_SpriteSheet_6: -6229013959746997183
-      Troll_SpriteSheet_60: 8342149491183391020
-      Troll_SpriteSheet_61: -3328921805566546939
-      Troll_SpriteSheet_62: -5284389372423829271
-      Troll_SpriteSheet_7: 3751387063202231532
-      Troll_SpriteSheet_8: 6537750690172251671
-      Troll_SpriteSheet_9: 8086315489544438137
+      Troll_Back_Attack_0: 4706152485055542071
+      Troll_Back_Attack_1: 5082724001107873982
+      Troll_Back_Attack_2: -4854940604492156285
+      Troll_Back_Attack_3: -2014714451137756733
+      Troll_Back_Attack_4: -2356822111466013272
+      Troll_Back_Attack_5: 4523057112327796689
+      Troll_Back_Idle_0: -6952599056751997159
+      Troll_Back_Idle_1: -6229013959746997183
+      Troll_Back_Idle_2: 3751387063202231532
+      Troll_Back_Idle_3: 6537750690172251671
+      Troll_Back_Idle_4: 8086315489544438137
+      Troll_Back_Walk_0: 392881157598472479
+      Troll_Back_Walk_1: -7556436216980983262
+      Troll_Back_Walk_2: -3683371990583466409
+      Troll_Back_Walk_3: 756920212338502770
+      Troll_Back_Walk_4: -1383747212820326023
+      Troll_Back_Walk_5: -5657250341439079333
+      Troll_Dead_00: 2813058879748906318
+      Troll_Dead_01: 342456635390790396
+      Troll_Dead_02: 5514866618118347312
+      Troll_Dead_03: 2038725828321679057
+      Troll_Dead_04: -8215647897607282178
+      Troll_Dead_05: 3160928868165499284
+      Troll_Dead_06: 8942573800954208685
+      Troll_Dead_07: -3859065337022811989
+      Troll_Dead_08: -5495731362653557834
+      Troll_Dead_09: 8342149491183391020
+      Troll_Dead_10: -3328921805566546939
+      Troll_Dead_11: -5284389372423829271
+      Troll_Front_Attack_0: -2303509248251306720
+      Troll_Front_Attack_1: 4592620055426765163
+      Troll_Front_Attack_2: -7014360903828449492
+      Troll_Front_Attack_3: 8536669112982300840
+      Troll_Front_Attack_4: -5423909365256505936
+      Troll_Front_Attack_5: -1038211080093461637
+      Troll_Front_Idle_0: 642152297239799996
+      Troll_Front_Idle_1: -5632210561917517105
+      Troll_Front_Idle_2: -9061180785725007716
+      Troll_Front_Idle_3: -1068953367970554231
+      Troll_Front_Idle_4: -4319124076289129257
+      Troll_Front_Walk_0: -399894199994676103
+      Troll_Front_Walk_1: 1309247587645746806
+      Troll_Front_Walk_2: -1954749860790663342
+      Troll_Front_Walk_3: -6141769625523492864
+      Troll_Front_Walk_4: 6970298360898725083
+      Troll_Front_Walk_5: 5188301865044794552
+      Troll_Side_Attack_0: -872101476536044577
+      Troll_Side_Attack_1: 9206156812941498803
+      Troll_Side_Attack_2: -3647321433482565427
+      Troll_Side_Attack_3: 2532402425900559079
+      Troll_Side_Attack_4: 8078333207921795907
+      Troll_Side_Attack_5: -4178767907058474658
+      Troll_Side_Idle_0: -275635073548113940
+      Troll_Side_Idle_1: -2998900579962539312
+      Troll_Side_Idle_2: -1113159352264302371
+      Troll_Side_Idle_3: 5886232679731021579
+      Troll_Side_Idle_4: 7479162024546115512
+      Troll_Side_Walk_0: -5156707475297350221
+      Troll_Side_Walk_1: 2202731935129212057
+      Troll_Side_Walk_2: -4799345749819113401
+      Troll_Side_Walk_3: -1415995195574015035
+      Troll_Side_Walk_4: 5808914689401750321
+      Troll_Side_Walk_5: 8429939974791156007
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
