@@ -100,6 +100,8 @@ GameObject:
   - component: {fileID: 2737436318412507732}
   - component: {fileID: 5815203664740908025}
   - component: {fileID: 691936326778899438}
+  - component: {fileID: 812989619648883834}
+  - component: {fileID: 4784472143194864754}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -197,6 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _body: {fileID: 6067396949842947324}
   _speed: 4
+  _externalSpeedMultiplier: 1
 --- !u!114 &5402159747806690286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,6 +415,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
   _respawnController: {fileID: 2737436318412507732}
+--- !u!114 &812989619648883834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89bb4038a110a654f8178206d74b2997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 8120486794298343527}
+  _consumeKey: 324
+--- !u!114 &4784472143194864754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f8b1984ec944b428c903c030aa1cf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 8120486794298343527}
+  _movement: {fileID: 6858055649506359506}
+  _tilesPerHungerPoint: 10
+  _worldUnitsPerTile: 1
+  _maxCountedTravelPerFrame: 1.5
+  _slowThresholdPercent: 0.25
+  _slowSpeedMultiplier: 0.75
+  _starvationTickIntervalSeconds: 2
+  _starvationDamagePerTick: 1
+  _starvationMinHealthPercent: 0.25
 --- !u!1 &3653677619089745102
 GameObject:
   m_ObjectHideFlags: 0

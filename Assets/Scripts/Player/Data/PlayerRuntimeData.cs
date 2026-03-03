@@ -206,7 +206,23 @@ public class PlayerRuntimeData
     /// <param name="amount">Amount to be increased by.</param>
     public void EatFood(int amount)
     {
+        if (amount <= 0) 
+            return;
+
         CurrentHunger = Mathf.Min(MaxHunger, CurrentHunger + amount);
+        OnHungerChanged?.Invoke(CurrentHunger, MaxHunger);
+    }
+
+    /// <summary>
+    /// Decreases hunger by <paramref name="amount"/>, clamping to zero, and raises OnHungerChanged event.
+    /// </summary>
+    /// <param name="amount">Amount to be decreased by.</param>
+    public void ConsumeHunger(int amount)
+    {
+        if (amount <= 0)
+            return;
+
+        CurrentHunger = Mathf.Max(0, CurrentHunger - amount);
         OnHungerChanged?.Invoke(CurrentHunger, MaxHunger);
     }
 
