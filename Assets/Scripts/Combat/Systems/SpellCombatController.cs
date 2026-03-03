@@ -300,7 +300,6 @@ public class SpellCombatController : MonoBehaviour
         }
     }
 
-
     private void QueryTargetsInRadius(Vector2 center, float radius)
     {
         _targetBuffer.Clear();

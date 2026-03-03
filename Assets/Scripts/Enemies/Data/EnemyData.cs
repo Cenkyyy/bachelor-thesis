@@ -28,8 +28,10 @@ public class EnemyData : ScriptableObject
     [field: SerializeField] public float IdleDurationMax { get; private set; } = 1.6f;
 
     [field: Header("Combat")]
+    [field: SerializeField] public int AttackDamage { get; private set; } = 15;
     [field: SerializeField] public float AttackRange { get; private set; } = 1.2f;
     [field: SerializeField] public float AttackWindupSeconds { get; private set; } = 0.6f;
+    [field: SerializeField] public float AttackHitWindowSeconds { get; private set; } = 0.15f;
     [field: SerializeField] public float AttackRecoverySeconds { get; private set; } = 0.8f;
 
     [field: Header("Pathfinding")]
@@ -69,11 +71,17 @@ public class EnemyData : ScriptableObject
         if (IdleDurationMax < IdleDurationMin)
             IdleDurationMax = IdleDurationMin;
 
+        if (AttackDamage < 0)
+            AttackDamage = 0;
+
         if (AttackRange < 0f)
             AttackRange = 0f;
 
         if (AttackWindupSeconds < 0f)
             AttackWindupSeconds = 0f;
+
+        if (AttackHitWindowSeconds < 0f)
+            AttackHitWindowSeconds = 0f;
 
         if (AttackRecoverySeconds < 0f)
             AttackRecoverySeconds = 0f;

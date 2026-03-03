@@ -1,15 +1,21 @@
 ﻿public class EnemyAttackState : EnemyStateBase
 {
+    private bool _hasAppliedDamage;
+
     public override void OnEnter()
     {
         base.OnEnter();
+        _hasAppliedDamage = false;
         enemyCore.StopMovement();
         enemyCore.TriggerAttackAnimation();
     }
 
     public override void Do()
     {
-        var totalCommit = enemyCore.AttackWindupSeconds + enemyCore.AttackRecoverySeconds;
+        TryApplyAttackDamage();
+
+        var totalCommit = enemyCore.AttackWindupSeconds + enemyCore.AttackHitWindowSeconds + enemyCore.AttackRecoverySeconds;
+
         if (time < totalCommit)
         {
             enemyCore.StopMovement();
@@ -40,5 +46,26 @@
     public override void OnExit()
     {
         enemyCore.StopMovement();
+    }
+
+    private void TryApplyAttackDamage()
+    {
+        if (_hasAppliedDamage)
+        {
+            return;
+        }
+
+        if (time < enemyCore.AttackWindupSeconds)
+        {
+            return;
+        }
+
+        if (time > enemyCore.AttackWindupSeconds + enemyCore.AttackHitWindowSeconds)
+        {
+            _hasAppliedDamage = true;
+            return;
+        }
+
+        _hasAppliedDamage = enemyCore.TryDealDamageToCurrentTarget(enemyCore.AttackDamage);
     }
 }

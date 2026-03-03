@@ -32,6 +32,8 @@ public class EnemyCore : AgentCore
     private float _nextAllowedRepathTime;
     private float _nextRetargetTime;
     private float _lostSightTimer;
+    private IDamageable _cachedDamageableTarget;
+    private Transform _cachedDamageableTransform;
 
     public EnemyData Data => _data;
     public EnemySpecies Species => _data != null ? _data.Species : EnemySpecies.Troll;
@@ -41,12 +43,14 @@ public class EnemyCore : AgentCore
     public Vector2 HomePoint => _homePoint;
 
     public float LeashRadius => _data != null ? _data.LeashRadius : 0f;
+    public int AttackDamage => _data != null ? _data.AttackDamage : 0;
     public float AttackRange => _data != null ? _data.AttackRange : 0f;
     public float LostSightGraceSeconds => _data != null ? _data.LostSightGraceSeconds : 0f;
     public float HomeRadius => _data != null ? _data.HomeRadius : 0f;
     public float IdleDurationMin => _data != null ? _data.IdleDurationMin : 0.5f;
     public float IdleDurationMax => _data != null ? _data.IdleDurationMax : 1f;
     public float AttackWindupSeconds => _data != null ? _data.AttackWindupSeconds : 0f;
+    public float AttackHitWindowSeconds => _data != null ? _data.AttackHitWindowSeconds : 0f;
     public float AttackRecoverySeconds => _data != null ? _data.AttackRecoverySeconds : 0f;
 
     protected override void Start()
@@ -205,6 +209,22 @@ public class EnemyCore : AgentCore
         _animation?.TriggerAttack();
     }
 
+    public bool TryDealDamageToCurrentTarget(int amount)
+    {
+        if (!HasTarget || amount <= 0 || !IsTargetInAttackRange())
+        {
+            return false;
+        }
+
+        if (!TryGetCurrentTargetDamageable(out var damageable) || !damageable.CanReceiveDamage)
+        {
+            return false;
+        }
+
+        damageable.ReceiveDamage(amount, this);
+        return true;
+    }
+
     public void SetDeadAnimation(bool isDead)
     {
         _animation?.SetDead(isDead);
@@ -272,5 +292,27 @@ public class EnemyCore : AgentCore
     private bool IsValidTarget(Collider2D col)
     {
         return col.CompareTag(_targetTag);
+    }
+
+    private bool TryGetCurrentTargetDamageable(out IDamageable damageable)
+    {
+        damageable = null;
+
+        if (!HasTarget)
+        {
+            return false;
+        }
+
+        if (_cachedDamageableTransform == Target && _cachedDamageableTarget != null)
+        {
+            damageable = _cachedDamageableTarget;
+            return true;
+        }
+
+        _cachedDamageableTransform = Target;
+        _cachedDamageableTarget = Target.GetComponentInParent<IDamageable>();
+        damageable = _cachedDamageableTarget;
+
+        return damageable != null;
     }
 }
