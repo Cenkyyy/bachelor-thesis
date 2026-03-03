@@ -7,45 +7,15 @@ public sealed class CraftingController : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private ItemDropSpawner _itemDropSpawner;
 
-    [Header("Defaults")]
-    [SerializeField] private float _defaultCraftDurationSeconds = 1.5f;
-
     public event Action<CraftingRecipeData> OnCraftStarted;
-    public event Action<CraftingRecipeData, float> OnCraftProgress;
     public event Action<CraftingRecipeData> OnCraftCompleted;
     public event Action<CraftingRecipeData, CraftingFailureReason> OnCraftFailed;
-
-    public bool IsCrafting => _activeCraft != null;
-    public CraftingRecipeData CurrentRecipe => _activeCraft?.Recipe;
-
-    private CraftingProcess _activeCraft;
-
-    private void Update()
-    {
-        if (_activeCraft == null)
-            return;
-
-        _activeCraft.ElapsedSeconds += Time.deltaTime;
-        var progress = Mathf.Clamp01(_activeCraft.ElapsedSeconds / _activeCraft.DurationSeconds);
-        OnCraftProgress?.Invoke(_activeCraft.Recipe, progress);
-
-        if (_activeCraft.ElapsedSeconds < _activeCraft.DurationSeconds)
-            return;
-
-        CompleteCraft();
-    }
 
     public bool TryStartCraft(CraftingRecipeData recipe)
     {
         if (recipe == null)
         {
             OnCraftFailed?.Invoke(recipe, CraftingFailureReason.InvalidRecipe);
-            return false;
-        }
-
-        if (IsCrafting)
-        {
-            OnCraftFailed?.Invoke(recipe, CraftingFailureReason.AlreadyCrafting);
             return false;
         }
 
@@ -71,10 +41,8 @@ public sealed class CraftingController : MonoBehaviour
 
         ConsumeIngredients(inventory, recipe);
 
-        var duration = recipe.CraftDurationSeconds > 0f ? recipe.CraftDurationSeconds : _defaultCraftDurationSeconds;
-        _activeCraft = new CraftingProcess(recipe, Mathf.Max(0.1f, duration));
         OnCraftStarted?.Invoke(recipe);
-        OnCraftProgress?.Invoke(recipe, 0f);
+        CompleteCraft(recipe);
         return true;
     }
 
@@ -92,13 +60,10 @@ public sealed class CraftingController : MonoBehaviour
         }
     }
 
-    private void CompleteCraft()
+    private void CompleteCraft(CraftingRecipeData recipe)
     {
-        var recipe = _activeCraft.Recipe;
         var inventory = _player != null ? _player.Inventory : null;
         var output = recipe != null ? recipe.GetOutputStack() : InventoryItem.Empty;
-
-        _activeCraft = null;
 
         if (inventory == null || output.IsEmpty)
         {
@@ -124,19 +89,5 @@ public sealed class CraftingController : MonoBehaviour
             return;
 
         _itemDropSpawner.Spawn(item, _player.transform.position);
-    }
-
-    private sealed class CraftingProcess
-    {
-        public CraftingRecipeData Recipe { get; }
-        public float DurationSeconds { get; }
-        public float ElapsedSeconds { get; set; }
-
-        public CraftingProcess(CraftingRecipeData recipe, float durationSeconds)
-        {
-            Recipe = recipe;
-            DurationSeconds = durationSeconds;
-            ElapsedSeconds = 0f;
-        }
     }
 }

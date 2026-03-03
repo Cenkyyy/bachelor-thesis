@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <OutputItem>k__BackingField: {fileID: 11400000, guid: 060efcd3a6a82654b95f4712b362e893, type: 2}
   <OutputAmount>k__BackingField: 1
-  <Description>k__BackingField: Tool that hep player mine copper
+  <Description>k__BackingField: Tool that helps player mine copper
   <Category>k__BackingField: 0
   CraftDurationSeconds: 1.5
   _ingredients:

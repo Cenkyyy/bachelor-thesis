@@ -16,7 +16,6 @@ public sealed class CraftingRecipeDetailsView : MonoBehaviour
 
     [Header("Crafting")]
     [SerializeField] private Button _craftButton;
-    [SerializeField] private Image _progressFill;
 
     private readonly List<CraftingIngredientRow> _rows = new();
 
@@ -41,7 +40,6 @@ public sealed class CraftingRecipeDetailsView : MonoBehaviour
         }
 
         RebuildIngredients(recipe, inventory);
-        SetProgress(0f);
     }
 
     public void SetCraftButtonEnabled(bool enabled)
@@ -49,14 +47,6 @@ public sealed class CraftingRecipeDetailsView : MonoBehaviour
         if (_craftButton != null)
         {
             _craftButton.interactable = enabled;
-        }
-    }
-
-    public void SetProgress(float value)
-    {
-        if (_progressFill != null)
-        {
-            _progressFill.fillAmount = Mathf.Clamp01(value);
         }
     }
 

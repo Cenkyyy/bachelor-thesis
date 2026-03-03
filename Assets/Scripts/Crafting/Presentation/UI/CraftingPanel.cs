@@ -58,7 +58,6 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
         if (_craftingController != null)
         {
             _craftingController.OnCraftStarted += HandleCraftStarted;
-            _craftingController.OnCraftProgress += HandleCraftProgress;
             _craftingController.OnCraftCompleted += HandleCraftFinished;
             _craftingController.OnCraftFailed += HandleCraftFailed;
         }
@@ -82,7 +81,6 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
         if (_craftingController != null)
         {
             _craftingController.OnCraftStarted -= HandleCraftStarted;
-            _craftingController.OnCraftProgress -= HandleCraftProgress;
             _craftingController.OnCraftCompleted -= HandleCraftFinished;
             _craftingController.OnCraftFailed -= HandleCraftFailed;
         }
@@ -196,14 +194,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
 
         if (_selectedRecipe != null)
         {
-            var isCraftingSelected = _craftingController != null &&
-                _craftingController.IsCrafting &&
-                _craftingController.CurrentRecipe == _selectedRecipe;
-
-            if (!isCraftingSelected)
-            {
-                _detailsView?.SetRecipe(_selectedRecipe, _player != null ? _player.Inventory : null);
-            }
+            _detailsView?.SetRecipe(_selectedRecipe, _player != null ? _player.Inventory : null);
             _detailsView?.SetCraftButtonEnabled(CanCraft(_selectedRecipe));
         }
     }
@@ -224,21 +215,8 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
         }
     }
 
-    private void HandleCraftProgress(CraftingRecipeData recipe, float progress)
-    {
-        if (_detailsView != null && recipe == _selectedRecipe)
-        {
-            _detailsView.SetProgress(progress);
-        }
-    }
-
     private void HandleCraftFinished(CraftingRecipeData recipe)
     {
-        if (_detailsView != null && recipe == _selectedRecipe)
-        {
-            _detailsView.SetProgress(0f);
-        }
-
         RefreshRecipeAvailability();
     }
 
@@ -246,7 +224,6 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
     {
         if (_detailsView != null && recipe == _selectedRecipe)
         {
-            _detailsView.SetProgress(0f);
             _detailsView.SetCraftButtonEnabled(CanCraft(recipe));
         }
 
