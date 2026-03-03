@@ -13,7 +13,7 @@ TagManager:
   - Water
   - UI
   - WorldItem
-  - Actors
+  - Enemies
   - Obstacles
   - Player
   - MineableNodes
@@ -57,7 +57,7 @@ TagManager:
   - name: Player
     uniqueID: 3620165257
     locked: 0
-  - name: Actors
+  - name: Enemies
     uniqueID: 790479049
     locked: 0
   - name: UI
