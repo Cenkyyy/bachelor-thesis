@@ -12,9 +12,6 @@ public class CraftingRecipeData : ScriptableObject
     [field: SerializeField][TextArea(2, 6)] public string Description { get; private set; }
     [field: SerializeField] public CraftingCategory Category { get; private set; } = CraftingCategory.Other;
 
-    [field: Header("Timing")]
-    [field: SerializeField] public float CraftDurationSeconds = 1.5f;
-
     [Header("Requirements")]
     [SerializeField] private List<CraftingIngredient> _ingredients = new();
     [SerializeField] private string _displayName;
