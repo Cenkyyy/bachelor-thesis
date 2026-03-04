@@ -11,13 +11,15 @@ public class PoisonCloudZone : MonoBehaviour
     private float _duration;
     private float _dps;
     private float _elapsed;
+    private object _damageSource;
 
-    public void Initialize(float radius, float durationSeconds, float damagePerSecond, LayerMask targetMask)
+    public void Initialize(float radius, float durationSeconds, float damagePerSecond, LayerMask targetMask, object damageSource)
     {
         _radius = radius;
         _duration = durationSeconds;
         _dps = damagePerSecond;
         _targetMask = targetMask;
+        _damageSource = damageSource;
         _targetFilter = new ContactFilter2D
         {
             useLayerMask = true,
@@ -36,11 +38,11 @@ public class PoisonCloudZone : MonoBehaviour
 
         for (var i = 0; i < _buffer.Count; i++)
         {
-            var target = _buffer[i].GetComponentInParent<ICombatTarget>();
+            var target = _buffer[i].GetComponentInParent<ISpellTarget>();
             if (target == null || !target.IsAlive)
                 continue;
 
-            target.ReceiveSpellDamage(_dps * delta);
+            target.ReceiveSpellDamage(_dps * delta, _damageSource);
             target.ApplyStatus(CombatStatusEffect.Poison, 0.2f);
         }
 

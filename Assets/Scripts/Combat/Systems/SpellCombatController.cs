@@ -165,11 +165,11 @@ public class SpellCombatController : MonoBehaviour
         var origin = (Vector2)transform.position;
         QueryTargetsInRadius(origin, _settings.Range);
         var nearestDistance = float.MaxValue;
-        var nearestTarget = (ICombatTarget)null;
+        var nearestTarget = (ISpellTarget)null;
 
         for (var i = 0; i < _targetBuffer.Count; i++)
         {
-            var target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
+            var target = _targetBuffer[i].GetComponentInParent<ISpellTarget>();
             if (target == null || !target.IsAlive)
                 continue;
 
@@ -215,7 +215,7 @@ public class SpellCombatController : MonoBehaviour
 
         for (var i = 0; i < _targetBuffer.Count; i++)
         {
-            var target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
+            var target = _targetBuffer[i].GetComponentInParent<ISpellTarget>();
             if (target == null || !target.IsAlive)
                 continue;
 
@@ -231,18 +231,18 @@ public class SpellCombatController : MonoBehaviour
         }
     }
 
-    private void ApplyHit(CastState castState, ICombatTarget target, Vector2 hitPosition)
+    private void ApplyHit(CastState castState, ISpellTarget target, Vector2 hitPosition)
     {
         var damage = castState.BaseDamage;
         if (castState.Element == ElementWord.Lightning && target.HasAnyNegativeStatus)
             damage *= _settings.LightningBonusMultiplier;
 
-        target.ReceiveSpellDamage(damage);
+        target.ReceiveSpellDamage(damage, _player);
         ApplyElementStatus(castState, target, hitPosition);
         ApplyModifierSideEffects(castState, target, hitPosition);
     }
 
-    private void ApplyElementStatus(CastState castState, ICombatTarget target, Vector2 hitPosition)
+    private void ApplyElementStatus(CastState castState, ISpellTarget target, Vector2 hitPosition)
     {
         switch (castState.Element)
         {
@@ -255,7 +255,7 @@ public class SpellCombatController : MonoBehaviour
                 break;
             case ElementWord.Ember:
                 target.ApplyStatus(CombatStatusEffect.Burn, _settings.StatusDuration);
-                target.ApplyDamageOverTime(_settings.DotDamagePerSecond, _settings.StatusDuration);
+                target.ApplyDamageOverTime(_settings.DotDamagePerSecond, _settings.StatusDuration, _player);
                 break;
             case ElementWord.Dark:
                 target.ApplyStatus(CombatStatusEffect.Weakened, _settings.StatusDuration);
@@ -263,7 +263,7 @@ public class SpellCombatController : MonoBehaviour
         }
     }
 
-    private void ApplyModifierSideEffects(CastState castState, ICombatTarget target, Vector2 hitPosition)
+    private void ApplyModifierSideEffects(CastState castState, ISpellTarget target, Vector2 hitPosition)
     {
         switch (castState.Modifier)
         {
@@ -292,11 +292,11 @@ public class SpellCombatController : MonoBehaviour
         QueryTargetsInRadius(center, _settings.ExplosionRadius);
         for (var i = 0; i < _targetBuffer.Count; i++)
         {
-            var target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
+            var target = _targetBuffer[i].GetComponentInParent<ISpellTarget>();
             if (target == null || !target.IsAlive)
                 continue;
 
-            target.ReceiveSpellDamage(castState.BaseDamage * _settings.ExplosionDamageMultiplier);
+            target.ReceiveSpellDamage(castState.BaseDamage * _settings.ExplosionDamageMultiplier, _player);
         }
     }
 
@@ -304,9 +304,6 @@ public class SpellCombatController : MonoBehaviour
     {
         _targetBuffer.Clear();
         Physics2D.OverlapCircle(center, radius, _targetFilter, _targetBuffer);
-
-        // TODO(combat/enemies): Replace this broad overlap query with enemy-owned target providers
-        // once the final enemy runtime architecture (FSM combat actor interfaces) is finalized.
     }
 
     private void SpawnPoisonCloud(Vector2 position)
@@ -314,14 +311,12 @@ public class SpellCombatController : MonoBehaviour
         var cloud = new GameObject("PoisonCloud");
         cloud.transform.position = position;
         var zone = cloud.AddComponent<PoisonCloudZone>();
-        zone.Initialize(_settings.PoisonCloudRadius, _settings.PoisonCloudDuration, _settings.DotDamagePerSecond, _targetMask);
+        zone.Initialize(_settings.PoisonCloudRadius, _settings.PoisonCloudDuration, _settings.DotDamagePerSecond, _targetMask, _player);
     }
 
     private Vector2[] GetCastDirections()
     {
-        var mouseWorld = Camera.main != null
-            ? (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)
-            : (Vector2)transform.position + Vector2.right;
+        var mouseWorld = Camera.main != null ? (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) : (Vector2)transform.position + Vector2.right;
 
         var forward = (mouseWorld - (Vector2)transform.position).normalized;
         if (forward == Vector2.zero)
@@ -340,7 +335,7 @@ public class SpellCombatController : MonoBehaviour
 
     private sealed class CastState
     {
-        private readonly HashSet<ICombatTarget> _hitTargets = new();
+        private readonly HashSet<ISpellTarget> _hitTargets = new();
         private int _remainingExplosions = 1;
         private int _remainingPoisonClouds = 1;
         private int _remainingReclaims;
@@ -359,9 +354,9 @@ public class SpellCombatController : MonoBehaviour
             _remainingReclaims = Mathf.Max(0, maxReclaimsPerCast);
         }
 
-        public bool WasTargetHit(ICombatTarget target) => _hitTargets.Contains(target);
+        public bool WasTargetHit(ISpellTarget target) => _hitTargets.Contains(target);
 
-        public void MarkTargetAsHit(ICombatTarget target)
+        public void MarkTargetAsHit(ISpellTarget target)
         {
             _hitTargets.Add(target);
         }

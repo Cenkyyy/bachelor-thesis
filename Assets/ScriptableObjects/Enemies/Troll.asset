@@ -18,6 +18,11 @@ MonoBehaviour:
   <HomeBiome>k__BackingField: 1
   <MaxHealth>k__BackingField: 40
   <XpReward>k__BackingField: 15
+  _drops:
+  - _item: {fileID: 11400000, guid: fe297c69801e0e6498c41b3f8161ba9e, type: 2}
+    _dropChance: 0.5
+    _minAmount: 2
+    _maxAmount: 3
   <MoveSpeed>k__BackingField: 2.2
   <ArrivalEpsilon>k__BackingField: 0.12
   <DetectionRadius>k__BackingField: 6
@@ -26,8 +31,10 @@ MonoBehaviour:
   <HomeRadius>k__BackingField: 5
   <IdleDurationMin>k__BackingField: 0.8
   <IdleDurationMax>k__BackingField: 1.6
+  <AttackDamage>k__BackingField: 15
   <AttackRange>k__BackingField: 1.2
   <AttackWindupSeconds>k__BackingField: 0.6
+  <AttackHitWindowSeconds>k__BackingField: 0.15
   <AttackRecoverySeconds>k__BackingField: 0.8
   <RepathIntervalSeconds>k__BackingField: 0.25
   <PathNodeStep>k__BackingField: 0.5

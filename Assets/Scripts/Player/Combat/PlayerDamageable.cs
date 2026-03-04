@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [DisallowMultipleComponent]
-public sealed class PlayerCombatDamageable : MonoBehaviour, IDamageable
+public sealed class PlayerDamageable : MonoBehaviour, IDamageable
 {
     [SerializeField] private Player _player;
     [SerializeField] private PlayerRespawnController _respawnController;

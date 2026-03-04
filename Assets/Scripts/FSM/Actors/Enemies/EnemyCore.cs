@@ -36,6 +36,7 @@ public class EnemyCore : AgentCore
     private Transform _cachedDamageableTransform;
 
     public EnemyData Data => _data;
+    public EnemyRuntimeData RuntimeData { get; } = new EnemyRuntimeData();
     public EnemySpecies Species => _data != null ? _data.Species : EnemySpecies.Troll;
     public EnemyArchetype Archetype => _data != null ? _data.Archetype : EnemyArchetype.Bruiser;
     public EnemyRoleTag RoleTags => _data != null ? _data.RoleTags : EnemyRoleTag.None;
@@ -61,6 +62,11 @@ public class EnemyCore : AgentCore
         if (_animation == null)
         {
             _animation = GetComponentInChildren<EnemyAnimationController>();
+        }
+
+        if (_data != null)
+        {
+            RuntimeData.InitializeFrom(_data);
         }
 
         ConfigureDetectionFilter();

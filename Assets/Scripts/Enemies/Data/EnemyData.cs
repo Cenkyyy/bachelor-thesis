@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(menuName = "Enemies/Enemy Data")]
 public class EnemyData : ScriptableObject
@@ -12,6 +13,10 @@ public class EnemyData : ScriptableObject
     [field: Header("Core Stats")]
     [field: SerializeField] public int MaxHealth { get; private set; } = 40;
     [field: SerializeField] public int XpReward { get; private set; } = 15;
+
+    [Header("Loot")]
+    [SerializeField] private List<EnemyLootDrop> _drops = new();
+    public IReadOnlyList<EnemyLootDrop> Drops => _drops;
 
     [field: Header("Movement")]
     [field: SerializeField] public float MoveSpeed { get; private set; } = 2.2f;
