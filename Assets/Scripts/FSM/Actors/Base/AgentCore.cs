@@ -46,9 +46,25 @@ public abstract class AgentCore : StateMachineCore
             return false;
         }
 
-        var hit = Physics2D.Raycast(from, d.normalized, d.magnitude, obstacleMask);
         dirToTarget = d.normalized;
-        return !hit.collider;
+        var hits = Physics2D.RaycastAll(from, d.normalized, d.magnitude, obstacleMask);
+        for (var i = 0; i < hits.Length; i++)
+        {
+            var hitTransform = hits[i].transform;
+            if (hitTransform == null)
+            {
+                continue;
+            }
+
+            if (hitTransform == target || hitTransform.IsChildOf(target))
+            {
+                continue;
+            }
+
+            return false;
+        }
+
+        return true;
     }
 
     public void MoveTowards(Vector2 worldTarget)

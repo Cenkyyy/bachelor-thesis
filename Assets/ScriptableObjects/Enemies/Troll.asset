@@ -27,17 +27,17 @@ MonoBehaviour:
     _maxAmount: 3
   <MoveSpeed>k__BackingField: 2.2
   <ArrivalEpsilon>k__BackingField: 0.12
-  <DetectionRadius>k__BackingField: 6
-  <LeashRadius>k__BackingField: 10
-  <LostSightGraceSeconds>k__BackingField: 1.2
+  <DetectionRadius>k__BackingField: 7
+  <LeashRadius>k__BackingField: 14
+  <LostSightGraceSeconds>k__BackingField: 2
   <HomeRadius>k__BackingField: 5
-  <IdleDurationMin>k__BackingField: 0.8
-  <IdleDurationMax>k__BackingField: 1.6
+  <IdleDurationMin>k__BackingField: 0.3
+  <IdleDurationMax>k__BackingField: 0.8
   <AttackDamage>k__BackingField: 15
-  <AttackRange>k__BackingField: 1.2
+  <AttackRange>k__BackingField: 1
   <AttackWindupSeconds>k__BackingField: 0.6
   <AttackHitWindowSeconds>k__BackingField: 0.15
   <AttackRecoverySeconds>k__BackingField: 0.8
-  <RepathIntervalSeconds>k__BackingField: 0.25
-  <PathNodeStep>k__BackingField: 0.5
-  <MaxPathIterations>k__BackingField: 1200
+  <RepathIntervalSeconds>k__BackingField: 0.1
+  <PathNodeStep>k__BackingField: 0.35
+  <MaxPathIterations>k__BackingField: 2000

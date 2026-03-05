@@ -7,11 +7,13 @@ public static class GridAStarPathfinder
     {
         public readonly Vector2Int Cell;
         public readonly float FScore;
+        public readonly float HScore;
 
-        public GridNode(Vector2Int cell, float fScore)
+        public GridNode(Vector2Int cell, float fScore, float hscore)
         {
             Cell = cell;
             FScore = fScore;
+            HScore = hscore;
         }
     }
 
@@ -27,7 +29,8 @@ public static class GridAStarPathfinder
             return false;
         }
 
-        var openList = new List<GridNode> { new GridNode(startCell, Heuristic(startCell, goalCell)) };
+        var startHeuristic = Heuristic(startCell, goalCell);
+        var openList = new List<GridNode> { new GridNode(startCell, startHeuristic, startHeuristic) };
         var closedList = new HashSet<Vector2Int>();
 
         var cameFrom = new Dictionary<Vector2Int, Vector2Int>();
@@ -43,7 +46,8 @@ public static class GridAStarPathfinder
             var bestF = openList[0].FScore;
             for (var i = 1; i < openList.Count; i++)
             {
-                if (openList[i].FScore < bestF)
+                // Compare F scores, and if they are equal, compare H scores to break ties
+                if (openList[i].FScore < bestF || (Mathf.Approximately(openList[i].FScore, bestF) && openList[i].HScore < openList[currentIndex].HScore))
                 {
                     bestF = openList[i].FScore;
                     currentIndex = i;
@@ -63,7 +67,7 @@ public static class GridAStarPathfinder
             closedList.Add(current);
 
             // Iterate through the neighbors of the current node
-            foreach (var neighbor in GetNeighbors(current))
+            foreach (var neighbor in GetNeighbors(current, nodeStep, obstacleMask, probeRadius))
             {
                 if (closedList.Contains(neighbor))
                 {
@@ -85,7 +89,8 @@ public static class GridAStarPathfinder
                 // Record the best path to the neighbor
                 cameFrom[neighbor] = current;
                 gScore[neighbor] = tentativeG;
-                var f = tentativeG + Heuristic(neighbor, goalCell);
+                var h = Heuristic(neighbor, goalCell);
+                var f = tentativeG + h;
 
                 // Check if the neighbor is already in the open list and update its F score if necessary
                 var found = false;
@@ -96,7 +101,7 @@ public static class GridAStarPathfinder
                         continue;
                     }
 
-                    openList[i] = new GridNode(neighbor, f);
+                    openList[i] = new GridNode(neighbor, f, h);
                     found = true;
                     break;
                 }
@@ -104,7 +109,7 @@ public static class GridAStarPathfinder
                 // If the neighbor is not in the open list, add it
                 if (!found)
                 {
-                    openList.Add(new GridNode(neighbor, f));
+                    openList.Add(new GridNode(neighbor, f, h));
                 }
             }
         }
@@ -113,7 +118,7 @@ public static class GridAStarPathfinder
         return false;
     }
 
-    private static IEnumerable<Vector2Int> GetNeighbors(Vector2Int cell)
+    private static IEnumerable<Vector2Int> GetNeighbors(Vector2Int cell, float nodeStep, LayerMask obstacleMask, float probeRadius)
     {
         for (var y = -1; y <= 1; y++)
         {
@@ -124,7 +129,20 @@ public static class GridAStarPathfinder
                     continue;
                 }
 
-                yield return new Vector2Int(cell.x + x, cell.y + y);
+                var neighbor = new Vector2Int(cell.x + x, cell.y + y);
+
+                // For diagonal neighbors, ensure that both adjacent orthogonal neighbors are not blocked to prevent cutting corners
+                if (x != 0 && y != 0)
+                {
+                    var horizontal = new Vector2Int(cell.x + x, cell.y);
+                    var vertical = new Vector2Int(cell.x, cell.y + y);
+                    if (IsBlocked(horizontal, nodeStep, obstacleMask, probeRadius) || IsBlocked(vertical, nodeStep, obstacleMask, probeRadius))
+                    {
+                        continue;
+                    }
+                }
+
+                yield return neighbor;
             }
         }
     }

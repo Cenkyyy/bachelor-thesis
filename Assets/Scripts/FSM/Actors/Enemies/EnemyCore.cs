@@ -32,6 +32,8 @@ public class EnemyCore : AgentCore
     private float _nextAllowedRepathTime;
     private float _nextRetargetTime;
     private float _lostSightTimer;
+    private Vector2 _lastKnownTargetPosition;
+    private bool _hasLastKnownTargetPosition;
     private IDamageable _cachedDamageableTarget;
     private Transform _cachedDamageableTransform;
 
@@ -83,6 +85,12 @@ public class EnemyCore : AgentCore
 
     public bool TryDetectTarget()
     {
+        if (HasTarget)
+        {
+            _lastKnownTargetPosition = Target.position;
+            _hasLastKnownTargetPosition = true;
+        }
+
         if (Time.time < _nextRetargetTime)
         {
             return HasTarget;
@@ -110,8 +118,15 @@ public class EnemyCore : AgentCore
             }
         }
 
-        SetTarget(best);
-        return best != null;
+        if (best != null)
+        {
+            SetTarget(best);
+            _lastKnownTargetPosition = best.position;
+            _hasLastKnownTargetPosition = true;
+            return true;
+        }
+
+        return HasTarget;
     }
 
     public bool IsTargetInAttackRange()
@@ -168,6 +183,17 @@ public class EnemyCore : AgentCore
             var nextWaypoint = _currentPath[_pathIndex];
             MoveTowards(nextWaypoint);
             SetAnimationMotion(nextWaypoint - (Vector2)transform.position);
+            return;
+        }
+
+        if (!CanMoveDirectlyTo(worldTarget))
+        {
+            if (_hasLastKnownTargetPosition && TryMoveToDetour(_lastKnownTargetPosition))
+            {
+                return;
+            }
+
+            StopMovement();
             return;
         }
 
@@ -301,6 +327,77 @@ public class EnemyCore : AgentCore
     private void SetAnimationMotion(Vector2 desiredDirection)
     {
         _animation?.SetMoving(desiredDirection.normalized);
+    }
+
+    private bool CanMoveDirectlyTo(Vector2 worldTarget)
+    {
+        var from = (Vector2)transform.position;
+        var toTarget = worldTarget - from;
+        if (toTarget.sqrMagnitude <= arrivalEps * arrivalEps)
+        {
+            return true;
+        }
+
+        var hit = Physics2D.CircleCast(from, _pathProbeRadius, toTarget.normalized, toTarget.magnitude, obstacleMask);
+        return hit.collider == null;
+    }
+
+    private bool TryMoveToDetour(Vector2 worldTarget)
+    {
+        var from = (Vector2)transform.position;
+        var toTarget = worldTarget - from;
+        if (toTarget.sqrMagnitude <= 0.0001f)
+        {
+            return false;
+        }
+
+        var lateral = Vector2.Perpendicular(toTarget.normalized);
+        var probeDistance = Mathf.Max(_pathProbeRadius * 3f, arrivalEps * 2f);
+
+        var detourA = from + lateral * probeDistance;
+        var detourB = from - lateral * probeDistance;
+
+        var aBlocked = Physics2D.OverlapCircle(detourA, _pathProbeRadius, obstacleMask) != null;
+        var bBlocked = Physics2D.OverlapCircle(detourB, _pathProbeRadius, obstacleMask) != null;
+
+        if (aBlocked && bBlocked)
+        {
+            return false;
+        }
+
+        var aDistance = (detourA - worldTarget).sqrMagnitude;
+        var bDistance = (detourB - worldTarget).sqrMagnitude;
+        var chooseA = !aBlocked && (bBlocked || aDistance <= bDistance);
+        var detour = chooseA ? detourA : detourB;
+
+        MoveTowards(detour);
+        SetAnimationMotion(detour - from);
+        return true;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        var detection = _data != null ? _data.DetectionRadius : visionRadius;
+        var leash = _data != null ? _data.LeashRadius : 0f;
+        var home = _data != null ? _data.HomeRadius : 0f;
+
+        // Draw detection radius
+        Gizmos.color = new Color(0.2f, 0.8f, 1f, 0.45f);
+        Gizmos.DrawWireSphere(transform.position, detection);
+
+        if (leash > 0f)
+        {
+            // Draw leash radius
+            Gizmos.color = new Color(1f, 0.5f, 0f, 0.35f);
+            Gizmos.DrawWireSphere(_homePointOverride != null ? _homePointOverride.position : transform.position, leash);
+        }
+
+        if (home > 0f)
+        {
+            // Draw home radius
+            Gizmos.color = new Color(0.4f, 1f, 0.3f, 0.35f);
+            Gizmos.DrawWireSphere(_homePointOverride != null ? _homePointOverride.position : transform.position, home);
+        }
     }
 
     private bool IsValidTarget(Collider2D col)

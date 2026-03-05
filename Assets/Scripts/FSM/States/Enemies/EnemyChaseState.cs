@@ -16,18 +16,18 @@ public class EnemyChaseState : EnemyStateBase
             return;
         }
 
-        if (enemyCore.IsOutsideLeash())
-        {
-            Set(ActorStateId.Patrol, forceReset: true);
-            return;
-        }
-
         var canSee = enemyCore.CanSeeTarget(out _);
         if (canSee)
         {
             enemyCore.ResetLostSightTimer();
         }
         else if (enemyCore.TickLostSight(UnityEngine.Time.deltaTime))
+        {
+            Set(ActorStateId.Patrol, forceReset: true);
+            return;
+        }
+
+        if (enemyCore.IsOutsideLeash())
         {
             Set(ActorStateId.Patrol, forceReset: true);
             return;
