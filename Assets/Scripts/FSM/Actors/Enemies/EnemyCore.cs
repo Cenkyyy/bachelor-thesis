@@ -73,6 +73,14 @@ public class EnemyCore : AgentCore
         base.Start();
     }
 
+    public void SetData(EnemyData data)
+    {
+        if (data != null)
+        {
+            _data = data;
+        }
+    }
+
     public bool TryDetectTarget()
     {
         if (Time.time < _nextRetargetTime)

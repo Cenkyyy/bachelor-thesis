@@ -25,6 +25,8 @@ public class WorldGeneratorBehaviour : MonoBehaviour
     [SerializeField] private MinimapController _minimap;
 
     public int CurrentSeed { get; private set; }
+    public WorldData CurrentWorldData { get; private set; }
+    public Tilemap GroundTilemap => _groundTilemap;
 
     private void Start()
     {
@@ -47,11 +49,13 @@ public class WorldGeneratorBehaviour : MonoBehaviour
 
         var generator = new WorldGenerator(settings);
         var data = generator.Generate();
+        CurrentWorldData = data;
 
         RenderWorld(data, seedUsed);
         PositionPlayer(data);
         _minimap.Initialize(data);
     }
+
     private int ResolveSeed()
     {
         if (_randomizeSeedOnPlay)
@@ -85,9 +89,6 @@ public class WorldGeneratorBehaviour : MonoBehaviour
     private void RenderWorld(WorldData data, int seedUsed)
     {
         _groundTilemap.ClearAllTiles();
-
-        var offsetX = -data.Width / 2;
-        var offsetY = -data.Height / 2;
 
         for (int y = 0; y < data.Height; y++)
         {

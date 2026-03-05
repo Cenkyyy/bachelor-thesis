@@ -10,6 +10,10 @@ public class EnemyData : ScriptableObject
     [field: SerializeField] public EnemyRoleTag RoleTags { get; private set; } = EnemyRoleTag.Bruiser;
     [field: SerializeField] public BiomeAffinity HomeBiome { get; private set; } = BiomeAffinity.Grassland;
 
+    [field: Header("Spawn")]
+    [field: SerializeField] public EnemyCore Prefab { get; private set; }
+    [field: SerializeField, Min(0f)] public float SpawnWeight { get; private set; } = 1f;
+
     [field: Header("Core Stats")]
     [field: SerializeField] public int MaxHealth { get; private set; } = 40;
     [field: SerializeField] public int XpReward { get; private set; } = 15;
@@ -46,6 +50,9 @@ public class EnemyData : ScriptableObject
 
     private void OnValidate()
     {
+        if (SpawnWeight < 0)
+            SpawnWeight = 0f;
+
         if (MaxHealth < 1)
             MaxHealth = 1;
 
