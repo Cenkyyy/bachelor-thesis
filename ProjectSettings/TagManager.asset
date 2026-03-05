@@ -12,11 +12,11 @@ TagManager:
   - 
   - Water
   - UI
-  - WorldItem
-  - Enemies
-  - Obstacles
+  - World Item
+  - Enemy
+  - Obstacle
   - Player
-  - MineableNodes
+  - Mineable Node
   - 
   - 
   - 
