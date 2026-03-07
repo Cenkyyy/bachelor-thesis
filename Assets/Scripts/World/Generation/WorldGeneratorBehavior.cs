@@ -4,19 +4,34 @@ using System.Collections.Generic;
 
 public class WorldGeneratorBehaviour : MonoBehaviour
 {
+    private const int DefaultWorldWidth = 1024;
+    private const int DefaultWorldHeight = 1024;
+    private const int DefaultPlayableRadius = 480;
+    private const int DefaultBorderThickness = 32;
+
     [Header("Tilemaps")]
     [SerializeField] private Tilemap _groundTilemap;
+    [SerializeField] private Tilemap _walkableDecorationTilemap;
+    [SerializeField] private Tilemap _nonWalkableDecorationTilemap;
 
     [Header("Tiles")]
     [SerializeField] private TileBase _voidTile;
-    [SerializeField] private TileBase[] _winterTiles;
-    [SerializeField] private TileBase[] _grassTiles;
+    [SerializeField] private TileBase _grasslandBaseTile;
+    [SerializeField] private TileBase _iceTundraBaseTile;
+    [SerializeField] private TileBase _desertBaseTile;
+    [SerializeField] private TileBase _amethystRiftBaseTile;
 
     [Header("World Settings")]
-    [SerializeField] private int _worldRadius = 128;
-    [SerializeField] private int _worldPadding = 4;
+    [SerializeField] private int _worldWidth = DefaultWorldWidth;
+    [SerializeField] private int _worldHeight = DefaultWorldHeight;
+    [SerializeField] private int _playableRadius = DefaultPlayableRadius;
+    [SerializeField] private int _borderThickness = DefaultBorderThickness;
     [SerializeField] private int _defaultSeed = 12345;
     [SerializeField] private bool _randomizeSeedOnPlay = false; // should be true when creating new game
+    [SerializeField, Min(1)] private int _biomeCenterCount = 32;
+    [SerializeField, Min(1)] private int _centerSamplingCandidates = 128;
+    [SerializeField, Min(0f)] private float _centerJitter = 3f;
+    [SerializeField] private BiomeType[] _centerBiomes = { BiomeType.Grassland, BiomeType.IceTundra, BiomeType.Desert, BiomeType.AmethystRift };
 
     [Header("Player")]
     [SerializeField] private Transform _playerTransform;
@@ -36,22 +51,21 @@ public class WorldGeneratorBehaviour : MonoBehaviour
 
     public void GenerateAndRender(int seedUsed)
     {
-        var diameter = _worldRadius * 2 + _worldPadding * 2;
-
         var settings = new WorldGenerator.Settings
         {
-            Width = diameter,
-            Height = diameter,
-            Radius = _worldRadius,
+            Width = Mathf.Max(1, _worldWidth),
+            Height = Mathf.Max(1, _worldHeight),
+            PlayableRadius = Mathf.Max(1, _playableRadius),
+            BorderThickness = Mathf.Max(0, _borderThickness),
             Seed = seedUsed,
-            BiomeCenters = CreateBiomeCenters(diameter)
+            BiomeCenters = CreateBiomeCenters(seedUsed)
         };
 
         var generator = new WorldGenerator(settings);
         var data = generator.Generate();
         CurrentWorldData = data;
 
-        RenderWorld(data, seedUsed);
+        RenderWorld(data);
         PositionPlayer(data);
         _minimap.Initialize(data);
     }
@@ -66,27 +80,135 @@ public class WorldGeneratorBehaviour : MonoBehaviour
         return _defaultSeed;
     }
 
-    private List<WorldGenerator.BiomeCenter> CreateBiomeCenters(int diameter)
+    private List<WorldGenerator.BiomeCenter> CreateBiomeCenters(int seedUsed)
     {
-        var centers = new List<WorldGenerator.BiomeCenter>();
+        var rng = new System.Random(seedUsed);
+        var centers = new List<WorldGenerator.BiomeCenter>(Mathf.Max(1, _biomeCenterCount));
+        var centerPositions = new List<Vector2>(Mathf.Max(1, _biomeCenterCount));
+        var allowedBiomes = GetAllowedBiomes();
+        var worldCenter = new Vector2(_worldWidth * 0.5f, _worldHeight * 0.5f);
 
-        Vector2 worldCenter = new Vector2(diameter * 0.5f, diameter * 0.5f);
+        Vector2 firstCenter = RandomPointInCircle(rng, worldCenter, _playableRadius);
+        firstCenter = JitterInsideCircle(rng, firstCenter, worldCenter, _playableRadius);
+        centerPositions.Add(firstCenter);
+        centers.Add(new WorldGenerator.BiomeCenter(firstCenter, PickBiome(rng, allowedBiomes)));
 
-        // Grassland in the middle
-        centers.Add(new WorldGenerator.BiomeCenter(worldCenter, BiomeType.Grassland));
+        int targetCount = Mathf.Max(1, _biomeCenterCount);
+        int candidateCount = Mathf.Max(4, _centerSamplingCandidates);
 
-        // A few Winter centers around, so outer ring becomes wintery
-        float ringRadius = _worldRadius * 0.7f;
-
-        centers.Add(new WorldGenerator.BiomeCenter(worldCenter + new Vector2(ringRadius, 0), BiomeType.Winter));
-        centers.Add(new WorldGenerator.BiomeCenter(worldCenter + new Vector2(-ringRadius, 0), BiomeType.Winter));
-        centers.Add(new WorldGenerator.BiomeCenter(worldCenter + new Vector2(0, ringRadius), BiomeType.Winter));
-        centers.Add(new WorldGenerator.BiomeCenter(worldCenter + new Vector2(0, -ringRadius), BiomeType.Winter));
+        while (centers.Count < targetCount)
+        {
+            var sampledPosition = SampleD2Center(rng, worldCenter, _playableRadius, centerPositions, candidateCount);
+            sampledPosition = JitterInsideCircle(rng, sampledPosition, worldCenter, _playableRadius);
+            centerPositions.Add(sampledPosition);
+            centers.Add(new WorldGenerator.BiomeCenter(sampledPosition, PickBiome(rng, allowedBiomes)));
+        }
 
         return centers;
     }
 
-    private void RenderWorld(WorldData data, int seedUsed)
+    private Vector2 SampleD2Center(System.Random rng, Vector2 worldCenter, float playableRadius, List<Vector2> existingCenters, int candidateCount)
+    {
+        if (existingCenters == null || existingCenters.Count == 0)
+            return RandomPointInCircle(rng, worldCenter, playableRadius);
+
+        var candidates = new Vector2[candidateCount];
+        var distances = new float[candidateCount];
+        float totalWeight = 0f;
+
+        // For each center candidate, which is chosen randomly from the world, find the distance to the nearest existing center
+        // and store it inside the distances array. The total weight is the sum of all distances, which is used to pick a candidate randomly with a probability proportional to its distance.
+        for (int i = 0; i < candidateCount; i++)
+        {
+            var candidate = RandomPointInCircle(rng, worldCenter, playableRadius);
+            candidates[i] = candidate;
+
+            float minDistSq = float.MaxValue;
+            for (int c = 0; c < existingCenters.Count; c++)
+            {
+                float distSq = (candidate - existingCenters[c]).sqrMagnitude;
+                if (distSq < minDistSq)
+                    minDistSq = distSq;
+            }
+
+            distances[i] = minDistSq;
+            totalWeight += minDistSq;
+        }
+
+        if (totalWeight <= Mathf.Epsilon)
+            return candidates[rng.Next(0, candidates.Length)];
+
+        float pick = (float)rng.NextDouble() * totalWeight;
+        float cumulative = 0f;
+        for (int i = 0; i < candidates.Length; i++)
+        {
+            cumulative += distances[i];
+            if (pick <= cumulative)
+                return candidates[i];
+        }
+
+        return candidates[candidates.Length - 1];
+    }
+
+    private Vector2 JitterInsideCircle(System.Random rng, Vector2 point, Vector2 circleCenter, float radius)
+    {
+        if (_centerJitter <= 0f)
+            return point;
+
+        float angle = (float)(rng.NextDouble() * Mathf.PI * 2f);
+        float distance = (float)rng.NextDouble() * _centerJitter;
+        var jitter = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
+        var jittered = point + jitter;
+
+        var offset = jittered - circleCenter;
+        float offsetMagnitude = offset.magnitude;
+        if (offsetMagnitude <= radius)
+            return jittered;
+
+        if (offsetMagnitude <= Mathf.Epsilon)
+            return circleCenter;
+
+        return circleCenter + offset / offsetMagnitude * radius;
+    }
+
+    private Vector2 RandomPointInCircle(System.Random rng, Vector2 center, float radius)
+    {
+        float angle = (float)(rng.NextDouble() * Mathf.PI * 2f);
+        float distance = Mathf.Sqrt((float)rng.NextDouble()) * radius;
+        return center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
+    }
+
+    private BiomeType[] GetAllowedBiomes()
+    {
+        if (_centerBiomes == null || _centerBiomes.Length == 0)
+            return new[] { BiomeType.Grassland, BiomeType.IceTundra, BiomeType.Desert, BiomeType.AmethystRift };
+
+        var result = new List<BiomeType>(_centerBiomes.Length);
+        for (int i = 0; i < _centerBiomes.Length; i++)
+        {
+            if (_centerBiomes[i] == BiomeType.None)
+                continue;
+
+            if (!result.Contains(_centerBiomes[i]))
+                result.Add(_centerBiomes[i]);
+        }
+
+        if (result.Count == 0)
+            result.Add(BiomeType.Grassland);
+
+        return result.ToArray();
+    }
+
+    private BiomeType PickBiome(System.Random rng, BiomeType[] allowedBiomes)
+    {
+        if (allowedBiomes == null || allowedBiomes.Length == 0)
+            return BiomeType.Grassland;
+
+        int idx = rng.Next(0, allowedBiomes.Length);
+        return allowedBiomes[idx];
+    }
+
+    private void RenderWorld(WorldData data)
     {
         _groundTilemap.ClearAllTiles();
 
@@ -96,7 +218,7 @@ public class WorldGeneratorBehaviour : MonoBehaviour
             {
                 var tile = data.Tiles[x, y];
 
-                var tileAsset = GetTileAsset(tile.TileType, x, y, seedUsed);
+                var tileAsset = GetTileAsset(tile.TileType);
                 if (tileAsset == null)
                     continue;
 
@@ -106,43 +228,22 @@ public class WorldGeneratorBehaviour : MonoBehaviour
         }
     }
 
-    private TileBase GetTileAsset(TileType tileType, int x, int y, int seedUsed)
+    private TileBase GetTileAsset(TileType tileType)
     {
         switch (tileType)
         {
             case TileType.Void:
                 return _voidTile;
-
-            case TileType.Snow:
-                return GetDeterministicTileAsset(_winterTiles, seedUsed, x, y, tileType: (int)tileType);
-
-            case TileType.Grass:
-                return GetDeterministicTileAsset(_grassTiles, seedUsed, x, y, tileType: (int)tileType);
-
+            case TileType.GrasslandBase:
+                return _grasslandBaseTile;
+            case TileType.IceTundraBase:
+                return _iceTundraBaseTile;
+            case TileType.DesertBase:
+                return _desertBaseTile;
+            case TileType.AmethystRift:
+                return _amethystRiftBaseTile;
             default:
                 return null;
-        }
-    }
-
-    private TileBase GetDeterministicTileAsset(TileBase[] array, int seedUsed, int x, int y, int tileType)
-    {
-        if (array == null || array.Length == 0)
-            return null;
-
-        int idx = DeterministicIndex(seedUsed, x, y, tileType, array.Length);
-        return array[idx];
-    }
-
-    private int DeterministicIndex(int seedUsed, int x, int y, int tileType, int length)
-    {
-        unchecked
-        {
-            uint hash = (uint)seedUsed;
-            hash = hash * WorldSeedUtils.PRIME_FNV1_32 ^ (uint)x;
-            hash = hash * WorldSeedUtils.PRIME_FNV1_32 ^ (uint)y;
-            hash = hash * WorldSeedUtils.PRIME_FNV1_32 ^ (uint)tileType;
-
-            return (int)(hash % length);
         }
     }
 

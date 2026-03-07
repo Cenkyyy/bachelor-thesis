@@ -22,19 +22,18 @@ public class WorldGenerator
     {
         public int Width;
         public int Height;
-        
-        public float Radius;
+
+        public float PlayableRadius;
+        public float BorderThickness;
         public int Seed;
         public List<BiomeCenter> BiomeCenters;
     }
 
     private readonly Settings _settings;
-    private readonly System.Random _rng;
 
     public WorldGenerator(Settings settings)
     {
         _settings = settings;
-        _rng = new System.Random(settings.Seed);
     }
 
     public WorldData Generate()
@@ -42,16 +41,15 @@ public class WorldGenerator
         var data = new WorldData(_settings.Width, _settings.Height);
 
         var worldCenter = new Vector2(_settings.Width * 0.5f, _settings.Height * 0.5f);
-        var radiusSq = _settings.Radius * _settings.Radius;
+        var playableRadiusSq = _settings.PlayableRadius * _settings.PlayableRadius;
+        var borderOuterRadius = _settings.PlayableRadius + Mathf.Max(0f, _settings.BorderThickness);
+        var borderOuterRadiusSq = borderOuterRadius * borderOuterRadius;
 
         // Prepare biome centers
         var centers = _settings.BiomeCenters;
         if (centers == null || centers.Count == 0)
         {
-            centers = new List<BiomeCenter>
-            {
-                new BiomeCenter(worldCenter, BiomeType.Winter)
-            };
+            throw new System.Exception("At least one biome center is required to generate the world.");
         }
 
         // Fill tiles
@@ -66,9 +64,16 @@ public class WorldGenerator
                 var offset = tileCenter - worldCenter;
                 var distSq = offset.sqrMagnitude;
 
-                if (distSq > radiusSq)
+                if (distSq > borderOuterRadiusSq)
                 {
-                    // Outside circle: void tile
+                    // Outside border ring: empty tiles
+                    data.Tiles[x, y] = new WorldTile(BiomeType.None, TileType.None);
+                    continue;
+                }
+
+                if (distSq > playableRadiusSq)
+                {
+                    // Border ring: void tiles
                     data.Tiles[x, y] = new WorldTile(BiomeType.None, TileType.Void);
                     continue;
                 }
@@ -78,7 +83,7 @@ public class WorldGenerator
                 var biome = nearest.Biome;
 
                 // Inside that biome, decide concrete tile type
-                var tileType = ChooseTileForBiome(biome, tileCenter);
+                var tileType = ChooseTileForBiome(biome);
 
                 data.Tiles[x, y] = new WorldTile(biome, tileType);
             }
@@ -108,17 +113,18 @@ public class WorldGenerator
         return best;
     }
 
-    private TileType ChooseTileForBiome(BiomeType biome, Vector2 position)
+    private TileType ChooseTileForBiome(BiomeType biome)
     {
-        // Currently only winter biome exists, so just return snow, otherwise void
         switch (biome)
         {
-            case BiomeType.Winter:
-                return TileType.Snow;
-
             case BiomeType.Grassland:
-                return TileType.Grass;
-
+                return TileType.GrasslandBase;
+            case BiomeType.IceTundra:
+                return TileType.IceTundraBase;
+            case BiomeType.Desert:
+                return TileType.DesertBase;
+            case BiomeType.AmethystRift:
+                return TileType.AmethystRift;
             default:
                 return TileType.Void;
         }

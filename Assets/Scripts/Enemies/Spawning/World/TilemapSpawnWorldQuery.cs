@@ -46,8 +46,12 @@ public sealed class TilemapSpawnWorldQuery : ISpawnWorldQuery
         {
             case BiomeType.Grassland:
                 return BiomeAffinity.Grassland;
-            case BiomeType.Winter:
+            case BiomeType.IceTundra:
                 return BiomeAffinity.IceTundra;
+            case BiomeType.Desert:
+                return BiomeAffinity.Desert;
+            case BiomeType.AmethystRift:
+                return BiomeAffinity.AmethystRift;
             case BiomeType.None:
             default:
                 return BiomeAffinity.None;

@@ -3,17 +3,20 @@ using UnityEngine;
 public enum BiomeType
 {
     None = 0,
-    Winter = 1,
-    Grassland = 2
-    // TODO: Add more biomes later
+    Grassland = 1,
+    IceTundra = 2,
+    Desert = 3,
+    AmethystRift = 4
 }
 
 public enum TileType
 {
-    Void = 0,
-    Snow = 1,
-    Grass = 2
-    // TODO: Add more tile types later
+    None = 0,
+    Void = 1,
+    GrasslandBase = 2,
+    IceTundraBase = 3,
+    DesertBase = 4,
+    AmethystRift = 5
 }
 
 public struct WorldTile
