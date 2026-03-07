@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de015b59478de6d4a8ec437b1ccce772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _definition: {fileID: 11400000, guid: c7dd4c3ce4843ca488e616e3ece0d218, type: 2}
+  _data: {fileID: 11400000, guid: c7dd4c3ce4843ca488e616e3ece0d218, type: 2}
   _dropAnchor: {fileID: 3382344007120526757}
   _feedbackPopup: {fileID: 6707003018897083608}
   _higherToolRequiredMessage: Higher tool is required
