@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 public class WorldGeneratorBehaviour : MonoBehaviour
 {
-    private const int DefaultWorldWidth = 1024;
-    private const int DefaultWorldHeight = 1024;
-    private const int DefaultPlayableRadius = 480;
+    private const int DefaultWorldWidth = 2048;
+    private const int DefaultWorldHeight = DefaultWorldWidth;
     private const int DefaultBorderThickness = 32;
 
     [Header("Tilemaps")]
     [SerializeField] private Tilemap _groundTilemap;
     [SerializeField] private Tilemap _walkableDecorationTilemap;
     [SerializeField] private Tilemap _nonWalkableDecorationTilemap;
+    [SerializeField] private Tilemap _borderTilemap;
 
     [Header("Tiles")]
     [SerializeField] private TileBase _voidTile;
@@ -20,18 +20,24 @@ public class WorldGeneratorBehaviour : MonoBehaviour
     [SerializeField] private TileBase _iceTundraBaseTile;
     [SerializeField] private TileBase _desertBaseTile;
     [SerializeField] private TileBase _amethystRiftBaseTile;
+    [SerializeField] private TileBase _borderTile;
 
     [Header("World Settings")]
     [SerializeField] private int _worldWidth = DefaultWorldWidth;
     [SerializeField] private int _worldHeight = DefaultWorldHeight;
-    [SerializeField] private int _playableRadius = DefaultPlayableRadius;
     [SerializeField] private int _borderThickness = DefaultBorderThickness;
     [SerializeField] private int _defaultSeed = 12345;
     [SerializeField] private bool _randomizeSeedOnPlay = false; // should be true when creating new game
-    [SerializeField, Min(1)] private int _biomeCenterCount = 32;
+    [SerializeField, Min(1)] private int _biomeCenterCount = 48;
     [SerializeField, Min(1)] private int _centerSamplingCandidates = 128;
-    [SerializeField, Min(0f)] private float _centerJitter = 3f;
+    [SerializeField, Min(0f)] private float _centerJitter = 6f;
     [SerializeField] private BiomeType[] _centerBiomes = { BiomeType.Grassland, BiomeType.IceTundra, BiomeType.Desert, BiomeType.AmethystRift };
+
+    [Header("Radial Biome Distribution")]
+    [SerializeField, Range(0f, 1f)] private float _innerRingMaxNormalizedRadius = 0.35f;
+    [SerializeField, Range(0f, 1f)] private float _middleRingMaxNormalizedRadius = 0.70f;
+    [SerializeField] private RadialBiomeWeights _middleRingWeights = RadialBiomeWeights.Create(25f, 37.5f, 37.5f, 0f);
+    [SerializeField] private RadialBiomeWeights _outerRingWeights = RadialBiomeWeights.Create(10f, 17.5f, 17.5f, 55f);
 
     [Header("Player")]
     [SerializeField] private Transform _playerTransform;
@@ -39,9 +45,31 @@ public class WorldGeneratorBehaviour : MonoBehaviour
     [Header("Minimap")]
     [SerializeField] private MinimapController _minimap;
 
+    private int _playableRadius => (_worldWidth - (2 * _borderThickness)) / 2;
+
     public int CurrentSeed { get; private set; }
     public WorldData CurrentWorldData { get; private set; }
     public Tilemap GroundTilemap => _groundTilemap;
+
+    [System.Serializable]
+    private struct RadialBiomeWeights
+    {
+        [Min(0f)] public float Grassland;
+        [Min(0f)] public float IceTundra;
+        [Min(0f)] public float Desert;
+        [Min(0f)] public float AmethystRift;
+
+        public static RadialBiomeWeights Create(float grassland, float iceTundra, float desert, float amethystRift)
+        {
+            return new RadialBiomeWeights
+            {
+                Grassland = grassland,
+                IceTundra = iceTundra,
+                Desert = desert,
+                AmethystRift = amethystRift
+            };
+        }
+    }
 
     private void Start()
     {
@@ -91,7 +119,7 @@ public class WorldGeneratorBehaviour : MonoBehaviour
         Vector2 firstCenter = RandomPointInCircle(rng, worldCenter, _playableRadius);
         firstCenter = JitterInsideCircle(rng, firstCenter, worldCenter, _playableRadius);
         centerPositions.Add(firstCenter);
-        centers.Add(new WorldGenerator.BiomeCenter(firstCenter, PickBiome(rng, allowedBiomes)));
+        centers.Add(new WorldGenerator.BiomeCenter(firstCenter, PickBiomeByRadius(rng, firstCenter, worldCenter, _playableRadius, allowedBiomes)));
 
         int targetCount = Mathf.Max(1, _biomeCenterCount);
         int candidateCount = Mathf.Max(4, _centerSamplingCandidates);
@@ -101,7 +129,7 @@ public class WorldGeneratorBehaviour : MonoBehaviour
             var sampledPosition = SampleD2Center(rng, worldCenter, _playableRadius, centerPositions, candidateCount);
             sampledPosition = JitterInsideCircle(rng, sampledPosition, worldCenter, _playableRadius);
             centerPositions.Add(sampledPosition);
-            centers.Add(new WorldGenerator.BiomeCenter(sampledPosition, PickBiome(rng, allowedBiomes)));
+            centers.Add(new WorldGenerator.BiomeCenter(sampledPosition, PickBiomeByRadius(rng, sampledPosition, worldCenter, _playableRadius, allowedBiomes)));
         }
 
         return centers;
@@ -178,6 +206,62 @@ public class WorldGeneratorBehaviour : MonoBehaviour
         return center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
     }
 
+    private BiomeType PickBiomeByRadius(System.Random rng, Vector2 position, Vector2 worldCenter, float playableRadius, BiomeType[] allowedBiomes)
+    {
+        if (playableRadius <= Mathf.Epsilon)
+            return BiomeType.Grassland;
+
+        var normalizedRadius = Mathf.Clamp01((position - worldCenter).magnitude / playableRadius);
+
+        if (normalizedRadius <= _innerRingMaxNormalizedRadius)
+            return BiomeType.Grassland;
+
+        if (normalizedRadius <= _middleRingMaxNormalizedRadius)
+            return PickWeightedBiome(rng, _middleRingWeights, allowedBiomes);
+
+        return PickWeightedBiome(rng, _outerRingWeights, allowedBiomes);
+    }
+
+    private BiomeType PickWeightedBiome(System.Random rng, RadialBiomeWeights weights, BiomeType[] allowedBiomes)
+    {
+        float grasslandWeight = IsBiomeAllowed(BiomeType.Grassland, allowedBiomes) ? Mathf.Max(0f, weights.Grassland) : 0f;
+        float iceTundraWeight = IsBiomeAllowed(BiomeType.IceTundra, allowedBiomes) ? Mathf.Max(0f, weights.IceTundra) : 0f;
+        float desertWeight = IsBiomeAllowed(BiomeType.Desert, allowedBiomes) ? Mathf.Max(0f, weights.Desert) : 0f;
+        float amethystRiftWeight = IsBiomeAllowed(BiomeType.AmethystRift, allowedBiomes) ? Mathf.Max(0f, weights.AmethystRift) : 0f;
+
+        float total = grasslandWeight + iceTundraWeight + desertWeight + amethystRiftWeight;
+        if (total <= Mathf.Epsilon)
+            return PickBiome(rng, allowedBiomes);
+
+        float roll = (float)rng.NextDouble() * total;
+        if (roll < grasslandWeight)
+            return BiomeType.Grassland;
+
+        roll -= grasslandWeight;
+        if (roll < iceTundraWeight)
+            return BiomeType.IceTundra;
+
+        roll -= iceTundraWeight;
+        if (roll < desertWeight)
+            return BiomeType.Desert;
+
+        return BiomeType.AmethystRift;
+    }
+
+    private bool IsBiomeAllowed(BiomeType biome, BiomeType[] allowedBiomes)
+    {
+        if (allowedBiomes == null || allowedBiomes.Length == 0)
+            return biome != BiomeType.None;
+
+        for (int i = 0; i < allowedBiomes.Length; i++)
+        {
+            if (allowedBiomes[i] == biome)
+                return true;
+        }
+
+        return false;
+    }
+
     private BiomeType[] GetAllowedBiomes()
     {
         if (_centerBiomes == null || _centerBiomes.Length == 0)
@@ -211,6 +295,9 @@ public class WorldGeneratorBehaviour : MonoBehaviour
     private void RenderWorld(WorldData data)
     {
         _groundTilemap.ClearAllTiles();
+        _walkableDecorationTilemap.ClearAllTiles();
+        _nonWalkableDecorationTilemap.ClearAllTiles();
+        _borderTilemap.ClearAllTiles();
 
         for (int y = 0; y < data.Height; y++)
         {
@@ -218,14 +305,32 @@ public class WorldGeneratorBehaviour : MonoBehaviour
             {
                 var tile = data.Tiles[x, y];
 
+                var tilePos = data.DataToCell(x, y);
+
+                if (tile.TileType == TileType.Void)
+                {
+                    var borderTileAsset = GetBorderTileAsset();
+                    if (borderTileAsset != null)
+                        _borderTilemap.SetTile(tilePos, borderTileAsset);
+
+                    continue;
+                }
+
                 var tileAsset = GetTileAsset(tile.TileType);
                 if (tileAsset == null)
                     continue;
 
-                var tilePos = data.DataToCell(x, y);
                 _groundTilemap.SetTile(tilePos, tileAsset);
             }
         }
+    }
+
+    private TileBase GetBorderTileAsset()
+    {
+        if (_borderTile != null)
+            return _borderTile;
+
+        return _voidTile;
     }
 
     private TileBase GetTileAsset(TileType tileType)
