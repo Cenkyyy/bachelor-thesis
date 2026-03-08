@@ -45,6 +45,20 @@ public sealed class EquipmentInventory : IInventory
         return _items[index];
     }
 
+    public bool TryGetIndexForSlotType(EquipmentSlotType slotType, out int index)
+    {
+        for (int i = 0; i < _slotLayout.Length; i++)
+        {
+            if (_slotLayout[i] != slotType) continue;
+
+            index = i;
+            return true;
+        }
+
+        index = -1;
+        return false;
+    }
+
     /// <summary>
     /// Directly sets the item at index if valid for the equipment slot type.
     /// </summary>

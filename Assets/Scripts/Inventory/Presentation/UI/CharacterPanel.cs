@@ -4,19 +4,17 @@ using UnityEngine.EventSystems;
 public sealed class CharacterPanel : MonoBehaviour, IPanel
 {
     [Header("View")]
-    [SerializeField] private EquipmentSlot _slotPrefab;
-    [SerializeField] private Transform _slotParent;
+    [SerializeField] private EquipmentSlot[] _slots;
+    [SerializeField] private Transform _slotsParent;
 
     [Header("Model")]
     [SerializeField] private Player _player;
 
-    public bool IsOpen => _slotParent != null && _slotParent.gameObject.activeSelf;
-
-    private EquipmentSlot[] _slots;
+    public bool IsOpen => _slotsParent != null && _slotsParent.gameObject.activeSelf;
 
     private void Start()
     {
-        BuildSlots();
+        BindSlots();
         if (_player?.Equipment != null)
             _player.Equipment.OnItemChanged += RefreshSlot;
     }
@@ -26,47 +24,72 @@ public sealed class CharacterPanel : MonoBehaviour, IPanel
         if (_player?.Equipment != null)
             _player.Equipment.OnItemChanged -= RefreshSlot;
 
-        if (_slots != null)
-        {
-            foreach (var s in _slots)
-            {
-                if (!s) continue;
-                s.OnPointerClicked -= HandleSlotClicked;
-                s.OnPointerEntered -= HandleSlotEnter;
-            }
-        }
+        UnbindSlots();
     }
 
-    private void BuildSlots()
+    private void BindSlots()
     {
-        if (_player?.Equipment == null || _slotPrefab == null || _slotParent == null)
+        if (_player?.Equipment == null || _slots == null || _slotsParent == null)
             return;
 
-        _slots = new EquipmentSlot[_player.Equipment.Capacity];
         for (int i = 0; i < _slots.Length; i++)
         {
-            _slots[i] = Instantiate(_slotPrefab, _slotParent);
-            _slots[i].Bind(_player.Equipment, i, _player.Equipment.GetItemAt(i));
+            if (!_slots[i])
+                continue;
 
+            if (!_player.Equipment.TryGetIndexForSlotType(_slots[i].SlotType, out int inventoryIndex))
+                continue;
+
+            _slots[i].Bind(_player.Equipment, inventoryIndex, _player.Equipment.GetItemAt(inventoryIndex));
             _slots[i].OnPointerClicked += HandleSlotClicked;
             _slots[i].OnPointerEntered += HandleSlotEnter;
         }
     }
 
+    private void UnbindSlots()
+    {
+        if (_slots == null)
+            return;
+
+        foreach (var slot in _slots)
+        {
+            if (!slot)
+                continue;
+            
+            slot.OnPointerClicked -= HandleSlotClicked;
+            slot.OnPointerEntered -= HandleSlotEnter;
+        }
+    }
+
     public void Open()
     {
-        _slotParent.gameObject.SetActive(true);
+        _slotsParent.gameObject.SetActive(true);
     }
 
     public void Close()
     {
-        _slotParent.gameObject.SetActive(false);
+        _slotsParent.gameObject.SetActive(false);
     }
 
     public void RefreshSlot(int index)
     {
-        if (_slots == null || index < 0 || index >= _slots.Length) return;
-        _slots[index].Refresh(_player.Equipment.GetItemAt(index));
+        if (_player?.Equipment == null || _slots == null)
+            return;
+
+        for (int i = 0; i < _slots.Length; i++)
+        {
+            var slot = _slots[i];
+            if (!slot) continue;
+
+            if (!_player.Equipment.TryGetIndexForSlotType(slot.SlotType, out int inventoryIndex))
+                continue;
+
+            if (inventoryIndex != index)
+                continue;
+
+            slot.Refresh(_player.Equipment.GetItemAt(index));
+            return;
+        }
     }
 
     private void HandleSlotClicked(Slot slot, PointerEventData evt) =>

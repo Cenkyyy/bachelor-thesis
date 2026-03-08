@@ -341,4 +341,4 @@ MonoBehaviour:
   backgroundImage: {fileID: 972452108531623991}
   itemIconImage: {fileID: 719210652328201096}
   itemAmountText: {fileID: 7760605695221254100}
-  backgroundSprite: {fileID: -5296726394706623546, guid: f9c1cc94d4e431a4b9dc789c769ba772, type: 3}
+  backgroundSprite: {fileID: -4937444523968337394, guid: 658d4c5b4c4862f42abe97527f85a458, type: 3}
