@@ -39,6 +39,11 @@ public class WorldGeneratorBehaviour : MonoBehaviour
     [SerializeField] private RadialBiomeWeights _middleRingWeights = RadialBiomeWeights.Create(25f, 37.5f, 37.5f, 0f);
     [SerializeField] private RadialBiomeWeights _outerRingWeights = RadialBiomeWeights.Create(10f, 17.5f, 17.5f, 55f);
 
+    [Header("Biome Transition Band")]
+    [SerializeField, Min(0f)] private float _biomeTransitionBandWidthTiles = 6f;
+    [SerializeField, Min(0.001f)] private float _biomeTransitionNoiseScale = 0.6f;
+    [SerializeField, Min(0f)] private float _biomeTransitionDisplacementTiles = 4f;
+
     [Header("Player")]
     [SerializeField] private Transform _playerTransform;
 
@@ -86,6 +91,9 @@ public class WorldGeneratorBehaviour : MonoBehaviour
             PlayableRadius = Mathf.Max(1, _playableRadius),
             BorderThickness = Mathf.Max(0, _borderThickness),
             Seed = seedUsed,
+            TransitionBandWidthTiles = Mathf.Max(0f, _biomeTransitionBandWidthTiles),
+            TransitionNoiseScale = Mathf.Max(0.001f, _biomeTransitionNoiseScale),
+            TransitionDisplacementTiles = Mathf.Max(0f, _biomeTransitionDisplacementTiles),
             BiomeCenters = CreateBiomeCenters(seedUsed)
         };
 

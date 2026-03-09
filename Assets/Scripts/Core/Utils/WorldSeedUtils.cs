@@ -1,12 +1,34 @@
 using System;
+using UnityEngine;
 
 public static class WorldSeedUtils
 {
     public const uint PRIME_FNV1_32 = 16777619u;
 
+    // Large offsets to avoid sampling around zero
+    private const float PerlinBaseOffsetX = 137.42f;
+    private const float PerlinBaseOffsetY = 911.73f;
+
+    // Seed multipliers that deterministically shift the Perlin sampling domain per world seed
+    private const float PerlinSeedScaleX = 0.01713f;
+    private const float PerlinSeedScaleY = 0.00971f;
+
     public static int CreateRandomSeed()
     {
         var bytes = Guid.NewGuid().ToByteArray();
         return BitConverter.ToInt32(bytes, 0);
+    }
+
+    /// <summary>
+    /// Samples deterministic seed-shifted Perlin noise and remaps it from [0,1] to [-1,1] using * 2f - 1f.
+    /// Useful for neutral push-pull displacement fields in world generation so both biomes can push-pull tiles.
+    /// </summary>
+    public static float SampleSignedPerlinNoise(int x, int y, float scale, int seed)
+    {
+        float safeScale = Mathf.Max(0.0001f, scale);
+        float sampleX = (x + 0.5f) * safeScale + PerlinBaseOffsetX + seed * PerlinSeedScaleX;
+        float sampleY = (y + 0.5f) * safeScale + PerlinBaseOffsetY + seed * PerlinSeedScaleY;
+
+        return Mathf.PerlinNoise(sampleX, sampleY) * 2f - 1f;
     }
 }

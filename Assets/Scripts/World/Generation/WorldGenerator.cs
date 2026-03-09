@@ -26,6 +26,11 @@ public class WorldGenerator
         public float PlayableRadius;
         public float BorderThickness;
         public int Seed;
+
+        public float TransitionBandWidthTiles;
+        public float TransitionNoiseScale;
+        public float TransitionDisplacementTiles;
+
         public List<BiomeCenter> BiomeCenters;
     }
 
@@ -78,12 +83,12 @@ public class WorldGenerator
                     continue;
                 }
 
-                // Inside circle: choose biome via Voronoi
-                var nearest = FindNearestCenter(tileCenter, centers);
+                // Inside circle: choose biome via Voronoi and in case of tile transitions happening, get the nearest different biome for transition blending effects
+                FindNearestCenters(tileCenter, centers, out var nearest, out var nearestDifferentBiome, out var nearestDistance, out var nearestDifferentBiomeDistance);
                 var biome = nearest.Biome;
 
                 // Inside that biome, decide concrete tile type
-                var tileType = ChooseTileForBiome(biome);
+                var tileType = ChooseVisualTileForBiomeTransition(biome, nearestDifferentBiome.Biome, nearestDistance, nearestDifferentBiomeDistance, x, y);
 
                 data.Tiles[x, y] = new WorldTile(biome, tileType);
             }
@@ -95,22 +100,72 @@ public class WorldGenerator
         return data;
     }
 
-    private BiomeCenter FindNearestCenter(Vector2 position, List<BiomeCenter> centers)
+    private void FindNearestCenters(Vector2 position, List<BiomeCenter> centers, out BiomeCenter nearest, out BiomeCenter nearestDifferentBiome, out float nearestDistance, out float nearestDifferentBiomeDistance)
     {
-        var best = centers[0];
-        var bestDistSq = (position - best.Position).sqrMagnitude;
+        nearest = centers[0];
+        float bestDistSq = (position - nearest.Position).sqrMagnitude;
 
         for (int i = 1; i < centers.Count; i++)
         {
-            var distSq = (position - centers[i].Position).sqrMagnitude;
+            var center = centers[i];
+            var distSq = (position - center.Position).sqrMagnitude;
             if (distSq < bestDistSq)
             {
                 bestDistSq = distSq;
-                best = centers[i];
+                nearest = center;
             }
         }
 
-        return best;
+        nearestDifferentBiome = nearest;
+        float bestDifferentBiomeDistSq = float.MaxValue;
+        for (int i = 0; i < centers.Count; i++)
+        {
+            var center = centers[i];
+            if (center.Biome == nearest.Biome)
+                continue;
+
+            var distSq = (position - center.Position).sqrMagnitude;
+            if (distSq < bestDifferentBiomeDistSq)
+            {
+                bestDifferentBiomeDistSq = distSq;
+                nearestDifferentBiome = center;
+            }
+        }
+
+        nearestDistance = Mathf.Sqrt(bestDistSq);
+        nearestDifferentBiomeDistance = bestDifferentBiomeDistSq < float.MaxValue ? Mathf.Sqrt(bestDifferentBiomeDistSq) : float.MaxValue;
+    }
+
+    private TileType ChooseVisualTileForBiomeTransition(BiomeType biome, BiomeType neighbouringBiome, float nearestDistance, float neighbouringDistance, int x, int y)
+    {
+        if (neighbouringBiome == biome)
+            return ChooseTileForBiome(biome);
+
+        float bandWidth = Mathf.Max(0f, _settings.TransitionBandWidthTiles);
+        if (bandWidth <= Mathf.Epsilon || neighbouringDistance == float.MaxValue)
+            return ChooseTileForBiome(biome);
+
+        // Signed distance from current tile to the Voronoi border line between two competing biome centers.
+        // Positive means the tile is on the current biome side, negative means neighbour side.
+        float borderSignedDistance = (neighbouringDistance - nearestDistance) * 0.5f;
+        if (Mathf.Abs(borderSignedDistance) > bandWidth)
+            return ChooseTileForBiome(biome);
+
+        float noiseScale = Mathf.Max(0.001f, _settings.TransitionNoiseScale);
+        float displacementAmplitude = Mathf.Max(0f, _settings.TransitionDisplacementTiles);
+        float displacement = WorldSeedUtils.SampleSignedPerlinNoise(x, y, noiseScale, _settings.Seed) * displacementAmplitude;
+
+        // Neutral push-pull: border is warped both directions by signed displacement.
+        float warpedSignedDistance = borderSignedDistance - displacement;
+
+        if (Mathf.Abs(warpedSignedDistance) > bandWidth)
+            return ChooseTileForBiome(biome);
+
+        // If the warped border passes over this tile, borrow neighbouring biome visual tile.
+        if (warpedSignedDistance <= 0f)
+            return ChooseTileForBiome(neighbouringBiome);
+
+        return ChooseTileForBiome(biome);
     }
 
     private TileType ChooseTileForBiome(BiomeType biome)
