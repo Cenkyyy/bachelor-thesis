@@ -10,7 +10,8 @@ public sealed class WorldMapPanelZoomController : MonoBehaviour
 
     [Header("Zoom")]
     [SerializeField] private float _zoomSpeed = 0.15f;
-    [SerializeField] private float _maxZoom = 4f;
+    [SerializeField, Min(1f)] private float _maxZoom = 20f;
+    [SerializeField, Min(1f)] private float _startZoomPercent = 1000f;
 
     [Header("Pan")]
     [SerializeField] private float _panSpeed = 1f;
@@ -59,12 +60,20 @@ public sealed class WorldMapPanelZoomController : MonoBehaviour
         fit = Mathf.Clamp(fit, 0.01f, 999f);
 
         _minZoomRuntime = fit;
-        _maxZoomRuntime = Mathf.Max(_maxZoom, _minZoomRuntime);
+        _maxZoomRuntime = _minZoomRuntime * _maxZoom;
 
-        _content.localScale = new Vector3(fit, fit, 1f);
-        _content.anchoredPosition = Vector2.zero;
-
+        ApplyStartZoom();
         ClampContentToViewport();
+    }
+
+    private void ApplyStartZoom()
+    {
+        float zoomMultiplier = Mathf.Max(0.01f, _startZoomPercent * 0.01f);
+        float startZoom = _minZoomRuntime * zoomMultiplier;
+        float clampedZoom = Mathf.Clamp(startZoom, _minZoomRuntime, _maxZoomRuntime);
+
+        _content.localScale = new Vector3(clampedZoom, clampedZoom, 1f);
+        _content.anchoredPosition = Vector2.zero;
     }
 
     private void HandleZoom(Camera cam)

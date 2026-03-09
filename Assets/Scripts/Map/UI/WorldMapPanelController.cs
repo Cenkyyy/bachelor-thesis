@@ -8,7 +8,6 @@ public sealed class WorldMapPanelController : MonoBehaviour, IMajorPanel
     [SerializeField] private GameObject _root;
     [SerializeField] private RectTransform _mapContent;
     [SerializeField] private RawImage _terrainImage;
-    [SerializeField] private RawImage _fogImage;
     [SerializeField] private RectTransform _playerMarker;
 
     [Header("Refs")]
@@ -60,10 +59,7 @@ public sealed class WorldMapPanelController : MonoBehaviour, IMajorPanel
             return;
 
         _terrainImage.texture = _minimap.TerrainTexture;
-        _fogImage.texture = _minimap.FogTexture;
-
         _terrainImage.uvRect = new Rect(0f, 0f, 1f, 1f);
-        _fogImage.uvRect = new Rect(0f, 0f, 1f, 1f);
 
         _mapContent.sizeDelta = new Vector2(_terrainImage.texture.width, _terrainImage.texture.height);
 
@@ -84,19 +80,22 @@ public sealed class WorldMapPanelController : MonoBehaviour, IMajorPanel
 
     private void UpdatePlayerMarker()
     {
-        Vector2 dataPos = GetPlayerDataPositionContinuous();
+        Vector2 normalizedPos = GetPlayerDataPositionNormalized();
 
         var contentSize = _mapContent.rect.size;
-        var contentOffset = new Vector2(-contentSize.x * _mapContent.pivot.x, -contentSize.y * _mapContent.pivot.y);
+        var contentPivot = _mapContent.pivot;
+
+        float localX = (normalizedPos.x - contentPivot.x) * contentSize.x;
+        float localY = (normalizedPos.y - contentPivot.y) * contentSize.y;
 
         _playerMarker.anchorMin = _playerMarker.anchorMax = new Vector2(0.5f, 0.5f);
-        _playerMarker.anchoredPosition = contentOffset + dataPos;
+        _playerMarker.anchoredPosition = new Vector2(localX, localY);
 
         float z = _playerTransform.eulerAngles.z;
         _playerMarker.localRotation = Quaternion.Euler(0f, 0f, z);
     }
 
-    private Vector2 GetPlayerDataPositionContinuous()
+    private Vector2 GetPlayerDataPositionNormalized()
     {
         var grid = _groundTilemap.layoutGrid;
         Vector3 playerLocalInGrid = grid.transform.InverseTransformPoint(_playerTransform.position);
@@ -105,9 +104,9 @@ public sealed class WorldMapPanelController : MonoBehaviour, IMajorPanel
         float dataX = cellPos.x - _minimap.WorldData.OffsetX;
         float dataY = cellPos.y - _minimap.WorldData.OffsetY;
 
-        float clampedX = Mathf.Clamp(dataX, 0f, _minimap.WorldData.Width);
-        float clampedY = Mathf.Clamp(dataY, 0f, _minimap.WorldData.Height);
+        float normalizedX = Mathf.Clamp01(dataX / _minimap.WorldData.Width);
+        float normalizedY = Mathf.Clamp01(dataY / _minimap.WorldData.Height);
 
-        return new Vector2(clampedX, clampedY);
+        return new Vector2(normalizedX, normalizedY);
     }
 }

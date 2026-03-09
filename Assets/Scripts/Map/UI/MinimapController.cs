@@ -15,7 +15,6 @@ public sealed class MinimapController : MonoBehaviour
 
     [Header("UI Refs")]
     [SerializeField] private RawImage _terrainImage;
-    [SerializeField] private RawImage _fogImage;
     [SerializeField] private RectTransform _minimapViewport;
     [SerializeField] private RectTransform _playerMarker;
 
@@ -32,9 +31,9 @@ public sealed class MinimapController : MonoBehaviour
     private ExplorationData _exploration;
 
     public Texture2D TerrainTexture { get; private set; }
-    public Texture2D FogTexture { get; private set; }
 
     private Dictionary<TileType, Color32> _colorByTile;
+    private Color32[] _terrainPixelsByIndex;
     private Vector2Int _lastPlayerTile = new Vector2Int(int.MinValue, int.MinValue);
     public bool IsInitialized { get; private set; } = false;
 
@@ -44,12 +43,10 @@ public sealed class MinimapController : MonoBehaviour
 
         BuildColorLookup();
         BuildTerrainTexture();
-        BuildFogTexture();
 
         _exploration = new ExplorationData(WorldData.Width, WorldData.Height);
 
         _terrainImage.texture = TerrainTexture;
-        _fogImage.texture = FogTexture;
 
         UpdateView(force: true);
         IsInitialized = true;
@@ -80,39 +77,26 @@ public sealed class MinimapController : MonoBehaviour
         TerrainTexture.filterMode = FilterMode.Point;
         TerrainTexture.wrapMode = TextureWrapMode.Clamp;
 
+        _terrainPixelsByIndex = new Color32[w * h];
+        var hiddenPixels = new Color32[w * h];
+
         for (int y = 0; y < h; y++)
         {
             for (int x = 0; x < w; x++)
             {
+                int index = (y * w) + x;
                 var tileType = WorldData.Tiles[x, y].TileType;
 
                 if (!_colorByTile.TryGetValue(tileType, out var col))
                     col = new Color32(0, 0, 0, 255);
 
-                TerrainTexture.SetPixel(x, y, col);
+                _terrainPixelsByIndex[index] = col;
+                hiddenPixels[index] = new Color32(col.r, col.g, col.b, 0);
             }
         }
 
+        TerrainTexture.SetPixels32(hiddenPixels);
         TerrainTexture.Apply(updateMipmaps: false);
-    }
-
-    private void BuildFogTexture()
-    {
-        int w = WorldData.Width;
-        int h = WorldData.Height;
-
-        FogTexture = new Texture2D(w, h, TextureFormat.RGBA32, mipChain: false);
-        FogTexture.filterMode = FilterMode.Point;
-        FogTexture.wrapMode = TextureWrapMode.Clamp;
-
-        var pixels = new Color32[w * h];
-        var fog = new Color32(0, 0, 0, 255);
-
-        for (int i = 0; i < pixels.Length; i++)
-            pixels[i] = fog;
-
-        FogTexture.SetPixels32(pixels);
-        FogTexture.Apply(updateMipmaps: false);
     }
 
     private void UpdateView(bool force)
@@ -147,7 +131,9 @@ public sealed class MinimapController : MonoBehaviour
         int r = _revealRadiusTiles;
         int rSq = r * r;
 
-        bool anyChanged = false;
+        int w = WorldData.Width;
+
+        bool terrainChanged = false;
 
         for (int dy = -r; dy <= r; dy++)
         {
@@ -161,14 +147,15 @@ public sealed class MinimapController : MonoBehaviour
 
                 if (_exploration.TrySetExplored(x, y))
                 {
-                    FogTexture.SetPixel(x, y, new Color32(0, 0, 0, 0));
-                    anyChanged = true;
+                    int index = (y * w) + x;
+                    TerrainTexture.SetPixel(x, y, _terrainPixelsByIndex[index]);
+                    terrainChanged = true;
                 }
             }
         }
 
-        if (anyChanged)
-            FogTexture.Apply(updateMipmaps: false);
+        if (terrainChanged)
+            TerrainTexture.Apply(updateMipmaps: false);
     }
 
     private void UpdateUvRect(Vector2Int center)
@@ -190,7 +177,6 @@ public sealed class MinimapController : MonoBehaviour
 
         var rect = new Rect(u, v, viewW, viewH);
         _terrainImage.uvRect = rect;
-        _fogImage.uvRect = rect;
     }
 
     private void UpdatePlayerMarkerRotation()
