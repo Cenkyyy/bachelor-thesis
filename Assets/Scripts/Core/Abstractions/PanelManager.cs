@@ -15,8 +15,9 @@ public sealed class PanelManager : MonoBehaviour
     [SerializeField] private BackpackPanel _backpackPanel;
     [SerializeField] private ChestPanel _chestPanel;
     [SerializeField] private WorldMapPanelController _mapPanel;
-    [SerializeField] private SettingsController _settingsPanel;
+    [SerializeField] private OverworldSettingsController _settingsPanel;
     [SerializeField] private CraftingPanel _craftingPanel;
+    [SerializeField] private DeathPanelController _deathPanel;
 
     [Header("Panels - Secondary")]
     [SerializeField] private CharacterPanel _characterPanel;
@@ -29,9 +30,9 @@ public sealed class PanelManager : MonoBehaviour
     private IPanel[] _mapGroup;
     private IPanel[] _settingsGroup;
     private IPanel[] _craftingGroup;
+    private IPanel[] _deathGroup;
 
-    public bool BlocksGameplayInput =>
-        _currentPanelId.HasValue && GetMajorPanel(_currentPanelId.Value).BlocksGameplayInput;
+    public bool BlocksGameplayInput => _currentPanelId.HasValue && GetMajorPanel(_currentPanelId.Value).BlocksGameplayInput;
 
     private void Awake()
     {
@@ -46,11 +47,15 @@ public sealed class PanelManager : MonoBehaviour
         if (_spellCastingPanel == null)
             _spellCastingPanel = FindFirstObjectByType<SpellCastingPanelController>();
 
+        if (_deathPanel == null)
+            _deathPanel = FindFirstObjectByType<DeathPanelController>();
+
         _inventoryGroup = new IPanel[] { _backpackPanel, _characterPanel };
         _chestGroup = new IPanel[] { _chestPanel, _backpackPanel, _characterPanel };
         _mapGroup = new IPanel[] { _mapPanel };
         _settingsGroup = new IPanel[] { _settingsPanel };
         _craftingGroup = new IPanel[] { _craftingPanel };
+        _deathGroup = new IPanel[] { _deathPanel }; 
 
         _currentPanelId = null;
         _currentChestInventory = null;
@@ -65,6 +70,9 @@ public sealed class PanelManager : MonoBehaviour
 
     private void HandleInput()
     {
+        if (_currentPanelId == PanelId.Death)
+            return;
+
         if (Input.GetKeyDown(_panelKeybinds.CloseOrPause))
         {
             if (_currentPanelId.HasValue)
@@ -126,7 +134,15 @@ public sealed class PanelManager : MonoBehaviour
 
     public void CloseCurrentMajorPanel()
     {
+        CloseCurrentMajorPanel(force: false);
+    }
+
+    public void CloseCurrentMajorPanel(bool force)
+    {
         if (!_currentPanelId.HasValue)
+            return;
+
+        if (!force && _currentPanelId.Value == PanelId.Death)
             return;
 
         ItemInteractionController.Instance?.ResolveHeldItemToInventoryOrDrop();
@@ -186,6 +202,7 @@ public sealed class PanelManager : MonoBehaviour
             PanelId.Map => _mapGroup,
             PanelId.Settings => _settingsGroup,
             PanelId.Crafting => _craftingGroup,
+            PanelId.Death => _deathGroup,
             _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)
         };
     }
@@ -194,6 +211,9 @@ public sealed class PanelManager : MonoBehaviour
     {
         foreach (var panel in group)
         {
+            if (panel == null)
+                continue;
+
             panel.Open();
         }
     }
@@ -202,6 +222,9 @@ public sealed class PanelManager : MonoBehaviour
     {
         foreach (var panel in group)
         {
+            if (panel == null) 
+                continue;
+
             panel.Close();
         }
     }
@@ -215,6 +238,7 @@ public sealed class PanelManager : MonoBehaviour
             PanelId.Map => _mapPanel,
             PanelId.Settings => _settingsPanel,
             PanelId.Crafting => _craftingPanel,
+            PanelId.Death => _deathPanel,
             _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)
         };
     }

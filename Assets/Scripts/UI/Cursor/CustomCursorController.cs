@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public sealed class CustomCursorController : MonoBehaviour
 {
+    public static CustomCursorController Instance { get; private set; }
+
     [Header("Refs")]
     [SerializeField] private CursorVisualSettingsData _settings;
     [SerializeField] private RectTransform _cursorRoot;
@@ -17,8 +19,19 @@ public sealed class CustomCursorController : MonoBehaviour
 
     private void Awake()
     {
-        _currentFillColor = _settings.FillColor;
-        _currentScale = _settings.Scale;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        _currentFillColor = _settings != null ? _settings.FillColor : Color.white;
+        _currentScale = _settings != null ? _settings.Scale : 1f;
+
+        ApplyCurrent();
     }
 
     private void OnEnable()
@@ -26,8 +39,15 @@ public sealed class CustomCursorController : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.None;
 
-        _fillImage.raycastTarget = false;
-        _outlineImage.raycastTarget = false;
+        if (_fillImage != null)
+        {
+            _fillImage.raycastTarget = false;
+        }
+
+        if (_outlineImage != null)
+        {
+            _outlineImage.raycastTarget = false;
+        }
 
         ApplyCurrent();
         UpdatePosition();
@@ -36,6 +56,14 @@ public sealed class CustomCursorController : MonoBehaviour
     private void OnDisable()
     {
         Cursor.visible = true;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
 
     private void Update()
@@ -53,13 +81,22 @@ public sealed class CustomCursorController : MonoBehaviour
 
     private void ApplyCurrent()
     {
-        _fillImage.color = _currentFillColor;
-        _outlineImage.color = Color.black;
-        _cursorRoot.localScale = Vector3.one * _currentScale;
+        if (_fillImage != null)
+        {
+            _fillImage.color = _currentFillColor;
+        }
+
+        if (_cursorRoot != null)
+        {
+            _cursorRoot.localScale = Vector3.one * _currentScale;
+        }
     }
 
     private void UpdatePosition()
     {
+        if (_cursorRoot == null)
+            return;
+
         _cursorRoot.position = (Vector2)Input.mousePosition + _screenOffset;
     }
 }

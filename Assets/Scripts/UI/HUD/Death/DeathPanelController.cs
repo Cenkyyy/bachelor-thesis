@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
-public sealed class DeathPanelController : MonoBehaviour
+public sealed class DeathPanelController : MonoBehaviour, IMajorPanel
 {
     [Header("References")]
     [SerializeField] private PlayerRespawnController _respawnController;
@@ -10,9 +10,14 @@ public sealed class DeathPanelController : MonoBehaviour
     [SerializeField] private Button _respawnButton;
     [SerializeField] private Button _returnToMenuButton;
 
+    public PanelId Id => PanelId.Death;
+    public bool IsOpen => _panelRoot != null && _panelRoot.activeSelf;
+    public bool PausesGame => true;
+    public bool BlocksGameplayInput => true;
+
     private void Awake()
     {
-        _panelRoot.SetActive(false);
+        Close();
 
         _respawnButton.onClick.AddListener(HandleRespawnClicked);
         _returnToMenuButton.onClick.AddListener(HandleReturnToMenuClicked);
@@ -36,16 +41,28 @@ public sealed class DeathPanelController : MonoBehaviour
         _respawnController.OnRespawned -= HidePanel;
     }
 
+    public void Open()
+    {
+        if (_panelRoot != null)
+            _panelRoot.SetActive(true);
+    }
+
+    public void Close()
+    {
+        if (_panelRoot != null)
+            _panelRoot.SetActive(false);
+    }
+
     private void ShowPanel()
     {
-        _panelRoot.SetActive(true);
-        GameStateManager.SetPause(true);
+        PanelManager.Instance.OpenMajorPanel(PanelId.Death);
+        return;
     }
 
     private void HidePanel()
     {
-        _panelRoot.SetActive(false);
-        GameStateManager.SetPause(false);
+        PanelManager.Instance.CloseCurrentMajorPanel(force: true);
+        return;
     }
 
     private void HandleRespawnClicked()
