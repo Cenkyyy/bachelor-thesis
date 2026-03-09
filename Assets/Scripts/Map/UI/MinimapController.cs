@@ -129,7 +129,6 @@ public sealed class MinimapController : MonoBehaviour
     private void RevealAround(Vector2Int center)
     {
         int r = _revealRadiusTiles;
-        int rSq = r * r;
 
         int w = WorldData.Width;
 
@@ -139,7 +138,7 @@ public sealed class MinimapController : MonoBehaviour
         {
             for (int dx = -r; dx <= r; dx++)
             {
-                if (dx * dx + dy * dy > rSq)
+                if (!IsTileInsideRevealCircle(dx, dy, r))
                     continue;
 
                 int x = center.x + dx;
@@ -156,6 +155,17 @@ public sealed class MinimapController : MonoBehaviour
 
         if (terrainChanged)
             TerrainTexture.Apply(updateMipmaps: false);
+    }
+
+    private bool IsTileInsideRevealCircle(int dx, int dy, int radius)
+    {
+        float sampleX = Mathf.Abs(dx) + 0.5f;
+        float sampleY = Mathf.Abs(dy) + 0.5f;
+
+        float tileCenterDistanceSquared = (sampleX * sampleX) + (sampleY * sampleY);
+        float radiusSquared = radius * radius;
+
+        return tileCenterDistanceSquared <= radiusSquared;
     }
 
     private void UpdateUvRect(Vector2Int center)
