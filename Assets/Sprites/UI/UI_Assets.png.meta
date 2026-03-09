@@ -283,73 +283,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI_Assets_0
-      rect:
-        serializedVersion: 2
-        x: 101
-        y: 349
-        width: 8
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1e7cd3724333b84d0800000000000000
-      internalID: -3131352816816371743
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_1
-      rect:
-        serializedVersion: 2
-        x: 115
-        y: 349
-        width: 8
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: babf3943bf88a9830800000000000000
-      internalID: 4078723025037687723
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_3
-      rect:
-        serializedVersion: 2
-        x: 138
-        y: 332
-        width: 141
-        height: 25
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e2b9288a20ed6ed30800000000000000
-      internalID: 4460496583955487534
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_5
+      name: SmallCrystal_0
       rect:
         serializedVersion: 2
         x: 338
@@ -371,7 +305,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_6
+      name: SmallCrystal_1
       rect:
         serializedVersion: 2
         x: 354
@@ -393,7 +327,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_7
+      name: SmallCrystal_5
       rect:
         serializedVersion: 2
         x: 384
@@ -415,7 +349,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_8
+      name: BackgroundPixel
       rect:
         serializedVersion: 2
         x: 406
@@ -437,7 +371,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_9
+      name: BigCrystal_0
       rect:
         serializedVersion: 2
         x: 418
@@ -459,7 +393,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_10
+      name: BigCrystal_1
       rect:
         serializedVersion: 2
         x: 450
@@ -481,7 +415,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_11
+      name: NecklaceSlot
       rect:
         serializedVersion: 2
         x: 484
@@ -503,7 +437,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_12
+      name: HelmetSlot
       rect:
         serializedVersion: 2
         x: 532
@@ -525,7 +459,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_13
+      name: RingSlotToLeft
       rect:
         serializedVersion: 2
         x: 580
@@ -547,7 +481,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_14
+      name: ChestplateSlot
       rect:
         serializedVersion: 2
         x: 628
@@ -569,7 +503,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_15
+      name: SmallCrystal_2
       rect:
         serializedVersion: 2
         x: 337
@@ -591,7 +525,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_16
+      name: SmallCrystal_6
       rect:
         serializedVersion: 2
         x: 337
@@ -613,7 +547,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_17
+      name: SmallCrystal_3
       rect:
         serializedVersion: 2
         x: 354
@@ -635,7 +569,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_18
+      name: Rune_1
       rect:
         serializedVersion: 2
         x: 371
@@ -657,7 +591,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_19
+      name: Rune_2
       rect:
         serializedVersion: 2
         x: 385
@@ -679,7 +613,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_20
+      name: Rune_3
       rect:
         serializedVersion: 2
         x: 401
@@ -701,7 +635,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_21
+      name: MenuButtonHighlighted
       rect:
         serializedVersion: 2
         x: 21
@@ -723,7 +657,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_22
+      name: MenuButton
       rect:
         serializedVersion: 2
         x: 150
@@ -745,7 +679,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_23
+      name: Rune_0
       rect:
         serializedVersion: 2
         x: 355
@@ -767,95 +701,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_24
-      rect:
-        serializedVersion: 2
-        x: 21
-        y: 268
-        width: 119
-        height: 25
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 62b5f381512daa0d0800000000000000
-      internalID: -3410682779736777946
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_25
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 269
-        width: 117
-        height: 23
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 32abe259538446740800000000000000
-      internalID: 5144316069337283107
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_26
-      rect:
-        serializedVersion: 2
-        x: 274
-        y: 282
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7fb9e2e4c879493a0800000000000000
-      internalID: -6659531320111227913
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_27
-      rect:
-        serializedVersion: 2
-        x: 289
-        y: 281
-        width: 14
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 37c4c9dc1bf7f9c00800000000000000
-      internalID: 909586051387640947
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_28
+      name: BigCrystal_2
       rect:
         serializedVersion: 2
         x: 336
@@ -877,7 +723,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_29
+      name: BigCrystal_3
       rect:
         serializedVersion: 2
         x: 369
@@ -899,7 +745,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_30
+      name: BigCrystal_4
       rect:
         serializedVersion: 2
         x: 401
@@ -921,7 +767,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_31
+      name: RingSlotToRight
       rect:
         serializedVersion: 2
         x: 484
@@ -943,7 +789,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_32
+      name: LegsSlot
       rect:
         serializedVersion: 2
         x: 532
@@ -965,7 +811,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_33
+      name: AmuletSlo
       rect:
         serializedVersion: 2
         x: 580
@@ -987,7 +833,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_34
+      name: BootsSlot
       rect:
         serializedVersion: 2
         x: 628
@@ -1009,51 +855,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_35
-      rect:
-        serializedVersion: 2
-        x: 21
-        y: 232
-        width: 119
-        height: 31
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 40805df6ca3cee320800000000000000
-      internalID: 2589221981162637316
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_36
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 233
-        width: 117
-        height: 29
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 01821fe4fb192ece0800000000000000
-      internalID: -1377378285172742128
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_37
+      name: VerticalTransparentBackground
       rect:
         serializedVersion: 2
         x: 306
@@ -1075,7 +877,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_38
+      name: AudioSliderHandle
       rect:
         serializedVersion: 2
         x: 277
@@ -1097,95 +899,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_39
-      rect:
-        serializedVersion: 2
-        x: 292
-        y: 252
-        width: 9
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 66bad2af842283bf0800000000000000
-      internalID: -344487674663556250
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_44
-      rect:
-        serializedVersion: 2
-        x: 21
-        y: 200
-        width: 119
-        height: 31
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9196fcecbfcc92360800000000000000
-      internalID: 7145467665678559513
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_45
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 201
-        width: 117
-        height: 29
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f42cbd6c377495200800000000000000
-      internalID: 169245023586206287
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_46
-      rect:
-        serializedVersion: 2
-        x: 294
-        y: 218
-        width: 5
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 21f25ec3d94902e40800000000000000
-      internalID: 5629662937265549074
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_47
+      name: SettingsButtonHighlighted
       rect:
         serializedVersion: 2
         x: 19
@@ -1207,7 +921,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_48
+      name: SettingsButton
       rect:
         serializedVersion: 2
         x: 148
@@ -1229,7 +943,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_53
+      name: ButtonHighlighted
       rect:
         serializedVersion: 2
         x: 18
@@ -1251,7 +965,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_54
+      name: Button
       rect:
         serializedVersion: 2
         x: 147
@@ -1273,7 +987,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_55
+      name: InventorySlot
       rect:
         serializedVersion: 2
         x: 100
@@ -1295,7 +1009,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_56
+      name: HotbarSlot
       rect:
         serializedVersion: 2
         x: 148
@@ -1317,7 +1031,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_57
+      name: WordSlot
       rect:
         serializedVersion: 2
         x: 195
@@ -1339,7 +1053,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_58
+      name: HighlightedBorder
       rect:
         serializedVersion: 2
         x: 243
@@ -1361,7 +1075,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_59
+      name: HighlightedInventorySlot
       rect:
         serializedVersion: 2
         x: 99
@@ -1383,7 +1097,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_60
+      name: HighlightedHotbarSlot
       rect:
         serializedVersion: 2
         x: 147
@@ -1405,7 +1119,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_61
+      name: HighlightedWordSlot
       rect:
         serializedVersion: 2
         x: 194
@@ -1427,7 +1141,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_2
+      name: SmallCrystal_4
       rect:
         serializedVersion: 2
         x: 368
@@ -1449,29 +1163,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_4
-      rect:
-        serializedVersion: 2
-        x: 274
-        y: 239
-        width: 28
-        height: 1
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e95223dd892679438bfca6736b30b42
-      internalID: -3427747503594080863
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Assets_40
+      name: CursorColorHandle
       rect:
         serializedVersion: 2
         x: 279
@@ -1493,7 +1185,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_41
+      name: AudioSliderFilling
       rect:
         serializedVersion: 2
         x: 158
@@ -1515,7 +1207,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_42
+      name: AudioSliderEdge
       rect:
         serializedVersion: 2
         x: 153
@@ -1537,7 +1229,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_43
+      name: AudioSlider
       rect:
         serializedVersion: 2
         x: 153
@@ -1559,7 +1251,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Assets_49
+      name: CursorColorSlider
       rect:
         serializedVersion: 2
         x: 157
@@ -1567,7 +1259,7 @@ TextureImporter:
         width: 102
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1594,68 +1286,68 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      AmuletSlo: -1087614287073443477
+      AudioSlider: 6542293239424750880
+      AudioSliderEdge: 4310072150773806040
+      AudioSliderFilling: 3760210124697040761
+      AudioSliderHandle: -9879943261941721
+      BackgroundPixel: -2275160820100057453
+      BigCrystal_0: -5968239265996116607
+      BigCrystal_1: -4746177125779073283
+      BigCrystal_2: -2358783683333544584
+      BigCrystal_3: 6336373675690571044
+      BigCrystal_4: -1955368487622344423
+      BootsSlot: -4781952042304868374
+      Button: -277338358234680262
+      ButtonHighlighted: 8272841112774431148
+      ChestplateSlot: -300619020086794900
+      CursorColorHandle: -2194095483079811548
+      CursorColorSlider: -893806657857932856
+      HelmetSlot: -7994044926189751012
+      HighlightedBorder: 8539566704405457586
+      HighlightedHotbarSlot: 9070167050123000488
+      HighlightedInventorySlot: 7876921859739946140
+      HighlightedWordSlot: -1523318205404831425
+      HotbarSlot: 6349350879602338715
+      InventorySlot: -4937444523968337394
+      LegsSlot: -7029424772709752668
+      MenuButton: -9024126528354515892
+      MenuButtonHighlighted: 3190390861762735925
+      NecklaceSlot: 2688598737884923661
+      RingSlotToLeft: 835976369561786664
+      RingSlotToRight: 807140388900196745
+      Rune_0: -6557574453961850623
+      Rune_1: -2929457081452239349
+      Rune_2: -3721479683443608858
+      Rune_3: 2719875700895278455
+      SettingsButton: 3232745132771376673
+      SettingsButtonHighlighted: 5731609581830885699
+      SmallCrystal_0: 6890289797660125240
+      SmallCrystal_1: 2180464291104061586
+      SmallCrystal_2: -8448972004482176520
+      SmallCrystal_3: 1056923483889378637
+      SmallCrystal_4: -8789949178559433020
+      SmallCrystal_5: -5703578217257022999
+      SmallCrystal_6: 192750561020369924
       UI_Assets_0: -3131352816816371743
       UI_Assets_1: 4078723025037687723
-      UI_Assets_10: -4746177125779073283
-      UI_Assets_11: 2688598737884923661
-      UI_Assets_12: -7994044926189751012
-      UI_Assets_13: 835976369561786664
-      UI_Assets_14: -300619020086794900
-      UI_Assets_15: -8448972004482176520
-      UI_Assets_16: 192750561020369924
-      UI_Assets_17: 1056923483889378637
-      UI_Assets_18: -2929457081452239349
-      UI_Assets_19: -3721479683443608858
-      UI_Assets_2: -8789949178559433020
-      UI_Assets_20: 2719875700895278455
-      UI_Assets_21: 3190390861762735925
-      UI_Assets_22: -9024126528354515892
-      UI_Assets_23: -6557574453961850623
       UI_Assets_24: -3410682779736777946
       UI_Assets_25: 5144316069337283107
       UI_Assets_26: -6659531320111227913
       UI_Assets_27: 909586051387640947
-      UI_Assets_28: -2358783683333544584
-      UI_Assets_29: 6336373675690571044
       UI_Assets_3: 4460496583955487534
-      UI_Assets_30: -1955368487622344423
-      UI_Assets_31: 807140388900196745
-      UI_Assets_32: -7029424772709752668
-      UI_Assets_33: -1087614287073443477
-      UI_Assets_34: -4781952042304868374
       UI_Assets_35: 2589221981162637316
       UI_Assets_36: -1377378285172742128
-      UI_Assets_37: -8497033774787863395
-      UI_Assets_38: -9879943261941721
       UI_Assets_39: -344487674663556250
       UI_Assets_4: -3427747503594080863
-      UI_Assets_40: -2194095483079811548
-      UI_Assets_41: 3760210124697040761
-      UI_Assets_42: 4310072150773806040
-      UI_Assets_43: 6542293239424750880
       UI_Assets_44: 7145467665678559513
       UI_Assets_45: 169245023586206287
       UI_Assets_46: 5629662937265549074
-      UI_Assets_47: 5731609581830885699
-      UI_Assets_48: 3232745132771376673
-      UI_Assets_49: -893806657857932856
-      UI_Assets_5: 6890289797660125240
       UI_Assets_50: 802504746577130880
       UI_Assets_51: -7408679789447714127
       UI_Assets_52: -3024340522021363176
-      UI_Assets_53: 8272841112774431148
-      UI_Assets_54: -277338358234680262
-      UI_Assets_55: -4937444523968337394
-      UI_Assets_56: 6349350879602338715
-      UI_Assets_57: 942301177591845185
-      UI_Assets_58: 8539566704405457586
-      UI_Assets_59: 7876921859739946140
-      UI_Assets_6: 2180464291104061586
-      UI_Assets_60: 9070167050123000488
-      UI_Assets_61: -1523318205404831425
-      UI_Assets_7: -5703578217257022999
-      UI_Assets_8: -2275160820100057453
-      UI_Assets_9: -5968239265996116607
+      VerticalTransparentBackground: -8497033774787863395
+      WordSlot: 942301177591845185
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

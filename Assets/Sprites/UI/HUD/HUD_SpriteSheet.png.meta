@@ -262,7 +262,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HUD_SpriteSheet_3
+      name: HUD_StatBarBorderImage
       rect:
         serializedVersion: 2
         x: 102
@@ -284,7 +284,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_4
+      name: HUD_SpriteSheet_10
       rect:
         serializedVersion: 2
         x: 224
@@ -306,7 +306,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_5
+      name: HUD_SpriteSheet_11
       rect:
         serializedVersion: 2
         x: 235
@@ -328,7 +328,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_6
+      name: HUD_SpriteSheet_12
       rect:
         serializedVersion: 2
         x: 246
@@ -350,7 +350,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_7
+      name: HUD_SpriteSheet_13
       rect:
         serializedVersion: 2
         x: 257
@@ -372,7 +372,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_8
+      name: HUD_SpriteSheet_14
       rect:
         serializedVersion: 2
         x: 268
@@ -394,7 +394,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_9
+      name: HUD_SpriteSheet_15
       rect:
         serializedVersion: 2
         x: 279
@@ -416,7 +416,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_10
+      name: HUD_SpriteSheet_16
       rect:
         serializedVersion: 2
         x: 290
@@ -438,7 +438,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_11
+      name: HUD_SpriteSheet_17
       rect:
         serializedVersion: 2
         x: 301
@@ -460,7 +460,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_12
+      name: HUD_SpriteSheet_18
       rect:
         serializedVersion: 2
         x: 312
@@ -482,7 +482,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_13
+      name: HUD_SpriteSheet_19
       rect:
         serializedVersion: 2
         x: 323
@@ -504,7 +504,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_14
+      name: HUD_SpriteSheet_20
       rect:
         serializedVersion: 2
         x: 334
@@ -526,7 +526,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_15
+      name: HUD_SpriteSheet_21
       rect:
         serializedVersion: 2
         x: 345
@@ -548,7 +548,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_16
+      name: HUD_SpriteSheet_22
       rect:
         serializedVersion: 2
         x: 356
@@ -570,29 +570,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_17
-      rect:
-        serializedVersion: 2
-        x: 52
-        y: 132
-        width: 40
-        height: 40
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6c38313486f3e76b0800000000000000
-      internalID: -5296726394706623546
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HUD_SpriteSheet_18
+      name: HUD_HealthBarFill
       rect:
         serializedVersion: 2
         x: 102
@@ -614,7 +592,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_19
+      name: HUD_CraftingBookIcon
       rect:
         serializedVersion: 2
         x: 231
@@ -636,7 +614,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_20
+      name: HUD_MapIcon
       rect:
         serializedVersion: 2
         x: 278
@@ -658,7 +636,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_21
+      name: HUD_MinimapBackground
       rect:
         serializedVersion: 2
         x: 328
@@ -680,7 +658,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_24
+      name: HUD_HealthBarBackground
       rect:
         serializedVersion: 2
         x: 102
@@ -702,7 +680,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_27
+      name: HUD_ManaBarFill
       rect:
         serializedVersion: 2
         x: 102
@@ -724,7 +702,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_28
+      name: HUD_ManaBarBackground
       rect:
         serializedVersion: 2
         x: 102
@@ -746,29 +724,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_29
-      rect:
-        serializedVersion: 2
-        x: 52
-        y: 84
-        width: 40
-        height: 40
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: acbb7733ff96e5610800000000000000
-      internalID: 1611842261446278090
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HUD_SpriteSheet_30
+      name: HUD_HungerBarFill
       rect:
         serializedVersion: 2
         x: 102
@@ -790,7 +746,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_31
+      name: HUD_DayAndNightSlider
       rect:
         serializedVersion: 2
         x: 231
@@ -812,7 +768,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_32
+      name: HUD_HungerBarBackground
       rect:
         serializedVersion: 2
         x: 102
@@ -834,7 +790,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_33
+      name: HUD_DayAndNightSun
       rect:
         serializedVersion: 2
         x: 227
@@ -856,7 +812,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_36
+      name: HUD_DayAndNightMoon
       rect:
         serializedVersion: 2
         x: 298
@@ -878,7 +834,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_37
+      name: HUD_SpriteSheet_0
       rect:
         serializedVersion: 2
         x: 103
@@ -900,7 +856,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_38
+      name: HUD_SpriteSheet_1
       rect:
         serializedVersion: 2
         x: 114
@@ -922,7 +878,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_39
+      name: HUD_SpriteSheet_2
       rect:
         serializedVersion: 2
         x: 125
@@ -944,7 +900,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_40
+      name: HUD_SpriteSheet_3
       rect:
         serializedVersion: 2
         x: 136
@@ -966,7 +922,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_41
+      name: HUD_SpriteSheet_4
       rect:
         serializedVersion: 2
         x: 147
@@ -988,7 +944,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_42
+      name: HUD_SpriteSheet_5
       rect:
         serializedVersion: 2
         x: 158
@@ -1010,7 +966,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_43
+      name: HUD_SpriteSheet_6
       rect:
         serializedVersion: 2
         x: 169
@@ -1032,7 +988,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_44
+      name: HUD_SpriteSheet_7
       rect:
         serializedVersion: 2
         x: 180
@@ -1054,7 +1010,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_45
+      name: HUD_SpriteSheet_8
       rect:
         serializedVersion: 2
         x: 191
@@ -1076,7 +1032,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_46
+      name: HUD_SpriteSheet_9
       rect:
         serializedVersion: 2
         x: 202
@@ -1098,7 +1054,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_49
+      name: HUD_DayAndNightInficator
       rect:
         serializedVersion: 2
         x: 268
@@ -1120,7 +1076,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_50
+      name: HUD_XpBorderImage
       rect:
         serializedVersion: 2
         x: 6
@@ -1142,7 +1098,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_51
+      name: HUD_MemoryXpBackground
       rect:
         serializedVersion: 2
         x: 7
@@ -1164,7 +1120,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_52
+      name: HUD_MemoryXpFill
       rect:
         serializedVersion: 2
         x: 7
@@ -1186,7 +1142,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_53
+      name: HUD_XpBackground
       rect:
         serializedVersion: 2
         x: 7
@@ -1208,7 +1164,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HUD_SpriteSheet_54
+      name: HUD_XpFill
       rect:
         serializedVersion: 2
         x: 7
@@ -1243,61 +1199,56 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HUD_SpriteSheet_0: 5576336795264568840
-      HUD_SpriteSheet_1: 7830801590153399973
-      HUD_SpriteSheet_10: 7874124346218076324
-      HUD_SpriteSheet_11: -2819012254991629184
-      HUD_SpriteSheet_12: -2956701305207105399
-      HUD_SpriteSheet_13: 9192300626089332458
-      HUD_SpriteSheet_14: -6402879168154803452
-      HUD_SpriteSheet_15: -6316135034943437675
-      HUD_SpriteSheet_16: 4840790869277733358
-      HUD_SpriteSheet_17: -5296726394706623546
-      HUD_SpriteSheet_18: 1860690631710320505
-      HUD_SpriteSheet_19: 7608007195126365521
-      HUD_SpriteSheet_2: -129424509216564690
-      HUD_SpriteSheet_20: 8950887283632487596
-      HUD_SpriteSheet_21: 3197748622484088826
-      HUD_SpriteSheet_22: -5700594431566631842
+      HUD_CraftingBookIcon: 7608007195126365521
+      HUD_DayAndNightInficator: 6060537854774099330
+      HUD_DayAndNightMoon: 7767615823798729922
+      HUD_DayAndNightSlider: -7045194526931301628
+      HUD_DayAndNightSun: 6386230319971191885
+      HUD_HealthBarBackground: 5803710017217706948
+      HUD_HealthBarFill: 1860690631710320505
+      HUD_HungerBarBackground: -2819378279539161106
+      HUD_HungerBarFill: -7269391763347078675
+      HUD_ManaBarBackground: 4579560393200178045
+      HUD_ManaBarFill: 3397752622093525471
+      HUD_MapIcon: 8950887283632487596
+      HUD_MemoryXpBackground: -1021559717290222844
+      HUD_MemoryXpFill: -6672485917646172175
+      HUD_MinimapBackground: 3197748622484088826
+      HUD_SpriteSheet_0: 8478891316057890724
+      HUD_SpriteSheet_1: 1853189620978460852
+      HUD_SpriteSheet_10: 4833738125364738220
+      HUD_SpriteSheet_11: 773717581744706962
+      HUD_SpriteSheet_12: -913756128088992116
+      HUD_SpriteSheet_13: 530279295958657528
+      HUD_SpriteSheet_14: -8839822354242451635
+      HUD_SpriteSheet_15: 6233071717061811866
+      HUD_SpriteSheet_16: 7874124346218076324
+      HUD_SpriteSheet_17: -2819012254991629184
+      HUD_SpriteSheet_18: -2956701305207105399
+      HUD_SpriteSheet_19: 9192300626089332458
+      HUD_SpriteSheet_2: -8738591475163851845
+      HUD_SpriteSheet_20: -6402879168154803452
+      HUD_SpriteSheet_21: -6316135034943437675
+      HUD_SpriteSheet_22: 4840790869277733358
       HUD_SpriteSheet_23: -4576553458009606475
-      HUD_SpriteSheet_24: 5803710017217706948
       HUD_SpriteSheet_25: -8112496689190661910
       HUD_SpriteSheet_26: 8468299561693822937
-      HUD_SpriteSheet_27: 3397752622093525471
-      HUD_SpriteSheet_28: 4579560393200178045
       HUD_SpriteSheet_29: 1611842261446278090
-      HUD_SpriteSheet_3: -3506486991293949622
-      HUD_SpriteSheet_30: -7269391763347078675
-      HUD_SpriteSheet_31: -7045194526931301628
-      HUD_SpriteSheet_32: -2819378279539161106
-      HUD_SpriteSheet_33: 6386230319971191885
+      HUD_SpriteSheet_3: -7698012945374021820
       HUD_SpriteSheet_34: 8338398677127049678
       HUD_SpriteSheet_35: -371336813137276079
-      HUD_SpriteSheet_36: 7767615823798729922
-      HUD_SpriteSheet_37: 8478891316057890724
-      HUD_SpriteSheet_38: 1853189620978460852
-      HUD_SpriteSheet_39: -8738591475163851845
-      HUD_SpriteSheet_4: 4833738125364738220
-      HUD_SpriteSheet_40: -7698012945374021820
-      HUD_SpriteSheet_41: -7165474874117040434
-      HUD_SpriteSheet_42: 1724123304637949058
-      HUD_SpriteSheet_43: -3376056372938858939
-      HUD_SpriteSheet_44: 5388887266569683887
-      HUD_SpriteSheet_45: 5767178817872982302
-      HUD_SpriteSheet_46: 4216625012175456800
+      HUD_SpriteSheet_4: -7165474874117040434
       HUD_SpriteSheet_47: -4920855254099196695
       HUD_SpriteSheet_48: 2540407379386609503
-      HUD_SpriteSheet_49: 6060537854774099330
-      HUD_SpriteSheet_5: 773717581744706962
-      HUD_SpriteSheet_50: 2331973490083772468
-      HUD_SpriteSheet_51: -1021559717290222844
-      HUD_SpriteSheet_52: -6672485917646172175
-      HUD_SpriteSheet_53: 3725139336059085125
-      HUD_SpriteSheet_54: -1774984434657992092
-      HUD_SpriteSheet_6: -913756128088992116
-      HUD_SpriteSheet_7: 530279295958657528
-      HUD_SpriteSheet_8: -8839822354242451635
-      HUD_SpriteSheet_9: 6233071717061811866
+      HUD_SpriteSheet_5: 1724123304637949058
+      HUD_SpriteSheet_6: -3376056372938858939
+      HUD_SpriteSheet_7: 5388887266569683887
+      HUD_SpriteSheet_8: 5767178817872982302
+      HUD_SpriteSheet_9: 4216625012175456800
+      HUD_StatBarBorderImage: -3506486991293949622
+      HUD_XpBackground: 3725139336059085125
+      HUD_XpBorderImage: 2331973490083772468
+      HUD_XpFill: -1774984434657992092
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
