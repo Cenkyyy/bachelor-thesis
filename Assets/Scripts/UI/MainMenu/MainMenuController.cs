@@ -28,7 +28,7 @@ public sealed class MainMenuController : MonoBehaviour
     {
         if (SceneLoader.Instance != null)
         {
-            SceneLoader.Instance.LoadGameplay();
+            SceneLoader.Instance.LoadGameplayWithTransition();
         }
     }
 

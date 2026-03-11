@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-public class WorldGeneratorBehaviour : MonoBehaviour
+public class WorldGeneratorBehaviour : MonoBehaviour, ISceneTransitionReadinessBlocker
 {
     private const int DefaultWorldWidth = 2048;
     private const int DefaultWorldHeight = DefaultWorldWidth;
@@ -50,11 +52,14 @@ public class WorldGeneratorBehaviour : MonoBehaviour
     [Header("Minimap")]
     [SerializeField] private MinimapController _minimap;
 
-    private int _playableRadius => (_worldWidth - (2 * _borderThickness)) / 2;
+    [Header("Performance")]
+    [SerializeField, Min(1)] private int _rowsPerFrame = 32; // how many rows of tiles are rendered before yielding to the next frame when rendering the world
+    [SerializeField, Min(64)] private int _tilesPerYield = 1024; // how many tiles are rendered before yielding to the next frame when rendering the world
 
     public int CurrentSeed { get; private set; }
     public WorldData CurrentWorldData { get; private set; }
     public Tilemap GroundTilemap => _groundTilemap;
+    public bool IsReadyForSceneReveal { get; private set; }
 
     [System.Serializable]
     private struct RadialBiomeWeights
@@ -76,6 +81,9 @@ public class WorldGeneratorBehaviour : MonoBehaviour
         }
     }
 
+    private int _playableRadius => (_worldWidth - (2 * _borderThickness)) / 2;
+    private Coroutine _generationCoroutine;
+
     private void Start()
     {
         CurrentSeed = ResolveSeed();
@@ -84,6 +92,19 @@ public class WorldGeneratorBehaviour : MonoBehaviour
 
     public void GenerateAndRender(int seedUsed)
     {
+        if (_generationCoroutine != null)
+        {
+            StopCoroutine(_generationCoroutine);
+        }
+
+        _generationCoroutine = StartCoroutine(GenerateAndRenderCoroutine(seedUsed));
+    }
+
+    private IEnumerator GenerateAndRenderCoroutine(int seedUsed)
+    {
+        IsReadyForSceneReveal = false;
+        CurrentSeed = seedUsed;
+
         var settings = new WorldGenerator.Settings
         {
             Width = Mathf.Max(1, _worldWidth),
@@ -97,13 +118,38 @@ public class WorldGeneratorBehaviour : MonoBehaviour
             BiomeCenters = CreateBiomeCenters(seedUsed)
         };
 
-        var generator = new WorldGenerator(settings);
-        var data = generator.Generate();
+        var generateTask = Task.Run(() =>
+        {
+            var generator = new WorldGenerator(settings);
+            return generator.Generate();
+        });
+
+        while (!generateTask.IsCompleted)
+        {
+            yield return null;
+        }
+
+        if (generateTask.IsFaulted)
+        {
+            Debug.LogException(generateTask.Exception);
+            IsReadyForSceneReveal = true;
+            _generationCoroutine = null;
+            yield break;
+        }
+
+        var data = generateTask.Result;
         CurrentWorldData = data;
 
-        RenderWorld(data);
+        yield return RenderWorldCoroutine(data);
         PositionPlayer(data);
-        _minimap.Initialize(data);
+
+        if (_minimap != null)
+        {
+            _minimap.Initialize(data);
+        }
+        
+        IsReadyForSceneReveal = true;
+        _generationCoroutine = null;
     }
 
     private int ResolveSeed()
@@ -300,13 +346,14 @@ public class WorldGeneratorBehaviour : MonoBehaviour
         return allowedBiomes[idx];
     }
 
-    private void RenderWorld(WorldData data)
+    private IEnumerator RenderWorldCoroutine(WorldData data)
     {
         _groundTilemap.ClearAllTiles();
         _walkableDecorationTilemap.ClearAllTiles();
         _nonWalkableDecorationTilemap.ClearAllTiles();
         _borderTilemap.ClearAllTiles();
 
+        int processedTileCount = 0;
         for (int y = 0; y < data.Height; y++)
         {
             for (int x = 0; x < data.Width; x++)
@@ -329,6 +376,18 @@ public class WorldGeneratorBehaviour : MonoBehaviour
                     continue;
 
                 _groundTilemap.SetTile(tilePos, tileAsset);
+                processedTileCount++;
+
+                if (processedTileCount >= _tilesPerYield)
+                {
+                    processedTileCount = 0;
+                    yield return null;
+                }
+            }
+
+            if (y % _rowsPerFrame == 0)
+            {
+                yield return null;
             }
         }
     }

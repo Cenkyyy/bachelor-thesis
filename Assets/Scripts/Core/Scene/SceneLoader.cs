@@ -6,10 +6,16 @@ public sealed class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance { get; private set; }
 
+    [Header("Scene Names")]
     [SerializeField] private string _bootScene = "00_Boot";
     [SerializeField] private string _menuScene = "01_Menu";
     [SerializeField] private string _gameplayScene = "02_Gameplay";
+
+    [Header("Settings")]
     [SerializeField] private bool _autoGoToMenuFromBoot = true;
+
+    [Header("Transition")]
+    [SerializeField] private SceneTransitionController _sceneTransitionController;
 
     private void Awake()
     {
@@ -21,6 +27,11 @@ public sealed class SceneLoader : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        if (_sceneTransitionController == null)
+        {
+            _sceneTransitionController = GetComponent<SceneTransitionController>();
+        }
 
         if (_autoGoToMenuFromBoot && SceneManager.GetActiveScene().name == _bootScene)
         {
@@ -39,8 +50,27 @@ public sealed class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
+    public void LoadWithTransition(string sceneName)
+    {
+        if (string.IsNullOrEmpty(sceneName))
+            return;
+        if (SceneManager.GetActiveScene().name == sceneName)
+            return;
+        
+        if (_sceneTransitionController != null)
+        {
+            _sceneTransitionController.TryLoadScene(sceneName);
+            return;
+        }
+
+        Load(sceneName);
+
+    }
+
     public void LoadMenu() => Load(_menuScene);
     public void LoadGameplay() => Load(_gameplayScene);
+    public void LoadMenuWithTransition() => LoadWithTransition(_menuScene);
+    public void LoadGameplayWithTransition() => LoadWithTransition(_gameplayScene);
     public void QuitGame()
     {
 #if UNITY_EDITOR
