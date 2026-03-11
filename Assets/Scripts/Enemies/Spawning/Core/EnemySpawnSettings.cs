@@ -5,11 +5,13 @@ using UnityEngine;
 public sealed class EnemySpawnSettings
 {
     [field: Header("Spawning cycle settings")]
-    [field: SerializeField, Min(0.5f)] public float SpawnIntervalSeconds { get; private set; } = 1.5f;
+    [field: SerializeField, Min(0.5f)] public float SpawnIntervalSeconds { get; private set; } = 3f;
+    [field: SerializeField, Range(0.1f, 1f)] public float NightSpawnAccelerationMultiplier { get; private set; } = 0.90f;
     [field: SerializeField, Min(1)] public int AttemptsPerCycle { get; private set; } = 3;
 
     [field: Header("Max alive enemies")]
     [field: SerializeField, Min(1)] public int MaxAliveEnemies { get; private set; } = 20;
+    [field: SerializeField, Min(1)] public float NightMaxAliveEnemiesMultiplier { get; private set; } = 1.25f;
 
     [field: Header("Spawning/Despawning radii distances")]
     [field: SerializeField, Min(1f)] public float SpawnRadius { get; private set; } = 16f;

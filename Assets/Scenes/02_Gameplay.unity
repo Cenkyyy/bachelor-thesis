@@ -373,9 +373,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cae1e10bb0f4cb8439076f4d125ed93c, type: 2}
   _spawnStrategyType: 0
   _settings:
-    <SpawnIntervalSeconds>k__BackingField: 1.5
+    <SpawnIntervalSeconds>k__BackingField: 3
+    <NightSpawnAccelerationMultiplier>k__BackingField: 0.9
     <AttemptsPerCycle>k__BackingField: 3
     <MaxAliveEnemies>k__BackingField: 5
+    <NightMaxAliveEnemiesMultiplier>k__BackingField: 1.25
     <SpawnRadius>k__BackingField: 16
     <MinSpawnDistance>k__BackingField: 7
     <DespawnRadius>k__BackingField: 24
@@ -11536,14 +11538,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _secondsPerGameDay: 600
-  _initialTime01: 0.25
+  _initialTime01: 0.13
   _startDay: 1
-  _dayStartTime01: 0.25
-  _nightStartTime01: 0.75
   _minBrightnessAtMidnight: 0.15
   _twilightBoost: 0.08
-  _sunrise01: 0.25
-  _sunset01: 0.75
 --- !u!1 &1611478415
 GameObject:
   m_ObjectHideFlags: 0

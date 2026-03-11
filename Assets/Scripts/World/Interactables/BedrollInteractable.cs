@@ -29,7 +29,7 @@ public sealed class BedrollInteractable : InteractableBase
             return false;
         if (Event.current != null && EventSystem.current.IsPointerOverGameObject())
             return false;
-        if (_requireNight && !_allowDaytimeTesting && !NightTimeFlag.IsNight)
+        if (_requireNight && !_allowDaytimeTesting && (DayNightSystem.Instance == null || !DayNightSystem.Instance.IsNight))
             return false;
         if (HasEnemiesNearby())
             return false;

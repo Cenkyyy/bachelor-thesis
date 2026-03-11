@@ -34,6 +34,7 @@ public sealed class DayNightSystem : MonoBehaviour
     public int Hour { get; private set; }
     public int Minute { get; private set; }
     public float Brightness { get; private set; }
+    public bool IsNight { get; private set; }
 
     /// <summary>Raised when the minute changes: args(hour, minute).</summary>
     public event Action<int, int> OnMinuteChanged;
@@ -113,8 +114,7 @@ public sealed class DayNightSystem : MonoBehaviour
 
     private void RecomputeNightFlag()
     {
-        bool isNight = Time01 >= _nightStartTime01 || Time01 < _dayStartTime01;
-        NightTimeFlag.Set(isNight);
+        IsNight = Time01 >= _nightStartTime01 || Time01 < _dayStartTime01;
     }
 
     private void RecomputeBrightness(bool forceInvoke)

@@ -30,12 +30,15 @@ public sealed class EnemySpawner<TEnemy> where TEnemy : EnemyCore
 
     public void RunSpawnCycle(Vector2 playerPosition)
     {
-        if (_registry.AliveCount >= _settings.MaxAliveEnemies)
+        var effectiveMaxAliveMultiplier = DayNightSystem.Instance != null && DayNightSystem.Instance.IsNight ? _settings.NightMaxAliveEnemiesMultiplier : 1f;
+        var effectiveMaxAliveEnemies = Mathf.Max(1, Mathf.FloorToInt(_settings.MaxAliveEnemies * effectiveMaxAliveMultiplier));
+
+        if (_registry.AliveCount >= effectiveMaxAliveEnemies)
         {
             return;
         }
 
-        var remainingCapacity = _settings.MaxAliveEnemies - _registry.AliveCount;
+        var remainingCapacity = effectiveMaxAliveEnemies - _registry.AliveCount;
         var attempts = Mathf.Min(_settings.AttemptsPerCycle, remainingCapacity);
 
         for (var i = 0; i < attempts; i++)

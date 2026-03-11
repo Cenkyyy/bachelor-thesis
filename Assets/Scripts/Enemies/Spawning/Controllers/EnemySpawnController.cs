@@ -74,7 +74,9 @@ public class EnemySpawnController : MonoBehaviour
 
         // Spawn cycle
         _enemySpawner.RunSpawnCycle(playerPosition);
-        _nextSpawnTime = Time.time + _settings.SpawnIntervalSeconds;
+        _nextSpawnTime = DayNightSystem.Instance != null && DayNightSystem.Instance.IsNight 
+            ? Time.time + _settings.SpawnIntervalSeconds * _settings.NightSpawnAccelerationMultiplier 
+            : Time.time + _settings.SpawnIntervalSeconds;
     }
 
     private bool TryBuildSpawner()
