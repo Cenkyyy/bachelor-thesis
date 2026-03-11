@@ -10,16 +10,24 @@ public sealed class DayNightSystem : MonoBehaviour
 {
     public static DayNightSystem Instance { get; private set; }
 
+    private const int MinutesPerHour = 60;
+    private const int HoursPerDay = 24;
+    private const int MinutesPerDay = HoursPerDay * MinutesPerHour;
+
     [Header("Time")]
     [SerializeField, Min(1f)] private float _secondsPerGameDay = 600f; // 10 min per day
     [SerializeField, Range(0f, 1f)] private float _initialTime01 = 0.25f; // ~06:00
     [SerializeField, Min(1)] private int _startDay = 1;
 
+    [Header("Day / Night Window")]
+    [SerializeField, Range(0f, 1f)] private readonly float _dayStartTime01 = 6f / HoursPerDay;
+    [SerializeField, Range(0f, 1f)] private readonly float _nightStartTime01 = 18f / HoursPerDay;
+
     [Header("Brightness (for visuals)")]
     [SerializeField, Range(0f, 1f)] private float _minBrightnessAtMidnight = 0.15f;
     [SerializeField, Range(0f, 1f)] private float _twilightBoost = 0.08f;
-    [SerializeField, Range(0f, 1f)] private float _sunrise01 = 0.23f; // ~05:30
-    [SerializeField, Range(0f, 1f)] private float _sunset01 = 0.77f;  // ~18:30
+    [SerializeField, Range(0f, 1f)] private readonly float _sunrise01 = 0.25f; // ~06:00
+    [SerializeField, Range(0f, 1f)] private readonly float _sunset01 = 0.75f;  // ~18:00
 
     public float Time01 { get; private set; }
     public int CurrentDay { get; private set; }
@@ -50,6 +58,7 @@ public sealed class DayNightSystem : MonoBehaviour
         CurrentDay = Mathf.Max(1, _startDay);
         Time01 = Mathf.Repeat(_initialTime01, 1f);
         RecomputeHhMm();
+        RecomputeNightFlag();
         RecomputeBrightness(forceInvoke: true);
     }
 
@@ -65,7 +74,7 @@ public sealed class DayNightSystem : MonoBehaviour
             return;
 
         var dt = Time.deltaTime;
-        if (dt <= 0f) 
+        if (dt <= 0f)
             return;
 
         Time01 += dt / _secondsPerGameDay;
@@ -77,15 +86,16 @@ public sealed class DayNightSystem : MonoBehaviour
         }
 
         RecomputeHhMm();
+        RecomputeNightFlag();
         RecomputeBrightness(forceInvoke: false);
     }
 
     private void RecomputeHhMm()
     {
-        float totalMinutesF = Time01 * 1440f; // 24 * 60
+        float totalMinutesF = Time01 * MinutesPerDay;
         int totalMinutes = Mathf.FloorToInt(totalMinutesF);
-        int hh = totalMinutes / 60;
-        int mm = totalMinutes % 60;
+        int hh = totalMinutes / MinutesPerHour;
+        int mm = totalMinutes % MinutesPerHour;
 
         if (mm != _prevMinute)
         {
@@ -99,6 +109,12 @@ public sealed class DayNightSystem : MonoBehaviour
             Hour = hh;
             Minute = mm;
         }
+    }
+
+    private void RecomputeNightFlag()
+    {
+        bool isNight = Time01 >= _nightStartTime01 || Time01 < _dayStartTime01;
+        NightTimeFlag.Set(isNight);
     }
 
     private void RecomputeBrightness(bool forceInvoke)
@@ -131,11 +147,7 @@ public sealed class DayNightSystem : MonoBehaviour
     }
 
     public float GetHudTimeBarPosition01() => GetHudTimeBarPosition01(Time01);
-    public float GetHudTimeBarPosition01(float time01)
-    {
-        const float sixAm01 = 6f / 24f;
-        return Mathf.Repeat(time01 - sixAm01, 1f);
-    }
+    public float GetHudTimeBarPosition01(float time01) => Mathf.Repeat(time01 - _dayStartTime01, 1f);
 
     public string GetTimeString() => $"{Hour:00}:{Minute:00}";
 }

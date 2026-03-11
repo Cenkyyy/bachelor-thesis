@@ -11538,10 +11538,12 @@ MonoBehaviour:
   _secondsPerGameDay: 600
   _initialTime01: 0.25
   _startDay: 1
+  _dayStartTime01: 0.25
+  _nightStartTime01: 0.75
   _minBrightnessAtMidnight: 0.15
   _twilightBoost: 0.08
-  _sunrise01: 0.23
-  _sunset01: 0.77
+  _sunrise01: 0.25
+  _sunset01: 0.75
 --- !u!1 &1611478415
 GameObject:
   m_ObjectHideFlags: 0
