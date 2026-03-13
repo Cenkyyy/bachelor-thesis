@@ -70,6 +70,9 @@ public sealed class PanelManager : MonoBehaviour
 
     private void HandleInput()
     {
+        if (SceneTransitionController.Instance != null && SceneTransitionController.Instance.IsTransitionActive)
+            return;
+
         if (_currentPanelId == PanelId.Death)
             return;
 
@@ -120,6 +123,9 @@ public sealed class PanelManager : MonoBehaviour
 
     public void OpenMajorPanel(PanelId id)
     {
+        if (SceneTransitionController.Instance != null && SceneTransitionController.Instance.IsTransitionActive)
+            return;
+
         ItemInteractionController.Instance?.ResolveHeldItemToInventoryOrDrop();
 
         if (_currentPanelId.HasValue)
@@ -157,6 +163,9 @@ public sealed class PanelManager : MonoBehaviour
 
     public void OpenChest(IInventory inventory)
     {
+        if (SceneTransitionController.Instance != null && SceneTransitionController.Instance.IsTransitionActive)
+            return;
+
         ItemInteractionController.Instance?.ResolveHeldItemToInventoryOrDrop();
 
         if (_currentPanelId.HasValue)

@@ -125,7 +125,7 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
     {
         if (SceneLoader.Instance != null)
         {
-            SceneLoader.Instance.LoadMenu();
+            SceneLoader.Instance.LoadMenuWithTransition();
         }
     }
 

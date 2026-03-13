@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,9 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public sealed class SceneTransitionController : MonoBehaviour
 {
+    // TODO: In the future I would probably like to remove this being a singleton and instead have the SceneLoader expose whether the Transition is active, but its 1 AM ;(
+    public static SceneTransitionController Instance { get; private set; }
+
     [Header("Assigned UI References")]
     [SerializeField] private GameObject _transitionRoot;
     [SerializeField] private CanvasGroup _overlayCanvasGroup;
@@ -28,24 +32,61 @@ public sealed class SceneTransitionController : MonoBehaviour
     [SerializeField] private Color _overlayColorWhenSpriteAssigned = Color.white;
     [SerializeField] private Color _overlayFallbackColor = Color.black;
 
-    private bool _isTransitionRunning;
-    private bool _holdsTransitionPauseLock;
+    public bool IsTransitionActive => _isTransitionActive;
+    public event Action<string> TransitionMiddleCompleted;
+    public event Action<string> TransitionFinished;
+
+    private OverlayFadeService _overlayFadeService;
+    private bool _isTransitionActive;
+    private bool _isMiddleCompleted;
+    private string _activeTargetSceneName;
     private float _loadingTimer;
     private int _loadingStep;
 
     private void Awake()
     {
+        _overlayFadeService = new OverlayFadeService(_overlayCanvasGroup, _maxTransitionDeltaTime);
         SetTransitionRootVisible(false);
     }
 
     private void OnDisable()
     {
-        ReleaseTransitionPauseLock();
+        _isTransitionActive = false;
+        _isMiddleCompleted = false;
+        _activeTargetSceneName = string.Empty;
+        GameStateManager.ReleasePauseLock(this);
     }
 
-    public bool TryLoadScene(string sceneName)
+    public bool TryLoadSceneWithTransition(string sceneName)
     {
-        if (_isTransitionRunning || string.IsNullOrEmpty(sceneName))
+        if (!TryBeginSceneTransition(sceneName))
+            return false;
+
+        StartCoroutine(AutoFinishAfterMiddleCoroutine());
+        return true;
+    }
+
+    public bool TryBeginSceneTransition(string sceneName)
+    {
+        if (!CanStartTransition(sceneName))
+            return false;
+
+        StartCoroutine(RunTransitionStartAndMiddleCoroutine(sceneName));
+        return true;
+    }
+
+    public bool TryFinishSceneTransition()
+    {
+        if (!_isTransitionActive || !_isMiddleCompleted || string.IsNullOrEmpty(_activeTargetSceneName))
+            return false;
+
+        StartCoroutine(RunTransitionFinishCoroutine(_activeTargetSceneName));
+        return true;
+    }
+
+    private bool CanStartTransition(string sceneName)
+    {
+        if (_isTransitionActive || string.IsNullOrEmpty(sceneName))
             return false;
 
         if (SceneManager.GetActiveScene().name == sceneName)
@@ -54,25 +95,36 @@ public sealed class SceneTransitionController : MonoBehaviour
         if (_overlayCanvasGroup == null || _overlayImage == null || _loadingText == null)
             return false;
 
-        StartCoroutine(LoadSceneRoutine(sceneName));
         return true;
     }
 
-    private IEnumerator LoadSceneRoutine(string sceneName)
+    private IEnumerator AutoFinishAfterMiddleCoroutine()
     {
-        _isTransitionRunning = true;
+        while (_isTransitionActive && !_isMiddleCompleted)
+            yield return null;
+
+        if (_isMiddleCompleted)
+            TryFinishSceneTransition();
+    }
+
+    private IEnumerator RunTransitionStartAndMiddleCoroutine(string sceneName)
+    {
+        _isTransitionActive = true;
+        _isMiddleCompleted = false;
+        _activeTargetSceneName = sceneName;
 
         // Show the transition root, pause the game, assign the overlay image and hide the loading text until the fade in is done
         SetTransitionRootVisible(true);
-        AcquireTransitionPauseLock();
-        ApplyOverlayVisual();
+        GameStateManager.AcquirePauseLock(this);
+        _overlayFadeService.ApplyOverlayVisual(_overlayImage, _overlaySprite, _overlayColorWhenSpriteAssigned, _overlayFallbackColor);
         SetLoadingTextVisible(false);
 
-        // Fade in the overlay, show the loading text and start loading the scene asynchronously until the scene is ready to be activated
-        yield return Fade(0f, 1f, _fadeInDuration);
+        // Fade in the overlay and show the loading text
+        yield return _overlayFadeService.FadeIn(_fadeInDuration);
+
+        SetLoadingTextVisible(true);
 
         // Load the scene asynchronously in the background
-        SetLoadingTextVisible(true);
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         loadOperation.allowSceneActivation = false;
 
@@ -98,16 +150,27 @@ public sealed class SceneTransitionController : MonoBehaviour
 
         yield return WaitForSceneRevealReadiness(sceneName);
 
-        UpdateLoadingText();
-        yield return null;
-
-        // Turn off the loading text, fade out the overlay, unpause the game and hide the transition root
+        // Turn off the loading text, unpause the game and hide the transition root
         SetLoadingTextVisible(false);
-        yield return Fade(1f, 0f, _fadeOutDuration);
+        _isMiddleCompleted = true;
+        TransitionMiddleCompleted?.Invoke(sceneName);
+    }
 
-        ReleaseTransitionPauseLock();
+    private IEnumerator RunTransitionFinishCoroutine(string sceneName)
+    {
+        if (!_isTransitionActive || !_isMiddleCompleted)
+            yield break;
+
+        _isMiddleCompleted = false;
+
+        GameStateManager.ReleasePauseLock(this);
+        yield return _overlayFadeService.FadeOut(_fadeOutDuration);
+
         SetTransitionRootVisible(false);
-        _isTransitionRunning = false;
+
+        _isTransitionActive = false;
+        _activeTargetSceneName = string.Empty;
+        TransitionFinished?.Invoke(sceneName);
     }
 
     private IEnumerator WaitForSceneRevealReadiness(string targetSceneName)
@@ -161,31 +224,6 @@ public sealed class SceneTransitionController : MonoBehaviour
         }
     }
 
-    private IEnumerator Fade(float fromAlpha, float toAlpha, float duration)
-    {
-        if (_overlayCanvasGroup == null)
-            yield break;
-
-        if (duration <= 0f)
-        {
-            _overlayCanvasGroup.alpha = toAlpha;
-            yield break;
-        }
-
-        float t = 0f;
-        _overlayCanvasGroup.alpha = fromAlpha;
-
-        while (t < duration)
-        {
-            t += Mathf.Min(Time.unscaledDeltaTime, _maxTransitionDeltaTime);
-            float normalized = Mathf.Clamp01(t / duration);
-            _overlayCanvasGroup.alpha = Mathf.Lerp(fromAlpha, toAlpha, normalized);
-            yield return null;
-        }
-
-        _overlayCanvasGroup.alpha = toAlpha;
-    }
-
     private void SetTransitionRootVisible(bool visible)
     {
         if (_transitionRoot == null)
@@ -195,35 +233,6 @@ public sealed class SceneTransitionController : MonoBehaviour
             return;
 
         _transitionRoot.SetActive(visible);
-    }
-
-    private void ApplyOverlayVisual()
-    {
-        if (_overlayImage == null)
-            return;
-
-        bool hasSprite = _overlaySprite != null;
-        _overlayImage.sprite = _overlaySprite;
-        _overlayImage.type = Image.Type.Simple;
-        _overlayImage.color = hasSprite ? _overlayColorWhenSpriteAssigned : _overlayFallbackColor;
-    }
-
-    private void AcquireTransitionPauseLock()
-    {
-        if (_holdsTransitionPauseLock)
-            return;
-
-        GameStateManager.PushTransitionPauseLock();
-        _holdsTransitionPauseLock = true;
-    }
-
-    private void ReleaseTransitionPauseLock()
-    {
-        if (!_holdsTransitionPauseLock)
-            return;
-
-        GameStateManager.PopTransitionPauseLock();
-        _holdsTransitionPauseLock = false;
     }
 
     private void UpdateLoadingText()

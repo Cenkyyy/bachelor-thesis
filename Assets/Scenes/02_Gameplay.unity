@@ -4108,10 +4108,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 519420032}
+  - component: {fileID: 519420033}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
-  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4251,6 +4251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 2010244813}
   _followSpeed: 10
+  _useUnscaledTimeWhenPaused: 1
 --- !u!1 &524098144
 GameObject:
   m_ObjectHideFlags: 0
@@ -11538,7 +11539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _secondsPerGameDay: 600
-  _initialTime01: 0.13
+  _initialTime01: 0.25
   _startDay: 1
   _minBrightnessAtMidnight: 0.15
   _twilightBoost: 0.08

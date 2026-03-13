@@ -427,7 +427,7 @@ public class WorldGeneratorBehaviour : MonoBehaviour, ISceneTransitionReadinessB
         var cellPos = data.DataToCell(data.SpawnTile.x, data.SpawnTile.y);
 
         var cellWorldPos = _groundTilemap.CellToWorld(cellPos);
-        var worldPos = cellWorldPos + new Vector3(0.5f, 0.5f, 0f);
+        var worldPos = cellWorldPos + new Vector3(0.5f, 0.5f, 0f); // move to center of tile
 
         _playerTransform.position = worldPos;
     }

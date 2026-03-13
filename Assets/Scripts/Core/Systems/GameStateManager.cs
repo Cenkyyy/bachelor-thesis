@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
@@ -11,9 +12,9 @@ public class GameStateManager : MonoBehaviour
     private static bool _manualPauseRequested;
     
     /// <summary>
-    /// Represents the number of active transition pause locks. When greater than 0, the game is considered paused due to an active transition.
+    /// Represents the set of active pause locks which are currently active in the game, preventing the game from unpausing until all locks are released.
     /// </summary>
-    private static int _transitionPauseLockCount;
+    private static readonly HashSet<int> _pauseLockOwners = new();
 
     private void Awake()
     {
@@ -35,25 +36,29 @@ public class GameStateManager : MonoBehaviour
         ApplyPauseState();
     }
 
-    public static void PushTransitionPauseLock()
+    public static void AcquirePauseLock(object owner)
     {
-        _transitionPauseLockCount++;
+        if (owner == null)
+            return;
+
+        int ownerId = System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(owner);
+        _pauseLockOwners.Add(ownerId);
         ApplyPauseState();
     }
 
-    public static void PopTransitionPauseLock()
+    public static void ReleasePauseLock(object owner)
     {
-        if (_transitionPauseLockCount > 0)
-        {
-            _transitionPauseLockCount--;
-        }
+        if (owner == null)
+            return;
 
+        int ownerId = System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(owner);
+        _pauseLockOwners.Remove(ownerId);
         ApplyPauseState();
     }
 
     private static void ApplyPauseState()
     {
-        bool shouldPause = _manualPauseRequested || _transitionPauseLockCount > 0;
+        bool shouldPause = _manualPauseRequested || _pauseLockOwners.Count > 0;
         if (IsGamePaused == shouldPause)
             return;
 

@@ -58,7 +58,7 @@ public sealed class PlayerRespawnController : MonoBehaviour
     {
         if (SceneLoader.Instance != null)
         {
-            SceneLoader.Instance.LoadMenu();
+            SceneLoader.Instance.LoadMenuWithTransition();
             return;
         }
     }
