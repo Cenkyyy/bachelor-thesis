@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +38,7 @@ public sealed class PreGameController : MonoBehaviour
 
     private string _expectedGameplaySceneName;
     private Coroutine _preGameCoroutine;
-    private bool _blockAdvanceUntilKeyRelease;
+    private bool _currentMessageWasCompletedByAdvanceKey;
 
     private void Awake()
     {
@@ -131,6 +132,7 @@ public sealed class PreGameController : MonoBehaviour
 
         for (int i = 0; i < _introDialogueData.Lines.Count; i++)
         {
+            _currentMessageWasCompletedByAdvanceKey = false;
             string message = _introDialogueData.Lines[i] ?? string.Empty;
             yield return TypeMessageCoroutine(message);
             yield return WaitForMessageAdvanceCoroutine();
@@ -142,7 +144,6 @@ public sealed class PreGameController : MonoBehaviour
     private IEnumerator TypeMessageCoroutine(string message)
     {
         _introMessageText.text = string.Empty;
-        _blockAdvanceUntilKeyRelease = false;
 
         if (string.IsNullOrEmpty(message))
             yield break;
@@ -155,7 +156,7 @@ public sealed class PreGameController : MonoBehaviour
             if (Input.GetKeyDown(_introDialogueData.AdvanceKey))
             {
                 _introMessageText.text = message;
-                _blockAdvanceUntilKeyRelease = true;
+                _currentMessageWasCompletedByAdvanceKey = true;
                 yield break;
             }
 
@@ -177,13 +178,13 @@ public sealed class PreGameController : MonoBehaviour
 
     private IEnumerator WaitForMessageAdvanceCoroutine()
     {
-        if (_blockAdvanceUntilKeyRelease)
+        if (_currentMessageWasCompletedByAdvanceKey)
         {
             while (Input.GetKey(_introDialogueData.AdvanceKey))
                 yield return null;
-
-            _blockAdvanceUntilKeyRelease = false;
         }
+
+        yield return null;
 
         if (_introDialogueData.AutoAdvanceDelay <= 0f)
             yield break;
@@ -192,7 +193,13 @@ public sealed class PreGameController : MonoBehaviour
         while (elapsed < _introDialogueData.AutoAdvanceDelay)
         {
             if (Input.GetKeyDown(_introDialogueData.AdvanceKey))
+            {
+                while (Input.GetKey(_introDialogueData.AdvanceKey))
+                    yield return null;
+
+                yield return null;
                 yield break;
+            }
 
             elapsed += Mathf.Min(Time.unscaledDeltaTime, _introDialogueData.MaxDeltaTime);
             yield return null;

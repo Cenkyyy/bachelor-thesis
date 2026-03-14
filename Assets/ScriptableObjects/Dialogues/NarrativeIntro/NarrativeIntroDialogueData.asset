@@ -14,28 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Lines>k__BackingField:
   - You were the strongest wizard alive.
-  - 'Then came the battle you could not win.
+  - 'Then your enemy used forbidden magic
 
-    Not because you were weaker -
+    and shattered the memory of your spells.'
+  - 'But one truth still burns within you -
 
-    but
-    because your enemy used forbidden magic.'
-  - In a single moment, your spells were erased.
-  - 'The lost Words still exist.
+    your story is not over.'
+  - 'Across this world, the lost Words still remain.
 
-    Hidden across the world.
+    Hidden. Scattered. Waiting
+    to be found.'
+  - 'Each Word you recover brings your magic back into reach.
 
-    Waiting to be
-    remembered.'
-  - 'Now the lost Words of magic must be found again.
+    Each step forward
+    brings you closer to what you once were.'
+  - 'Find the lost Words.
 
-    Only then can your power
-    return.'
-  - Find them. Grow stronger. Take your revenge.
+    Restore your power.
+
+    Finish what was taken from
+    you.'
   <BackgroundSprite>k__BackingField: {fileID: 7071881630838703602, guid: 31a451a1530b4e244af45484a01af482, type: 3}
   <BackgroundColorWhenSpriteAssigned>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
   <BackgroundFallbackColor>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
   <CharactersPerSecond>k__BackingField: 15
-  <AutoAdvanceDelay>k__BackingField: 2
+  <AutoAdvanceDelay>k__BackingField: 2.5
   <MaxDeltaTime>k__BackingField: 0.05
   <AdvanceKey>k__BackingField: 32

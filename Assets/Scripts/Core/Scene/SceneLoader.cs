@@ -6,6 +6,8 @@ public sealed class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance { get; private set; }
 
+    public bool IsTransitionActive => _sceneTransitionController != null && _sceneTransitionController.IsTransitionActive;
+
     [Header("Scene Names")]
     [SerializeField] private string _bootScene = "00_Boot";
     [SerializeField] private string _menuScene = "01_Menu";

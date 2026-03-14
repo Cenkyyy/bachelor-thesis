@@ -9,8 +9,9 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public sealed class SceneTransitionController : MonoBehaviour
 {
-    // TODO: In the future I would probably like to remove this being a singleton and instead have the SceneLoader expose whether the Transition is active, but its 1 AM ;(
-    public static SceneTransitionController Instance { get; private set; }
+    public bool IsTransitionActive => _isTransitionActive;
+    public event Action<string> TransitionMiddleCompleted;
+    public event Action<string> TransitionFinished;
 
     [Header("Assigned UI References")]
     [SerializeField] private GameObject _transitionRoot;
@@ -31,10 +32,6 @@ public sealed class SceneTransitionController : MonoBehaviour
     [SerializeField] private Sprite _overlaySprite;
     [SerializeField] private Color _overlayColorWhenSpriteAssigned = Color.white;
     [SerializeField] private Color _overlayFallbackColor = Color.black;
-
-    public bool IsTransitionActive => _isTransitionActive;
-    public event Action<string> TransitionMiddleCompleted;
-    public event Action<string> TransitionFinished;
 
     private OverlayFadeService _overlayFadeService;
     private bool _isTransitionActive;
