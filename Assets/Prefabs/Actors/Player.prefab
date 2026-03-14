@@ -229,7 +229,7 @@ MonoBehaviour:
   _backpackPanel: {fileID: 0}
   _worldItemSpawner: {fileID: 0}
   _uiRaycaster: {fileID: 0}
-  _dropKey: 113
+  _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
   _throwSpawnDistance: 0.6
 --- !u!114 &3428453546330940767
 MonoBehaviour:
@@ -247,7 +247,7 @@ MonoBehaviour:
   _toolDurability: {fileID: 4403078374656698331}
   _itemDropSpawner: {fileID: 0}
   _camera: {fileID: 0}
-  _mouseButton: 0
+  _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
   _mineableMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -396,7 +396,7 @@ MonoBehaviour:
   _player: {fileID: 8120486794298343527}
   _camera: {fileID: 0}
   _worldGrid: {fileID: 0}
-  _placeMouseButton: 1
+  _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
   _blockingLayerMask:
     serializedVersion: 2
     m_Bits: 1408
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
-  _consumeKey: 324
+  _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
 --- !u!114 &4784472143194864754
 MonoBehaviour:
   m_ObjectHideFlags: 0

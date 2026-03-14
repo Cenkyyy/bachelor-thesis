@@ -6,7 +6,7 @@
 public sealed class PlayerConsumableController : MonoBehaviour
 {
     [SerializeField] private Player _player;
-    [SerializeField] private KeyCode _consumeKey = KeyCode.Mouse1;
+    [SerializeField] private GameplayInputBindingsData _inputBindings;
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public sealed class PlayerConsumableController : MonoBehaviour
         if (_player == null || GameStateManager.IsGamePaused)
             return;
 
-        if (!Input.GetKeyDown(_consumeKey))
+        if (!Input.GetKeyDown(_inputBindings.ConsumeKey))
             return;
 
         TryConsumeSelectedHotbarItem();

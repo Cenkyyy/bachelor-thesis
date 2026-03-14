@@ -9,7 +9,7 @@ public sealed class PlayerMiningController : MonoBehaviour
     [SerializeField] private Camera _camera;
 
     [Header("Mining Input")]
-    [SerializeField] private int _mouseButton = 0;
+    [SerializeField] private GameplayInputBindingsData _inputBindings;
     [SerializeField] private LayerMask _mineableMask;
     [SerializeField] private float _miningRange = 1.5f;
 
@@ -25,7 +25,7 @@ public sealed class PlayerMiningController : MonoBehaviour
         if (GameStateManager.IsGamePaused)
             return;
 
-        if (!Input.GetMouseButton(_mouseButton))
+        if (!Input.GetKey(_inputBindings.MiningKey))
         {
             ResetMining();
             return;

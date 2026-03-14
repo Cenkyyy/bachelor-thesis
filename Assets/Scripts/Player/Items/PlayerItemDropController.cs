@@ -12,7 +12,7 @@ public sealed class PlayerItemDropController : MonoBehaviour
     [SerializeField] private GraphicRaycaster _uiRaycaster; //  UI Canvas
 
     [Header("Input")]
-    [SerializeField] private KeyCode _dropKey = KeyCode.Q;
+    [SerializeField] private GameplayInputBindingsData _inputBindings;
 
     [Header("Throw")]
     [SerializeField] private float _throwSpawnDistance = 0.6f;
@@ -52,9 +52,9 @@ public sealed class PlayerItemDropController : MonoBehaviour
         if (GameStateManager.IsGamePaused) 
             return;
 
-        if (Input.GetKeyDown(_dropKey))
+        if (Input.GetKeyDown(_inputBindings.DropKey))
         {
-            var dropAll = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+            var dropAll = Input.GetKey(_inputBindings.DropAllModifierKey);
             HandleDrop(dropAll);
         }
     }

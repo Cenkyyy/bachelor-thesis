@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d077999f67bd4e47ac09df57c0a0fae, type: 3}
+  m_Name: SpellCastingKeybinds
+  m_EditorClassIdentifier: 
+  <Slot1>k__BackingField: 49
+  <Slot2>k__BackingField: 50
+  <Slot3>k__BackingField: 51
+  <Slot4>k__BackingField: 52
+  <Slot5>k__BackingField: 53

@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6beb071d34f7c0a42a4593400dce2d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
   _requireNight: 1
   _allowDaytimeTesting: 1
   _enemyLayerMask:

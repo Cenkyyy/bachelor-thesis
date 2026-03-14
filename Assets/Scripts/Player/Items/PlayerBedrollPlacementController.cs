@@ -9,7 +9,7 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
     [SerializeField] private Grid _worldGrid;
 
     [Header("Input")]
-    [SerializeField] private int _placeMouseButton = 1;
+    [SerializeField] private GameplayInputBindingsData _inputBindings;
 
     [Header("Placement")]
     [SerializeField] private LayerMask _blockingLayerMask = ~0;
@@ -50,7 +50,7 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
 
     private bool CanProcessPlacementInput()
     {
-        if (!Input.GetMouseButtonDown(_placeMouseButton))
+        if (!Input.GetKeyDown(_inputBindings.PlacementKey))
             return false;
 
         if (_player == null || _player.Inventory == null || GameStateManager.IsGamePaused)

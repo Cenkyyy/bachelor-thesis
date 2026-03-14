@@ -12,26 +12,6 @@ public class SpellCastingPanelController : MonoBehaviour
         Form
     }
 
-    [Serializable]
-    private struct WordSelectionKeys
-    {
-        public KeyCode Slot1;
-        public KeyCode Slot2;
-        public KeyCode Slot3;
-        public KeyCode Slot4;
-        public KeyCode Slot5;
-
-        public int? TryGetPressedIndex()
-        {
-            if (Input.GetKeyDown(Slot1)) return 0;
-            if (Input.GetKeyDown(Slot2)) return 1;
-            if (Input.GetKeyDown(Slot3)) return 2;
-            if (Input.GetKeyDown(Slot4)) return 3;
-            if (Input.GetKeyDown(Slot5)) return 4;
-            return null;
-        }
-    }
-
     [Header("References")]
     [SerializeField] private Player _player;
     [SerializeField] private WordPanelView _modifierPanel;
@@ -42,7 +22,7 @@ public class SpellCastingPanelController : MonoBehaviour
     [SerializeField] private TMP_Text _currentPhraseText;
 
     [Header("Input")]
-    [SerializeField] private WordSelectionKeys _selectionKeys = default;
+    [SerializeField] private SpellCastingKeybindsData _spellCastingKeys;
 
     [Header("Casting")]
     [SerializeField, Min(0f)] private float _castLockDurationSeconds = 0.2f;
@@ -94,7 +74,7 @@ public class SpellCastingPanelController : MonoBehaviour
         if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
             return;
 
-        var pressedIndex = _selectionKeys.TryGetPressedIndex();
+        var pressedIndex = _spellCastingKeys.TryGetPressedIndex();
         if (!pressedIndex.HasValue)
             return;
 

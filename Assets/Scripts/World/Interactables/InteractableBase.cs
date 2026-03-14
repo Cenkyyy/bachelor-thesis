@@ -2,6 +2,8 @@
 
 public abstract class InteractableBase : MonoBehaviour, IInteractable
 {
+    [SerializeField] private GameplayInputBindingsData _inputBindings;
+
     protected bool IsPlayerInside { get; private set; }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -24,7 +26,7 @@ public abstract class InteractableBase : MonoBehaviour, IInteractable
 
     private void OnMouseOver()
     {
-        if (!Input.GetMouseButtonDown(1))
+        if (!Input.GetKeyDown(_inputBindings.InteractKey))
             return;
 
         Interact();
