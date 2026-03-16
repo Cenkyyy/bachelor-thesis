@@ -32,8 +32,6 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
     {
         if (GameStateManager.IsGamePaused)
             return;
-        if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
-            return;
 
         var scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll > 0f)
