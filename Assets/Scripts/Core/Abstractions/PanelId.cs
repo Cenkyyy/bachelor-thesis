@@ -4,7 +4,6 @@ public enum PanelId
     Chest,
     Map,
     Settings,
-    ParallelWorld, // might be changed to a scene later
-    Crafting,
-    Death
+    ParallelWorld,
+    Crafting
 }
