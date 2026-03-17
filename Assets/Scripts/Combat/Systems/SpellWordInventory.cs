@@ -20,6 +20,25 @@ public class SpellWordInventory : MonoBehaviour
         SortUnlockedWords();
     }
 
+    public void SetUnlockedWords(IReadOnlyList<ModifierWord> modifiers, IReadOnlyList<ElementWord> elements, IReadOnlyList<FormWord> forms)
+    {
+        _unlockedModifiers.Clear();
+        _unlockedElements.Clear();
+        _unlockedForms.Clear();
+
+        if (modifiers != null)
+            _unlockedModifiers.AddRange(modifiers);
+
+        if (elements != null)
+            _unlockedElements.AddRange(elements);
+
+        if (forms != null)
+            _unlockedForms.AddRange(forms);
+
+        SortUnlockedWords();
+        OnWordsChanged?.Invoke();
+    }
+
     public bool Unlock(ModifierWord word)
     {
         if (_unlockedModifiers.Contains(word))

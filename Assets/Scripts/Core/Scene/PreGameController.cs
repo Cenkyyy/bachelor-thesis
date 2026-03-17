@@ -32,6 +32,9 @@ public sealed class PreGameController : MonoBehaviour
 
     [Header("Word selection")]
     [SerializeField] private bool _enableWordSelection = true;
+    [SerializeField] private StarterWordSelectionData _starterWordSelectionData;
+    [SerializeField] private StarterWordSelectionController _starterWordSelectionController;
+    [SerializeField] private Player _player;
 
     public PreGameState CurrentState { get; private set; } = PreGameState.Idle;
     public bool IsPreGameEnabled => _enablePreGame;
@@ -44,6 +47,9 @@ public sealed class PreGameController : MonoBehaviour
     {
         if (_sceneTransitionController == null)
             _sceneTransitionController = GetComponent<SceneTransitionController>();
+
+        if (_player == null)
+            _player = FindFirstObjectByType<Player>();
 
         SetIntroVisible(false);
     }
@@ -67,6 +73,8 @@ public sealed class PreGameController : MonoBehaviour
 
         StopPreGameCoroutine();
         SetIntroVisible(false);
+        if (_starterWordSelectionController != null)
+            _starterWordSelectionController.Hide();
         SetState(PreGameState.Idle);
     }
 
@@ -208,9 +216,28 @@ public sealed class PreGameController : MonoBehaviour
 
     private IEnumerator RunWordSelectionCoroutine()
     {
-        // TODO: Implement word selcection here
         SetState(PreGameState.WordSelection);
-        yield return null;
+
+        if (_starterWordSelectionData == null || _starterWordSelectionController == null)
+            yield break;
+
+        if (_player == null)
+            _player = FindFirstObjectByType<Player>();
+
+        if (_player == null || _player.SpellWords == null)
+            yield break;
+
+        var backgroundSprite = _introDialogueData != null ? _introDialogueData.BackgroundSprite : null;
+        var backgroundColor = _introDialogueData != null ? _introDialogueData.BackgroundFallbackColor : Color.black;
+
+        _starterWordSelectionController.Show(_starterWordSelectionData, backgroundSprite, backgroundColor);
+
+        while (!_starterWordSelectionController.WasConfirmed)
+            yield return null;
+
+        var result = _starterWordSelectionController.Result;
+        _player.SpellWords.SetUnlockedWords(result.Modifiers, result.Elements, result.Forms);
+        _starterWordSelectionController.Hide();
     }
 
     private void HandleTransitionFinished(string sceneName)
