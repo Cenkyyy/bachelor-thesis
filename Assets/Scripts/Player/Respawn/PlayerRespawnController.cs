@@ -8,6 +8,7 @@ public sealed class PlayerRespawnController : MonoBehaviour
     [Header("Player")]
     [SerializeField] private Player _player;
     [SerializeField] private Transform _playerTransform;
+    [SerializeField] private DeathDropController _deathDropController;
     [Tooltip("Optional explicit default spawn point. If empty, current player position at Start is used")]
     [SerializeField] private Transform _defaultSpawnPoint;
 
@@ -103,7 +104,7 @@ public sealed class PlayerRespawnController : MonoBehaviour
         SetDeathFadeVisible(true);
         yield return _fadeService.FadeIn(_fadeInDuration);
 
-        // TODO: Add losing backpack items, creating waypoint on minimap, instantiating a chest and moving the backpack items into that
+        _deathDropController.CreateDeathChestFromBackpack(_player, _playerTransform.position);
         Respawn();
 
         yield return _fadeService.FadeOut(_fadeOutDuration);

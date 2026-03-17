@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
-public sealed class MinimapController : MonoBehaviour
+public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
 {
     [Serializable]
     public struct TileColor
@@ -17,6 +17,8 @@ public sealed class MinimapController : MonoBehaviour
     [SerializeField] private RawImage _terrainImage;
     [SerializeField] private RectTransform _minimapViewport;
     [SerializeField] private RectTransform _playerMarker;
+    [SerializeField] private RectTransform _markerContainer;
+    [SerializeField] private RectTransform _markerPrefab;
 
     [Header("World Refs")]
     [SerializeField] private Tilemap _groundTilemap;
@@ -33,6 +35,8 @@ public sealed class MinimapController : MonoBehaviour
     public Texture2D TerrainTexture { get; private set; }
 
     private Dictionary<TileType, Color32> _colorByTile;
+    private readonly Dictionary<string, MapMarkerRuntimeData> _markerDataById = new Dictionary<string, MapMarkerRuntimeData>();
+    private readonly Dictionary<string, RectTransform> _markerViewById = new Dictionary<string, RectTransform>();
     private Color32[] _terrainPixelsByIndex;
     private Vector2Int _lastPlayerTile = new Vector2Int(int.MinValue, int.MinValue);
     public bool IsInitialized { get; private set; } = false;
@@ -59,6 +63,44 @@ public sealed class MinimapController : MonoBehaviour
 
         UpdateView(force: false);
         UpdatePlayerMarkerRotation();
+        UpdateMarkers();
+    }
+
+    public void AddMarker(MapMarkerRuntimeData marker)
+    {
+        if (string.IsNullOrEmpty(marker.Id))
+            return;
+
+        _markerDataById[marker.Id] = marker;
+
+        if (!_markerViewById.ContainsKey(marker.Id))
+            _markerViewById[marker.Id] = CreateMarkerView();
+
+        if (!IsInitialized)
+            return;
+
+        UpdateMarkerView(marker.Id);
+    }
+
+    public void UpdateMarker(MapMarkerRuntimeData marker)
+    {
+        AddMarker(marker);
+    }
+
+    public void RemoveMarker(string markerId)
+    {
+        if (string.IsNullOrEmpty(markerId))
+            return;
+
+        _markerDataById.Remove(markerId);
+
+        if (_markerViewById.TryGetValue(markerId, out var markerView))
+        {
+            if (markerView != null)
+                Destroy(markerView.gameObject);
+
+            _markerViewById.Remove(markerId);
+        }
     }
 
     private void BuildColorLookup()
@@ -196,5 +238,59 @@ public sealed class MinimapController : MonoBehaviour
 
         float z = _playerTransform.eulerAngles.z;
         _playerMarker.localRotation = Quaternion.Euler(0f, 0f, z);
+    }
+
+    private RectTransform CreateMarkerView()
+    {
+        if (_markerPrefab == null)
+            return null;
+
+        var container = _markerContainer != null ? _markerContainer : _minimapViewport;
+        if (container == null)
+            return null;
+
+        var marker = Instantiate(_markerPrefab, container);
+        marker.anchorMin = marker.anchorMax = new Vector2(0.5f, 0.5f);
+        return marker;
+    }
+
+    private void UpdateMarkers()
+    {
+        foreach (var markerId in _markerDataById.Keys)
+            UpdateMarkerView(markerId);
+    }
+
+    private void UpdateMarkerView(string markerId)
+    {
+        if (!_markerDataById.TryGetValue(markerId, out var markerData))
+            return;
+
+        if (!IsInitialized)
+            return;
+
+        if (!_markerViewById.TryGetValue(markerId, out var markerView) || markerView == null)
+            return;
+
+        var normalized = MapCoordinateUtility.WorldToDataNormalized(_groundTilemap, WorldData, markerData.WorldPosition);
+        var uvRect = _terrainImage.uvRect;
+        bool isVisible =
+            normalized.x >= uvRect.xMin && normalized.x <= uvRect.xMax &&
+            normalized.y >= uvRect.yMin && normalized.y <= uvRect.yMax;
+
+        markerView.gameObject.SetActive(isVisible);
+        if (!isVisible)
+            return;
+
+        float localU = (normalized.x - uvRect.xMin) / uvRect.width;
+        float localV = (normalized.y - uvRect.yMin) / uvRect.height;
+
+        var container = _markerContainer != null ? _markerContainer : _minimapViewport;
+        var containerSize = container.rect.size;
+        var containerPivot = container.pivot;
+
+        float localX = (localU - containerPivot.x) * containerSize.x;
+        float localY = (localV - containerPivot.y) * containerSize.y;
+
+        markerView.anchoredPosition = new Vector2(localX, localY);
     }
 }

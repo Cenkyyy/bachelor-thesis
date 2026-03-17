@@ -30,6 +30,8 @@ public sealed class PanelManager : MonoBehaviour
     private IPanel[] _settingsGroup;
     private IPanel[] _craftingGroup;
 
+    public event Action<IInventory> OnChestClosed;
+
     public bool BlocksGameplayInput => _currentPanelId.HasValue && GetMajorPanel(_currentPanelId.Value).BlocksGameplayInput;
 
     private void Awake()
@@ -142,12 +144,18 @@ public sealed class PanelManager : MonoBehaviour
         if (!force && SceneLoader.Instance != null && SceneLoader.Instance.IsTransitionActive)
             return;
 
+        var closingPanelId = _currentPanelId.Value;
+        var closingChestInventory = closingPanelId == PanelId.Chest ? _currentChestInventory : null;
+
         ItemInteractionController.Instance?.ResolveHeldItemToInventoryOrDrop();
 
-        CloseGroup(GetGroup(_currentPanelId.Value));
+        CloseGroup(GetGroup(closingPanelId));
 
         _currentPanelId = null;
         _currentChestInventory = null;
+
+        if (closingChestInventory != null)
+            OnChestClosed?.Invoke(closingChestInventory);
 
         GameStateManager.SetPause(false);
     }

@@ -1838,6 +1838,8 @@ MonoBehaviour:
   _mapContent: {fileID: 1068549154}
   _terrainImage: {fileID: 323979530}
   _playerMarker: {fileID: 296437675}
+  _markerContainer: {fileID: 1248015685}
+  _markerPrefab: {fileID: 1117304301412245839, guid: b201a6a1f78541c4787e1054605a840f, type: 3}
   _minimap: {fileID: 503899696}
   _groundTilemap: {fileID: 188757767}
   _playerTransform: {fileID: 2010244813}
@@ -3756,6 +3758,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488170023}
   m_CullTransparentMesh: 1
+--- !u!1 &494402210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 494402211}
+  m_Layer: 5
+  m_Name: DeathMarkersContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &494402211
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494402210}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 842758577}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &503899694
 GameObject:
   m_ObjectHideFlags: 0
@@ -3807,6 +3844,8 @@ MonoBehaviour:
   _terrainImage: {fileID: 1773316914}
   _minimapViewport: {fileID: 2105585047}
   _playerMarker: {fileID: 1801179216}
+  _markerContainer: {fileID: 494402211}
+  _markerPrefab: {fileID: 1117304301412245839, guid: b201a6a1f78541c4787e1054605a840f, type: 3}
   _groundTilemap: {fileID: 188757767}
   _playerTransform: {fileID: 2010244813}
   _minimapHalfSizeTiles: 18
@@ -4466,6 +4505,96 @@ MonoBehaviour:
   slotPrefab: {fileID: 3672516636108083546, guid: 965491b462a816446850da639c6b3fef, type: 3}
   slotParent: {fileID: 203007079}
   player: {fileID: 2010244819}
+--- !u!1 &612149431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 612149432}
+  - component: {fileID: 612149436}
+  - component: {fileID: 612149435}
+  - component: {fileID: 612149434}
+  - component: {fileID: 612149433}
+  m_Layer: 0
+  m_Name: DeathSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &612149432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612149431}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &612149433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612149431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd8a52e02749bf41b017c7c47944e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minimap: {fileID: 503899696}
+  _worldMap: {fileID: 185817031}
+--- !u!114 &612149434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612149431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a87248bce9ed89547b59c7bfe73e51a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &612149435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612149431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e388913a1cf4616469c0b0466e1a7313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deathChestPrefab: {fileID: 5999568118665831840, guid: 9ae8e68182fbe8a40b871d5768156549, type: 3}
+  _deathChestParent: {fileID: 2002939701}
+--- !u!114 &612149436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612149431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0103c030ff450b47978230b05375a21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deathChestFactory: {fileID: 612149435}
+  _deathChestRegistry: {fileID: 612149434}
+  _deathMarkerController: {fileID: 612149433}
 --- !u!1 &617756592
 GameObject:
   m_ObjectHideFlags: 0
@@ -6508,6 +6637,7 @@ RectTransform:
   - {fileID: 394923723}
   - {fileID: 1773316912}
   - {fileID: 1801179216}
+  - {fileID: 494402211}
   m_Father: {fileID: 2105585047}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -8673,6 +8803,7 @@ RectTransform:
   m_Children:
   - {fileID: 323979529}
   - {fileID: 296437675}
+  - {fileID: 1248015685}
   m_Father: {fileID: 1055701525}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -9281,6 +9412,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1224626019}
   m_CullTransparentMesh: 1
+--- !u!1 &1248015684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1248015685}
+  m_Layer: 5
+  m_Name: DeathMarkersContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1248015685
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248015684}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1068549154}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1265745437
 GameObject:
   m_ObjectHideFlags: 0
@@ -9592,6 +9758,7 @@ Transform:
   - {fileID: 814563175}
   - {fileID: 896982110}
   - {fileID: 2031400804}
+  - {fileID: 2002939701}
   m_Father: {fileID: 174293338}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1362542294
@@ -14859,6 +15026,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1999943865}
   m_CullTransparentMesh: 1
+--- !u!1 &2002939700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2002939701}
+  m_Layer: 0
+  m_Name: DeathChests
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2002939701
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002939700}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1327090048}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2009648768
 GameObject:
   m_ObjectHideFlags: 0
@@ -16076,6 +16274,10 @@ PrefabInstance:
       value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 2737436318412507732, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _deathDropController
+      value: 
+      objectReference: {fileID: 612149436}
+    - target: {fileID: 2737436318412507732, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _deathFadeCanvasGroup
       value: 
       objectReference: {fileID: 669887594}
@@ -16368,6 +16570,7 @@ SceneRoots:
   - {fileID: 288753444}
   - {fileID: 174293338}
   - {fileID: 850465700}
+  - {fileID: 612149432}
   - {fileID: 1905795851}
   - {fileID: 1592801024}
   - {fileID: 1394616547}

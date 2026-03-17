@@ -1,14 +1,18 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
-public sealed class WorldMapPanelController : MonoBehaviour, IMajorPanel
+public sealed class WorldMapPanelController : MonoBehaviour, IMajorPanel, IMapMarkerPresenter
 {
     [Header("UI")]
     [SerializeField] private GameObject _root;
     [SerializeField] private RectTransform _mapContent;
     [SerializeField] private RawImage _terrainImage;
     [SerializeField] private RectTransform _playerMarker;
+    [SerializeField] private RectTransform _markerContainer;
+    [SerializeField] private RectTransform _markerPrefab;
 
     [Header("Refs")]
     [SerializeField] private MinimapController _minimap;
@@ -23,6 +27,8 @@ public sealed class WorldMapPanelController : MonoBehaviour, IMajorPanel
 
     private bool _texturesBound;
     private bool _fitAppliedThisOpen;
+    private readonly Dictionary<string, MapMarkerRuntimeData> _markerDataById = new Dictionary<string, MapMarkerRuntimeData>();
+    private readonly Dictionary<string, RectTransform> _markerViewById = new Dictionary<string, RectTransform>();
 
     private void LateUpdate()
     {
@@ -35,6 +41,44 @@ public sealed class WorldMapPanelController : MonoBehaviour, IMajorPanel
             return;
 
         UpdatePlayerMarker();
+        UpdateMarkers();
+    }
+
+    public void AddMarker(MapMarkerRuntimeData marker)
+    {
+        if (string.IsNullOrEmpty(marker.Id))
+            return;
+
+        _markerDataById[marker.Id] = marker;
+
+        if (!_markerViewById.ContainsKey(marker.Id))
+            _markerViewById[marker.Id] = CreateMarkerView();
+
+        if (_minimap == null || !_minimap.IsInitialized)
+            return;
+
+        UpdateMarkerView(marker.Id);
+    }
+
+    public void UpdateMarker(MapMarkerRuntimeData marker)
+    {
+        AddMarker(marker);
+    }
+
+    public void RemoveMarker(string markerId)
+    {
+        if (string.IsNullOrEmpty(markerId))
+            return;
+
+        _markerDataById.Remove(markerId);
+
+        if (_markerViewById.TryGetValue(markerId, out var markerView))
+        {
+            if (markerView != null)
+                Destroy(markerView.gameObject);
+
+            _markerViewById.Remove(markerId);
+        }
     }
 
     public void Open()
@@ -97,16 +141,48 @@ public sealed class WorldMapPanelController : MonoBehaviour, IMajorPanel
 
     private Vector2 GetPlayerDataPositionNormalized()
     {
-        var grid = _groundTilemap.layoutGrid;
-        Vector3 playerLocalInGrid = grid.transform.InverseTransformPoint(_playerTransform.position);
-        Vector3 cellPos = grid.LocalToCellInterpolated(playerLocalInGrid);
+        return MapCoordinateUtility.WorldToDataNormalized(_groundTilemap, _minimap.WorldData, _playerTransform.position);
+    }
 
-        float dataX = cellPos.x - _minimap.WorldData.OffsetX;
-        float dataY = cellPos.y - _minimap.WorldData.OffsetY;
+    private RectTransform CreateMarkerView()
+    {
+        if (_markerPrefab == null)
+            return null;
 
-        float normalizedX = Mathf.Clamp01(dataX / _minimap.WorldData.Width);
-        float normalizedY = Mathf.Clamp01(dataY / _minimap.WorldData.Height);
+        var container = _markerContainer != null ? _markerContainer : _mapContent;
+        if (container == null)
+            return null;
 
-        return new Vector2(normalizedX, normalizedY);
+        var marker = Instantiate(_markerPrefab, container);
+        marker.anchorMin = marker.anchorMax = new Vector2(0.5f, 0.5f);
+        return marker;
+    }
+
+    private void UpdateMarkers()
+    {
+        foreach (var markerId in _markerDataById.Keys)
+            UpdateMarkerView(markerId);
+    }
+
+    private void UpdateMarkerView(string markerId)
+    {
+        if (!_markerDataById.TryGetValue(markerId, out var markerData))
+            return;
+
+        if (_minimap == null || !_minimap.IsInitialized)
+            return;
+
+        if (!_markerViewById.TryGetValue(markerId, out var markerView) || markerView == null)
+            return;
+
+        var normalizedPos = MapCoordinateUtility.WorldToDataNormalized(_groundTilemap, _minimap.WorldData, markerData.WorldPosition);
+
+        var contentSize = _mapContent.rect.size;
+        var contentPivot = _mapContent.pivot;
+
+        float localX = (normalizedPos.x - contentPivot.x) * contentSize.x;
+        float localY = (normalizedPos.y - contentPivot.y) * contentSize.y;
+
+        markerView.anchoredPosition = new Vector2(localX, localY);
     }
 }

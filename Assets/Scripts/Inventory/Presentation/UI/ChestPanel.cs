@@ -17,8 +17,11 @@ public sealed class ChestPanel : MonoBehaviour, IMajorPanel
 
     public void Bind(IInventory inventory)
     {
-        if (Inventory == inventory && _slots != null) 
+        if (Inventory == inventory && _slots != null)
+        {
+            RefreshAllSlots();
             return;
+        }
 
         if (Inventory != null)
             Inventory.OnItemChanged -= RefreshSlot;
@@ -27,6 +30,7 @@ public sealed class ChestPanel : MonoBehaviour, IMajorPanel
 
         ClearSlots();
         BuildSlots();
+        RefreshAllSlots();
 
         if (Inventory != null)
             Inventory.OnItemChanged += RefreshSlot;
@@ -35,6 +39,7 @@ public sealed class ChestPanel : MonoBehaviour, IMajorPanel
     public void Open()
     { 
         _slotParent.gameObject.SetActive(true);
+        RefreshAllSlots();
     }
     public void Close() 
     { 
@@ -90,5 +95,14 @@ public sealed class ChestPanel : MonoBehaviour, IMajorPanel
     {
         if (_slots == null || index < 0 || index >= _slots.Length) return;
         _slots[index].Refresh(Inventory.GetItemAt(index));
+    }
+
+    private void RefreshAllSlots()
+    {
+        if (_slots == null || Inventory == null)
+            return;
+
+        for (int i = 0; i < _slots.Length; i++)
+            _slots[i].Refresh(Inventory.GetItemAt(i));
     }
 }
