@@ -11,12 +11,11 @@ public enum BiomeType
 
 public enum TileType
 {
-    None = 0,
-    Void = 1,
-    GrasslandBase = 2,
-    IceTundraBase = 3,
-    DesertBase = 4,
-    AmethystRift = 5
+    Void = 0,
+    GrasslandBase = 1,
+    IceTundraBase = 2,
+    DesertBase = 3,
+    AmethystRift = 4
 }
 
 public struct WorldTile

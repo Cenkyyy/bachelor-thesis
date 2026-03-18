@@ -3851,23 +3851,23 @@ MonoBehaviour:
   _minimapHalfSizeTiles: 18
   _revealRadiusTiles: 8
   _tileColors:
-  - TileType: 1
+  - TileType: 0
     Color:
       serializedVersion: 2
       rgba: 4280098077
-  - TileType: 2
+  - TileType: 1
     Color:
       serializedVersion: 2
       rgba: 4281226789
-  - TileType: 3
+  - TileType: 2
     Color:
       serializedVersion: 2
       rgba: 4290416463
-  - TileType: 4
+  - TileType: 3
     Color:
       serializedVersion: 2
       rgba: 4281027464
-  - TileType: 5
+  - TileType: 4
     Color:
       serializedVersion: 2
       rgba: 4283508544

@@ -71,8 +71,7 @@ public class WorldGenerator
 
                 if (distSq > borderOuterRadiusSq)
                 {
-                    // Outside border ring: empty tiles
-                    data.Tiles[x, y] = new WorldTile(BiomeType.None, TileType.None);
+                    // Outside border ring: skip
                     continue;
                 }
 
