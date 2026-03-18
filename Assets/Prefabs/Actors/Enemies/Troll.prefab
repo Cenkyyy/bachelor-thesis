@@ -151,6 +151,11 @@ MonoBehaviour:
   initialState: {fileID: 6824101350984700763}
   moveSpeed: 2.5
   arrivalEps: 0.12
+  actorPushMultiplier: 0.2
+  actorPushCastExtraDistance: 0.02
+  actorPushTargetMask:
+    serializedVersion: 2
+    m_Bits: 640
   visionRadius: 6
   obstacleMask:
     serializedVersion: 2

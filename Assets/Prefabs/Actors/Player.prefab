@@ -200,6 +200,11 @@ MonoBehaviour:
   _body: {fileID: 6067396949842947324}
   _speed: 4
   _externalSpeedMultiplier: 1
+  _actorPushMultiplier: 0.2
+  _actorPushCastExtraDistance: 0.02
+  _actorPushTargetMask:
+    serializedVersion: 2
+    m_Bits: 640
 --- !u!114 &5402159747806690286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,7 +385,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
   _playerTransform: {fileID: 3689139185868277431}
+  _deathDropController: {fileID: 0}
   _defaultSpawnPoint: {fileID: 3689139185868277431}
+  _deathFadeRoot: {fileID: 0}
+  _deathFadeCanvasGroup: {fileID: 0}
+  _fadeInDuration: 0.6
+  _fadeOutDuration: 0.6
+  _maxFadeDeltaTime: 0.05
 --- !u!114 &5815203664740908025
 MonoBehaviour:
   m_ObjectHideFlags: 0

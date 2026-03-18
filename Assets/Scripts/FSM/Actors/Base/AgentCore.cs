@@ -7,12 +7,19 @@ public abstract class AgentCore : StateMachineCore
     [SerializeField] protected float moveSpeed = 2.5f;
     [SerializeField] protected float arrivalEps = 0.12f;
 
+    [Header("Push Resistance")]
+    [SerializeField, Range(0f, 1f)] protected float actorPushMultiplier = 0.2f;
+    [SerializeField] protected float actorPushCastExtraDistance = 0.02f;
+    [SerializeField] protected LayerMask actorPushTargetMask;
+
     [Header("Vision")]
     [SerializeField] protected float visionRadius = 6f;
     [SerializeField] protected LayerMask obstacleMask;
 
     protected Rigidbody2D body;
     protected Transform target;
+
+    private readonly RaycastHit2D[] _movementCastHits = MovementPushResistanceUtils.CreateCastBuffer();
 
     protected override void Start()
     {
@@ -76,10 +83,23 @@ public abstract class AgentCore : StateMachineCore
             return;
         }
 
-        body.linearVelocity = d.normalized * moveSpeed;
+        var direction = d.normalized;
+        var speedMultiplier = ShouldReduceActorPush(direction, d.magnitude) ? actorPushMultiplier : 1f;
+        body.linearVelocity = direction * (moveSpeed * Mathf.Clamp01(speedMultiplier));
     }
 
     public bool ArrivedAt(Vector2 worldTarget) => Vector2.Distance(transform.position, worldTarget) <= arrivalEps;
 
     public void Stop() => body.linearVelocity = Vector2.zero;
+
+    private bool ShouldReduceActorPush(Vector2 direction, float distanceToTarget)
+    {
+        if (actorPushMultiplier >= 0.999f || body == null)
+        {
+            return false;
+        }
+
+        var castDistance = Mathf.Max(0f, Mathf.Min(distanceToTarget, moveSpeed * Time.fixedDeltaTime) + actorPushCastExtraDistance);
+        return MovementPushResistanceUtils.ShouldReducePush(body, direction, castDistance, _movementCastHits, actorPushTargetMask);
+    }
 }
