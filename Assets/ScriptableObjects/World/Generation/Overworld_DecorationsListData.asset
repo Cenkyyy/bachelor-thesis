@@ -1,0 +1,171 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f60f54d43184c44a56d5ffa4a794fd, type: 3}
+  m_Name: Overworld_DecorationsListData
+  m_EditorClassIdentifier: 
+  _entries:
+  - <DecorationId>k__BackingField: Grassland_Tree_Small
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: ec82202da13bc6140bfed03f47ca24f7, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: 3b6e3714f84fd6e47b9975fe07bdcf0e, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 0
+    _allowedBiomes: 01000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4
+  - <DecorationId>k__BackingField: Grassland_Tree_Small_2
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 840b9e7fdc96bfb46ae06e9ac9563ccd, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: 3b6e3714f84fd6e47b9975fe07bdcf0e, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 0
+    _allowedBiomes: 01000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4
+  - <DecorationId>k__BackingField: Grassland_Tree_Medium
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 8f97baf6b1dc6324b83e5fc32f3db569, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: dbba77c93af60b145b3efc2dc1323f76, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 1
+    _allowedBiomes: 01000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4
+  - <DecorationId>k__BackingField: Grassland_Tree_Medium_2
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 4f793b5db9d118f448bd0c685b179093, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: 53c66c2957e205847be91fa8ccdf966c, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 1
+    _allowedBiomes: 01000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4
+  - <DecorationId>k__BackingField: IceTundra_Tree_Small
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 4a1ec9f232c275c4d9833fa6212e88a5, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: d0b31ccadf8e6ca4c82cab1757d8e812, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 0
+    _allowedBiomes: 02000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4
+  - <DecorationId>k__BackingField: IceTundra_Tree_Small_2
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 9f810e3c30909124b8c67adf2d86891e, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: d0b31ccadf8e6ca4c82cab1757d8e812, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 1
+    _allowedBiomes: 02000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4
+  - <DecorationId>k__BackingField: IceTundra_Tree_Medium
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 5e619d7ee36795e43b722b9ec136b3dc, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: b0fbc50e6fe03a34b9982b7b9d40c674, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 1
+    _allowedBiomes: 02000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4
+  - <DecorationId>k__BackingField: IceTundra_Tree_Medium_2
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: f5211dfb95ed94e46876a2818cc23d38, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: 53c66c2957e205847be91fa8ccdf966c, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 1
+    _allowedBiomes: 02000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4
+  - <DecorationId>k__BackingField: Desert_Tree_Small
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: e9e4fd26cc6b855499d1a1c19a40e195, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: 222f4b9660c2e5c41a60d6ce7beb2a9d, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 0
+    _allowedBiomes: 03000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4
+  - <DecorationId>k__BackingField: Desert_Tree_Medium
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: e07fb582ffbf931498abaf78b7d17399, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: 53c66c2957e205847be91fa8ccdf966c, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 1
+    _allowedBiomes: 03000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4
+  - <DecorationId>k__BackingField: Desert_Tree_Large
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 1b11175585fede14da62f5c5f17574a7, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: b1c776143e5131d4087df7ab4f7e9bb5, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 2
+    _allowedBiomes: 03000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4
+  - <DecorationId>k__BackingField: AmethystRift_Tree_Small
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 77142d08e877535428c0393675ee8218, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: 412e6e5c6dfb0e64f88bda3819420dc7, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 0
+    _allowedBiomes: 04000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4
+  - <DecorationId>k__BackingField: AmethystRift_Tree_Medium
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: e07fb582ffbf931498abaf78b7d17399, type: 3}
+    <NodeData>k__BackingField: {fileID: 11400000, guid: 33c6e0b6d1e83574592bc697eda4890e, type: 2}
+    <Category>k__BackingField: 0
+    <Size>k__BackingField: 1
+    _allowedBiomes: 04000000
+    <SpawnWeight>k__BackingField: 1
+    <MinimumSpacingTiles>k__BackingField: 2.5
+    <AllowCluster>k__BackingField: 1
+    <MinClusterCount>k__BackingField: 2
+    <MaxClusterCount>k__BackingField: 4
+    <ClusterRadiusTiles>k__BackingField: 4

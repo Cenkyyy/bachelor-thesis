@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CopperChestplate
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Copper Chestplate
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 1766183660, guid: 78b27ca8d880efd40a810ca556c42a4a, type: 3}
   <Description>k__BackingField: 
   <Category>k__BackingField: 0
   <Rarity>k__BackingField: 1
@@ -21,5 +21,4 @@ MonoBehaviour:
   <MaxStackSize>k__BackingField: 1
   <Slot>k__BackingField: 1
   <ProgressionTier>k__BackingField: 2
-  <ArmorValue>k__BackingField: 0
   _statBonuses: []
