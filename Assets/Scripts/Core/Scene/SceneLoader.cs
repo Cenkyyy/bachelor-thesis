@@ -18,7 +18,6 @@ public sealed class SceneLoader : MonoBehaviour
 
     [Header("Transition")]
     [SerializeField] private SceneTransitionController _sceneTransitionController;
-    [SerializeField] private PreGameController _preGameController;
 
     private void Awake()
     {
@@ -34,11 +33,6 @@ public sealed class SceneLoader : MonoBehaviour
         if (_sceneTransitionController == null)
         {
             _sceneTransitionController = GetComponent<SceneTransitionController>();
-        }
-
-        if (_preGameController == null)
-        {
-            _preGameController = GetComponent<PreGameController>();
         }
 
         if (_autoGoToMenuFromBoot && SceneManager.GetActiveScene().name == _bootScene)
@@ -76,7 +70,7 @@ public sealed class SceneLoader : MonoBehaviour
     public void LoadMenuWithTransition() => LoadWithTransition(_menuScene);
     public void LoadGameplayWithTransition()
     {
-        if (_preGameController != null && _preGameController.TryStartNewGame(_gameplayScene))
+        if (PreGameManager.Instance != null && PreGameManager.Instance.TryStartNewGame(_gameplayScene))
             return;
 
         LoadWithTransition(_gameplayScene);

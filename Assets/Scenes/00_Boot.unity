@@ -1033,6 +1033,95 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 971271615}
   m_CullTransparentMesh: 1
+--- !u!1 &974794750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 974794751}
+  - component: {fileID: 974794752}
+  - component: {fileID: 974794753}
+  - component: {fileID: 974794754}
+  m_Layer: 0
+  m_Name: PreGameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &974794751
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974794750}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &974794752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974794750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d1bef53a11623438bca5295568eb1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enablePreGame: 1
+  _sceneTransitionController: {fileID: 1625545496}
+  _narrativeIntroductionController: {fileID: 974794753}
+  _starterWordSelectionController: {fileID: 974794754}
+  _starterWordSelectionData: {fileID: 11400000, guid: 658d940d466eb43488aa173258c309dc, type: 2}
+  _player: {fileID: 0}
+--- !u!114 &974794753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974794750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6448df8376308ca479d9cdf3df630c24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enableNarrativeIntro: 1
+  _introDialogueData: {fileID: 11400000, guid: b5f5683fbcfbb02458121fa4cc63c85f, type: 2}
+  _introRoot: {fileID: 292310300}
+  _introBackgroundImage: {fileID: 1860279517}
+  _introMessageText: {fileID: 1397565000}
+  _introContinueHintText: {fileID: 1375761473}
+--- !u!114 &974794754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974794750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 913b1167da0702b4b836f5e35926ef1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enableWordSelection: 1
+  _root: {fileID: 759133296}
+  _backgroundImage: {fileID: 744961781}
+  _modifierPanel: {fileID: 339803609}
+  _elementPanel: {fileID: 1077831754}
+  _formPanel: {fileID: 1804931167}
+  _continueButton: {fileID: 1689147469}
 --- !u!1 &1048799559
 GameObject:
   m_ObjectHideFlags: 0
@@ -1935,8 +2024,6 @@ GameObject:
   - component: {fileID: 1625545494}
   - component: {fileID: 1625545495}
   - component: {fileID: 1625545496}
-  - component: {fileID: 1625545498}
-  - component: {fileID: 1625545497}
   m_Layer: 0
   m_Name: SceneLoader
   m_TagString: Untagged
@@ -1976,7 +2063,6 @@ MonoBehaviour:
   _gameplayScene: 02_Gameplay
   _autoGoToMenuFromBoot: 1
   _sceneTransitionController: {fileID: 1625545496}
-  _preGameController: {fileID: 1625545498}
 --- !u!114 &1625545496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2001,48 +2087,6 @@ MonoBehaviour:
   _overlaySprite: {fileID: 7071881630838703602, guid: 31a451a1530b4e244af45484a01af482, type: 3}
   _overlayColorWhenSpriteAssigned: {r: 1, g: 1, b: 1, a: 1}
   _overlayFallbackColor: {r: 0, g: 0, b: 0, a: 1}
---- !u!114 &1625545497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1625545493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 913b1167da0702b4b836f5e35926ef1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _root: {fileID: 759133296}
-  _backgroundImage: {fileID: 744961781}
-  _modifierPanel: {fileID: 339803609}
-  _elementPanel: {fileID: 1077831754}
-  _formPanel: {fileID: 1804931167}
-  _continueButton: {fileID: 1689147469}
---- !u!114 &1625545498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1625545493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 684b9dea4f573ba4b817a123cb1df318, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enablePreGame: 1
-  _sceneTransitionController: {fileID: 1625545496}
-  _enableNarrativeIntro: 0
-  _introDialogueData: {fileID: 11400000, guid: b5f5683fbcfbb02458121fa4cc63c85f, type: 2}
-  _introRoot: {fileID: 292310300}
-  _introBackgroundImage: {fileID: 1860279517}
-  _introMessageText: {fileID: 1397565000}
-  _introContinueHintText: {fileID: 1375761473}
-  _enableWordSelection: 0
-  _starterWordSelectionData: {fileID: 11400000, guid: 658d940d466eb43488aa173258c309dc, type: 2}
-  _starterWordSelectionController: {fileID: 1625545497}
-  _player: {fileID: 0}
 --- !u!1 &1689147467
 GameObject:
   m_ObjectHideFlags: 0
@@ -2802,5 +2846,6 @@ SceneRoots:
   - {fileID: 802697069}
   - {fileID: 470396483}
   - {fileID: 1625545494}
+  - {fileID: 974794751}
   - {fileID: 33247761}
   - {fileID: 1389004387}

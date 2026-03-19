@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,9 @@ public sealed class StarterWordSelectionController : MonoBehaviour
         public List<FormWord> Forms = new();
     }
 
+    [Header("Settings")]
+    [SerializeField] private bool _enableWordSelection = true;
+
     [Header("Root")]
     [SerializeField] private GameObject _root;
     [SerializeField] private Image _backgroundImage;
@@ -27,6 +31,7 @@ public sealed class StarterWordSelectionController : MonoBehaviour
     [SerializeField] private Button _continueButton;
 
     public bool WasConfirmed { get; private set; }
+    public bool IsEnabled => _enableWordSelection;
     public StarterWordSelectionResult Result { get; private set; }
 
     private void Awake()
@@ -59,6 +64,27 @@ public sealed class StarterWordSelectionController : MonoBehaviour
 
         if (_formPanel != null)
             _formPanel.SelectionChanged -= RefreshContinueInteractable;
+    }
+
+    public IEnumerator RunSelectionCoroutine(StarterWordSelectionData data, Player player, Sprite backgroundSprite, Color backgroundColor)
+    {
+        if (!IsEnabled || data == null)
+            yield break;
+
+        if (player == null)
+            player = FindFirstObjectByType<Player>();
+
+        if (player == null || player.SpellWords == null)
+            yield break;
+
+        Show(data, backgroundSprite, backgroundColor);
+
+        while (!WasConfirmed)
+            yield return null;
+
+        var result = Result;
+        player.SpellWords.SetUnlockedWords(result.Modifiers, result.Elements, result.Forms);
+        Hide();
     }
 
     public void Show(StarterWordSelectionData data, Sprite backgroundSprite, Color backgroundColor)
