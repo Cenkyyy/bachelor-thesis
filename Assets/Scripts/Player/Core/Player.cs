@@ -38,9 +38,4 @@ public class Player : MonoBehaviour
 
         Equipment = new EquipmentInventory();
     }
-
-    private void Update()
-    {
-        Debug.Log($"Defence: {Data.Defence}, HealthRegen: {Data.HealthRegeneration}, ManaRegen: {Data.ManaRegeneration}");
-    }
 }
