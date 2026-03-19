@@ -7,6 +7,5 @@ public enum ItemStatType
     SpellDamage = 4,
     MoveSpeed = 5,
     CastSpeed = 6,
-    Defense = 7,
-    HungerDrainMultiplier = 8
+    Defence = 7
 }

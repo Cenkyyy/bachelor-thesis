@@ -6,12 +6,16 @@
 public sealed class PlayerConsumableController : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private PlayerItemStatController _itemStatController;
     [SerializeField] private GameplayInputBindingsData _inputBindings;
 
     private void Awake()
     {
         if (_player == null)
             _player = GetComponent<Player>();
+
+        if (_itemStatController == null)
+            _itemStatController = GetComponent<PlayerItemStatController>();
     }
 
     private void Update()
@@ -44,6 +48,8 @@ public sealed class PlayerConsumableController : MonoBehaviour
         _player.Data.Heal(consumable.RestoreHealth);
         _player.Data.RecoverMana(consumable.RestoreMana);
         _player.Data.EatFood(consumable.RestoreHunger);
+
+        _itemStatController?.ApplyTimedConsumableModifiers(consumable);
     }
 
     private void ConsumeOne(int slotIndex, InventoryItem slotItem)

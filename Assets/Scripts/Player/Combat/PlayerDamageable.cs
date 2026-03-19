@@ -3,8 +3,13 @@
 [DisallowMultipleComponent]
 public sealed class PlayerDamageable : MonoBehaviour, IDamageable
 {
+    [Header("References")]
     [SerializeField] private Player _player;
     [SerializeField] private PlayerRespawnController _respawnController;
+
+    [Header("Defence damage reduction")]
+    [SerializeField, Min(0.01f)] private float _defenceCoefficient = 100f;
+    [SerializeField, Min(0)] private int _minimumDamageTaken = 1;
 
     public bool CanReceiveDamage =>
         _player != null &&
@@ -31,6 +36,18 @@ public sealed class PlayerDamageable : MonoBehaviour, IDamageable
             return;
         }
 
-        _player.Data.TakeDamage(amount);
+        var finalDamage = CalculateFinalDamage(amount, _player.Data.Defence);
+        if (finalDamage <= 0)
+            return;
+
+        _player.Data.TakeDamage(finalDamage);
+    }
+
+    private int CalculateFinalDamage(int incomingDamage, int defense)
+    {
+        defense = Mathf.Max(0, defense);
+        var damageMultiplier = _defenceCoefficient / (_defenceCoefficient + defense);
+        var reducedDamage = Mathf.CeilToInt(incomingDamage * damageMultiplier);
+        return Mathf.Max(_minimumDamageTaken, reducedDamage);
     }
 }

@@ -10,6 +10,9 @@ public class PlayerData : ScriptableObject
     [field: Header("Base Stats")]
     [field: SerializeField] public int BaseMaxHealth { get; private set; } = 100;
     [field: SerializeField] public int BaseMaxMana { get; private set; } = 100;
+    [field: SerializeField, Min(0)] public int BaseDefence { get; private set; } = 0;
+    [field: SerializeField, Min(0f)] public float BaseHealthRegeneration { get; private set; } = 0f;
+    [field: SerializeField, Min(0f)] public float BaseManaRegeneration { get; private set; } = 0f;
 
     [field: Header("Experience")]
     [field: SerializeField] public int BaseMaxXP { get; private set; } = 100;

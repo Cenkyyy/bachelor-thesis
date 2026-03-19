@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float _speed = 4f;
     [SerializeField] private float _externalSpeedMultiplier = 1f;
+    [SerializeField] private float _itemSpeedMultiplier = 1f;
 
     [Header("Push Resistance")]
     [SerializeField, Range(0f, 1f)] private float _actorPushMultiplier = 0.2f;
@@ -42,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // calculate delta - the distance to move the frame based on input and speed
-        var speed = _speed * Mathf.Max(0f, _externalSpeedMultiplier);
+        var speed = _speed * Mathf.Max(0f, _externalSpeedMultiplier) * Mathf.Max(0f, _itemSpeedMultiplier);
         var direction = _input.normalized;
         var distance = speed * Time.fixedDeltaTime;
         var speedMultiplier = ShouldReduceActorPush(direction, distance) ? _actorPushMultiplier : 1f;
@@ -53,6 +54,11 @@ public class PlayerMovement : MonoBehaviour
     public void SetExternalSpeedMultiplier(float multiplier)
     {
         _externalSpeedMultiplier = Mathf.Max(0f, multiplier);
+    }
+
+    public void SetItemSpeedMultiplier(float multiplier)
+    {
+        _itemSpeedMultiplier = Mathf.Max(0f, multiplier);
     }
 
     private bool ShouldReduceActorPush(Vector2 direction, float distance)

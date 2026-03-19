@@ -54,6 +54,15 @@ public class PlayerRuntimeData
     /// <summary> World-space point where the player respawns after defeat. </summary>
     public Vector3 SpawnPoint { get; private set; }
 
+    /// <summary> Defensive stat used for incoming damage calculations. </summary>
+    public int Defence { get; private set; }
+
+    /// <summary> Health regenerated per second. </summary>
+    public float HealthRegeneration { get; private set; }
+
+    /// <summary> Mana regenerated per second. </summary>
+    public float ManaRegeneration { get; private set; }
+
 
     // Events
 
@@ -71,6 +80,12 @@ public class PlayerRuntimeData
     public event Action<Vector3> OnSpawnPointChanged;
     /// <summary> Raised after InitializeFrom() sets all defaults. </summary>
     public event Action OnInitialized;
+
+    private int _baseDefence;
+    private float _baseHealthRegeneration;
+    private float _baseManaRegeneration;
+    private int _appliedItemMaxHealthBonus;
+    private int _appliedItemMaxManaBonus;
 
     /// <summary>
     /// Initializes all stats from <see cref="PlayerData"/> and raises initial change events.
@@ -101,6 +116,14 @@ public class PlayerRuntimeData
         MaxHunger = defaultData.BaseMaxHunger;
         CurrentHunger = MaxHunger;
 
+        _baseDefence = Mathf.Max(0, defaultData.BaseDefence);
+        _baseHealthRegeneration = Mathf.Max(0f, defaultData.BaseHealthRegeneration);
+        _baseManaRegeneration = Mathf.Max(0f, defaultData.BaseManaRegeneration);
+
+        Defence = _baseDefence;
+        HealthRegeneration = _baseHealthRegeneration;
+        ManaRegeneration = _baseManaRegeneration;
+
         SpawnPoint = Vector3.zero;
 
         OnInitialized?.Invoke();
@@ -120,6 +143,9 @@ public class PlayerRuntimeData
     /// <param name="amount">Damage to be taken.</param>
     public void TakeDamage(int amount)
     {
+        if (amount <= 0)
+            return;
+
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
@@ -196,6 +222,34 @@ public class PlayerRuntimeData
             CurrentMana = Mathf.Min(CurrentMana, MaxMana);
         }
         OnManaChanged?.Invoke(CurrentMana, MaxMana);
+    }
+
+    // Item stat bonuses API
+
+    /// <summary>
+    /// Applies aggregated item modifiers on top of initialized base combat stats.
+    /// </summary>
+    public void ApplyCombatItemModifiers(float defenceAdditive, float healthRegenAdditive, float manaRegenAdditive, float maxHealthAdditive, float maxManaAdditive)
+    {
+        Defence = Mathf.Max(0, Mathf.RoundToInt(_baseDefence + defenceAdditive));
+        HealthRegeneration = Mathf.Max(0f, _baseHealthRegeneration + healthRegenAdditive);
+        ManaRegeneration = Mathf.Max(0f, _baseManaRegeneration + manaRegenAdditive);
+
+        int targetHealthBonus = Mathf.RoundToInt(maxHealthAdditive);
+        if (targetHealthBonus != _appliedItemMaxHealthBonus)
+        {
+            int healthDelta = targetHealthBonus - _appliedItemMaxHealthBonus;
+            _appliedItemMaxHealthBonus = targetHealthBonus;
+            ModifyMaxHealth(healthDelta, healWithIncrease: false);
+        }
+
+        int targetManaBonus = Mathf.RoundToInt(maxManaAdditive);
+        if (targetManaBonus != _appliedItemMaxManaBonus)
+        {
+            int manaDelta = targetManaBonus - _appliedItemMaxManaBonus;
+            _appliedItemMaxManaBonus = targetManaBonus;
+            ModifyMaxMana(manaDelta, restoreWithIncrease: false);
+        }
     }
 
     // Hunger API

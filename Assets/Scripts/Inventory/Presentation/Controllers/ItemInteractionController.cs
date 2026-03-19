@@ -190,7 +190,7 @@ public class ItemInteractionController : MonoBehaviour
         if (!_heldItem.IsEmpty)
         {
             // Only EquipmentItem can go into equipment slots
-            if (!(_heldItem.Item is EquipmentItem))
+            if (!(_heldItem.Item is EquipmentItemData))
                 return;
 
             // Try to place exactly 1 into this specific slot
@@ -228,7 +228,7 @@ public class ItemInteractionController : MonoBehaviour
         }
 
         // Holding something: allow quick place of ONE equipment item if compatible
-        if (_heldItem.Item is EquipmentItem)
+        if (_heldItem.Item is EquipmentItemData)
         {
             if (eq.TryMergeInto(new InventoryItem(_heldItem.Item, 1), index, out var leftoverOnce))
             {
