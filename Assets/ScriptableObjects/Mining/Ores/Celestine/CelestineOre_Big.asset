@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46989a09e1edfd74594f4a6f05ebb304, type: 3}
-  m_Name: CopperOre
+  m_Name: CelestineOre_Big
   m_EditorClassIdentifier: 
   <RequiredToolType>k__BackingField: 1
-  <MinimumTier>k__BackingField: 1
+  <MinimumTier>k__BackingField: 2
   <AllowHandMining>k__BackingField: 0
-  <MaxDurability>k__BackingField: 10
+  <MaxDurability>k__BackingField: 20
   <ToolPowerMultiplier>k__BackingField: 1
   _drops:
   - _item: {fileID: 11400000, guid: 454d9a3282a1dad439c8064255e7761b, type: 2}
-    _minAmount: 1
-    _maxAmount: 3
+    _minAmount: 5
+    _maxAmount: 10
   <GrantsMemoryXP>k__BackingField: 0
   <MemoryXpAmount>k__BackingField: 0
