@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Items/Consumable Item")]
-public class ConsumableItemData : ItemData
+public class ConsumableItemData : ItemData, ICooldownItem
 {
     [field: SerializeField] public ConsumableKind Kind { get; private set; } = ConsumableKind.Food;
 
@@ -44,5 +44,10 @@ public class ConsumableItemData : ItemData
 
         if (CooldownSeconds < 0f)
             CooldownSeconds = 0f;
+    }
+
+    public float GetCooldownSeconds()
+    {
+        return Kind == ConsumableKind.Potion ? CooldownSeconds : 0f;
     }
 }

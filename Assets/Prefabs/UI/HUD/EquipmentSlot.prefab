@@ -121,7 +121,7 @@ MonoBehaviour:
   backgroundImage: {fileID: 6189352919544109727}
   itemIconImage: {fileID: 5863970377266133280}
   itemAmountText: {fileID: 3686498082983654780}
-  _consumableCooldownOverlay: {fileID: 8785624873975498149}
+  _itemCooldownOverlay: {fileID: 8785624873975498149}
   backgroundSprite: {fileID: -5296726394706623546, guid: f9c1cc94d4e431a4b9dc789c769ba772, type: 3}
   <SlotType>k__BackingField: 0
 --- !u!114 &3686498082983654780 stripped

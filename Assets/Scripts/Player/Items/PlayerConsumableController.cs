@@ -8,6 +8,7 @@ public sealed class PlayerConsumableController : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private PlayerItemStatController _itemStatController;
+    [SerializeField] private ItemCooldownTrackController _itemCooldownTrackController;
     [SerializeField] private GameplayInputBindingsData _inputBindings;
 
     private readonly Dictionary<ItemData, float> _itemCooldownEndTimes = new();
@@ -19,6 +20,9 @@ public sealed class PlayerConsumableController : MonoBehaviour
 
         if (_itemStatController == null)
             _itemStatController = GetComponent<PlayerItemStatController>();
+
+        if (_itemCooldownTrackController == null)
+            _itemCooldownTrackController = GetComponent<ItemCooldownTrackController>();
     }
 
     private void Update()
@@ -32,30 +36,6 @@ public sealed class PlayerConsumableController : MonoBehaviour
         TryConsumeSelectedHotbarItem();
     }
 
-    public bool TryGetConsumableCooldown01(ItemData item, out float remainingNormalized)
-    {
-        remainingNormalized = 0f;
-        if (item is not ConsumableItemData consumable)
-            return false;
-
-        var cooldownSeconds = GetCooldownSeconds(consumable);
-        if (cooldownSeconds <= 0f)
-            return false;
-
-        if (!_itemCooldownEndTimes.TryGetValue(item, out var cooldownEndTime))
-            return false;
-
-        var remainingSeconds = cooldownEndTime - Time.time;
-        if (remainingSeconds <= 0f)
-        {
-            _itemCooldownEndTimes.Remove(item);
-            return false;
-        }
-
-        remainingNormalized = Mathf.Clamp01(remainingSeconds / cooldownSeconds);
-        return true;
-    }
-
     private void TryConsumeSelectedHotbarItem()
     {
         var slotIndex = _player.Inventory.SelectedHotbarIndex;
@@ -66,11 +46,11 @@ public sealed class PlayerConsumableController : MonoBehaviour
         if (slotItem.Item is not ConsumableItemData consumable)
             return;
 
-        if (IsOnCooldown(consumable))
+        if (_itemCooldownTrackController != null && _itemCooldownTrackController.IsOnCooldown(consumable))
             return;
 
         ApplyConsumable(consumable);
-        StartCooldown(consumable);
+        _itemCooldownTrackController?.TryStartCooldown(consumable);
         ConsumeOne(slotIndex, slotItem);
     }
 

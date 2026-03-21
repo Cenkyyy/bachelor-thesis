@@ -9,7 +9,7 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : Slot
 
     [Header("Model")]
     [SerializeField] protected Player player;
-    [SerializeField] private PlayerConsumableController _consumableController;
+    [SerializeField] private ItemCooldownTrackController _itemCooldownTrackController;
 
     protected abstract int SlotCount { get; }
     protected abstract int GetInventorySlotIndex(int panelSlotIndex);
@@ -65,27 +65,27 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : Slot
             return;
 
         var slot = slots[panelSlotIndex];
-        if (slot == null || player == null || _consumableController == null)
+        if (slot == null || player == null || _itemCooldownTrackController == null)
         {
-            slot?.SetConsumableCooldownOverlayFill(0f);
+            slot?.SetItemCooldownOverlayFill(0f);
             return;
         }
 
         var inventorySlotIndex = GetInventorySlotIndex(panelSlotIndex);
         if (inventorySlotIndex < 0 || inventorySlotIndex >= player.Inventory.Capacity)
         {
-            slot.SetConsumableCooldownOverlayFill(0f);
+            slot.SetItemCooldownOverlayFill(0f);
             return;
         }
 
         var item = player.Inventory.GetItemAt(inventorySlotIndex);
-        if (item.IsEmpty || !_consumableController.TryGetConsumableCooldown01(item.Item, out var cooldown01))
+        if (item.IsEmpty || !_itemCooldownTrackController.TryGetItemCooldown01(item.Item, out var cooldown01))
         {
-            slot.SetConsumableCooldownOverlayFill(0f);
+            slot.SetItemCooldownOverlayFill(0f);
             return;
         }
 
-        slot.SetConsumableCooldownOverlayFill(cooldown01);
+        slot.SetItemCooldownOverlayFill(cooldown01);
     }
 
     private void RefreshCooldownOverlays()

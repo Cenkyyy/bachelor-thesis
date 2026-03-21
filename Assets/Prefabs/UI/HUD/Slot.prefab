@@ -417,5 +417,5 @@ MonoBehaviour:
   backgroundImage: {fileID: 972452108531623991}
   itemIconImage: {fileID: 719210652328201096}
   itemAmountText: {fileID: 7760605695221254100}
-  _consumableCooldownOverlay: {fileID: 2411370819999119117}
+  _itemCooldownOverlay: {fileID: 2411370819999119117}
   backgroundSprite: {fileID: -4937444523968337394, guid: 658d4c5b4c4862f42abe97527f85a458, type: 3}
