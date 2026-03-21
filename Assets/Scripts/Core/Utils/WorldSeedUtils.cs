@@ -31,4 +31,15 @@ public static class WorldSeedUtils
 
         return Mathf.PerlinNoise(sampleX, sampleY) * 2f - 1f;
     }
+
+    public static int CombineSeed(int seed, int x, int y)
+    {
+        unchecked
+        {
+            uint hash = (uint)seed;
+            hash = (hash ^ (uint)x) * PRIME_FNV1_32;
+            hash = (hash ^ (uint)y) * PRIME_FNV1_32;
+            return (int)hash;
+        }
+    }
 }

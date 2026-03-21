@@ -6,7 +6,7 @@ public class EnemySpawnController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform _player;
     [SerializeField] private Transform _spawnParent;
-    [SerializeField] private WorldGeneratorBehaviour _worldGenerator;
+    [SerializeField] private WorldGenerationController _worldGenerator;
     [SerializeField] private LayerMask _obstacleMask;
 
     [Header("Spawn Data")]
@@ -37,7 +37,7 @@ public class EnemySpawnController : MonoBehaviour
 
         if (_worldGenerator == null)
         {
-            _worldGenerator = FindFirstObjectByType<WorldGeneratorBehaviour>();
+            _worldGenerator = FindFirstObjectByType<WorldGenerationController>();
         }
     }
 

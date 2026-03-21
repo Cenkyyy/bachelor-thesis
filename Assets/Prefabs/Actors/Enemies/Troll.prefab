@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 911937178736591080}
   - component: {fileID: 7851187727804375572}
+  - component: {fileID: 5421431794502325785}
   m_Layer: 7
   m_Name: Collider
   m_TagString: Untagged
@@ -66,8 +67,45 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.003284216, y: -0.23055339}
-  m_Size: {x: 0.7352228, y: 0.77245116}
+  m_Offset: {x: -0.017642736, y: -0.23342507}
+  m_Size: {x: 0.7869135, y: 0.7869135}
+  m_Direction: 0
+--- !u!70 &5421431794502325785
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505801763089019054}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.04307556, y: 0.10050964}
+  m_Size: {x: 0.5861511, y: 0.5861511}
   m_Direction: 0
 --- !u!1 &2304351662522366803
 GameObject:
@@ -561,7 +599,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 790479049
-  m_SortingLayer: 6
+  m_SortingLayer: 4
   m_SortingOrder: 10
   m_Sprite: {fileID: 642152297239799996, guid: 3a7493e6d54dfe343a19a81ec8070550, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

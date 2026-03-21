@@ -4,10 +4,10 @@ using UnityEngine.Tilemaps;
 public sealed class TilemapSpawnWorldQuery : ISpawnWorldQuery
 {
     private readonly Tilemap _groundTilemap;
-    private readonly WorldData _worldData;
+    private readonly WorldRuntimeData _worldData;
     private readonly LayerMask _obstacleMask;
 
-    public TilemapSpawnWorldQuery(Tilemap groundTilemap, WorldData worldData, LayerMask obstacleMask)
+    public TilemapSpawnWorldQuery(Tilemap groundTilemap, WorldRuntimeData worldData, LayerMask obstacleMask)
     {
         _groundTilemap = groundTilemap;
         _worldData = worldData;
@@ -35,7 +35,7 @@ public sealed class TilemapSpawnWorldQuery : ISpawnWorldQuery
             return false;
         }
 
-        var worldTile = _worldData.Tiles[data.x, data.y];
+        var worldTile = _worldData.GetTile(data.x, data.y);
         biome = MapBiome(worldTile.Biome);
         return biome != BiomeAffinity.None;
     }

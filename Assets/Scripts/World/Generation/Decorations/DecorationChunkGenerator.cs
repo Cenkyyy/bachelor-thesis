@@ -7,7 +7,7 @@ using UnityEngine;
 public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionReadinessBlocker
 {
     [Header("Dependencies")]
-    [SerializeField] private WorldGeneratorBehaviour _worldGenerator;
+    [SerializeField] private WorldGenerationController _worldGenerator;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private DecorationsListData _decorationsListData;
     [SerializeField] private Transform _spawnedDecorationsRoot;
@@ -81,9 +81,9 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
                 continue;
             }
 
-            var focusTile = ResolveFocusTile(data);
-            var focusChunk = GetChunkCoordFromTile(focusTile);
-            var desiredChunks = BuildChunkSetInRadius(focusChunk, Mathf.Max(0, _generationRadiusInChunks));
+            var focusTile = WorldChunkUtility.ResolveFocusTile(data, _worldGenerator.GroundTilemap, _playerTransform);
+            var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, _chunkSize);
+            var desiredChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, _generationRadiusInChunks);
 
             int chunkBudget = 0;
             foreach (var chunk in desiredChunks)
@@ -106,11 +106,11 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
         }
     }
 
-    private IEnumerator StreamInitialChunksCoroutine(WorldData data)
+    private IEnumerator StreamInitialChunksCoroutine(WorldRuntimeData data)
     {
-        var focusTile = ResolveFocusTile(data);
-        var focusChunk = GetChunkCoordFromTile(focusTile);
-        var initialChunks = BuildChunkSetInRadius(focusChunk, Mathf.Max(0, _initialGenerationRadiusInChunks));
+        var focusTile = WorldChunkUtility.ResolveFocusTile(data, _worldGenerator.GroundTilemap, _playerTransform);
+        var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, _chunkSize);
+        var initialChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, _initialGenerationRadiusInChunks);
 
         int chunkBudget = 0;
         int perFrameBudget = Mathf.Max(1, _chunksGeneratedPerFrame);
@@ -174,56 +174,7 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
             list.Add(entry);
     }
 
-    private Vector2Int ResolveFocusTile(WorldData data)
-    {
-        if (_playerTransform == null || _worldGenerator.GroundTilemap == null)
-            return data.SpawnTile;
-
-        var playerCell = _worldGenerator.GroundTilemap.WorldToCell(_playerTransform.position);
-        var playerTile = data.CellToData(playerCell);
-        playerTile.x = Mathf.Clamp(playerTile.x, 0, data.Width - 1);
-        playerTile.y = Mathf.Clamp(playerTile.y, 0, data.Height - 1);
-        return playerTile;
-    }
-
-    private Vector2Int GetChunkCoordFromTile(Vector2Int tile)
-    {
-        int safeChunkSize = Mathf.Max(1, _chunkSize);
-        return new Vector2Int(tile.x / safeChunkSize, tile.y / safeChunkSize);
-    }
-
-    private List<Vector2Int> BuildChunkSetInRadius(Vector2Int centerChunk, int radius)
-    {
-        var chunks = new List<Vector2Int>();
-        int sqrRadius = radius * radius;
-        for (int y = -radius; y <= radius; y++)
-        {
-            for (int x = -radius; x <= radius; x++)
-            {
-                int sqrDistance = (x * x) + (y * y);
-                if (sqrDistance > sqrRadius)
-                    continue;
-
-                chunks.Add(new Vector2Int(centerChunk.x + x, centerChunk.y + y));
-            }
-        }
-
-        chunks.Sort((a, b) =>
-        {
-            int ax = a.x - centerChunk.x;
-            int ay = a.y - centerChunk.y;
-            int bx = b.x - centerChunk.x;
-            int by = b.y - centerChunk.y;
-
-            int aDistance = (ax * ax) + (ay * ay);
-            int bDistance = (bx * bx) + (by * by);
-            return aDistance.CompareTo(bDistance);
-        });
-
-        return chunks;
-    }
-
-    private void SpawnChunk(WorldData data, Vector2Int chunkCoord)
+    private void SpawnChunk(WorldRuntimeData data, Vector2Int chunkCoord)
     {
         var placements = GeneratePlacementsForChunk(data, chunkCoord);
         var instances = new List<GameObject>(placements.Count);
@@ -262,7 +213,7 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
         return _spawnedDecorationsRoot;
     }
 
-    private List<DecorationPlacement> GeneratePlacementsForChunk(WorldData data, Vector2Int chunkCoord)
+    private List<DecorationPlacement> GeneratePlacementsForChunk(WorldRuntimeData data, Vector2Int chunkCoord)
     {
         int startX = chunkCoord.x * _chunkSize;
         int startY = chunkCoord.y * _chunkSize;
@@ -272,7 +223,7 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
 
         int width = Mathf.Min(_chunkSize, data.Width - startX);
         int height = Mathf.Min(_chunkSize, data.Height - startY);
-        int chunkSeed = CombineSeed(_worldGenerator.CurrentSeed, chunkCoord.x, chunkCoord.y);
+        int chunkSeed = WorldSeedUtils.CombineSeed(_worldGenerator.CurrentSeed, chunkCoord.x, chunkCoord.y);
         var rng = new System.Random(chunkSeed);
 
         var placements = new List<DecorationPlacement>();
@@ -285,7 +236,7 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
             int worldX = startX + localX;
             int worldY = startY + localY;
 
-            var worldTile = data.Tiles[worldX, worldY];
+            var worldTile = data.GetTile(worldX, worldY);
             if (worldTile.TileType == TileType.Void)
                 continue;
 
@@ -320,7 +271,7 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
         return placements;
     }
 
-    private DecorationPlacement? TryBuildPlacement(WorldData data, DecorationListEntry entry, int tileX, int tileY, Vector2Int chunkCoord, int attemptIndex, List<DecorationPlacement> existing, System.Random rng)
+    private DecorationPlacement? TryBuildPlacement(WorldRuntimeData data, DecorationListEntry entry, int tileX, int tileY, Vector2Int chunkCoord, int attemptIndex, List<DecorationPlacement> existing, System.Random rng)
     {
         string instanceId = BuildInstanceId(entry.DecorationId, chunkCoord, attemptIndex, 0);
 
@@ -343,7 +294,7 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
         };
     }
 
-    private DecorationPlacement? TryBuildClusterPlacement(WorldData data, DecorationListEntry entry, DecorationPlacement center, Vector2Int chunkCoord, int attemptIndex, int clusterIndex, List<DecorationPlacement> existing, System.Random rng)
+    private DecorationPlacement? TryBuildClusterPlacement(WorldRuntimeData data, DecorationListEntry entry, DecorationPlacement center, Vector2Int chunkCoord, int attemptIndex, int clusterIndex, List<DecorationPlacement> existing, System.Random rng)
     {
         float radius = Mathf.Max(0.25f, entry.ClusterRadiusTiles);
         float angle = (float)rng.NextDouble() * Mathf.PI * 2f;
@@ -356,7 +307,7 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
         if (tileX < 0 || tileX >= data.Width || tileY < 0 || tileY >= data.Height)
             return null;
 
-        var tile = data.Tiles[tileX, tileY];
+        var tile = data.GetTile(tileX, tileY);
         if (tile.TileType == TileType.Void)
             return null;
 
@@ -436,7 +387,7 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
         return entries[entries.Count - 1];
     }
 
-    private Vector3 TileToWorldPosition(WorldData data, int tileX, int tileY, float jitterX, float jitterY)
+    private Vector3 TileToWorldPosition(WorldRuntimeData data, int tileX, int tileY, float jitterX, float jitterY)
     {
         if (_worldGenerator.GroundTilemap == null)
             return new Vector3(tileX + jitterX, tileY + jitterY, 0f);
@@ -491,17 +442,6 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
         }
 
         _spawnedChunkInstances.Clear();
-    }
-
-    private static int CombineSeed(int seed, int x, int y)
-    {
-        unchecked
-        {
-            int hash = seed;
-            hash = (hash * 397) ^ x;
-            hash = (hash * 397) ^ y;
-            return hash;
-        }
     }
 
     private static string BuildInstanceId(string decorationId, Vector2Int chunkCoord, int attemptIndex, int clusterIndex)

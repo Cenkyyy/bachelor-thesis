@@ -29,7 +29,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     [SerializeField] private int _revealRadiusTiles = 8;
     [SerializeField] private TileColor[] _tileColors;
 
-    public WorldData WorldData { get; private set; }
+    public WorldRuntimeData WorldData { get; private set; }
     private ExplorationData _exploration;
 
     public Texture2D TerrainTexture { get; private set; }
@@ -41,7 +41,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     private Vector2Int _lastPlayerTile = new Vector2Int(int.MinValue, int.MinValue);
     public bool IsInitialized { get; private set; } = false;
 
-    public void Initialize(WorldData worldData)
+    public void Initialize(WorldRuntimeData worldData)
     {
         WorldData = worldData;
 
@@ -127,7 +127,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
             for (int x = 0; x < w; x++)
             {
                 int index = (y * w) + x;
-                var tileType = WorldData.Tiles[x, y].TileType;
+                var tileType = WorldData.GetTile(x, y).TileType;
 
                 if (!_colorByTile.TryGetValue(tileType, out var col))
                     col = new Color32(0, 0, 0, 255);

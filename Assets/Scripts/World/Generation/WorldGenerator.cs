@@ -41,9 +41,9 @@ public class WorldGenerator
         _settings = settings;
     }
 
-    public WorldData Generate()
+    public WorldRuntimeData Generate()
     {
-        var data = new WorldData(_settings.Width, _settings.Height);
+        var data = new WorldRuntimeData(_settings.Width, _settings.Height);
 
         var worldCenter = new Vector2(_settings.Width * 0.5f, _settings.Height * 0.5f);
         var playableRadiusSq = _settings.PlayableRadius * _settings.PlayableRadius;
@@ -78,7 +78,7 @@ public class WorldGenerator
                 if (distSq > playableRadiusSq)
                 {
                     // Border ring: void tiles
-                    data.Tiles[x, y] = new WorldTile(BiomeType.None, TileType.Void);
+                    data.SetTile(x, y, new WorldTile(BiomeType.None, TileType.Void));
                     continue;
                 }
 
@@ -89,7 +89,7 @@ public class WorldGenerator
                 // Inside that biome, decide concrete tile type
                 var tileType = ChooseVisualTileForBiomeTransition(biome, nearestDifferentBiome.Biome, nearestDistance, nearestDifferentBiomeDistance, x, y);
 
-                data.Tiles[x, y] = new WorldTile(biome, tileType);
+                data.SetTile(x, y, new WorldTile(biome, tileType));
             }
         }
 
@@ -184,7 +184,7 @@ public class WorldGenerator
         }
     }
 
-    private Vector2Int FindSpawnTile(WorldData data, Vector2 desiredPosition)
+    private Vector2Int FindSpawnTile(WorldRuntimeData data, Vector2 desiredPosition)
     {
         int bestX = Mathf.Clamp(Mathf.RoundToInt(desiredPosition.x), 0, data.Width - 1);
         int bestY = Mathf.Clamp(Mathf.RoundToInt(desiredPosition.y), 0, data.Height - 1);
@@ -220,5 +220,5 @@ public class WorldGenerator
         return new Vector2Int(bestX, bestY);
     }
 
-    private bool IsTileWalkable(WorldData data, int x, int y) => data.Tiles[x, y].TileType != TileType.Void;
+    private bool IsTileWalkable(WorldRuntimeData data, int x, int y) => data.GetTile(x, y).TileType != TileType.Void;
 }

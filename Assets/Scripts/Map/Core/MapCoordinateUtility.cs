@@ -3,7 +3,7 @@ using UnityEngine.Tilemaps;
 
 public static class MapCoordinateUtility
 {
-    public static Vector2 WorldToDataNormalized(Tilemap groundTilemap, WorldData worldData, Vector3 worldPosition)
+    public static Vector2 WorldToDataNormalized(Tilemap groundTilemap, WorldRuntimeData worldData, Vector3 worldPosition)
     {
         var cell = groundTilemap.WorldToCell(worldPosition);
         var dataPos = worldData.CellToData(cell);
