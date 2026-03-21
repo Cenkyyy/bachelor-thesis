@@ -71,6 +71,11 @@ public class EnemySpawnController : MonoBehaviour
             return;
         }
 
+        if (!CanSpawnForCurrentDay())
+        {
+            return;
+        }
+
         // Spawn cycle
         _enemySpawner.RunSpawnCycle(playerPosition);
         _nextSpawnTime = DayNightSystem.Instance != null && DayNightSystem.Instance.IsNight 
@@ -104,6 +109,16 @@ public class EnemySpawnController : MonoBehaviour
             default:
                 return new AroundPlayerSpawnStrategy();
         }
+    }
+
+    private bool CanSpawnForCurrentDay()
+    {
+        if (DayNightSystem.Instance == null)
+            return true;
+        if (_settings == null || _settings.IgnoreFirstSpawnDay)
+            return true;
+
+        return DayNightSystem.Instance.CurrentDay >= _settings.FirstSpawnDay;
     }
 
 #if UNITY_EDITOR
