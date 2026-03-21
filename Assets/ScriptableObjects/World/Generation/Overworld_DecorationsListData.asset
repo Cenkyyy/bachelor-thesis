@@ -158,7 +158,7 @@ MonoBehaviour:
     <MaxClusterCount>k__BackingField: 4
     <ClusterRadiusTiles>k__BackingField: 4
   - <DecorationId>k__BackingField: AmethystRift_Tree_Medium
-    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: e07fb582ffbf931498abaf78b7d17399, type: 3}
+    <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: d25f7c315a71ee848bd72e17e52b1734, type: 3}
     <NodeData>k__BackingField: {fileID: 11400000, guid: 33c6e0b6d1e83574592bc697eda4890e, type: 2}
     <Category>k__BackingField: 0
     <Size>k__BackingField: 1

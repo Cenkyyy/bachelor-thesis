@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <RequiredToolType>k__BackingField: 2
   <MinimumTier>k__BackingField: 3
-  <AllowHandMining>k__BackingField: 1
+  <AllowHandMining>k__BackingField: 0
   <MaxDurability>k__BackingField: 10
   <ToolPowerMultiplier>k__BackingField: 1
   _drops: []
