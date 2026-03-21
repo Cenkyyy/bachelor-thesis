@@ -4533,6 +4533,7 @@ MonoBehaviour:
   slotPrefab: {fileID: 3672516636108083546, guid: 965491b462a816446850da639c6b3fef, type: 3}
   slotParent: {fileID: 203007079}
   player: {fileID: 2010244819}
+  _consumableController: {fileID: 317918005633736358}
 --- !u!1 &612149431
 GameObject:
   m_ObjectHideFlags: 0
@@ -8959,6 +8960,7 @@ MonoBehaviour:
   _decorationsListData: {fileID: 11400000, guid: 4dcbe27d436906443b34cdd482169e10, type: 2}
   _spawnedDecorationsRoot: {fileID: 568387668}
   _chunkSize: 32
+  _initialGenerationRadiusInChunks: 4
   _generationRadiusInChunks: 3
   _unloadRadiusInChunks: 5
   _refreshIntervalSeconds: 0.1
@@ -11508,6 +11510,7 @@ MonoBehaviour:
   slotPrefab: {fileID: -2390514043304085740, guid: d259688275a8b9249ab8506420c439a3, type: 3}
   slotParent: {fileID: 121172469}
   player: {fileID: 2010244819}
+  _consumableController: {fileID: 317918005633736358}
 --- !u!1001 &1613794738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16234,6 +16237,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf8d7e971244e9944b43e318ca17d8e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &317918005633736358 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 812989619648883834, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+  m_PrefabInstance: {fileID: 317918005633736356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89bb4038a110a654f8178206d74b2997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807

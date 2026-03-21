@@ -3,6 +3,7 @@ using UnityEngine;
 public class HotbarPanel : InventoryPanelBase<HotbarSlot>
 {
     protected override int SlotCount => player.Inventory.HotbarSize;
+    protected override int GetInventorySlotIndex(int panelSlotIndex) => panelSlotIndex;
 
     private int _selectedIndex = 0;
 
@@ -28,10 +29,9 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
         player.Inventory.OnHotbarSelectionChanged += ChangeSelectedSlot;
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (GameStateManager.IsGamePaused)
-            return;
+        base.Update();
 
         var scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll > 0f)
@@ -64,7 +64,9 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
     {
         if (hotbarIndex >= 0 && hotbarIndex < slots.Length)
         {
-            slots[hotbarIndex].Refresh(player.Inventory.GetItemAt(hotbarIndex));
+            var slotItem = player.Inventory.GetItemAt(hotbarIndex);
+            slots[hotbarIndex].Refresh(slotItem);
+            RefreshCooldownOverlayForPanelSlot(hotbarIndex);
         }
     }
 }

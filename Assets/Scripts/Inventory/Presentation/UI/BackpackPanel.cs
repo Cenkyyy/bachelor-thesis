@@ -1,8 +1,8 @@
-using UnityEngine;
-
 public class BackpackPanel : InventoryPanelBase<Slot>, IMajorPanel
 {
     protected override int SlotCount => player.Inventory.BackpackSize;
+    protected override int GetInventorySlotIndex(int panelSlotIndex) => panelSlotIndex + player.Inventory.HotbarSize;
+
     public bool IsOpen => slotParent.gameObject.activeSelf;
     public PanelId Id => PanelId.Inventory;
     public bool PausesGame => false;
@@ -47,6 +47,7 @@ public class BackpackPanel : InventoryPanelBase<Slot>, IMajorPanel
         if (slotIndex >= 0 && slotIndex < slots.Length)
         {
             slots[slotIndex].Refresh(player.Inventory.GetItemAt(backpackIndex));
+            RefreshCooldownOverlayForPanelSlot(slotIndex);
         }
     }
 }

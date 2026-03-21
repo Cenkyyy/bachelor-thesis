@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Consumes consumables from the selected hotbar slot and applies their instant effects.
@@ -8,6 +9,8 @@ public sealed class PlayerConsumableController : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private PlayerItemStatController _itemStatController;
     [SerializeField] private GameplayInputBindingsData _inputBindings;
+
+    private readonly Dictionary<ItemData, float> _itemCooldownEndTimes = new();
 
     private void Awake()
     {
@@ -29,6 +32,30 @@ public sealed class PlayerConsumableController : MonoBehaviour
         TryConsumeSelectedHotbarItem();
     }
 
+    public bool TryGetConsumableCooldown01(ItemData item, out float remainingNormalized)
+    {
+        remainingNormalized = 0f;
+        if (item is not ConsumableItemData consumable)
+            return false;
+
+        var cooldownSeconds = GetCooldownSeconds(consumable);
+        if (cooldownSeconds <= 0f)
+            return false;
+
+        if (!_itemCooldownEndTimes.TryGetValue(item, out var cooldownEndTime))
+            return false;
+
+        var remainingSeconds = cooldownEndTime - Time.time;
+        if (remainingSeconds <= 0f)
+        {
+            _itemCooldownEndTimes.Remove(item);
+            return false;
+        }
+
+        remainingNormalized = Mathf.Clamp01(remainingSeconds / cooldownSeconds);
+        return true;
+    }
+
     private void TryConsumeSelectedHotbarItem()
     {
         var slotIndex = _player.Inventory.SelectedHotbarIndex;
@@ -39,8 +66,43 @@ public sealed class PlayerConsumableController : MonoBehaviour
         if (slotItem.Item is not ConsumableItemData consumable)
             return;
 
+        if (IsOnCooldown(consumable))
+            return;
+
         ApplyConsumable(consumable);
+        StartCooldown(consumable);
         ConsumeOne(slotIndex, slotItem);
+    }
+
+    private bool IsOnCooldown(ConsumableItemData consumable)
+    {
+        if (GetCooldownSeconds(consumable) <= 0f)
+            return false;
+
+        if (!_itemCooldownEndTimes.TryGetValue(consumable, out var cooldownEndTime))
+            return false;
+
+        if (cooldownEndTime <= Time.time)
+        {
+            _itemCooldownEndTimes.Remove(consumable);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void StartCooldown(ConsumableItemData consumable)
+    {
+        var cooldownSeconds = GetCooldownSeconds(consumable);
+        if (cooldownSeconds <= 0f)
+            return;
+
+        _itemCooldownEndTimes[consumable] = Time.time + cooldownSeconds;
+    }
+
+    private float GetCooldownSeconds(ConsumableItemData consumable)
+    {
+        return consumable.Kind == ConsumableKind.Potion ? consumable.CooldownSeconds : 0f;
     }
 
     private void ApplyConsumable(ConsumableItemData consumable)

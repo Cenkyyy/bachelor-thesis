@@ -9,8 +9,10 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : Slot
 
     [Header("Model")]
     [SerializeField] protected Player player;
+    [SerializeField] private PlayerConsumableController _consumableController;
 
     protected abstract int SlotCount { get; }
+    protected abstract int GetInventorySlotIndex(int panelSlotIndex);
 
     protected T[] slots;
 
@@ -20,6 +22,14 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : Slot
         {
             player.Inventory.OnItemChanged += HandleItemChanged;
         }
+    }
+
+    protected virtual void Update()
+    {
+        if (GameStateManager.IsGamePaused)
+            return;
+
+        RefreshCooldownOverlays();
     }
 
     protected virtual void OnDestroy()
@@ -48,4 +58,44 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : Slot
     protected virtual void HandleSlotClicked(Slot slot, PointerEventData eventData) => ItemInteractionController.Instance?.OnSlotPointerClicked(slot, eventData);
 
     protected virtual void HandleSlotEnter(Slot slot, PointerEventData eventData) => ItemInteractionController.Instance?.OnSlotPointerEnter(slot, eventData);
+
+    protected void RefreshCooldownOverlayForPanelSlot(int panelSlotIndex)
+    {
+        if (slots == null || panelSlotIndex < 0 || panelSlotIndex >= slots.Length)
+            return;
+
+        var slot = slots[panelSlotIndex];
+        if (slot == null || player == null || _consumableController == null)
+        {
+            slot?.SetConsumableCooldownOverlayFill(0f);
+            return;
+        }
+
+        var inventorySlotIndex = GetInventorySlotIndex(panelSlotIndex);
+        if (inventorySlotIndex < 0 || inventorySlotIndex >= player.Inventory.Capacity)
+        {
+            slot.SetConsumableCooldownOverlayFill(0f);
+            return;
+        }
+
+        var item = player.Inventory.GetItemAt(inventorySlotIndex);
+        if (item.IsEmpty || !_consumableController.TryGetConsumableCooldown01(item.Item, out var cooldown01))
+        {
+            slot.SetConsumableCooldownOverlayFill(0f);
+            return;
+        }
+
+        slot.SetConsumableCooldownOverlayFill(cooldown01);
+    }
+
+    private void RefreshCooldownOverlays()
+    {
+        if (slots == null)
+            return;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            RefreshCooldownOverlayForPanelSlot(i);
+        }
+    }
 }

@@ -11,6 +11,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     [SerializeField] protected Image backgroundImage;
     [SerializeField] protected Image itemIconImage;
     [SerializeField] protected TMP_Text itemAmountText;
+    [SerializeField] private Image _consumableCooldownOverlay;
 
     [Header("Sprites")]
     [SerializeField] protected Sprite backgroundSprite;
@@ -86,6 +87,21 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
             itemAmountText.text = string.Empty;
             itemAmountText.gameObject.SetActive(false);
         }
+
+        SetConsumableCooldownOverlayFill(fill01: 0f);
+    }
+
+    public void SetConsumableCooldownOverlayFill(float fill01)
+    {
+        if (_consumableCooldownOverlay == null)
+            return;
+
+        var clampedFill = Mathf.Clamp01(fill01);
+        var showOverlay = clampedFill > 0f && itemIconImage != null && itemIconImage.enabled;
+
+        _consumableCooldownOverlay.gameObject.SetActive(showOverlay);
+        if (showOverlay)
+            _consumableCooldownOverlay.fillAmount = clampedFill;
     }
 
     public void OnPointerClick(PointerEventData eventData)

@@ -11,6 +11,9 @@ public class ConsumableItemData : ItemData
     [field: SerializeField] public int RestoreMana { get; private set; }
     [field: SerializeField] public int RestoreHunger { get; private set; }
 
+    [field: Header("Usage")]
+    [field: SerializeField, Min(0f)] public float CooldownSeconds { get; private set; }
+
     [field: Header("Optional Timed Effects")]
     [field: SerializeField] public float EffectDurationSeconds { get; private set; }
     [SerializeField] private List<ItemStatModifier> _timedModifiers = new();
@@ -38,5 +41,8 @@ public class ConsumableItemData : ItemData
 
         if (EffectDurationSeconds < 0f)
             EffectDurationSeconds = 0f;
+
+        if (CooldownSeconds < 0f)
+            CooldownSeconds = 0f;
     }
 }

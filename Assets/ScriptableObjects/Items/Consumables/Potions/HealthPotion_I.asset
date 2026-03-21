@@ -23,5 +23,6 @@ MonoBehaviour:
   <RestoreHealth>k__BackingField: 50
   <RestoreMana>k__BackingField: 0
   <RestoreHunger>k__BackingField: 0
+  <CooldownSeconds>k__BackingField: 5
   <EffectDurationSeconds>k__BackingField: 0
   _timedModifiers: []

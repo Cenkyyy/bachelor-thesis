@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bedroll
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Bedroll
-  <Icon>k__BackingField: {fileID: 5214554162266237324, guid: e13225e88ec1dcf4e825ec2ff94f84c2, type: 3}
+  <Icon>k__BackingField: {fileID: 5312805574595449782, guid: becfb77c229afda49bb73cfd134ac235, type: 3}
   <Description>k__BackingField: A bedroll for sleeping, to enter the parallel world
   <Category>k__BackingField: 6
   <Rarity>k__BackingField: 0
