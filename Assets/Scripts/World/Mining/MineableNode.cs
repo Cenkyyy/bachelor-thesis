@@ -21,6 +21,7 @@ public sealed class MineableNode : MonoBehaviour
 
     public event Action<float> OnMiningProgressChanged;
     public event Action OnMiningStopped;
+    public event Action<MineableNode> OnDepleted;
 
     private void Awake()
     {
@@ -98,6 +99,7 @@ public sealed class MineableNode : MonoBehaviour
             TryDropLoot(player, dropSpawner);
         }
 
+        OnDepleted?.Invoke(this);
         OnMiningStopped?.Invoke();
         Destroy(gameObject);
     }
