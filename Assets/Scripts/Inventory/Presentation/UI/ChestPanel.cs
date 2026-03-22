@@ -37,10 +37,11 @@ public sealed class ChestPanel : MonoBehaviour, IMajorPanel
     }
 
     public void Open()
-    { 
+    {
         _slotParent.gameObject.SetActive(true);
         RefreshAllSlots();
     }
+
     public void Close() 
     { 
         _slotParent.gameObject.SetActive(false);
@@ -48,7 +49,7 @@ public sealed class ChestPanel : MonoBehaviour, IMajorPanel
 
     private void BuildSlots()
     {
-        if (Inventory == null || _slotPrefab == null || _slotParent == null) 
+        if (Inventory == null || _slotPrefab == null || _slotParent == null)
             return;
 
         _slots = new Slot[Inventory.Capacity];
@@ -58,6 +59,8 @@ public sealed class ChestPanel : MonoBehaviour, IMajorPanel
             _slots[i].Bind(Inventory, i, Inventory.GetItemAt(i));
             _slots[i].OnPointerClicked += HandleSlotClicked;
             _slots[i].OnPointerEntered += HandleSlotEnter;
+            _slots[i].OnPointerExited += HandleSlotExit;
+            _slots[i].OnSlotDisabled += HandleSlotDisabled;
         }
     }
 
@@ -66,13 +69,16 @@ public sealed class ChestPanel : MonoBehaviour, IMajorPanel
         if (_slots == null)
             return;
 
-        foreach (var s in _slots)
+        foreach (var slot in _slots)
         {
-            if (s == null) 
+            if (slot == null)
                 continue;
-            s.OnPointerClicked -= HandleSlotClicked;
-            s.OnPointerEntered -= HandleSlotEnter;
-            Destroy(s.gameObject);
+
+            slot.OnPointerClicked -= HandleSlotClicked;
+            slot.OnPointerEntered -= HandleSlotEnter;
+            slot.OnPointerExited -= HandleSlotExit;
+            slot.OnSlotDisabled -= HandleSlotDisabled;
+            Destroy(slot.gameObject);
         }
         _slots = null;
     }
@@ -88,12 +94,27 @@ public sealed class ChestPanel : MonoBehaviour, IMajorPanel
     private void HandleSlotClicked(Slot slot, PointerEventData evt) =>
         ItemInteractionController.Instance?.OnSlotPointerClicked(slot, evt);
 
-    private void HandleSlotEnter(Slot slot, PointerEventData evt) =>
+    private void HandleSlotEnter(Slot slot, PointerEventData evt)
+    {
         ItemInteractionController.Instance?.OnSlotPointerEnter(slot, evt);
+        ItemTooltipController.Instance?.OnSlotPointerEnter(slot, evt);
+    }
+
+    private void HandleSlotExit(Slot slot, PointerEventData evt)
+    {
+        ItemTooltipController.Instance?.OnSlotPointerExit(slot, evt);
+    }
+
+    private void HandleSlotDisabled(Slot slot)
+    {
+        ItemTooltipController.Instance?.OnSlotDisabled(slot);
+    }
 
     public void RefreshSlot(int index)
     {
-        if (_slots == null || index < 0 || index >= _slots.Length) return;
+        if (_slots == null || index < 0 || index >= _slots.Length) 
+            return;
+        
         _slots[index].Refresh(Inventory.GetItemAt(index));
     }
 

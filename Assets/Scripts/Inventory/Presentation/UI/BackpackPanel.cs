@@ -26,6 +26,8 @@ public class BackpackPanel : InventoryPanelBase<Slot>, IMajorPanel
             // subscribe to events
             slots[i].OnPointerClicked += HandleSlotClicked;
             slots[i].OnPointerEntered += HandleSlotEnter;
+            slots[i].OnPointerExited += HandleSlotExit;
+            slots[i].OnSlotDisabled += HandleSlotDisabled;
         }
 
         slotParent.gameObject.SetActive(wasActive);

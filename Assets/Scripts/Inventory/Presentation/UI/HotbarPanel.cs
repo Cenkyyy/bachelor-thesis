@@ -21,6 +21,8 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
             // subscribe to slot ui events
             slots[i].OnPointerClicked += HandleSlotClicked;
             slots[i].OnPointerEntered += HandleSlotEnter;
+            slots[i].OnPointerExited += HandleSlotExit;
+            slots[i].OnSlotDisabled += HandleSlotDisabled;
         }
 
         slots[_selectedIndex].HighlightSelected();

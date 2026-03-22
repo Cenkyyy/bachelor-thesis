@@ -45,8 +45,11 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : Slot
             {
                 if (slots[i] == null)
                     continue;
+
                 slots[i].OnPointerClicked -= HandleSlotClicked;
                 slots[i].OnPointerEntered -= HandleSlotEnter;
+                slots[i].OnPointerExited -= HandleSlotExit;
+                slots[i].OnSlotDisabled -= HandleSlotDisabled;
             }
         }
     }
@@ -57,7 +60,21 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : Slot
 
     protected virtual void HandleSlotClicked(Slot slot, PointerEventData eventData) => ItemInteractionController.Instance?.OnSlotPointerClicked(slot, eventData);
 
-    protected virtual void HandleSlotEnter(Slot slot, PointerEventData eventData) => ItemInteractionController.Instance?.OnSlotPointerEnter(slot, eventData);
+    protected virtual void HandleSlotEnter(Slot slot, PointerEventData eventData)
+    {
+        ItemInteractionController.Instance?.OnSlotPointerEnter(slot, eventData);
+        ItemTooltipController.Instance?.OnSlotPointerEnter(slot, eventData);
+    }
+
+    protected virtual void HandleSlotExit(Slot slot, PointerEventData eventData)
+    {
+        ItemTooltipController.Instance?.OnSlotPointerExit(slot, eventData);
+    }
+
+    protected virtual void HandleSlotDisabled(Slot slot)
+    {
+        ItemTooltipController.Instance?.OnSlotDisabled(slot);
+    }
 
     protected void RefreshCooldownOverlayForPanelSlot(int panelSlotIndex)
     {

@@ -43,6 +43,8 @@ public sealed class CharacterPanel : MonoBehaviour, IPanel
             _slots[i].Bind(_player.Equipment, inventoryIndex, _player.Equipment.GetItemAt(inventoryIndex));
             _slots[i].OnPointerClicked += HandleSlotClicked;
             _slots[i].OnPointerEntered += HandleSlotEnter;
+            _slots[i].OnPointerExited += HandleSlotExit;
+            _slots[i].OnSlotDisabled += HandleSlotDisabled;
         }
     }
 
@@ -58,6 +60,8 @@ public sealed class CharacterPanel : MonoBehaviour, IPanel
             
             slot.OnPointerClicked -= HandleSlotClicked;
             slot.OnPointerEntered -= HandleSlotEnter;
+            slot.OnPointerExited -= HandleSlotExit;
+            slot.OnSlotDisabled -= HandleSlotDisabled;
         }
     }
 
@@ -79,7 +83,8 @@ public sealed class CharacterPanel : MonoBehaviour, IPanel
         for (int i = 0; i < _slots.Length; i++)
         {
             var slot = _slots[i];
-            if (!slot) continue;
+            if (!slot) 
+                continue;
 
             if (!_player.Equipment.TryGetIndexForSlotType(slot.SlotType, out int inventoryIndex))
                 continue;
@@ -95,6 +100,19 @@ public sealed class CharacterPanel : MonoBehaviour, IPanel
     private void HandleSlotClicked(Slot slot, PointerEventData evt) =>
         ItemInteractionController.Instance?.OnSlotPointerClicked(slot, evt);
 
-    private void HandleSlotEnter(Slot slot, PointerEventData evt) =>
+    private void HandleSlotEnter(Slot slot, PointerEventData evt)
+    {
         ItemInteractionController.Instance?.OnSlotPointerEnter(slot, evt);
+        ItemTooltipController.Instance?.OnSlotPointerEnter(slot, evt);
+    }
+
+    private void HandleSlotExit(Slot slot, PointerEventData evt)
+    {
+        ItemTooltipController.Instance?.OnSlotPointerExit(slot, evt);
+    }
+
+    private void HandleSlotDisabled(Slot slot)
+    {
+        ItemTooltipController.Instance?.OnSlotDisabled(slot);
+    }
 }

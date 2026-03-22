@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
-public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
+public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("UI References")]
     [SerializeField] protected Image backgroundImage;
@@ -19,9 +19,10 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     public IReadOnlyInventory Owner { get; private set; }
     public int SlotIndex { get; private set; } = -1;
 
-    // Events
     public event Action<Slot, PointerEventData> OnPointerClicked;
     public event Action<Slot, PointerEventData> OnPointerEntered;
+    public event Action<Slot, PointerEventData> OnPointerExited;
+    public event Action<Slot> OnSlotDisabled;
 
     private void Awake()
     {
@@ -31,6 +32,11 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         }
 
         Clear();
+    }
+
+    private void OnDisable()
+    {
+        OnSlotDisabled?.Invoke(this);
     }
 
     public virtual void Bind(IReadOnlyInventory owner, int index, InventoryItem item)
@@ -55,7 +61,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
             itemIconImage.sprite = item.Item.Icon;
         }
 
-        if (item.Item.IsStackable && item.Amount > 1) 
+        if (item.Item.IsStackable && item.Amount > 1)
         {
             // show item amount text if amount is greater than 1
             if (itemAmountText != null)
@@ -64,7 +70,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
                 itemAmountText.gameObject.SetActive(true);
             }
         }
-        else 
+        else
         {
             // hide item amount text if amount is 1 or less
             if (itemAmountText != null)
@@ -109,8 +115,13 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         OnPointerClicked?.Invoke(this, eventData);
     }
 
-    public void OnPointerEnter(PointerEventData eventData) 
+    public void OnPointerEnter(PointerEventData eventData)
     {
         OnPointerEntered?.Invoke(this, eventData);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnPointerExited?.Invoke(this, eventData);
     }
 }
