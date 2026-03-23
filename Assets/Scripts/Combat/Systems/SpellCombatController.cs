@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,11 @@ public class SpellCombatController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Player _player;
     [SerializeField] private SpellCastingPanelController _castingPanel;
+    [SerializeField] private WorldTextPopupEmitter _feedbackPopup;
+
+    [Header("Feedback")]
+    [SerializeField] private string _castOnCooldownMessage = "Spell is recharging";
+    [SerializeField] private string _insufficientManaMessage = "Need to restore mana";
 
     [Header("Targeting")]
     [SerializeField] private LayerMask _targetMask;
@@ -48,6 +54,8 @@ public class SpellCombatController : MonoBehaviour
     private ContactFilter2D _targetFilter;
     private float _nextCastAllowedAt;
 
+    public event Action<SpellPhrase> OnSpellCastCommitted;
+
     private void Awake()
     {
         _targetFilter = new ContactFilter2D
@@ -76,7 +84,11 @@ public class SpellCombatController : MonoBehaviour
             return;
 
         if (Time.time < _nextCastAllowedAt)
+        {
+            _feedbackPopup.ShowMessage(_castOnCooldownMessage);
             return;
+        }
+
 
         var formSettings = _settings.GetFormSettings(phrase.Form.Value);
         var modifierSettings = _settings.GetModifierSettings(phrase.Modifier.Value);
@@ -84,11 +96,18 @@ public class SpellCombatController : MonoBehaviour
         var manaCost = formSettings.ManaCost + modifierSettings.AdditionalManaCost;
         var cooldown = formSettings.CooldownSeconds + modifierSettings.AdditionalCooldownSeconds;
 
-        if (_player.Data.CurrentMana < manaCost)
+        if (_player == null || _player.Data == null)
             return;
+
+        if (_player.Data.CurrentMana < manaCost)
+        {
+            _feedbackPopup.ShowMessage(_insufficientManaMessage);
+            return;
+        }
 
         _player.Data.UseMana(manaCost);
         _nextCastAllowedAt = Time.time + cooldown;
+        OnSpellCastCommitted?.Invoke(phrase);
 
         var castState = new CastState(
             phrase.Modifier.Value,

@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 4403078374656698331}
   - component: {fileID: 6731827953367733980}
   - component: {fileID: 4319894653538523301}
+  - component: {fileID: 4686141728631495212}
   - component: {fileID: 3171962435665915792}
   - component: {fileID: 2737436318412507732}
   - component: {fileID: 5815203664740908025}
@@ -140,7 +141,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 2259951683026114348}
   m_BodyType: 0
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
@@ -305,6 +306,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
   _castingPanel: {fileID: 0}
+  _feedbackPopup: {fileID: 4686141728631495212}
+  _insufficientManaMessage: Need to restore mana
   _targetMask:
     serializedVersion: 2
     m_Bits: 128
@@ -359,6 +362,29 @@ MonoBehaviour:
     MaxReclaimsPerCast: 2
     PoisonCloudRadius: 1.9
     PoisonCloudDuration: 4
+--- !u!114 &4686141728631495212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1971731234e694f4ab34acd03d85fe09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localOffset: {x: 0, y: 0.5, z: 0}
+  _textColor: {r: 1, g: 1, b: 1, a: 1}
+  _fontSize: 2.5
+  _fontAsset: {fileID: 11400000, guid: b38523a5958474b49b379ba60931379c, type: 2}
+  _inheritHostRendererSorting: 1
+  _sortingOrderOffset: 10
+  _sortingLayerName: Default
+  _sortingOrder: 50
+  _duration: 1.2
+  _riseDistance: 0.5
+  _cooldownSeconds: 2.5
 --- !u!114 &3171962435665915792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950b57fd1e315c14e8b91016ffc7fdb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _castingPanel: {fileID: 0}
+  _spellCombatController: {fileID: 4319894653538523301}
   _vfxData: {fileID: 11400000, guid: d596ae22048838d4ba36735254e29ae2, type: 2}
   _spawnOrigin: {fileID: 3689139185868277431}
   _barrageInterval: 0.08
@@ -398,8 +424,8 @@ MonoBehaviour:
   _searchRadius: 3
   _deathFadeRoot: {fileID: 0}
   _deathFadeCanvasGroup: {fileID: 0}
-  _fadeInDuration: 0.6
-  _fadeOutDuration: 0.6
+  _fadeInDuration: 1.25
+  _fadeOutDuration: 1.25
   _maxFadeDeltaTime: 0.05
 --- !u!114 &5815203664740908025
 MonoBehaviour:

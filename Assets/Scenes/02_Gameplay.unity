@@ -16900,14 +16900,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 669887592}
     - target: {fileID: 2737436318412507732, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _fadeInDuration
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2737436318412507732, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _fadeOutDuration
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2737436318412507732, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _deathDropController
       value: 
       objectReference: {fileID: 612149436}
@@ -16915,10 +16907,6 @@ PrefabInstance:
       propertyPath: _deathFadeCanvasGroup
       value: 
       objectReference: {fileID: 669887594}
-    - target: {fileID: 3171962435665915792, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _castingPanel
-      value: 
-      objectReference: {fileID: 192015840}
     - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _uiRaycaster
       value: 
@@ -16939,14 +16927,6 @@ PrefabInstance:
       propertyPath: _itemDropSpawner
       value: 
       objectReference: {fileID: 2031400805}
-    - target: {fileID: 3689139185868277431, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3689139185868277431, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3689139185868277431, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -16991,6 +16971,22 @@ PrefabInstance:
       propertyPath: _castingPanel
       value: 
       objectReference: {fileID: 192015840}
+    - target: {fileID: 4686141728631495212, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _duration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4686141728631495212, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _cooldownSeconds
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4686141728631495212, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _sortingLayerName
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4686141728631495212, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _inheritHostRendererSorting
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5815203664740908025, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _camera
       value: 
@@ -16999,34 +16995,11 @@ PrefabInstance:
       propertyPath: _worldGrid
       value: 
       objectReference: {fileID: 1097722627}
-    - target: {fileID: 6067396949842947324, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: m_BodyType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067396949842947324, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: m_UseFullKinematicContacts
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8811410057483689384, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _playerMovement
-      value: 
-      objectReference: {fileID: 317918005633736357}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
---- !u!114 &317918005633736357 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6858055649506359506, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-  m_PrefabInstance: {fileID: 317918005633736356}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf8d7e971244e9944b43e318ca17d8e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &317918005633736358 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 585030241615801583, guid: 7998bc0df66461f41b18e80565be354d, type: 3}

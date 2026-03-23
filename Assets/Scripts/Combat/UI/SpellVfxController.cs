@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpellVfxController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private SpellCastingPanelController _castingPanel;
+    [SerializeField] private SpellCombatController _spellCombatController;
     [SerializeField] private SpellVfxData _vfxData;
 
     [Header("Spawning")]
@@ -14,17 +14,17 @@ public class SpellVfxController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_castingPanel != null)
-            _castingPanel.OnPhraseCompleted += HandlePhraseCompleted;
+        if (_spellCombatController != null)
+            _spellCombatController.OnSpellCastCommitted += HandleSpellCastCommitted;
     }
 
     private void OnDisable()
     {
-        if (_castingPanel != null)
-            _castingPanel.OnPhraseCompleted -= HandlePhraseCompleted;
+        if (_spellCombatController != null)
+            _spellCombatController.OnSpellCastCommitted -= HandleSpellCastCommitted;
     }
 
-    private void HandlePhraseCompleted(SpellPhrase phrase)
+    private void HandleSpellCastCommitted(SpellPhrase phrase)
     {
         if (!phrase.IsComplete || _vfxData == null || _vfxData.BaseSpellPrefab == null)
             return;
