@@ -23,8 +23,7 @@ public class WorldGenerator
         public int Width;
         public int Height;
 
-        public float PlayableRadius;
-        public float BorderThickness;
+        public IWorldShape WorldShape;
         public int Seed;
 
         public float TransitionBandWidthTiles;
@@ -45,11 +44,6 @@ public class WorldGenerator
     {
         var data = new WorldRuntimeData(_settings.Width, _settings.Height);
 
-        var worldCenter = new Vector2(_settings.Width * 0.5f, _settings.Height * 0.5f);
-        var playableRadiusSq = _settings.PlayableRadius * _settings.PlayableRadius;
-        var borderOuterRadius = _settings.PlayableRadius + Mathf.Max(0f, _settings.BorderThickness);
-        var borderOuterRadiusSq = borderOuterRadius * borderOuterRadius;
-
         // Prepare biome centers
         var centers = _settings.BiomeCenters;
         if (centers == null || centers.Count == 0)
@@ -65,17 +59,13 @@ public class WorldGenerator
                 // Center of this tile
                 var tileCenter = new Vector2(x + 0.5f, y + 0.5f);
 
-                // Check if inside circular world
-                var offset = tileCenter - worldCenter;
-                var distSq = offset.sqrMagnitude;
-
-                if (distSq > borderOuterRadiusSq)
+                if (!_settings.WorldShape.IsInsideBorder(tileCenter))
                 {
                     // Outside border ring: skip
                     continue;
                 }
 
-                if (distSq > playableRadiusSq)
+                if (!_settings.WorldShape.IsInsidePlayable(tileCenter))
                 {
                     // Border ring: void tiles
                     data.SetTile(x, y, new WorldTile(BiomeType.None, TileType.Void));
@@ -94,7 +84,7 @@ public class WorldGenerator
         }
 
         // Compute spawn tile near world center
-        data.SpawnTile = FindSpawnTile(data, worldCenter);
+        data.SpawnTile = FindSpawnTile(data, _settings.WorldShape.Center);
 
         return data;
     }

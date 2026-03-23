@@ -89,7 +89,6 @@ public class SpellCombatController : MonoBehaviour
             return;
         }
 
-
         var formSettings = _settings.GetFormSettings(phrase.Form.Value);
         var modifierSettings = _settings.GetModifierSettings(phrase.Modifier.Value);
 

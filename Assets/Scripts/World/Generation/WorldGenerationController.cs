@@ -12,8 +12,6 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
 
     [Header("Tilemaps")]
     [SerializeField] private Tilemap _groundTilemap;
-    [SerializeField] private Tilemap _walkableDecorationTilemap;
-    [SerializeField] private Tilemap _nonWalkableDecorationTilemap;
     [SerializeField] private Tilemap _borderTilemap;
 
     [Header("Tiles")]
@@ -135,17 +133,18 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
     {
         IsReadyForSceneReveal = false;
 
+        var worldShape = CreateWorldShape(_worldWidth, _worldHeight, _borderThickness, _playableRadius);
+
         var settings = new WorldGenerator.Settings
         {
-            Width = Mathf.Max(1, _worldWidth),
-            Height = Mathf.Max(1, _worldHeight),
-            PlayableRadius = Mathf.Max(1, _playableRadius),
-            BorderThickness = Mathf.Max(0, _borderThickness),
+            Width = _worldWidth,
+            Height = _worldHeight,
+            WorldShape = worldShape,
             Seed = seedUsed,
             TransitionBandWidthTiles = Mathf.Max(0f, _biomeTransitionBandWidthTiles),
             TransitionNoiseScale = Mathf.Max(0.001f, _biomeTransitionNoiseScale),
             TransitionDisplacementTiles = Mathf.Max(0f, _biomeTransitionDisplacementTiles),
-            BiomeCenters = CreateBiomeCenters(seedUsed)
+            BiomeCenters = CreateBiomeCenters(seedUsed, worldShape)
         };
 
         var generateTask = Task.Run(() =>
@@ -193,37 +192,36 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
         return _defaultSeed;
     }
 
-    private List<WorldGenerator.BiomeCenter> CreateBiomeCenters(int seedUsed)
+    private List<WorldGenerator.BiomeCenter> CreateBiomeCenters(int seedUsed, IWorldShape worldShape)
     {
         var rng = new System.Random(seedUsed);
         var centers = new List<WorldGenerator.BiomeCenter>(Mathf.Max(1, _biomeCenterCount));
         var centerPositions = new List<Vector2>(Mathf.Max(1, _biomeCenterCount));
         var allowedBiomes = GetAllowedBiomes();
-        var worldCenter = new Vector2(_worldWidth * 0.5f, _worldHeight * 0.5f);
 
-        Vector2 firstCenter = RandomPointInCircle(rng, worldCenter, _playableRadius);
-        firstCenter = JitterInsideCircle(rng, firstCenter, worldCenter, _playableRadius);
+        Vector2 firstCenter = worldShape.SamplePoint(rng);
+        firstCenter = JitterInsideWorldShape(rng, firstCenter, worldShape);
         centerPositions.Add(firstCenter);
-        centers.Add(new WorldGenerator.BiomeCenter(firstCenter, PickBiomeByRadius(rng, firstCenter, worldCenter, _playableRadius, allowedBiomes)));
+        centers.Add(new WorldGenerator.BiomeCenter(firstCenter, PickBiomeByDistance(rng, firstCenter, worldShape, allowedBiomes)));
 
         int targetCount = Mathf.Max(1, _biomeCenterCount);
         int candidateCount = Mathf.Max(4, _centerSamplingCandidates);
 
         while (centers.Count < targetCount)
         {
-            var sampledPosition = SampleD2Center(rng, worldCenter, _playableRadius, centerPositions, candidateCount);
-            sampledPosition = JitterInsideCircle(rng, sampledPosition, worldCenter, _playableRadius);
+            var sampledPosition = SampleD2Center(rng, worldShape, centerPositions, candidateCount);
+            sampledPosition = JitterInsideWorldShape(rng, sampledPosition, worldShape);
             centerPositions.Add(sampledPosition);
-            centers.Add(new WorldGenerator.BiomeCenter(sampledPosition, PickBiomeByRadius(rng, sampledPosition, worldCenter, _playableRadius, allowedBiomes)));
+            centers.Add(new WorldGenerator.BiomeCenter(sampledPosition, PickBiomeByDistance(rng, sampledPosition, worldShape, allowedBiomes)));
         }
 
         return centers;
     }
 
-    private Vector2 SampleD2Center(System.Random rng, Vector2 worldCenter, float playableRadius, List<Vector2> existingCenters, int candidateCount)
+    private Vector2 SampleD2Center(System.Random rng, IWorldShape worldShape, List<Vector2> existingCenters, int candidateCount)
     {
         if (existingCenters == null || existingCenters.Count == 0)
-            return RandomPointInCircle(rng, worldCenter, playableRadius);
+            return worldShape.SamplePoint(rng);
 
         var candidates = new Vector2[candidateCount];
         var distances = new float[candidateCount];
@@ -233,7 +231,7 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
         // and store it inside the distances array. The total weight is the sum of all distances, which is used to pick a candidate randomly with a probability proportional to its distance.
         for (int i = 0; i < candidateCount; i++)
         {
-            var candidate = RandomPointInCircle(rng, worldCenter, playableRadius);
+            var candidate = worldShape.SamplePoint(rng);
             candidates[i] = candidate;
 
             float minDistSq = float.MaxValue;
@@ -263,40 +261,28 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
         return candidates[candidates.Length - 1];
     }
 
-    private Vector2 JitterInsideCircle(System.Random rng, Vector2 point, Vector2 circleCenter, float radius)
+    private Vector2 JitterInsideWorldShape(System.Random rng, Vector2 point, IWorldShape worldShape)
     {
         if (_centerJitter <= 0f)
             return point;
 
-        float angle = (float)(rng.NextDouble() * Mathf.PI * 2f);
-        float distance = (float)rng.NextDouble() * _centerJitter;
-        var jitter = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
-        var jittered = point + jitter;
+        int maxJitterAttempts = 8;
+        for (int attempt = 0; attempt < maxJitterAttempts; attempt++)
+        {
+            float angle = (float)(rng.NextDouble() * Mathf.PI * 2f);
+            float distance = (float)rng.NextDouble() * _centerJitter;
+            var jitter = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
+            var jittered = point + jitter;
+            if (worldShape.IsInsidePlayable(jittered))
+                return jittered;
+        }
 
-        var offset = jittered - circleCenter;
-        float offsetMagnitude = offset.magnitude;
-        if (offsetMagnitude <= radius)
-            return jittered;
-
-        if (offsetMagnitude <= Mathf.Epsilon)
-            return circleCenter;
-
-        return circleCenter + offset / offsetMagnitude * radius;
+        return point;
     }
 
-    private Vector2 RandomPointInCircle(System.Random rng, Vector2 center, float radius)
+    private BiomeType PickBiomeByDistance(System.Random rng, Vector2 position, IWorldShape worldShape, BiomeType[] allowedBiomes)
     {
-        float angle = (float)(rng.NextDouble() * Mathf.PI * 2f);
-        float distance = Mathf.Sqrt((float)rng.NextDouble()) * radius;
-        return center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
-    }
-
-    private BiomeType PickBiomeByRadius(System.Random rng, Vector2 position, Vector2 worldCenter, float playableRadius, BiomeType[] allowedBiomes)
-    {
-        if (playableRadius <= Mathf.Epsilon)
-            return BiomeType.Grassland;
-
-        var normalizedRadius = Mathf.Clamp01((position - worldCenter).magnitude / playableRadius);
+        var normalizedRadius = worldShape.GetNormalizedDistanceFromCenter(position);
 
         if (normalizedRadius <= _innerRingMaxNormalizedRadius)
             return BiomeType.Grassland;
@@ -305,6 +291,11 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
             return PickWeightedBiome(rng, _middleRingWeights, allowedBiomes);
 
         return PickWeightedBiome(rng, _outerRingWeights, allowedBiomes);
+    }
+
+    private IWorldShape CreateWorldShape(int worldWidth, int worldHeight, int borderThickness, int playableRadius)
+    {
+        return new CircularWorldShape(worldWidth, worldHeight, playableRadius, borderThickness);
     }
 
     private BiomeType PickWeightedBiome(System.Random rng, RadialBiomeWeights weights, BiomeType[] allowedBiomes)
@@ -400,8 +391,6 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
     {
         _renderedChunks.Clear();
         _groundTilemap.ClearAllTiles();
-        _walkableDecorationTilemap.ClearAllTiles();
-        _nonWalkableDecorationTilemap.ClearAllTiles();
         _borderTilemap.ClearAllTiles();
 
         yield return null;
