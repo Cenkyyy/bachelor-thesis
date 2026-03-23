@@ -4745,7 +4745,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deathChestPrefab: {fileID: 5999568118665831840, guid: 9ae8e68182fbe8a40b871d5768156549, type: 3}
+  _deathChestPrefabCollider: {fileID: 3429509149576730832, guid: 9ae8e68182fbe8a40b871d5768156549, type: 3}
   _deathChestParent: {fileID: 2002939701}
+  _placementObstacleMask:
+    serializedVersion: 2
+    m_Bits: 1408
+  _placementStepDistance: 0.25
+  _placementSearchRadius: 3
 --- !u!114 &612149436
 MonoBehaviour:
   m_ObjectHideFlags: 0

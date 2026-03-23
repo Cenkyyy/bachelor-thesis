@@ -12,6 +12,11 @@ public sealed class PlayerRespawnController : MonoBehaviour
     [Tooltip("Optional explicit default spawn point. If empty, current player position at Start is used")]
     [SerializeField] private Transform _defaultSpawnPoint;
 
+    [Header("Respawn Placement")]
+    [SerializeField] private LayerMask _respawnObstacleMask = ~0;
+    [SerializeField, Min(0.01f)] private float _respawnProbeRadius = 0.25f;
+    [SerializeField, Min(1)] private int _searchRadius = 3;
+
     [Header("Death Fade")]
     [SerializeField] private GameObject _deathFadeRoot;
     [SerializeField] private CanvasGroup _deathFadeCanvasGroup;
@@ -67,7 +72,7 @@ public sealed class PlayerRespawnController : MonoBehaviour
         if (!IsDefeated)
             return;
 
-        _playerTransform.position = _player.Data.SpawnPoint;
+        _playerTransform.position = GetSafeRespawnPosition(_player.Data.SpawnPoint);
 
         if (_playerTransform.TryGetComponent<Rigidbody2D>(out var body))
         {
@@ -82,6 +87,38 @@ public sealed class PlayerRespawnController : MonoBehaviour
 
         IsDefeated = false;
         OnRespawned?.Invoke();
+    }
+
+    private Vector3 GetSafeRespawnPosition(Vector3 spawnPoint)
+    {
+        // in case the spawn point has obstacle on it (e.g. death chest, spawn the player to the closest free tile)
+        if (!HasObstacleAt(spawnPoint))
+            return spawnPoint;
+
+        // iterate through all radii starting from 1 to max search radius
+        // and check if the position has an obstacle on it, if not, spawn the player there
+        for (var radius = 1; radius <= _searchRadius; radius++)
+        {
+            for (var y = -radius; y <= radius; y++)
+            {
+                for (var x = -radius; x <= radius; x++)
+                {
+                    if (x == 0 && y == 0)
+                        continue;
+
+                    var candidate = spawnPoint + new Vector3(x, y, 0f);
+                    if (!HasObstacleAt(candidate))
+                        return candidate;
+                }
+            }
+        }
+
+        return spawnPoint;
+    }
+
+    private bool HasObstacleAt(Vector3 worldPoint)
+    {
+        return Physics2D.OverlapCircle(worldPoint, _respawnProbeRadius, _respawnObstacleMask) != null;
     }
 
     private void HandleHealthChanged(int currentHealth, int maxHealth)

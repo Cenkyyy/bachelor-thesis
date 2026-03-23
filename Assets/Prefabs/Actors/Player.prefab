@@ -391,6 +391,11 @@ MonoBehaviour:
   _playerTransform: {fileID: 3689139185868277431}
   _deathDropController: {fileID: 0}
   _defaultSpawnPoint: {fileID: 3689139185868277431}
+  _respawnObstacleMask:
+    serializedVersion: 2
+    m_Bits: 1408
+  _respawnProbeRadius: 0.25
+  _searchRadius: 3
   _deathFadeRoot: {fileID: 0}
   _deathFadeCanvasGroup: {fileID: 0}
   _fadeInDuration: 0.6

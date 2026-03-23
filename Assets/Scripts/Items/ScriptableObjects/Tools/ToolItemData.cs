@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 [CreateAssetMenu(menuName = "Items/Tool Item")]
 public class ToolItemData : ItemData, IMiningTool

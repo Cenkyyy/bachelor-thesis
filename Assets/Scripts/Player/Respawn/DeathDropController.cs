@@ -32,6 +32,6 @@ public sealed class DeathDropController : MonoBehaviour
 
         chestHandle.Controller.Initialize(chestId, chestHandle.Inventory.Inventory, _deathMarkerController, _deathChestRegistry);
         _deathChestRegistry?.Register(chestHandle);
-        _deathMarkerController?.AddDeathMarker(chestId, deathWorldPosition);
+        _deathMarkerController?.AddDeathMarker(chestId, chestHandle.WorldPosition);
     }
 }
