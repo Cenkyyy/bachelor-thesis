@@ -6,6 +6,5 @@ public enum ItemStatType
     ManaRegen = 3,
     SpellDamage = 4,
     MoveSpeed = 5,
-    CastSpeed = 6,
-    Defence = 7
+    Defence = 6
 }

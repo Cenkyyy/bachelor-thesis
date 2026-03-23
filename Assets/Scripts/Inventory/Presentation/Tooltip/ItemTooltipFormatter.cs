@@ -18,7 +18,6 @@ public static class ItemTooltipFormatter
             ItemStatType.ManaRegen => "Mana Regen",
             ItemStatType.SpellDamage => "Spell Damage",
             ItemStatType.MoveSpeed => "Move Speed",
-            ItemStatType.CastSpeed => "Cast Speed",
             ItemStatType.Defence => "Defence",
             _ => InsertWordBoundaries(statType.ToString())
         };

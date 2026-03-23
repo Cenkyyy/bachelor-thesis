@@ -94,9 +94,17 @@ public class SpellCombatController : MonoBehaviour
             phrase.Modifier.Value,
             phrase.Element.Value,
             phrase.Form.Value,
-            formSettings.BaseDamage,
+            GetDamageAfterItemBonuses(formSettings.BaseDamage),
             _settings.MaxReclaimsPerCast);
         StartCoroutine(ExecuteCast(castState));
+    }
+
+    private float GetDamageAfterItemBonuses(float baseDamage)
+    {
+        if (_player == null || _player.Data == null)
+            return Mathf.Max(0f, baseDamage);
+
+        return Mathf.Max(0f, baseDamage + _player.Data.SpellDamageBonus);
     }
 
     private IEnumerator ExecuteCast(CastState castState)

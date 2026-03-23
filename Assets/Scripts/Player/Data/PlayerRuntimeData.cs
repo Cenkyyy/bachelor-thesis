@@ -63,6 +63,8 @@ public class PlayerRuntimeData
     /// <summary> Mana regenerated per second. </summary>
     public float ManaRegeneration { get; private set; }
 
+    /// <summary> Flat bonus applied to outgoing spell damage from item bonuses. </summary>
+    public float SpellDamageBonus { get; private set; }
 
     // Events
 
@@ -123,6 +125,7 @@ public class PlayerRuntimeData
         Defence = _baseDefence;
         HealthRegeneration = _baseHealthRegeneration;
         ManaRegeneration = _baseManaRegeneration;
+        SpellDamageBonus = 0f;
 
         SpawnPoint = Vector3.zero;
 
@@ -229,11 +232,12 @@ public class PlayerRuntimeData
     /// <summary>
     /// Applies aggregated item modifiers on top of initialized base combat stats.
     /// </summary>
-    public void ApplyCombatItemModifiers(float defenceAdditive, float healthRegenAdditive, float manaRegenAdditive, float maxHealthAdditive, float maxManaAdditive)
+    public void ApplyCombatItemModifiers(float defenceAdditive, float healthRegenAdditive, float manaRegenAdditive, float maxHealthAdditive, float maxManaAdditive, float spellDamageAdditive)
     {
         Defence = Mathf.Max(0, Mathf.RoundToInt(_baseDefence + defenceAdditive));
         HealthRegeneration = Mathf.Max(0f, _baseHealthRegeneration + healthRegenAdditive);
         ManaRegeneration = Mathf.Max(0f, _baseManaRegeneration + manaRegenAdditive);
+        SpellDamageBonus = spellDamageAdditive;
 
         int targetHealthBonus = Mathf.RoundToInt(maxHealthAdditive);
         if (targetHealthBonus != _appliedItemMaxHealthBonus)

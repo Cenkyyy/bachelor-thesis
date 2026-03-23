@@ -25,6 +25,7 @@ public sealed class PlayerItemStatController : MonoBehaviour
         public float HealthRegenAdditive;
         public float ManaRegenAdditive;
         public float MoveSpeedPercentAdditive;
+        public float SpellDamageAdditive;
     }
 
     private void Awake()
@@ -143,7 +144,7 @@ public sealed class PlayerItemStatController : MonoBehaviour
         AggregateEquippedModifiers(ref aggregation);
         AggregateTimedConsumableModifiers(ref aggregation);
 
-        _player.Data.ApplyCombatItemModifiers(aggregation.DefenceAdditive, aggregation.HealthRegenAdditive, aggregation.ManaRegenAdditive, aggregation.MaxHealthAdditive, aggregation.MaxManaAdditive);
+        _player.Data.ApplyCombatItemModifiers(aggregation.DefenceAdditive, aggregation.HealthRegenAdditive, aggregation.ManaRegenAdditive, aggregation.MaxHealthAdditive, aggregation.MaxManaAdditive, aggregation.SpellDamageAdditive);
         ApplyMoveSpeed(aggregation.MoveSpeedPercentAdditive);
     }
 
@@ -204,10 +205,7 @@ public sealed class PlayerItemStatController : MonoBehaviour
                 ApplyValue(modifier, ref aggregation.MoveSpeedPercentAdditive);
                 break;
             case ItemStatType.SpellDamage:
-                // TODO: Hook SpellDamage into spell damage calculation pipeline.
-                break;
-            case ItemStatType.CastSpeed:
-                // TODO: Hook CastSpeed into spell casting/cooldown timing.
+                ApplyValue(modifier, ref aggregation.SpellDamageAdditive);
                 break;
             default:
                 break;
