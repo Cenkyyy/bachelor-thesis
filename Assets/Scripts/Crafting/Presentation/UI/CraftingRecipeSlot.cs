@@ -42,7 +42,7 @@ public sealed class CraftingRecipeSlot : MonoBehaviour
 
         if (_canvasGroup != null)
         {
-            _canvasGroup.alpha = craftable ? 1f : 0.45f;
+            _canvasGroup.alpha = craftable ? 1f : 0.70f;
         }
     }
 
