@@ -13,4 +13,24 @@ MonoBehaviour:
   m_Name: CraftingBook
   m_EditorClassIdentifier: 
   _recipes:
-  - {fileID: 11400000, guid: 89b8f716722efc147bd6521d14f17469, type: 2}
+  - {fileID: 11400000, guid: 834a9a8bf59ca6e44a9a956189e198a8, type: 2}
+  - {fileID: 11400000, guid: df6d85ab91136ad4b8446b68023b39c7, type: 2}
+  - {fileID: 11400000, guid: 6c48d7da669ba5742a2844bb2edb6985, type: 2}
+  - {fileID: 11400000, guid: 2c5e3b6f767d68147bf949950973df07, type: 2}
+  - {fileID: 11400000, guid: c83bb9eb9026c56459929d7095f769b1, type: 2}
+  - {fileID: 11400000, guid: ed04fa4aaecd79643966e99ebc302a01, type: 2}
+  - {fileID: 11400000, guid: 1ad522e5428ce9247a48039e0364b428, type: 2}
+  - {fileID: 11400000, guid: 84698967d148b4040bac7e58252986ad, type: 2}
+  - {fileID: 11400000, guid: 9ca0dd4919f40f740ac6980fe23b5e1e, type: 2}
+  - {fileID: 11400000, guid: d626d4866d649c9429fc2d4e37c55a68, type: 2}
+  - {fileID: 11400000, guid: 348e94153e18b1b478f49f1510049b31, type: 2}
+  - {fileID: 11400000, guid: b033e230604422440b3ebaf4292e2c6b, type: 2}
+  - {fileID: 11400000, guid: c16261d0505d75640af7c380d6625e69, type: 2}
+  - {fileID: 11400000, guid: 94ea63fd1cd030946999884c357e8fd3, type: 2}
+  - {fileID: 11400000, guid: f13dbe03824770e4581206dc42334946, type: 2}
+  - {fileID: 11400000, guid: 90bfda65676d18243a137d5ffc82b9a3, type: 2}
+  - {fileID: 11400000, guid: 15a02cf17a52d474e8c24a4b73b275f3, type: 2}
+  - {fileID: 11400000, guid: 75c6820f68e60de488e9fde5f512cf26, type: 2}
+  - {fileID: 11400000, guid: 578a501c31a420f40bd8b3f4727a087c, type: 2}
+  - {fileID: 11400000, guid: cbfbedcaf78ff0d48b4b96ff51e75526, type: 2}
+  - {fileID: 11400000, guid: e8438bf119e9c324e99fd2d014967ee0, type: 2}

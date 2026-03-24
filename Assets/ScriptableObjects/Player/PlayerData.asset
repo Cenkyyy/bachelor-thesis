@@ -23,22 +23,40 @@ MonoBehaviour:
   <MemoryMaxLevel>k__BackingField: 200
   <BaseMaxHunger>k__BackingField: 100
   _startingHotbarItems:
-  - <Item>k__BackingField: {fileID: 11400000, guid: fe297c69801e0e6498c41b3f8161ba9e, type: 2}
-    <Amount>k__BackingField: 32
-  - <Item>k__BackingField: {fileID: 11400000, guid: fe297c69801e0e6498c41b3f8161ba9e, type: 2}
-    <Amount>k__BackingField: 3
-  - <Item>k__BackingField: {fileID: 11400000, guid: 461db32e3697c78489869a09a4507074, type: 2}
-    <Amount>k__BackingField: 32
+  - <Item>k__BackingField: {fileID: 11400000, guid: 277f53f4a2fb6ee45bd69c23abdc00dc, type: 2}
+    <Amount>k__BackingField: 1
   - <Item>k__BackingField: {fileID: 11400000, guid: 060efcd3a6a82654b95f4712b362e893, type: 2}
     <Amount>k__BackingField: 1
   - <Item>k__BackingField: {fileID: 11400000, guid: 4183219e1d68b954bb6a5a7414b07b18, type: 2}
     <Amount>k__BackingField: 1
-  - <Item>k__BackingField: {fileID: 11400000, guid: 277f53f4a2fb6ee45bd69c23abdc00dc, type: 2}
-    <Amount>k__BackingField: 1
   _startingBackpackItems:
+  - <Item>k__BackingField: {fileID: 11400000, guid: e555145f6b9077649abff787612a0591, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: 7b7f38921bfee2c45a38ae933ee2a6b6, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: ea1c8677eebbaf54aa6a8945812d32eb, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: ff19b4dbc12caa947b200dd35600a190, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: 3886a0cbeea229a49aa7b6c5927047d1, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: 461db32e3697c78489869a09a4507074, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: a48bb03e16f283b41856d64cb365c220, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: c574a3d915b21c244b60268aa30163c4, type: 2}
+    <Amount>k__BackingField: 100
   - <Item>k__BackingField: {fileID: 11400000, guid: fe297c69801e0e6498c41b3f8161ba9e, type: 2}
-    <Amount>k__BackingField: 2
-  - <Item>k__BackingField: {fileID: 11400000, guid: fe297c69801e0e6498c41b3f8161ba9e, type: 2}
-    <Amount>k__BackingField: 32
-  - <Item>k__BackingField: {fileID: 11400000, guid: 7062229dae0db014089aba5938bcd110, type: 2}
-    <Amount>k__BackingField: 1
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: e19c621a2a902c545a35a26f421445f3, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: b6f084d3c1e200845b4541f46590537f, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: 4d711de63293a694f99a63773ffd2c31, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: 40a1ab359e0ccad4fa2f3d572952c782, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: 865731ea6f9f9d543a5971a2cdd971ba, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: 1b77d611d1e82844ab23d466700f34b3, type: 2}
+    <Amount>k__BackingField: 100

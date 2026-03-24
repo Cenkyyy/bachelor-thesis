@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: ManaPotion_I
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Mana Potion I
-  <Icon>k__BackingField: {fileID: 1352937985377501293, guid: 037e066397ae36d4183af298135237d4, type: 3}
-  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: -5565628534070872157, guid: c189f0a71fd157346bb88ee9d0b65a6b, type: 3}
+  <Description>k__BackingField: Instantly restores Mana
   <Category>k__BackingField: 4
   <Rarity>k__BackingField: 0
   <BiomeAffinity>k__BackingField: 0
-  <MaxStackSize>k__BackingField: 32
+  <MaxStackSize>k__BackingField: 9999
   <Kind>k__BackingField: 1
   <RestoreHealth>k__BackingField: 0
-  <RestoreMana>k__BackingField: 50
+  <RestoreMana>k__BackingField: 40
   <RestoreHunger>k__BackingField: 0
+  <CooldownSeconds>k__BackingField: 10
   <EffectDurationSeconds>k__BackingField: 0
   _timedModifiers: []

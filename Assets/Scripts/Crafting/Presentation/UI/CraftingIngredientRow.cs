@@ -11,9 +11,9 @@ public sealed class CraftingIngredientRow : MonoBehaviour
 
     public void Bind(ItemData item, int requiredAmount, int availableAmount)
     {
-        _icon.sprite = item != null ? item.Icon : null;
-        _icon.enabled = _icon.sprite != null;
-     
+        var iconSprite = item != null ? item.Icon : null;
+        ImageIconUtility.SetIcon(_icon, iconSprite);
+
         _label.text = item != null ? item.ItemName : "Unknown";
 
         _amount.text = $"{availableAmount}/{requiredAmount}";

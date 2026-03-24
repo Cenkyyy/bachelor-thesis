@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: HealthPotion_II
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Health Potion II
-  <Icon>k__BackingField: {fileID: -728488644960612398, guid: 54f94ca4cc376f8489043e8900ec001e, type: 3}
-  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 8688808870337780298, guid: acdc07267ed60fd4fbba74b6f7ef4a96, type: 3}
+  <Description>k__BackingField: Instantly restores Health
   <Category>k__BackingField: 4
   <Rarity>k__BackingField: 0
   <BiomeAffinity>k__BackingField: 0
-  <MaxStackSize>k__BackingField: 32
+  <MaxStackSize>k__BackingField: 9999
   <Kind>k__BackingField: 1
-  <RestoreHealth>k__BackingField: 100
+  <RestoreHealth>k__BackingField: 80
   <RestoreMana>k__BackingField: 0
   <RestoreHunger>k__BackingField: 0
+  <CooldownSeconds>k__BackingField: 8
   <EffectDurationSeconds>k__BackingField: 0
   _timedModifiers: []

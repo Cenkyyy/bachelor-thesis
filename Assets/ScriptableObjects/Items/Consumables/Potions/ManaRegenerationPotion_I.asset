@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8760f91d0fa4674995063a3f37b49e3, type: 3}
+  m_Name: ManaRegenerationPotion_I
+  m_EditorClassIdentifier: 
+  <ItemName>k__BackingField: Mana Regeneration Potion I
+  <Icon>k__BackingField: {fileID: 6618035931963064899, guid: a6c536e76137e3343ab54ebf4d209214, type: 3}
+  <Description>k__BackingField: Grants Mana regeneration
+  <Category>k__BackingField: 4
+  <Rarity>k__BackingField: 0
+  <BiomeAffinity>k__BackingField: 0
+  <MaxStackSize>k__BackingField: 9999
+  <Kind>k__BackingField: 1
+  <RestoreHealth>k__BackingField: 0
+  <RestoreMana>k__BackingField: 0
+  <RestoreHunger>k__BackingField: 0
+  <CooldownSeconds>k__BackingField: 30
+  <EffectDurationSeconds>k__BackingField: 20
+  _timedModifiers:
+  - <Stat>k__BackingField: 3
+    <Value>k__BackingField: 1.2

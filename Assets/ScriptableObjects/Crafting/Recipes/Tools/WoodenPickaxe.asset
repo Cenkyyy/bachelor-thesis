@@ -16,10 +16,5 @@ MonoBehaviour:
   <OutputAmount>k__BackingField: 1
   <Description>k__BackingField: Tool that helps player mine copper
   <Category>k__BackingField: 0
-  CraftDurationSeconds: 1.5
-  _ingredients:
-  - <Item>k__BackingField: {fileID: 11400000, guid: 060efcd3a6a82654b95f4712b362e893, type: 2}
-    <Amount>k__BackingField: 1
-  - <Item>k__BackingField: {fileID: 11400000, guid: 461db32e3697c78489869a09a4507074, type: 2}
-    <Amount>k__BackingField: 3
+  _ingredients: []
   _displayName: Wooden Pickaxe

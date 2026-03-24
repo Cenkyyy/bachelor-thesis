@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: SpeedPotion_I
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Speed Potion I
-  <Icon>k__BackingField: {fileID: 0}
-  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 3659794423882416702, guid: 320fdd7f0819d224ea82d3037f051348, type: 3}
+  <Description>k__BackingField: Increases movement speed
   <Category>k__BackingField: 4
   <Rarity>k__BackingField: 0
   <BiomeAffinity>k__BackingField: 0
-  <MaxStackSize>k__BackingField: 4
+  <MaxStackSize>k__BackingField: 9999
   <Kind>k__BackingField: 1
   <RestoreHealth>k__BackingField: 0
   <RestoreMana>k__BackingField: 0
   <RestoreHunger>k__BackingField: 0
+  <CooldownSeconds>k__BackingField: 20
   <EffectDurationSeconds>k__BackingField: 30
   _timedModifiers:
   - <Stat>k__BackingField: 5
-    <Mode>k__BackingField: 0
-    <Value>k__BackingField: 0.5
+    <Value>k__BackingField: 8

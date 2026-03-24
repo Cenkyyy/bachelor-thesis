@@ -752,7 +752,7 @@ public class ItemInteractionController : MonoBehaviour
         _heldItemContainer.gameObject.SetActive(true);
 
         // show icon
-        _heldItemIcon.sprite = _heldItem.Item.Icon;
+        ImageIconUtility.SetIcon(_heldItemIcon, _heldItem.Item.Icon);
         _heldItemIcon.gameObject.SetActive(true);
 
         if (_heldItem.Item.IsStackable && _heldItem.Amount > 1)
@@ -776,6 +776,7 @@ public class ItemInteractionController : MonoBehaviour
     {
         _heldItem = InventoryItem.Empty;
 
+        ImageIconUtility.SetIcon(_heldItemIcon, null);
         _heldItemIcon.gameObject.SetActive(false);
         _heldItemAmountText.gameObject.SetActive(false);
         _heldItemContainer.gameObject.SetActive(false);

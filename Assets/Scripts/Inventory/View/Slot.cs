@@ -57,8 +57,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         // show item icon
         if (itemIconImage != null)
         {
-            itemIconImage.enabled = true;
-            itemIconImage.sprite = item.Item.Icon;
+            ImageIconUtility.SetIcon(itemIconImage, item.Item.Icon);
         }
 
         if (item.Item.IsStackable && item.Amount > 1)
@@ -85,8 +84,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         if (itemIconImage != null)
         {
-            itemIconImage.sprite = null;
-            itemIconImage.enabled = false;
+            ImageIconUtility.SetIcon(itemIconImage, null);
         }
         if (itemAmountText != null)
         {

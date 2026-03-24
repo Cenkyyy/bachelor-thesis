@@ -25,8 +25,8 @@ public sealed class CraftingRecipeDetailsView : MonoBehaviour
     {
         if (_icon != null)
         {
-            _icon.sprite = recipe != null && recipe.OutputItem != null ? recipe.OutputItem.Icon : null;
-            _icon.enabled = _icon.sprite != null;
+            var iconSprite = recipe != null && recipe.OutputItem != null ? recipe.OutputItem.Icon : null;
+            ImageIconUtility.SetIcon(_icon, iconSprite);
         }
 
         if (_title != null)

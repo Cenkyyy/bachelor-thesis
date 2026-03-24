@@ -27,8 +27,8 @@ public sealed class CraftingRecipeSlot : MonoBehaviour
         _recipe = recipe;
         if (_icon != null)
         {
-            _icon.sprite = recipe != null && recipe.OutputItem != null ? recipe.OutputItem.Icon : null;
-            _icon.enabled = _icon.sprite != null;
+            var iconSprite = recipe != null && recipe.OutputItem != null ? recipe.OutputItem.Icon : null;
+            ImageIconUtility.SetIcon(_icon, iconSprite);
         }
         SetCraftable(craftable);
     }
