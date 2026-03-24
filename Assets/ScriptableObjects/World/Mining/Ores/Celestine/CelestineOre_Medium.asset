@@ -18,8 +18,8 @@ MonoBehaviour:
   <MaxDurability>k__BackingField: 10
   <ToolPowerMultiplier>k__BackingField: 1
   _drops:
-  - _item: {fileID: 11400000, guid: 454d9a3282a1dad439c8064255e7761b, type: 2}
-    _minAmount: 1
-    _maxAmount: 3
+  - _item: {fileID: 11400000, guid: cb484d165f7a91644b7bd8bc03387680, type: 2}
+    _minAmount: 2
+    _maxAmount: 4
   <GrantsMemoryXP>k__BackingField: 0
   <MemoryXpAmount>k__BackingField: 0

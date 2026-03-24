@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb46976bd70d81242b125b463234bffe, type: 3}
-  m_Name: IronOre
+  m_Name: AmberOre
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Iron Ore
-  <Icon>k__BackingField: {fileID: 0}
+  <ItemName>k__BackingField: Amber Ore
+  <Icon>k__BackingField: {fileID: 8982652330240798638, guid: f2fa09e03f355b147bf701e27485c63c, type: 3}
   <Description>k__BackingField: 
   <Category>k__BackingField: 3
-  <Rarity>k__BackingField: 0
-  <BiomeAffinity>k__BackingField: 2
-  <MaxStackSize>k__BackingField: 999
+  <Rarity>k__BackingField: 2
+  <BiomeAffinity>k__BackingField: 3
+  <MaxStackSize>k__BackingField: 9999
   <Kind>k__BackingField: 2
-  <TierTag>k__BackingField: 3
+  <TierTag>k__BackingField: 0

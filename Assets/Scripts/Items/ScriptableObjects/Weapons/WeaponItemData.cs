@@ -12,6 +12,8 @@ public class WeaponItemData : ItemData
     [field: SerializeField] public float AttackSpeed { get; private set; } = 1f;
     [field: SerializeField] public int ManaCost { get; private set; }
 
+    public bool HasProgressionTier => ProgressionTier != ToolTier.None;
+
     protected override ItemType? ExpectedCategory => ItemType.Weapon;
 
     protected override void OnValidate()

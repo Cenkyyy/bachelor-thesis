@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b20d55cfd28c47240b46f895e90886b0, type: 3}
-  m_Name: IronPickaxe
+  m_Name: CelestineAxe
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Iron Pickaxe
+  <ItemName>k__BackingField: Celestine Axe
   <Icon>k__BackingField: {fileID: 0}
   <Description>k__BackingField: 
   <Category>k__BackingField: 2
@@ -20,7 +20,7 @@ MonoBehaviour:
   <BiomeAffinity>k__BackingField: 2
   <MaxStackSize>k__BackingField: 1
   <MaxDurability>k__BackingField: 25
-  <ToolType>k__BackingField: 1
+  <ToolType>k__BackingField: 2
   <Tier>k__BackingField: 3
   <MiningPower>k__BackingField: 3
   <DurabilityLossPerSecond>k__BackingField: 1

@@ -14,7 +14,8 @@ public sealed class EquipmentTooltipProvider : IItemTooltipProvider
         if (inventoryItem.Item is not EquipmentItemData equipment)
             return;
 
-        lines.Add(new ItemTooltipLineRuntimeData("Tier", ItemTooltipFormatter.FormatEnumValue(equipment.ProgressionTier)));
+        if (equipment.HasProgressionTier)
+            lines.Add(new ItemTooltipLineRuntimeData("Tier", ItemTooltipFormatter.FormatEnumValue(equipment.ProgressionTier)));
 
         AppendModifiers(equipment.StatBonuses, lines);
     }

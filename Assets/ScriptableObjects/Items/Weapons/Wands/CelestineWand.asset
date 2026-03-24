@@ -9,17 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92ba0adafdd511b47930cdf4105e6d46, type: 3}
-  m_Name: IronBoots
+  m_Script: {fileID: 11500000, guid: 2cc6a19b30c5dd24a8b4b7b09ae95ff0, type: 3}
+  m_Name: CelestineWand
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Iron Boots
+  <ItemName>k__BackingField: Celestine Wand
   <Icon>k__BackingField: {fileID: 0}
   <Description>k__BackingField: 
-  <Category>k__BackingField: 0
+  <Category>k__BackingField: 1
   <Rarity>k__BackingField: 2
   <BiomeAffinity>k__BackingField: 2
   <MaxStackSize>k__BackingField: 1
-  <Slot>k__BackingField: 3
+  <Archetype>k__BackingField: 0
   <ProgressionTier>k__BackingField: 3
-  <ArmorValue>k__BackingField: 0
-  _statBonuses: []
+  <Damage>k__BackingField: 5
+  <Range>k__BackingField: 4
+  <AttackSpeed>k__BackingField: 1
+  <ManaCost>k__BackingField: 0

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Shows short-lived text rows for item pickups (e.g. "+ 3 Iron Ore") at the HUD.
+/// Shows short-lived text rows for item pickups (e.g. "+ 3 Copper Ore") at the HUD.
 /// </summary>
 public sealed class ItemPickupFeed : MonoBehaviour
 {

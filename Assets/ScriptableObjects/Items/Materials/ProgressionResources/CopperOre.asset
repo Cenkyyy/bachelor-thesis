@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: CopperOre
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Copper Ore
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 2869580775176698672, guid: 1bd9850a73985ff4e84ee2a6f1c0abf4, type: 3}
   <Description>k__BackingField: 
   <Category>k__BackingField: 3
-  <Rarity>k__BackingField: 0
+  <Rarity>k__BackingField: 1
   <BiomeAffinity>k__BackingField: 1
-  <MaxStackSize>k__BackingField: 999
+  <MaxStackSize>k__BackingField: 9999
   <Kind>k__BackingField: 2
   <TierTag>k__BackingField: 2

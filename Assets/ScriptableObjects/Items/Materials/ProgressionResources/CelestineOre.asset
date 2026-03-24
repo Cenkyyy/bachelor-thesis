@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb46976bd70d81242b125b463234bffe, type: 3}
-  m_Name: AmethystOre
+  m_Name: CelestineOre
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Amethyst Ore
-  <Icon>k__BackingField: {fileID: 6505026738284537468, guid: 67ba7e2613fc7664b996fde98ffb0fe7, type: 3}
+  <ItemName>k__BackingField: Celestine Ore
+  <Icon>k__BackingField: {fileID: 1009049853055315898, guid: 1c4380b4144981144bfecf5df811fc1c, type: 3}
   <Description>k__BackingField: 
   <Category>k__BackingField: 3
-  <Rarity>k__BackingField: 3
-  <BiomeAffinity>k__BackingField: 4
+  <Rarity>k__BackingField: 2
+  <BiomeAffinity>k__BackingField: 2
   <MaxStackSize>k__BackingField: 9999
   <Kind>k__BackingField: 2
-  <TierTag>k__BackingField: 5
+  <TierTag>k__BackingField: 3

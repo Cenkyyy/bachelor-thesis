@@ -29,6 +29,14 @@ MonoBehaviour:
     <Amount>k__BackingField: 1
   - <Item>k__BackingField: {fileID: 11400000, guid: 4183219e1d68b954bb6a5a7414b07b18, type: 2}
     <Amount>k__BackingField: 1
+  - <Item>k__BackingField: {fileID: 11400000, guid: a32204ad7b421c84cb9fc6248609b8ea, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: ce861eb6d827ac741aab7bb05003f31a, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: 454d9a3282a1dad439c8064255e7761b, type: 2}
+    <Amount>k__BackingField: 100
+  - <Item>k__BackingField: {fileID: 11400000, guid: cb484d165f7a91644b7bd8bc03387680, type: 2}
+    <Amount>k__BackingField: 100
   _startingBackpackItems:
   - <Item>k__BackingField: {fileID: 11400000, guid: e555145f6b9077649abff787612a0591, type: 2}
     <Amount>k__BackingField: 100

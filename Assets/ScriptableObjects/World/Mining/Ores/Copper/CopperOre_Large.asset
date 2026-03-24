@@ -20,6 +20,6 @@ MonoBehaviour:
   _drops:
   - _item: {fileID: 11400000, guid: 454d9a3282a1dad439c8064255e7761b, type: 2}
     _minAmount: 5
-    _maxAmount: 10
+    _maxAmount: 7
   <GrantsMemoryXP>k__BackingField: 0
   <MemoryXpAmount>k__BackingField: 0

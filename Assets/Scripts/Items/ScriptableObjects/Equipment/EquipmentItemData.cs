@@ -10,12 +10,16 @@ public sealed class EquipmentItemData : ItemData
     [SerializeField] private List<ItemStatModifier> _statBonuses = new();
 
     public IReadOnlyList<ItemStatModifier> StatBonuses => _statBonuses;
+    public bool HasProgressionTier => !IsAccessorySlot(Slot) && ProgressionTier != ToolTier.None;
 
     protected override ItemType? ExpectedCategory => IsAccessorySlot(Slot) ? ItemType.Accessory : ItemType.Armor;
 
     protected override void OnValidate()
     {
         base.OnValidate();
+
+        if (IsAccessorySlot(Slot) && ProgressionTier != ToolTier.None)
+            ProgressionTier = ToolTier.None;
     }
 
     private static bool IsAccessorySlot(EquipmentSlotType slot)
