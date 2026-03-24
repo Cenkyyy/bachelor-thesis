@@ -184,10 +184,10 @@ TextureImporter:
       name: Deer_Death_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 101
-        width: 15
-        height: 26
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,10 +206,10 @@ TextureImporter:
       name: Deer_Death_1
       rect:
         serializedVersion: 2
-        x: 41
-        y: 101
-        width: 15
-        height: 23
+        x: 32
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,10 +228,10 @@ TextureImporter:
       name: Deer_Death_2
       rect:
         serializedVersion: 2
-        x: 73
-        y: 101
-        width: 15
-        height: 20
+        x: 64
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,10 +250,10 @@ TextureImporter:
       name: Deer_Death_3
       rect:
         serializedVersion: 2
-        x: 106
-        y: 101
-        width: 13
-        height: 19
+        x: 96
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -272,10 +272,10 @@ TextureImporter:
       name: Deer_Death_4
       rect:
         serializedVersion: 2
-        x: 137
-        y: 100
-        width: 15
-        height: 15
+        x: 128
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -294,10 +294,10 @@ TextureImporter:
       name: Deer_Death_5
       rect:
         serializedVersion: 2
-        x: 169
-        y: 100
-        width: 15
-        height: 16
+        x: 160
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -316,10 +316,10 @@ TextureImporter:
       name: Deer_Death_6
       rect:
         serializedVersion: 2
-        x: 201
-        y: 100
-        width: 15
-        height: 16
+        x: 192
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -338,10 +338,10 @@ TextureImporter:
       name: Deer_Death_7
       rect:
         serializedVersion: 2
-        x: 9
-        y: 69
-        width: 15
-        height: 26
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -360,10 +360,10 @@ TextureImporter:
       name: Deer_Death_8
       rect:
         serializedVersion: 2
-        x: 41
-        y: 69
-        width: 15
-        height: 23
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -382,10 +382,10 @@ TextureImporter:
       name: Deer_Death_9
       rect:
         serializedVersion: 2
-        x: 73
-        y: 69
-        width: 15
-        height: 21
+        x: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -404,10 +404,10 @@ TextureImporter:
       name: Deer_Death_10
       rect:
         serializedVersion: 2
-        x: 105
-        y: 69
-        width: 15
-        height: 20
+        x: 96
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -426,10 +426,10 @@ TextureImporter:
       name: Deer_Death_11
       rect:
         serializedVersion: 2
-        x: 136
-        y: 69
-        width: 17
-        height: 14
+        x: 128
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -448,10 +448,10 @@ TextureImporter:
       name: Deer_Death_12
       rect:
         serializedVersion: 2
-        x: 168
-        y: 69
-        width: 17
-        height: 14
+        x: 160
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -470,10 +470,10 @@ TextureImporter:
       name: Deer_Death_13
       rect:
         serializedVersion: 2
-        x: 200
-        y: 69
-        width: 17
-        height: 14
+        x: 192
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -493,9 +493,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 35
-        width: 30
-        height: 27
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -514,10 +514,10 @@ TextureImporter:
       name: Deer_Death_15
       rect:
         serializedVersion: 2
-        x: 33
-        y: 35
-        width: 29
-        height: 23
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -536,10 +536,10 @@ TextureImporter:
       name: Deer_Death_16
       rect:
         serializedVersion: 2
-        x: 65
-        y: 35
-        width: 29
-        height: 21
+        x: 64
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -558,10 +558,10 @@ TextureImporter:
       name: Deer_Death_17
       rect:
         serializedVersion: 2
-        x: 95
-        y: 35
-        width: 30
-        height: 16
+        x: 96
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -580,10 +580,10 @@ TextureImporter:
       name: Deer_Death_18
       rect:
         serializedVersion: 2
-        x: 127
-        y: 35
-        width: 30
-        height: 13
+        x: 128
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -602,10 +602,10 @@ TextureImporter:
       name: Deer_Death_19
       rect:
         serializedVersion: 2
-        x: 159
-        y: 35
-        width: 30
-        height: 14
+        x: 160
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -624,10 +624,10 @@ TextureImporter:
       name: Deer_Death_20
       rect:
         serializedVersion: 2
-        x: 191
-        y: 35
-        width: 30
-        height: 14
+        x: 192
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -646,10 +646,10 @@ TextureImporter:
       name: Deer_Death_21
       rect:
         serializedVersion: 2
-        x: 2
-        y: 3
-        width: 30
-        height: 27
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -668,10 +668,10 @@ TextureImporter:
       name: Deer_Death_22
       rect:
         serializedVersion: 2
-        x: 34
-        y: 3
-        width: 29
-        height: 23
+        x: 32
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -690,10 +690,10 @@ TextureImporter:
       name: Deer_Death_23
       rect:
         serializedVersion: 2
-        x: 66
-        y: 3
-        width: 29
-        height: 21
+        x: 64
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -712,10 +712,10 @@ TextureImporter:
       name: Deer_Death_24
       rect:
         serializedVersion: 2
-        x: 99
-        y: 3
-        width: 30
-        height: 16
+        x: 96
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -734,10 +734,10 @@ TextureImporter:
       name: Deer_Death_25
       rect:
         serializedVersion: 2
-        x: 131
-        y: 3
-        width: 30
-        height: 13
+        x: 128
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -756,10 +756,10 @@ TextureImporter:
       name: Deer_Death_26
       rect:
         serializedVersion: 2
-        x: 163
-        y: 3
-        width: 30
-        height: 14
+        x: 160
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -778,10 +778,10 @@ TextureImporter:
       name: Deer_Death_27
       rect:
         serializedVersion: 2
-        x: 195
-        y: 3
-        width: 29
-        height: 14
+        x: 192
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -800,7 +800,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5c5033b763a7abd40856cbf142fd1008
     internalID: 0
     vertices: []
     indices: 

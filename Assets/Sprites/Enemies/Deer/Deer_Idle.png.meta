@@ -148,10 +148,10 @@ TextureImporter:
       name: Deer_Idle_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 101
-        width: 15
-        height: 26
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,10 +170,10 @@ TextureImporter:
       name: Deer_Idle_1
       rect:
         serializedVersion: 2
-        x: 41
-        y: 101
-        width: 15
-        height: 25
+        x: 32
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +192,10 @@ TextureImporter:
       name: Deer_Idle_2
       rect:
         serializedVersion: 2
-        x: 73
-        y: 101
-        width: 15
-        height: 25
+        x: 64
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,10 +214,10 @@ TextureImporter:
       name: Deer_Idle_3
       rect:
         serializedVersion: 2
-        x: 105
-        y: 101
-        width: 15
-        height: 26
+        x: 96
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +236,10 @@ TextureImporter:
       name: Deer_Idle_4
       rect:
         serializedVersion: 2
-        x: 9
-        y: 69
-        width: 15
-        height: 26
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,10 +258,10 @@ TextureImporter:
       name: Deer_Idle_5
       rect:
         serializedVersion: 2
-        x: 41
-        y: 69
-        width: 15
-        height: 25
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -280,10 +280,10 @@ TextureImporter:
       name: Deer_Idle_6
       rect:
         serializedVersion: 2
-        x: 73
-        y: 69
-        width: 15
-        height: 25
+        x: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -302,10 +302,10 @@ TextureImporter:
       name: Deer_Idle_7
       rect:
         serializedVersion: 2
-        x: 105
-        y: 69
-        width: 15
-        height: 26
+        x: 96
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -325,9 +325,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 35
-        width: 30
-        height: 27
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -347,9 +347,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 35
-        width: 30
-        height: 26
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -369,9 +369,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 35
-        width: 30
-        height: 26
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -391,9 +391,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 35
-        width: 30
-        height: 27
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -412,10 +412,10 @@ TextureImporter:
       name: Deer_Idle_12
       rect:
         serializedVersion: 2
-        x: 2
-        y: 3
-        width: 30
-        height: 27
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -434,10 +434,10 @@ TextureImporter:
       name: Deer_Idle_13
       rect:
         serializedVersion: 2
-        x: 34
-        y: 3
-        width: 30
-        height: 26
+        x: 32
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -456,10 +456,10 @@ TextureImporter:
       name: Deer_Idle_14
       rect:
         serializedVersion: 2
-        x: 66
-        y: 3
-        width: 30
-        height: 26
+        x: 64
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -478,10 +478,10 @@ TextureImporter:
       name: Deer_Idle_15
       rect:
         serializedVersion: 2
-        x: 98
-        y: 3
-        width: 30
-        height: 27
+        x: 96
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -500,7 +500,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e9dea4f4e092c42499bf294246ca33f3
     internalID: 0
     vertices: []
     indices: 

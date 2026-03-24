@@ -160,10 +160,10 @@ TextureImporter:
       name: Boar_Attack_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 101
-        width: 19
-        height: 23
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,10 +182,10 @@ TextureImporter:
       name: Boar_Attack_1
       rect:
         serializedVersion: 2
-        x: 40
-        y: 101
-        width: 17
-        height: 22
+        x: 32
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,10 +204,10 @@ TextureImporter:
       name: Boar_Attack_2
       rect:
         serializedVersion: 2
-        x: 70
-        y: 101
-        width: 19
-        height: 21
+        x: 64
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,10 +226,10 @@ TextureImporter:
       name: Boar_Attack_3
       rect:
         serializedVersion: 2
-        x: 103
-        y: 101
-        width: 23
-        height: 25
+        x: 96
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -248,10 +248,10 @@ TextureImporter:
       name: Boar_Attack_4
       rect:
         serializedVersion: 2
-        x: 135
-        y: 101
-        width: 23
-        height: 24
+        x: 128
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -270,10 +270,10 @@ TextureImporter:
       name: Boar_Attack_5
       rect:
         serializedVersion: 2
-        x: 7
-        y: 69
-        width: 19
-        height: 22
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -292,10 +292,10 @@ TextureImporter:
       name: Boar_Attack_6
       rect:
         serializedVersion: 2
-        x: 40
-        y: 69
-        width: 20
-        height: 22
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -314,10 +314,10 @@ TextureImporter:
       name: Boar_Attack_7
       rect:
         serializedVersion: 2
-        x: 72
-        y: 69
-        width: 20
-        height: 21
+        x: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -336,10 +336,10 @@ TextureImporter:
       name: Boar_Attack_8
       rect:
         serializedVersion: 2
-        x: 99
-        y: 69
-        width: 22
-        height: 24
+        x: 96
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -358,10 +358,10 @@ TextureImporter:
       name: Boar_Attack_9
       rect:
         serializedVersion: 2
-        x: 131
-        y: 69
-        width: 22
-        height: 24
+        x: 128
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -380,10 +380,10 @@ TextureImporter:
       name: Boar_Attack_10
       rect:
         serializedVersion: 2
-        x: 2
-        y: 37
-        width: 29
-        height: 22
+        x: 0
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -402,10 +402,10 @@ TextureImporter:
       name: Boar_Attack_11
       rect:
         serializedVersion: 2
-        x: 35
-        y: 37
-        width: 30
-        height: 22
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -424,10 +424,10 @@ TextureImporter:
       name: Boar_Attack_12
       rect:
         serializedVersion: 2
-        x: 68
-        y: 37
-        width: 29
-        height: 22
+        x: 64
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -446,10 +446,10 @@ TextureImporter:
       name: Boar_Attack_13
       rect:
         serializedVersion: 2
-        x: 95
-        y: 37
+        x: 96
+        y: 32
         width: 32
-        height: 23
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -469,9 +469,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 37
-        width: 31
-        height: 23
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -490,10 +490,10 @@ TextureImporter:
       name: Boar_Attack_15
       rect:
         serializedVersion: 2
-        x: 1
-        y: 5
-        width: 29
-        height: 22
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -512,10 +512,10 @@ TextureImporter:
       name: Boar_Attack_16
       rect:
         serializedVersion: 2
-        x: 31
-        y: 5
-        width: 30
-        height: 22
+        x: 32
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -534,10 +534,10 @@ TextureImporter:
       name: Boar_Attack_17
       rect:
         serializedVersion: 2
-        x: 63
-        y: 5
-        width: 29
-        height: 22
+        x: 64
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -556,10 +556,10 @@ TextureImporter:
       name: Boar_Attack_18
       rect:
         serializedVersion: 2
-        x: 97
-        y: 5
+        x: 96
+        y: 0
         width: 32
-        height: 23
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -578,10 +578,10 @@ TextureImporter:
       name: Boar_Attack_19
       rect:
         serializedVersion: 2
-        x: 129
-        y: 5
-        width: 31
-        height: 23
+        x: 128
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -600,7 +600,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e16a9a127f34ff347b72ee537686b3e2
     internalID: 0
     vertices: []
     indices: 

@@ -148,10 +148,10 @@ TextureImporter:
       name: Boar_Idle_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 101
-        width: 19
-        height: 23
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,10 +170,10 @@ TextureImporter:
       name: Boar_Idle_1
       rect:
         serializedVersion: 2
-        x: 40
-        y: 101
-        width: 17
-        height: 22
+        x: 32
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +192,10 @@ TextureImporter:
       name: Boar_Idle_2
       rect:
         serializedVersion: 2
-        x: 71
-        y: 101
-        width: 19
-        height: 22
+        x: 64
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,10 +214,10 @@ TextureImporter:
       name: Boar_Idle_3
       rect:
         serializedVersion: 2
-        x: 103
-        y: 101
-        width: 19
-        height: 23
+        x: 96
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +236,10 @@ TextureImporter:
       name: Boar_Idle_4
       rect:
         serializedVersion: 2
-        x: 7
-        y: 69
-        width: 19
-        height: 22
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,10 +258,10 @@ TextureImporter:
       name: Boar_Idle_5
       rect:
         serializedVersion: 2
-        x: 40
-        y: 69
-        width: 17
-        height: 21
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -280,10 +280,10 @@ TextureImporter:
       name: Boar_Idle_6
       rect:
         serializedVersion: 2
-        x: 71
-        y: 69
-        width: 19
-        height: 21
+        x: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -302,10 +302,10 @@ TextureImporter:
       name: Boar_Idle_7
       rect:
         serializedVersion: 2
-        x: 103
-        y: 69
-        width: 19
-        height: 22
+        x: 96
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -324,10 +324,10 @@ TextureImporter:
       name: Boar_Idle_8
       rect:
         serializedVersion: 2
-        x: 2
-        y: 37
-        width: 29
-        height: 22
+        x: 0
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -346,10 +346,10 @@ TextureImporter:
       name: Boar_Idle_9
       rect:
         serializedVersion: 2
-        x: 34
-        y: 37
-        width: 29
-        height: 21
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -368,10 +368,10 @@ TextureImporter:
       name: Boar_Idle_10
       rect:
         serializedVersion: 2
-        x: 66
-        y: 37
-        width: 29
-        height: 21
+        x: 64
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -390,10 +390,10 @@ TextureImporter:
       name: Boar_Idle_11
       rect:
         serializedVersion: 2
-        x: 98
-        y: 37
-        width: 29
-        height: 22
+        x: 96
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -412,10 +412,10 @@ TextureImporter:
       name: Boar_Idle_12
       rect:
         serializedVersion: 2
-        x: 1
-        y: 5
-        width: 29
-        height: 22
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -434,10 +434,10 @@ TextureImporter:
       name: Boar_Idle_13
       rect:
         serializedVersion: 2
-        x: 33
-        y: 5
-        width: 29
-        height: 21
+        x: 32
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -456,10 +456,10 @@ TextureImporter:
       name: Boar_Idle_14
       rect:
         serializedVersion: 2
-        x: 65
-        y: 5
-        width: 29
-        height: 21
+        x: 64
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -478,10 +478,10 @@ TextureImporter:
       name: Boar_Idle_15
       rect:
         serializedVersion: 2
-        x: 97
-        y: 5
-        width: 29
-        height: 22
+        x: 96
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -500,7 +500,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 721b0cc976030e442b6eaf2ec985e3f6
     internalID: 0
     vertices: []
     indices: 
