@@ -307,10 +307,20 @@ MonoBehaviour:
   _player: {fileID: 8120486794298343527}
   _castingPanel: {fileID: 0}
   _feedbackPopup: {fileID: 4686141728631495212}
+  _castOnCooldownMessage: Spell is recharging
   _insufficientManaMessage: Need to restore mana
   _targetMask:
     serializedVersion: 2
     m_Bits: 128
+  _wordEffectivenessData: {fileID: 11400000, guid: 3a8b4fc74c636fe499555877dc976ff7, type: 2}
+  _damageWordTextPopupSettings:
+    _effectiveColor: {r: 0.1, g: 1, b: 0.85, a: 1}
+    _resistedColor: {r: 1, g: 0.4, b: 0.15, a: 1}
+    _neutralColor: {r: 1, g: 1, b: 1, a: 1}
+    _ineffectiveThreshold: 0.9
+    _effectiveThreshold: 1.1
+    _cooldownSeconds: 0
+    _showMultiplierInDebugBuilds: 0
   _settings:
     Range: 8
     HitRadius: 0.5
@@ -378,13 +388,16 @@ MonoBehaviour:
   _textColor: {r: 1, g: 1, b: 1, a: 1}
   _fontSize: 2.5
   _fontAsset: {fileID: 11400000, guid: b38523a5958474b49b379ba60931379c, type: 2}
-  _inheritHostRendererSorting: 1
+  _inheritHostRendererSorting: 0
   _sortingOrderOffset: 10
-  _sortingLayerName: Default
+  _sortingLayerName: Player
   _sortingOrder: 50
-  _duration: 1.2
+  _duration: 1
   _riseDistance: 0.5
-  _cooldownSeconds: 2.5
+  _cooldownSeconds: 1
+  _stackSpacing: 0.2
+  _maxActivePopups: 4
+  _overflowFadeDuration: 0.2
 --- !u!114 &3171962435665915792
 MonoBehaviour:
   m_ObjectHideFlags: 0

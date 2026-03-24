@@ -16682,21 +16682,9 @@ PrefabInstance:
       propertyPath: _castingPanel
       value: 
       objectReference: {fileID: 192015840}
-    - target: {fileID: 4686141728631495212, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _duration
+    - target: {fileID: 4319894653538523301, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _showEffectivenessValueInDebugBuilds
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4686141728631495212, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _cooldownSeconds
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4686141728631495212, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _sortingLayerName
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4686141728631495212, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _inheritHostRendererSorting
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5815203664740908025, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _camera

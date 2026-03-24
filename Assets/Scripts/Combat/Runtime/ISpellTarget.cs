@@ -8,6 +8,6 @@ public interface ISpellTarget
 
     void ReceiveSpellDamage(float amount, object source = null);
     void ApplyStatus(CombatStatusEffect effect, float durationSeconds);
-    void ApplyDamageOverTime(float damagePerSecond, float durationSeconds, object source = null);
+    void ApplyDamageOverTime(float damagePerSecond, float durationSeconds, float effectivenessMultiplier = 1f, object source = null);
     void AddStunBuildup(float amount, float threshold, float stunDurationSeconds);
 }

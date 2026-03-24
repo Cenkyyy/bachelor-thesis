@@ -122,6 +122,7 @@ GameObject:
   - component: {fileID: 2908348382214334344}
   - component: {fileID: 5744313436986119435}
   - component: {fileID: 1218387277349931885}
+  - component: {fileID: 5769996152359017097}
   m_Layer: 7
   m_Name: Troll
   m_TagString: Untagged
@@ -275,7 +276,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyCore: {fileID: 1670540943250230566}
   _damageable: {fileID: 2908348382214334344}
-  _statusTickInterval: 0.2
+  _statusTickInterval: 0.5
+  _damageWordTextPopupSettings:
+    _effectiveColor: {r: 0.1, g: 1, b: 0.85, a: 1}
+    _resistedColor: {r: 1, g: 0.4, b: 0.15, a: 1}
+    _neutralColor: {r: 1, g: 1, b: 1, a: 1}
+    _ineffectiveThreshold: 0.9
+    _effectiveThreshold: 1.1
+    _cooldownSeconds: 0
+    _showMultiplierInDebugBuilds: 0
+--- !u!114 &5769996152359017097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2304351662522366803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1971731234e694f4ab34acd03d85fe09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localOffset: {x: 0, y: 0.3, z: 0}
+  _textColor: {r: 1, g: 1, b: 1, a: 1}
+  _fontSize: 3.5
+  _fontAsset: {fileID: 11400000, guid: b38523a5958474b49b379ba60931379c, type: 2}
+  _inheritHostRendererSorting: 0
+  _sortingOrderOffset: 10
+  _sortingLayerName: Enemy
+  _sortingOrder: 50
+  _duration: 1.2
+  _riseDistance: 0.5
+  _cooldownSeconds: 0
+  _stackSpacing: 0
+  _maxActivePopups: 3
 --- !u!1 &3182628478983972147
 GameObject:
   m_ObjectHideFlags: 0

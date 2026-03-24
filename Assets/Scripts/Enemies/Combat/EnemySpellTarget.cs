@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget
+public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget, ISpellWordEffectivenessTarget
 {
     [Header("References")]
     [SerializeField] private EnemyCore _enemyCore;
     [SerializeField] private EnemyDamageable _damageable;
 
     [Header("Status Runtime")]
-    [SerializeField] private float _statusTickInterval = 0.2f;
+    [SerializeField] private float _statusTickInterval = 0.5f;
+
+    [Header("Damage Word Text Popup Settings")]
+    [SerializeField] private DamageWordTextPopupSettings _damageWordTextPopupSettings = new();
 
     private readonly Dictionary<CombatStatusEffect, float> _statusUntil = new();
     private readonly List<CombatStatusEffect> _cleanupBuffer = new();
@@ -38,6 +41,20 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget
             _damageable = GetComponent<EnemyDamageable>() ?? GetComponentInParent<EnemyDamageable>();
     }
 
+    public bool TryGetSpellWordEffectivenessData(out BiomeAffinity biome, out EnemyRoleTag roleTags)
+    {
+        if (_enemyCore == null || _enemyCore.Data == null)
+        {
+            biome = BiomeAffinity.None;
+            roleTags = EnemyRoleTag.None;
+            return false;
+        }
+
+        biome = _enemyCore.HomeBiome;
+        roleTags = _enemyCore.RoleTags;
+        return true;
+    }
+
     public void ReceiveSpellDamage(float amount, object source = null)
     {
         if (_damageable == null)
@@ -58,12 +75,12 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget
         _statusUntil[effect] = Time.time + durationSeconds;
     }
 
-    public void ApplyDamageOverTime(float damagePerSecond, float durationSeconds, object source = null)
+    public void ApplyDamageOverTime(float damagePerSecond, float durationSeconds, float effectivenessMultiplier = 1f, object source = null)
     {
         if (damagePerSecond <= 0f || durationSeconds <= 0f)
             return;
 
-        StartCoroutine(ApplyDamageOverTimeRoutine(damagePerSecond, durationSeconds, source));
+        StartCoroutine(ApplyDamageOverTimeRoutine(damagePerSecond, durationSeconds, effectivenessMultiplier = 1f, source));
     }
 
     public void AddStunBuildup(float amount, float threshold, float stunDurationSeconds)
@@ -80,9 +97,15 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget
         _enemyCore?.StopMovement();
     }
 
-    private IEnumerator ApplyDamageOverTimeRoutine(float damagePerSecond, float durationSeconds, object source)
+    private IEnumerator ApplyDamageOverTimeRoutine(float damagePerSecond, float durationSeconds, float effectivenessMultiplier, object source)
     {
         var elapsed = 0f;
+        var initialDelay = Mathf.Min(_statusTickInterval, durationSeconds);
+        if (initialDelay > 0f)
+        {
+            yield return new WaitForSeconds(initialDelay);
+            elapsed += initialDelay;
+        }
 
         while (elapsed < durationSeconds)
         {
@@ -92,10 +115,14 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget
             var delta = Mathf.Min(_statusTickInterval, durationSeconds - elapsed);
             var damage = Mathf.RoundToInt(damagePerSecond * delta);
             if (damage > 0)
+            {
                 _damageable.ReceiveDamage(damage, source);
+                DamageWordTextPopupUtility.ShowForGameObject(gameObject, damage, effectivenessMultiplier, _damageWordTextPopupSettings);
+            }
 
             elapsed += delta;
-            yield return new WaitForSeconds(delta);
+            if (elapsed < durationSeconds)
+                yield return new WaitForSeconds(Mathf.Min(_statusTickInterval, durationSeconds - elapsed));
         }
     }
 

@@ -17,6 +17,10 @@ public class SpellCombatController : MonoBehaviour
     [Header("Targeting")]
     [SerializeField] private LayerMask _targetMask;
 
+    [Header("Word Effectiveness")]
+    [SerializeField] private SpellWordEffectivenessData _wordEffectivenessData;
+    [SerializeField] private DamageWordTextPopupSettings _damageWordTextPopupSettings = new();
+
     [Header("Runtime Tuning")]
     [SerializeField] private SpellRuntimeSettings _settings = new()
     {
@@ -259,16 +263,37 @@ public class SpellCombatController : MonoBehaviour
 
     private void ApplyHit(CastState castState, ISpellTarget target, Vector2 hitPosition)
     {
-        var damage = castState.BaseDamage;
+        var effectivenessMultiplier = ResolveWordEffectivenessMultiplier(castState, target);
+        var damage = castState.BaseDamage * effectivenessMultiplier;
+
         if (castState.Element == ElementWord.Lightning && target.HasAnyNegativeStatus)
             damage *= _settings.LightningBonusMultiplier;
+        
+        var displayedDamage = Mathf.Max(1, Mathf.RoundToInt(damage));
+
+        DamageWordTextPopupUtility.ShowForTarget(target, displayedDamage, effectivenessMultiplier, _damageWordTextPopupSettings);
 
         target.ReceiveSpellDamage(damage, _player);
-        ApplyElementStatus(castState, target, hitPosition);
+        ApplyElementStatus(castState, target, hitPosition, effectivenessMultiplier);
         ApplyModifierSideEffects(castState, target, hitPosition);
     }
 
-    private void ApplyElementStatus(CastState castState, ISpellTarget target, Vector2 hitPosition)
+    private float ResolveWordEffectivenessMultiplier(CastState castState, ISpellTarget target)
+    {
+        if (target == null)
+            return _wordEffectivenessData.NeutralMultiplier;
+
+        if (target is not Component targetComponent)
+            return _wordEffectivenessData.NeutralMultiplier;
+
+        var effectivenessReceiver = targetComponent.GetComponentInParent<ISpellWordEffectivenessTarget>();
+        if (effectivenessReceiver == null || !effectivenessReceiver.TryGetSpellWordEffectivenessData(out var biome, out var roleTags))
+            return _wordEffectivenessData.NeutralMultiplier;
+
+        return _wordEffectivenessData.CalculateFinalMultiplier(biome, roleTags, castState.Modifier, castState.Element, castState.Form);
+    }
+
+    private void ApplyElementStatus(CastState castState, ISpellTarget target, Vector2 hitPosition, float effectivenessMultiplier)
     {
         switch (castState.Element)
         {
@@ -281,7 +306,7 @@ public class SpellCombatController : MonoBehaviour
                 break;
             case ElementWord.Ember:
                 target.ApplyStatus(CombatStatusEffect.Burn, _settings.StatusDuration);
-                target.ApplyDamageOverTime(_settings.DotDamagePerSecond, _settings.StatusDuration, _player);
+                target.ApplyDamageOverTime(_settings.DotDamagePerSecond * effectivenessMultiplier, _settings.StatusDuration, effectivenessMultiplier, _player);
                 break;
             case ElementWord.Dark:
                 target.ApplyStatus(CombatStatusEffect.Weakened, _settings.StatusDuration);
@@ -322,7 +347,11 @@ public class SpellCombatController : MonoBehaviour
             if (target == null || !target.IsAlive)
                 continue;
 
-            target.ReceiveSpellDamage(castState.BaseDamage * _settings.ExplosionDamageMultiplier, _player);
+            var effectivenessMultiplier = ResolveWordEffectivenessMultiplier(castState, target);
+            var damage = castState.BaseDamage * _settings.ExplosionDamageMultiplier * effectivenessMultiplier;
+            var displayedDamage = Mathf.Max(1, Mathf.RoundToInt(damage));
+            DamageWordTextPopupUtility.ShowForTarget(target, displayedDamage, effectivenessMultiplier, _damageWordTextPopupSettings);
+            target.ReceiveSpellDamage(damage, _player);
         }
     }
 
