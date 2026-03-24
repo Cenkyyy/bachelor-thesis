@@ -5,6 +5,8 @@ public class EnemyAnimationController : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _renderer;
 
+    [SerializeField] private bool _mirrorSideSprites = true;
+
     [Header("Parameter Names")]
     [SerializeField] private string _isMovingParam = "IsMoving";
     [SerializeField] private string _moveXParam = "MoveX";
@@ -58,7 +60,7 @@ public class EnemyAnimationController : MonoBehaviour
 
     private void UpdateSideFlip(Vector2 direction)
     {
-        if (_renderer == null)
+        if (_renderer == null || !_mirrorSideSprites)
         {
             return;
         }
