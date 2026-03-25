@@ -131,6 +131,11 @@ public sealed class PanelManager : MonoBehaviour
         ApplyPauseRule();
     }
 
+    public bool ShouldBlockHotbarScrollInput()
+    {
+        return _currentPanelId.HasValue && _currentPanelId.Value == PanelId.Map;
+    }
+
     public void CloseCurrentMajorPanel()
     {
         CloseCurrentMajorPanel(force: false);

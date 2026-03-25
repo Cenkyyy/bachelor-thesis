@@ -35,6 +35,9 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
     {
         base.Update();
 
+        if (PanelManager.Instance != null && PanelManager.Instance.ShouldBlockHotbarScrollInput())
+            return;
+
         var scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll > 0f)
         {
