@@ -24,8 +24,10 @@ public sealed class PlayerRespawnController : MonoBehaviour
     [SerializeField, Min(0f)] private float _fadeOutDuration = 0.6f;
     [SerializeField, Min(0.001f)] private float _maxFadeDeltaTime = 0.05f;
 
-    public event Action OnDefeated;
-    public event Action OnRespawned;
+    [Header("Respawn Reveal Readiness")]
+    [SerializeField] private DecorationChunkGenerator _decorationChunkGenerator;
+    [SerializeField, Min(0)] private int _respawnGenerationRadiusInChunks = 1;
+    [SerializeField, Min(1)] private int _respawnGenerationChunksPerFrame = 2;
 
     public bool IsDefeated { get; private set; }
 
@@ -34,6 +36,9 @@ public sealed class PlayerRespawnController : MonoBehaviour
 
     private void Awake()
     {
+        if (_decorationChunkGenerator == null)
+            _decorationChunkGenerator = FindFirstObjectByType<DecorationChunkGenerator>();
+
         if (_deathFadeCanvasGroup == null && _deathFadeRoot != null)
             _deathFadeCanvasGroup = _deathFadeRoot.GetComponent<CanvasGroup>();
 
@@ -72,6 +77,10 @@ public sealed class PlayerRespawnController : MonoBehaviour
         if (!IsDefeated)
             return;
 
+        // create death chest and transfer the player's backpack items there
+        _deathDropController.CreateDeathChestFromBackpack(_player, _playerTransform.position);
+
+        // teleport player to his last spawn point
         _playerTransform.position = GetSafeRespawnPosition(_player.Data.SpawnPoint);
 
         if (_playerTransform.TryGetComponent<Rigidbody2D>(out var body))
@@ -80,13 +89,13 @@ public sealed class PlayerRespawnController : MonoBehaviour
             body.angularVelocity = 0f;
         }
 
+        // recover player's stats
         _player.Data.Heal(_player.Data.MaxHealth);
         _player.Data.RecoverMana(_player.Data.MaxMana);
 
-        // TODO: reset other player stats, remove some percentage of inventory items, etc
+        // TODO: reset other player stats
 
         IsDefeated = false;
-        OnRespawned?.Invoke();
     }
 
     private Vector3 GetSafeRespawnPosition(Vector3 spawnPoint)
@@ -127,7 +136,6 @@ public sealed class PlayerRespawnController : MonoBehaviour
             return;
 
         IsDefeated = true;
-        OnDefeated?.Invoke();
 
         if (_deathSequenceRoutine == null)
             _deathSequenceRoutine = StartCoroutine(RunDeathRespawnSequence());
@@ -141,14 +149,38 @@ public sealed class PlayerRespawnController : MonoBehaviour
         SetDeathFadeVisible(true);
         yield return _fadeService.FadeIn(_fadeInDuration);
 
-        _deathDropController.CreateDeathChestFromBackpack(_player, _playerTransform.position);
         Respawn();
+
+        yield return WaitForRespawnDecorationsToBeGenerated();
 
         yield return _fadeService.FadeOut(_fadeOutDuration);
         SetDeathFadeVisible(false);
 
         GameStateManager.ReleasePauseLock(this);
         _deathSequenceRoutine = null;
+    }
+
+    private IEnumerator WaitForRespawnDecorationsToBeGenerated()
+    {
+        if (_playerTransform == null)
+            yield break;
+
+        while (true)
+        {
+            bool decorationsReady = true;
+            var playerPosition = _playerTransform.position;
+
+            if (_decorationChunkGenerator != null)
+            {
+                _decorationChunkGenerator.SpawnMissingChunksAround(playerPosition, _respawnGenerationRadiusInChunks, _respawnGenerationChunksPerFrame);
+                decorationsReady = _decorationChunkGenerator.AreChunksSpawnedAround(playerPosition, _respawnGenerationRadiusInChunks);
+            }
+
+            if (decorationsReady)
+                yield break;
+
+            yield return null;
+        }
     }
 
     private void SetDeathFadeVisible(bool visible)

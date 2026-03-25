@@ -102,7 +102,7 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
             }
 
             UnloadFarChunks(focusChunk);
-            yield return new WaitForSeconds(Mathf.Max(0.02f, _refreshIntervalSeconds));
+            yield return new WaitForSecondsRealtime(Mathf.Max(0.02f, _refreshIntervalSeconds));
         }
     }
 
@@ -131,6 +131,53 @@ public sealed class DecorationChunkGenerator : MonoBehaviour, ISceneTransitionRe
             }
         }
     }
+
+    public int SpawnMissingChunksAround(Vector3 worldPosition, int radiusInChunks, int maxChunksToSpawn)
+    {
+        if (_worldGenerator == null || _worldGenerator.CurrentWorldData == null)
+            return 0;
+
+        var data = _worldGenerator.CurrentWorldData;
+        var tilePosition = _worldGenerator.RuntimeState.ResolveTileFromWorld(worldPosition);
+        var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(tilePosition, _chunkSize);
+        var desiredChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, Mathf.Max(0, radiusInChunks));
+
+        int spawnedCount = 0;
+        int spawnBudget = Mathf.Max(1, maxChunksToSpawn);
+        for (int i = 0; i < desiredChunks.Count; i++)
+        {
+            var chunkCoord = desiredChunks[i];
+            if (_spawnedChunkInstances.ContainsKey(chunkCoord))
+                continue;
+
+            SpawnChunk(data, chunkCoord);
+            spawnedCount++;
+
+            if (spawnedCount >= spawnBudget)
+                break;
+        }
+
+        return spawnedCount;
+    }
+
+    public bool AreChunksSpawnedAround(Vector3 worldPosition, int radiusInChunks)
+    {
+        if (_worldGenerator == null || _worldGenerator.CurrentWorldData == null)
+            return false;
+
+        var tilePosition = _worldGenerator.RuntimeState.ResolveTileFromWorld(worldPosition);
+        var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(tilePosition, _chunkSize);
+        var desiredChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, Mathf.Max(0, radiusInChunks));
+
+        for (int i = 0; i < desiredChunks.Count; i++)
+        {
+            if (!_spawnedChunkInstances.ContainsKey(desiredChunks[i]))
+                return false;
+        }
+
+        return true;
+    }
+
     private void RebuildBiomeIndex()
     {
         _entriesByBiome.Clear();
