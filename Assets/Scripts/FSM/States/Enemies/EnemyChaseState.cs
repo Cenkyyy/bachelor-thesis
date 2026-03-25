@@ -12,7 +12,7 @@ public class EnemyChaseState : EnemyStateBase
 
         if (!enemyCore.HasTarget)
         {
-            Set(ActorStateId.Patrol, forceReset: true);
+            Set(EntityStateId.Patrol, forceReset: true);
             return;
         }
 
@@ -23,19 +23,19 @@ public class EnemyChaseState : EnemyStateBase
         }
         else if (enemyCore.TickLostSight(UnityEngine.Time.deltaTime))
         {
-            Set(ActorStateId.Patrol, forceReset: true);
+            Set(EntityStateId.Patrol, forceReset: true);
             return;
         }
 
         if (enemyCore.IsOutsideLeash())
         {
-            Set(ActorStateId.Patrol, forceReset: true);
+            Set(EntityStateId.Patrol, forceReset: true);
             return;
         }
 
         if (enemyCore.IsTargetInAttackRange())
         {
-            Set(ActorStateId.Attack, forceReset: true);
+            Set(EntityStateId.Attack, forceReset: true);
             return;
         }
 

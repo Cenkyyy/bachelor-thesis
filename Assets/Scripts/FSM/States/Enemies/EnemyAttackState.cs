@@ -24,23 +24,23 @@
 
         if (!enemyCore.HasTarget)
         {
-            Set(ActorStateId.Patrol, forceReset: true);
+            Set(EntityStateId.Patrol, forceReset: true);
             return;
         }
 
         if (enemyCore.IsOutsideLeash())
         {
-            Set(ActorStateId.Patrol, forceReset: true);
+            Set(EntityStateId.Patrol, forceReset: true);
             return;
         }
 
         if (enemyCore.IsTargetInAttackRange())
         {
-            Set(ActorStateId.Attack, forceReset: true);
+            Set(EntityStateId.Attack, forceReset: true);
             return;
         }
 
-        Set(ActorStateId.Chase, forceReset: true);
+        Set(EntityStateId.Chase, forceReset: true);
     }
 
     public override void OnExit()

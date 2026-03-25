@@ -18,7 +18,7 @@ namespace Assets.Scripts.FSM.States
             var input = _core.ReadMoveInput();
             if (input != Vector2.zero)
             {
-                Set(ActorStateId.PlayerMove, forceReset: true);
+                Set(EntityStateId.PlayerMove, forceReset: true);
                 return;
             }
             _core.ApplyMovement(Vector2.zero);

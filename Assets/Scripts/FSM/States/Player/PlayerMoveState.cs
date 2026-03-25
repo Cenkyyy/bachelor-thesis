@@ -17,7 +17,7 @@ namespace Assets.Scripts.FSM.States
             var input = _core.ReadMoveInput();
             if (input == Vector2.zero)
             {
-                Set(ActorStateId.PlayerIdle, forceReset: true);
+                Set(EntityStateId.PlayerIdle, forceReset: true);
                 return;
             }
             _core.ApplyMovement(input);

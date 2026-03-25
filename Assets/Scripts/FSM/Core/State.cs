@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class State : MonoBehaviour, IState
 {
-    [field: SerializeField] public ActorStateId StateId { get; private set; } = ActorStateId.None;
+    [field: SerializeField] public EntityStateId StateId { get; private set; } = EntityStateId.None;
 
     public bool IsComplete { get; protected set; } = false;
 
@@ -24,7 +24,7 @@ public abstract class State : MonoBehaviour, IState
         parent.Set(newState, forceReset);
     }
 
-    protected void Set(ActorStateId newStateId, bool forceReset = false)
+    protected void Set(EntityStateId newStateId, bool forceReset = false)
     {
         core.RequestState(newStateId, forceReset);
     }

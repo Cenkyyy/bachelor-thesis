@@ -64,6 +64,6 @@ public sealed class EnemyDamageable : MonoBehaviour, IDamageable
         _isDead = true;
 
         if (_enemyCore != null)
-            _enemyCore.RequestState(ActorStateId.Dead);
+            _enemyCore.RequestState(EntityStateId.Dead);
     }
 }

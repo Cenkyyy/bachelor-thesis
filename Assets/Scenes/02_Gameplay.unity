@@ -370,8 +370,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1280
   _spawnableEnemies:
-  - {fileID: 11400000, guid: cae1e10bb0f4cb8439076f4d125ed93c, type: 2}
-  - {fileID: 11400000, guid: b77087d43f436a343a6cf87b40bc452c, type: 2}
+  - {fileID: 11400000, guid: ae968297b73e64d4fb319c407e633881, type: 2}
+  - {fileID: 11400000, guid: c1523698214b240419fd070c9878a6c5, type: 2}
   _spawnStrategyType: 0
   _settings:
     <FirstSpawnDay>k__BackingField: 2

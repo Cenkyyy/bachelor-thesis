@@ -1,16 +1,16 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public abstract class AgentCore : StateMachineCore
+public abstract class EntityCore : StateMachineCore
 {
     [Header("Movement")]
     [SerializeField] protected float moveSpeed = 2.5f;
     [SerializeField] protected float arrivalEps = 0.12f;
 
     [Header("Push Resistance")]
-    [SerializeField, Range(0f, 1f)] protected float actorPushMultiplier = 0.2f;
-    [SerializeField] protected float actorPushCastExtraDistance = 0.02f;
-    [SerializeField] protected LayerMask actorPushTargetMask;
+    [SerializeField, Range(0f, 1f)] protected float entityPushMultiplier = 0.2f;
+    [SerializeField] protected float entityPushCastExtraDistance = 0.02f;
+    [SerializeField] protected LayerMask entityPushTargetMask;
 
     [Header("Vision")]
     [SerializeField] protected float visionRadius = 6f;
@@ -84,7 +84,7 @@ public abstract class AgentCore : StateMachineCore
         }
 
         var direction = d.normalized;
-        var speedMultiplier = ShouldReduceActorPush(direction, d.magnitude) ? actorPushMultiplier : 1f;
+        var speedMultiplier = ShouldReduceEntityPush(direction, d.magnitude) ? entityPushMultiplier : 1f;
         body.linearVelocity = direction * (moveSpeed * Mathf.Clamp01(speedMultiplier));
     }
 
@@ -92,14 +92,14 @@ public abstract class AgentCore : StateMachineCore
 
     public void Stop() => body.linearVelocity = Vector2.zero;
 
-    private bool ShouldReduceActorPush(Vector2 direction, float distanceToTarget)
+    private bool ShouldReduceEntityPush(Vector2 direction, float distanceToTarget)
     {
-        if (actorPushMultiplier >= 0.999f || body == null)
+        if (entityPushMultiplier >= 0.999f || body == null)
         {
             return false;
         }
 
-        var castDistance = Mathf.Max(0f, Mathf.Min(distanceToTarget, moveSpeed * Time.fixedDeltaTime) + actorPushCastExtraDistance);
-        return MovementPushResistanceUtils.ShouldReducePush(body, direction, castDistance, _movementCastHits, actorPushTargetMask);
+        var castDistance = Mathf.Max(0f, Mathf.Min(distanceToTarget, moveSpeed * Time.fixedDeltaTime) + entityPushCastExtraDistance);
+        return MovementPushResistanceUtils.ShouldReducePush(body, direction, castDistance, _movementCastHits, entityPushTargetMask);
     }
 }

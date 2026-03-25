@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [Serializable]
-public struct EnemyLootDrop
+public struct EntityLootDrop
 {
     [SerializeField] private ItemData _item;
     [SerializeField, Range(0f, 1f)] private float _dropChance;

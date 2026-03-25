@@ -1,4 +1,4 @@
-﻿public enum ActorStateId
+﻿public enum EntityStateId
 {
     None = 0,
     Idle = 1,

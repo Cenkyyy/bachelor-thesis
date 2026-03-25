@@ -14,14 +14,14 @@
     {
         if (enemyCore.TryDetectTarget() && enemyCore.CanSeeTarget(out _))
         {
-            var next = enemyCore.IsTargetInAttackRange() ? ActorStateId.Attack : ActorStateId.Chase;
+            var next = enemyCore.IsTargetInAttackRange() ? EntityStateId.Attack : EntityStateId.Chase;
             Set(next, forceReset: true);
             return;
         }
 
         if (time >= _idleDuration)
         {
-            Set(ActorStateId.Patrol, forceReset: true);
+            Set(EntityStateId.Patrol, forceReset: true);
         }
     }
 

@@ -6,7 +6,7 @@
 
         if (!enemyCore.EnsurePatrolTarget())
         {
-            Set(ActorStateId.Idle, forceReset: true);
+            Set(EntityStateId.Idle, forceReset: true);
         }
     }
 
@@ -14,14 +14,14 @@
     {
         if (enemyCore.TryDetectTarget() && enemyCore.CanSeeTarget(out _))
         {
-            var next = enemyCore.IsTargetInAttackRange() ? ActorStateId.Attack : ActorStateId.Chase;
+            var next = enemyCore.IsTargetInAttackRange() ? EntityStateId.Attack : EntityStateId.Chase;
             Set(next, forceReset: true);
             return;
         }
 
         if (!enemyCore.EnsurePatrolTarget())
         {
-            Set(ActorStateId.Idle, forceReset: true);
+            Set(EntityStateId.Idle, forceReset: true);
             return;
         }
 
@@ -30,7 +30,7 @@
         if (enemyCore.ArrivedAt(enemyCore.CurrentPatrolTarget))
         {
             enemyCore.ClearPatrolTarget();
-            Set(ActorStateId.Idle, forceReset: true);
+            Set(EntityStateId.Idle, forceReset: true);
         }
     }
 

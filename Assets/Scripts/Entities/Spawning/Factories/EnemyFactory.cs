@@ -9,8 +9,13 @@ public sealed class EnemyFactory<TEnemy> : IEnemyFactory<TEnemy> where TEnemy : 
             return null;
         }
 
-        var enemy = Object.Instantiate(data.Prefab, spawnPoint, Quaternion.identity, parent);
-        enemy.SetData(data);
+        var spawnedEntity = Object.Instantiate(data.Prefab, spawnPoint, Quaternion.identity, parent);
+        var enemy = spawnedEntity as EnemyCore;
+        if (enemy == null)
+        {
+            Object.Destroy(spawnedEntity.gameObject);
+            return null;
+        }
         return enemy as TEnemy;
     }
 }

@@ -152,16 +152,16 @@ MonoBehaviour:
   initialState: {fileID: 6824101350984700763}
   moveSpeed: 2.5
   arrivalEps: 0.12
-  actorPushMultiplier: 0.2
-  actorPushCastExtraDistance: 0.02
-  actorPushTargetMask:
+  entityPushMultiplier: 0.2
+  entityPushCastExtraDistance: 0.02
+  entityPushTargetMask:
     serializedVersion: 2
-    m_Bits: 640
+    m_Bits: 0
   visionRadius: 6
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1280
-  _data: {fileID: 11400000, guid: b77087d43f436a343a6cf87b40bc452c, type: 2}
+  _data: {fileID: 11400000, guid: ae968297b73e64d4fb319c407e633881, type: 2}
   _homePointOverride: {fileID: 3227767779565571614}
   _detectionMask:
     serializedVersion: 2

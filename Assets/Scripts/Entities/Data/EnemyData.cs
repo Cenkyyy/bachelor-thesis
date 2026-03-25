@@ -1,30 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
-[CreateAssetMenu(menuName = "Enemies/Enemy Data")]
-public class EnemyData : ScriptableObject
+[CreateAssetMenu(menuName = "Entities/Enemy Data")]
+public class EnemyData : EntityData
 {
     [field: Header("Identity")]
     [field: SerializeField] public EnemySpecies Species { get; private set; } = EnemySpecies.Troll;
     [field: SerializeField] public EnemyArchetype Archetype { get; private set; } = EnemyArchetype.Bruiser;
     [field: SerializeField] public EnemyRoleTag RoleTags { get; private set; } = EnemyRoleTag.Bruiser;
-    [field: SerializeField] public BiomeAffinity HomeBiome { get; private set; } = BiomeAffinity.Grassland;
-
-    [field: Header("Spawn")]
-    [field: SerializeField] public EnemyCore Prefab { get; private set; }
-    [field: SerializeField, Min(0f)] public float SpawnWeight { get; private set; } = 1f;
-
-    [field: Header("Core Stats")]
-    [field: SerializeField] public int MaxHealth { get; private set; } = 40;
-    [field: SerializeField] public int XpReward { get; private set; } = 15;
-
-    [Header("Loot")]
-    [SerializeField] private List<EnemyLootDrop> _drops = new();
-    public IReadOnlyList<EnemyLootDrop> Drops => _drops;
-
-    [field: Header("Movement")]
-    [field: SerializeField] public float MoveSpeed { get; private set; } = 2.2f;
-    [field: SerializeField] public float ArrivalEpsilon { get; private set; } = 0.12f;
 
     [field: Header("Perception")]
     [field: SerializeField] public float DetectionRadius { get; private set; } = 6f;
@@ -43,27 +25,9 @@ public class EnemyData : ScriptableObject
     [field: SerializeField] public float AttackHitWindowSeconds { get; private set; } = 0.15f;
     [field: SerializeField] public float AttackRecoverySeconds { get; private set; } = 0.8f;
 
-    [field: Header("Pathfinding")]
-    [field: SerializeField] public float RepathIntervalSeconds { get; private set; } = 0.25f;
-    [field: SerializeField] public float PathNodeStep { get; private set; } = 0.5f;
-    [field: SerializeField] public int MaxPathIterations { get; private set; } = 1200;
-
-    private void OnValidate()
+    protected override void OnValidate()
     {
-        if (SpawnWeight < 0)
-            SpawnWeight = 0f;
-
-        if (MaxHealth < 1)
-            MaxHealth = 1;
-
-        if (XpReward < 0)
-            XpReward = 0;
-
-        if (MoveSpeed < 0f)
-            MoveSpeed = 0f;
-
-        if (ArrivalEpsilon < 0.01f)
-            ArrivalEpsilon = 0.01f;
+        base.OnValidate();
 
         if (DetectionRadius < 0f)
             DetectionRadius = 0f;
@@ -97,14 +61,5 @@ public class EnemyData : ScriptableObject
 
         if (AttackRecoverySeconds < 0f)
             AttackRecoverySeconds = 0f;
-
-        if (RepathIntervalSeconds < 0.05f)
-            RepathIntervalSeconds = 0.05f;
-
-        if (PathNodeStep < 0.1f)
-            PathNodeStep = 0.1f;
-
-        if (MaxPathIterations < 100)
-            MaxPathIterations = 100;
     }
 }

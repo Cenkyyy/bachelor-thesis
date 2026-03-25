@@ -7,7 +7,7 @@ public abstract class StateMachineCore : MonoBehaviour
     public StateMachine machine;
     public State initialState;
 
-    private readonly Dictionary<ActorStateId, State> _stateByIdLookup = new();
+    private readonly Dictionary<EntityStateId, State> _stateByIdLookup = new();
 
     protected virtual void Start()
     {
@@ -39,7 +39,7 @@ public abstract class StateMachineCore : MonoBehaviour
                 state.machine = new StateMachine();
             }
 
-            if (state.StateId == ActorStateId.None)
+            if (state.StateId == EntityStateId.None)
             {
                 continue;
             }
@@ -54,7 +54,7 @@ public abstract class StateMachineCore : MonoBehaviour
         }
     }
 
-    public bool RequestState(ActorStateId stateId, bool forceReset = false)
+    public bool RequestState(EntityStateId stateId, bool forceReset = false)
     {
         if (_stateByIdLookup.TryGetValue(stateId, out var state))
         {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyCore : AgentCore
+public class EnemyCore : EntityCore
 {
     [Header("Enemy")]
     [SerializeField] private EnemyData _data;
