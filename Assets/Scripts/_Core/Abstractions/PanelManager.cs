@@ -19,7 +19,7 @@ public sealed class PanelManager : MonoBehaviour
     [SerializeField] private CraftingPanel _craftingPanel;
 
     [Header("Panels - Secondary")]
-    [SerializeField] private CharacterPanel _characterPanel;
+    [SerializeField] private EquipmentPanel _equipmentPanel;
 
     private PanelId? _currentPanelId;
     private IInventory _currentChestInventory;
@@ -47,8 +47,8 @@ public sealed class PanelManager : MonoBehaviour
         if (_spellCastingPanel == null)
             _spellCastingPanel = FindFirstObjectByType<SpellCastingPanelController>();
 
-        _inventoryGroup = new IPanel[] { _backpackPanel, _characterPanel };
-        _chestGroup = new IPanel[] { _chestPanel, _backpackPanel, _characterPanel };
+        _inventoryGroup = new IPanel[] { _backpackPanel, _equipmentPanel };
+        _chestGroup = new IPanel[] { _chestPanel, _backpackPanel, _equipmentPanel };
         _mapGroup = new IPanel[] { _mapPanel };
         _settingsGroup = new IPanel[] { _settingsPanel };
         _craftingGroup = new IPanel[] { _craftingPanel };

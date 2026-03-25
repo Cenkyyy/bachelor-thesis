@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public sealed class CharacterPanel : MonoBehaviour, IPanel
+public sealed class EquipmentPanel : MonoBehaviour, IPanel
 {
     [Header("View")]
     [SerializeField] private EquipmentSlot[] _slots;

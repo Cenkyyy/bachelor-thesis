@@ -29,8 +29,8 @@ public class ItemInteractionController : MonoBehaviour
     [SerializeField] private ChestPanel _chestPanel;
     [SerializeField] private RectTransform _chestPanelRect;
 
-    [SerializeField] private CharacterPanel _characterPanel;
-    [SerializeField] private RectTransform _characterPanelRect;
+    [SerializeField] private EquipmentPanel _equipmentPanel;
+    [SerializeField] private RectTransform _equipmentPanelRect;
 
     [SerializeField] private CraftingPanel _craftingPanel;
     [SerializeField] private RectTransform _craftingPanelRect;
@@ -128,8 +128,8 @@ public class ItemInteractionController : MonoBehaviour
         var overChest = _chestPanel != null && _chestPanel.IsOpen && _chestPanelRect != null &&
             RectTransformUtility.RectangleContainsScreenPoint(_chestPanelRect, screenPoint, uiCamera);
 
-        var overCharacter = _characterPanel != null && _characterPanel.IsOpen && _characterPanelRect != null &&
-            RectTransformUtility.RectangleContainsScreenPoint(_characterPanelRect, screenPoint, uiCamera);
+        var overCharacter = _equipmentPanel != null && _equipmentPanel.IsOpen && _equipmentPanelRect != null &&
+            RectTransformUtility.RectangleContainsScreenPoint(_equipmentPanelRect, screenPoint, uiCamera);
 
         var overCrafting = _craftingPanel != null && _craftingPanel.IsOpen && _craftingPanelRect != null &&
             RectTransformUtility.RectangleContainsScreenPoint(_craftingPanelRect, screenPoint, uiCamera);

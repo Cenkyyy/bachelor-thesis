@@ -5426,7 +5426,7 @@ GameObject:
   - component: {fileID: 719520326}
   - component: {fileID: 719520328}
   m_Layer: 5
-  m_Name: CharacterPanel
+  m_Name: EquipmentPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6937,7 +6937,7 @@ GameObject:
   - component: {fileID: 853869611}
   - component: {fileID: 853869612}
   m_Layer: 0
-  m_Name: CharacterController
+  m_Name: EquipmentController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7691,8 +7691,8 @@ RectTransform:
   m_Children:
   - {fileID: 1611478416}
   - {fileID: 570862298}
-  - {fileID: 517984391}
   - {fileID: 853869611}
+  - {fileID: 517984391}
   - {fileID: 503899695}
   - {fileID: 185817030}
   - {fileID: 855455273}
@@ -10390,8 +10390,8 @@ MonoBehaviour:
   _hotbarPanelRect: {fileID: 121172469}
   _chestPanel: {fileID: 517984392}
   _chestPanelRect: {fileID: 527170256}
-  _characterPanel: {fileID: 853869612}
-  _characterPanelRect: {fileID: 719520325}
+  _equipmentPanel: {fileID: 853869612}
+  _equipmentPanelRect: {fileID: 719520325}
   _craftingPanel: {fileID: 279221440}
   _craftingPanelRect: {fileID: 2139804741}
   _player: {fileID: 2010244819}
@@ -14372,7 +14372,7 @@ MonoBehaviour:
   _mapPanel: {fileID: 185817031}
   _settingsPanel: {fileID: 784491454}
   _craftingPanel: {fileID: 279221440}
-  _characterPanel: {fileID: 853869612}
+  _equipmentPanel: {fileID: 853869612}
 --- !u!1 &1906169243
 GameObject:
   m_ObjectHideFlags: 0
