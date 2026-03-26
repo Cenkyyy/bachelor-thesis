@@ -25,13 +25,19 @@ public sealed class MineableNode : MonoBehaviour
 
     private void Awake()
     {
-        _currentDurability = Mathf.Max(0f, _data.MaxDurability);
+        ResetRuntimeState();
 
         if (_feedbackPopup == null)
             _feedbackPopup = GetComponent<WorldTextPopupEmitter>();
 
         if (_feedbackPopup == null)
             _feedbackPopup = gameObject.AddComponent<WorldTextPopupEmitter>();
+    }
+
+    public void ResetRuntimeState()
+    {
+        _isDepleted = false;
+        _currentDurability = Mathf.Max(0f, _data != null ? _data.MaxDurability : 0f);
     }
 
     public bool CanBeMinedWith(MiningToolContext tool)

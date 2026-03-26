@@ -50,16 +50,10 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
     [Header("Minimap")]
     [SerializeField] private MinimapController _minimap;
 
-    [Header("Performance")]
-    [SerializeField, Min(4)] private int _chunkSize = 32;
-    [SerializeField, Min(0)] private int _initialRenderRadiusInChunks = 4;
-    [SerializeField, Min(0)] private int _streamingRenderRadiusInChunks = 6;
-    [SerializeField, Min(0.02f)] private float _streamingRefreshIntervalSeconds = 0.1f;
-    [SerializeField, Min(1)] private int _chunksPerFrame = 2;
-
     public int CurrentSeed => _runtimeState.Seed;
     public WorldRuntimeData CurrentWorldData => _runtimeState.Data;
     public Tilemap GroundTilemap => _runtimeState.GroundTilemap;
+    public Tilemap BorderTilemap => _borderTilemap;
     public WorldRuntimeState RuntimeState => _runtimeState;
     public bool IsReadyForSceneReveal { get; private set; }
 
@@ -85,8 +79,6 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
 
     private int _playableRadius => (_worldWidth - (2 * _borderThickness)) / 2;
     private Coroutine _generationCoroutine;
-    private Coroutine _streamingCoroutine;
-    private readonly HashSet<Vector2Int> _renderedChunks = new HashSet<Vector2Int>();
     private readonly WorldRuntimeState _runtimeState = new WorldRuntimeState();
 
     private void Start()
@@ -101,14 +93,7 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
             StopCoroutine(_generationCoroutine);
         }
 
-        if (_streamingCoroutine != null)
-        {
-            StopCoroutine(_streamingCoroutine);
-            _streamingCoroutine = null;
-        }
-
         _runtimeState.Clear();
-
         _generationCoroutine = StartCoroutine(GenerateAndRenderCoroutine(seedUsed));
     }
 
@@ -118,12 +103,6 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
         {
             StopCoroutine(_generationCoroutine);
             _generationCoroutine = null;
-        }
-
-        if (_streamingCoroutine != null)
-        {
-            StopCoroutine(_streamingCoroutine);
-            _streamingCoroutine = null;
         }
 
         _runtimeState.Clear();
@@ -169,9 +148,7 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
         var data = generateTask.Result;
         _runtimeState.Update(seedUsed, data, _groundTilemap);
 
-        yield return RenderInitialChunksCoroutine(data);
         PositionPlayer(data);
-        StartChunkStreaming(data);
 
         if (_minimap != null)
         {
@@ -368,118 +345,7 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
         return allowedBiomes[idx];
     }
 
-    private IEnumerator RenderInitialChunksCoroutine(WorldRuntimeData data)
-    {
-        yield return ClearWorldCoroutine(data);
-
-        var centerChunk = WorldChunkUtility.GetChunkCoordFromTile(data.SpawnTile, _chunkSize);
-        int chunkBudget = 0;
-        foreach (var chunkCoord in WorldChunkUtility.BuildChunkSetInRadius(centerChunk, _initialRenderRadiusInChunks))
-        {
-            RenderChunk(data, chunkCoord);
-            chunkBudget++;
-
-            if (chunkBudget >= Mathf.Max(1, _chunksPerFrame))
-            {
-                chunkBudget = 0;
-                yield return null;
-            }
-        }
-    }
-
-    private IEnumerator ClearWorldCoroutine(WorldRuntimeData data)
-    {
-        _renderedChunks.Clear();
-        _groundTilemap.ClearAllTiles();
-        _borderTilemap.ClearAllTiles();
-
-        yield return null;
-    }
-
-    private void StartChunkStreaming(WorldRuntimeData data)
-    {
-        if (_streamingCoroutine != null)
-        {
-            StopCoroutine(_streamingCoroutine);
-        }
-        _streamingCoroutine = StartCoroutine(StreamChunksAroundPlayerCoroutine(data));
-    }
-
-    private IEnumerator StreamChunksAroundPlayerCoroutine(WorldRuntimeData data)
-    {
-        while (CurrentWorldData == data)
-        {
-            var focusTile = WorldChunkUtility.ResolveFocusTile(data, _groundTilemap, _playerTransform);
-            var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, _chunkSize);
-
-            int chunkBudget = 0;
-            foreach (var chunkCoord in WorldChunkUtility.BuildChunkSetInRadius(focusChunk, _streamingRenderRadiusInChunks))
-            {
-                if (_renderedChunks.Contains(chunkCoord))
-                    continue;
-
-                RenderChunk(data, chunkCoord);
-                chunkBudget++;
-
-                if (chunkBudget >= Mathf.Max(1, _chunksPerFrame))
-                {
-                    chunkBudget = 0;
-                    yield return null;
-                }
-            }
-            yield return new WaitForSeconds(Mathf.Max(0.02f, _streamingRefreshIntervalSeconds));
-        }
-    }
-
-    private void RenderChunk(WorldRuntimeData data, Vector2Int chunkCoord)
-    {
-        if (_renderedChunks.Contains(chunkCoord))
-            return;
-
-        int chunkSize = Mathf.Max(1, _chunkSize);
-        int startX = chunkCoord.x * chunkSize;
-        int startY = chunkCoord.y * chunkSize;
-
-        if (startX < 0 || startY < 0 || startX >= data.Width || startY >= data.Height)
-            return;
-
-        int width = Mathf.Min(chunkSize, data.Width - startX);
-        int height = Mathf.Min(chunkSize, data.Height - startY);
-
-        if (width <= 0 || height <= 0)
-            return;
-
-        var groundTiles = new TileBase[width * height];
-        var borderTiles = new TileBase[width * height];
-        var borderTileAsset = GetBorderTileAsset();
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                int dataX = startX + x;
-                int dataY = startY + y;
-                int index = x + (y * width);
-                var tile = data.GetTile(dataX, dataY);
-
-                if (tile.TileType == TileType.Void)
-                {
-                    borderTiles[index] = borderTileAsset;
-                    continue;
-                }
-
-                groundTiles[index] = GetTileAsset(tile.TileType);
-            }
-        }
-
-        var chunkOriginCell = data.DataToCell(startX, startY);
-        var chunkBounds = new BoundsInt(chunkOriginCell.x, chunkOriginCell.y, 0, width, height, 1);
-        _groundTilemap.SetTilesBlock(chunkBounds, groundTiles);
-        _borderTilemap.SetTilesBlock(chunkBounds, borderTiles);
-        _renderedChunks.Add(chunkCoord);
-    }
-
-    private TileBase GetBorderTileAsset()
+    public TileBase GetBorderTileAsset()
     {
         if (_borderTile != null)
             return _borderTile;
@@ -487,7 +353,7 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
         return _voidTile;
     }
 
-    private TileBase GetTileAsset(TileType tileType)
+    public TileBase GetTileAsset(TileType tileType)
     {
         switch (tileType)
         {

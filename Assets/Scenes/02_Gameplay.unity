@@ -4757,7 +4757,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000017d568ffb5ff7808956c7d7fdce809c5df538b60308fcc4c9c01d2f
+  m_ApplyToSortingLayers: 00000000017d568ffb5ff7808956c7d7fdce809c5df538b60308fcc4c9c01d2f49668bcf
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -8993,7 +8993,9 @@ GameObject:
   - component: {fileID: 1097722628}
   - component: {fileID: 1097722627}
   - component: {fileID: 1097722629}
+  - component: {fileID: 1097722632}
   - component: {fileID: 1097722630}
+  - component: {fileID: 1097722631}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -9076,11 +9078,6 @@ MonoBehaviour:
   _biomeTransitionDisplacementTiles: 4
   _playerTransform: {fileID: 2010244813}
   _minimap: {fileID: 503899696}
-  _chunkSize: 32
-  _initialRenderRadiusInChunks: 4
-  _streamingRenderRadiusInChunks: 6
-  _streamingRefreshIntervalSeconds: 0.1
-  _chunksPerFrame: 2
 --- !u!114 &1097722630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9095,16 +9092,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _worldGenerator: {fileID: 1097722629}
   _playerTransform: {fileID: 2010244813}
+  _chunkSize: 32
+  _initialGenerationRadiusInChunks: 3
+  _generationRadiusInChunks: 2
+  _unloadRadiusInChunks: 4
+  _refreshIntervalSeconds: 0.1
+  _chunksGeneratedPerFrame: 1
+  _chunksUnloadedPerFrame: 1
+  _terrainChunkGenerator: {fileID: 1097722632}
   _decorationsListData: {fileID: 11400000, guid: 4dcbe27d436906443b34cdd482169e10, type: 2}
   _spawnedDecorationsRoot: {fileID: 568387668}
+  _baseSpawnAttemptsPerChunk: 72
+  _tileCenterJitter: 0.35
+--- !u!114 &1097722631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097722626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1137686e0a428034d85d3595fd387844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _worldGenerator: {fileID: 1097722629}
+  _playerTransform: {fileID: 2010244813}
+  _chunkSize: 32
+  _initialGenerationRadiusInChunks: 2
+  _generationRadiusInChunks: 1
+  _unloadRadiusInChunks: 3
+  _refreshIntervalSeconds: 0.1
+  _chunksGeneratedPerFrame: 1
+  _chunksUnloadedPerFrame: 1
+  _decorationChunkGenerator: {fileID: 1097722630}
+  _foliageListData: {fileID: 11400000, guid: 5388b32ddb2585947af1f01a056937d4, type: 2}
+  _spawnedFoliageRoot: {fileID: 1426833342}
+  _baseSpawnAttemptsPerChunk: 512
+  _tileCenterJitter: 0.65
+--- !u!114 &1097722632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097722626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ccea369a371b66489839ac8619e2ebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _worldGenerator: {fileID: 1097722629}
+  _playerTransform: {fileID: 2010244813}
   _chunkSize: 32
   _initialGenerationRadiusInChunks: 4
   _generationRadiusInChunks: 3
   _unloadRadiusInChunks: 5
-  _refreshIntervalSeconds: 0.1
+  _refreshIntervalSeconds: 0.2
   _chunksGeneratedPerFrame: 1
-  _baseSpawnAttemptsPerChunk: 72
-  _tileCenterJitter: 0.35
+  _chunksUnloadedPerFrame: 1
+  _clearTilemapsOnEnable: 0
+  _enableChunkUnloading: 1
 --- !u!1 &1118528052
 GameObject:
   m_ObjectHideFlags: 0
@@ -10084,6 +10132,7 @@ Transform:
   - {fileID: 2031400804}
   - {fileID: 2002939701}
   - {fileID: 568387668}
+  - {fileID: 1426833342}
   m_Father: {fileID: 174293338}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1362542294
@@ -10398,6 +10447,37 @@ MonoBehaviour:
   _worldItemSpawner: {fileID: 2031400805}
   _dropSpawnDistance: 0.6
   _doubleClickDelay: 0.2
+--- !u!1 &1426833341
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1426833342}
+  m_Layer: 0
+  m_Name: Foliage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1426833342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426833341}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1327090048}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1436572154
 GameObject:
   m_ObjectHideFlags: 0

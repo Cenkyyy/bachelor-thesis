@@ -8,6 +8,9 @@ public sealed class DecorationInstanceTracker : MonoBehaviour
 
     public void Initialize(string instanceId, DecorationChunkGenerator owner, MineableNode node)
     {
+        if (_node != null)
+            _node.OnDepleted -= HandleNodeDepleted;
+
         _instanceId = instanceId;
         _owner = owner;
         _node = node;
