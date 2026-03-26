@@ -21,6 +21,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
     [Header("Recipe Grid")]
     [SerializeField] private Transform _recipeGridRoot;
     [SerializeField] private CraftingRecipeSlot _recipeSlotPrefab;
+    [SerializeField] private ScrollRect _recipeScrollRect;
 
     [Header("Details")]
     [SerializeField] private CraftingRecipeDetailsView _detailsView;
@@ -132,6 +133,17 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
             slot.Bind(recipe, craftable);
             slot.OnSelected += HandleRecipeSelected;
             _slots.Add(slot);
+        }
+
+        if (_recipeScrollRect != null)
+        {
+            _recipeScrollRect.StopMovement();
+            _recipeScrollRect.verticalNormalizedPosition = 1f;
+        }
+
+        if (_recipeGridRoot is RectTransform recipeGridRect)
+        {
+            recipeGridRect.anchoredPosition = Vector2.zero;
         }
 
         if (_slots.Count == 0)

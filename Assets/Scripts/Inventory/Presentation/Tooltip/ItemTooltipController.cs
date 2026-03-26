@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -116,13 +115,7 @@ public sealed class ItemTooltipController : MonoBehaviour
 
     private void RegisterProviders()
     {
-        _providers.Clear();
-        _providers.Add(new StatModifiersTooltipProvider());
-        _providers.Add(new EquipmentTooltipProvider());
-        _providers.Add(new ConsumableTooltipProvider());
-        _providers.Add(new WeaponTooltipProvider());
-        _providers.Add(new ToolTooltipProvider(_playerToolDurability));
-        _providers.Sort((a, b) => a.Order.CompareTo(b.Order));
+        _providers.AddRange(ItemTooltipProviderFactory.CreateDefault(_playerToolDurability));
     }
 
     private void RestartHoverCountdown(Slot slot)
@@ -187,27 +180,7 @@ public sealed class ItemTooltipController : MonoBehaviour
             _rarityText.text = runtimeData?.Rarity ?? string.Empty;
 
         if (_bodyText != null)
-            _bodyText.text = BuildBody(runtimeData?.Lines);
-    }
-
-    private static string BuildBody(List<ItemTooltipLineRuntimeData> lines)
-    {
-        if (lines == null || lines.Count == 0)
-            return string.Empty;
-
-        var builder = new StringBuilder(128);
-        for (int i = 0; i < lines.Count; i++)
-        {
-            var line = lines[i];
-            builder.Append(line.Label);
-            builder.Append(": ");
-            builder.Append(line.Value);
-
-            if (i < lines.Count - 1)
-                builder.AppendLine();
-        }
-
-        return builder.ToString();
+            _bodyText.text = ItemTooltipBodyBuilder.BuildBody(runtimeData?.Lines);
     }
 
     private void PositionNearSlot(Slot slot)
