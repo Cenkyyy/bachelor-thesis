@@ -66,6 +66,19 @@ public sealed class WorldMapPanelZoomController : MonoBehaviour
         ClampContentToViewport();
     }
 
+    public void CenterOnNormalizedPosition(Vector2 normalizedPosition)
+    {
+        var contentSize = _content.rect.size;
+        var contentPivot = _content.pivot;
+        float zoom = _content.localScale.x;
+
+        float localX = (normalizedPosition.x - contentPivot.x) * contentSize.x;
+        float localY = (normalizedPosition.y - contentPivot.y) * contentSize.y;
+
+        _content.anchoredPosition = new Vector2(-localX * zoom, -localY * zoom);
+        ClampContentToViewport();
+    }
+
     private void ApplyStartZoom()
     {
         float zoomMultiplier = Mathf.Max(0.01f, _startZoomPercent * 0.01f);

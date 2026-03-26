@@ -119,7 +119,14 @@ public sealed class WorldMapPanelController : MonoBehaviour, IMajorPanel, IMapMa
 
         Canvas.ForceUpdateCanvases();
         _zoom.FitToViewport();
+        CenterMapOnPlayer();
         _fitAppliedThisOpen = true;
+    }
+
+    private void CenterMapOnPlayer()
+    {
+        Vector2 normalizedPos = GetPlayerDataPositionNormalized();
+        _zoom.CenterOnNormalizedPosition(normalizedPos);
     }
 
     private void UpdatePlayerMarker()
