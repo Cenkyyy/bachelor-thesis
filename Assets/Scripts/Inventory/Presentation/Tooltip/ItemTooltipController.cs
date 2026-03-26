@@ -26,7 +26,10 @@ public sealed class ItemTooltipController : MonoBehaviour
     private readonly List<IItemTooltipProvider> _providers = new List<IItemTooltipProvider>();
 
     private Coroutine _hoverCoroutine;
-    private Slot _currentHoveredSlot;
+    private IItemTooltipSource _currentHoveredSource;
+    private RectTransform _currentHoveredAnchor;
+    private Slot _currentHoveredSlotContext;
+    private InventoryItem _currentHoveredItem;
 
     private void Awake()
     {
@@ -46,8 +49,7 @@ public sealed class ItemTooltipController : MonoBehaviour
 
     private void OnDisable()
     {
-        CancelPendingHover();
-        Hide();
+        ClearHoverState();
     }
 
     private void OnDestroy()
@@ -58,44 +60,87 @@ public sealed class ItemTooltipController : MonoBehaviour
 
     public void OnSlotPointerEnter(Slot slot, PointerEventData eventData)
     {
-        if (!CanShowForSlot(slot))
-        {
-            CancelPendingHover();
-            Hide();
-            return;
-        }
-
-        _currentHoveredSlot = slot;
-        RestartHoverCountdown(slot);
+        OnTooltipSourcePointerEnter(slot);
     }
 
     public void OnSlotPointerExit(Slot slot, PointerEventData eventData)
     {
-        if (!ReferenceEquals(_currentHoveredSlot, slot))
+        OnTooltipSourcePointerExit(slot);
+    }
+
+    public void OnStandaloneItemPointerEnter(RectTransform hoverTarget, InventoryItem inventoryItem)
+    {
+        if (hoverTarget == null || inventoryItem.IsEmpty || inventoryItem.Item == null)
+        {
+            ClearHoverState();
+            return;
+        }
+
+        _currentHoveredSource = null;
+        _currentHoveredAnchor = hoverTarget;
+        _currentHoveredSlotContext = null;
+        _currentHoveredItem = inventoryItem;
+        RestartHoverCountdown(null, hoverTarget);
+    }
+
+    public void OnStandaloneItemPointerExit(RectTransform hoverTarget)
+    {
+        if (_currentHoveredSource != null || hoverTarget == null || !ReferenceEquals(_currentHoveredAnchor, hoverTarget))
             return;
 
-        CancelPendingHover();
-        Hide();
-        _currentHoveredSlot = null;
+        ClearHoverState();
     }
 
     public void OnSlotDisabled(Slot slot)
     {
-        if (!ReferenceEquals(_currentHoveredSlot, slot))
+        if (!ReferenceEquals(_currentHoveredSource, slot))
             return;
 
-        CancelPendingHover();
-        Hide();
-        _currentHoveredSlot = null;
+        ClearHoverState();
     }
 
-    private static bool CanShowForSlot(Slot slot)
+    public void OnTooltipSourcePointerEnter(IItemTooltipSource source)
     {
-        if (slot == null || slot.Owner == null || slot.SlotIndex < 0)
+        if (!TryResolveTooltipData(source, out var slotContext, out var inventoryItem))
+        {
+            ClearHoverState();
+            return;
+        }
+
+        _currentHoveredSource = source;
+        _currentHoveredAnchor = source.TooltipAnchor;
+        _currentHoveredSlotContext = slotContext;
+        _currentHoveredItem = inventoryItem;
+        RestartHoverCountdown(source, _currentHoveredAnchor);
+    }
+
+    public void OnTooltipSourcePointerExit(IItemTooltipSource source)
+    {
+        if (!ReferenceEquals(_currentHoveredSource, source))
+            return;
+
+        ClearHoverState();
+    }
+
+    private static bool TryResolveTooltipData(IItemTooltipSource source, out Slot slotContext, out InventoryItem inventoryItem)
+    {
+        slotContext = null;
+        inventoryItem = InventoryItem.Empty;
+
+        if (source == null || source.TooltipAnchor == null)
             return false;
 
-        var slotItem = slot.Owner.GetItemAt(slot.SlotIndex);
-        return !slotItem.IsEmpty && slotItem.Item != null;
+        return source.TryGetTooltipData(out slotContext, out inventoryItem) && !inventoryItem.IsEmpty && inventoryItem.Item != null;
+    }
+
+    private void ClearHoverState()
+    {
+        CancelPendingHover();
+        Hide();
+        _currentHoveredSource = null;
+        _currentHoveredAnchor = null;
+        _currentHoveredSlotContext = null;
+        _currentHoveredItem = InventoryItem.Empty;
     }
 
     private void CancelPendingHover()
@@ -118,34 +163,41 @@ public sealed class ItemTooltipController : MonoBehaviour
         _providers.AddRange(ItemTooltipProviderFactory.CreateDefault(_playerToolDurability));
     }
 
-    private void RestartHoverCountdown(Slot slot)
+    private void RestartHoverCountdown(IItemTooltipSource source, RectTransform anchor)
     {
         CancelPendingHover();
-        _hoverCoroutine = StartCoroutine(ShowAfterDelayCoroutine(slot));
+        _hoverCoroutine = StartCoroutine(ShowAfterDelayCoroutine(source, anchor));
     }
 
-    private IEnumerator ShowAfterDelayCoroutine(Slot slot)
+    private IEnumerator ShowAfterDelayCoroutine(IItemTooltipSource source, RectTransform anchor)
     {
         yield return new WaitForSeconds(_hoverDelaySeconds);
 
-        if (!ReferenceEquals(_currentHoveredSlot, slot) || !CanShowForSlot(slot))
+        if (source != null)
+        {
+            if (!ReferenceEquals(_currentHoveredSource, source))
+                yield break;
+        }
+        else
+        {
+            if (_currentHoveredSource != null || !ReferenceEquals(_currentHoveredAnchor, anchor))
+                yield break;
+        }
+
+        if (_currentHoveredItem.IsEmpty || _currentHoveredItem.Item == null || _currentHoveredAnchor == null)
             yield break;
 
-        var slotItem = slot.Owner.GetItemAt(slot.SlotIndex);
-        if (slotItem.IsEmpty || slotItem.Item == null)
-            yield break;
-
-        Show(slot, slotItem);
+        Show(_currentHoveredAnchor, _currentHoveredSlotContext, _currentHoveredItem);
     }
 
-    private void Show(Slot slot, InventoryItem slotItem)
+    private void Show(RectTransform anchor, Slot slotContext, InventoryItem inventoryItem)
     {
         if (_panelRoot == null)
             return;
 
-        var tooltipRuntimeData = BuildRuntimeData(slot, slotItem);
+        var tooltipRuntimeData = BuildRuntimeData(slotContext, inventoryItem);
         Render(tooltipRuntimeData);
-        PositionNearSlot(slot);
+        PositionNearRectTransform(anchor);
 
         _panelRoot.gameObject.SetActive(true);
     }
@@ -183,26 +235,22 @@ public sealed class ItemTooltipController : MonoBehaviour
             _bodyText.text = ItemTooltipBodyBuilder.BuildBody(runtimeData?.Lines);
     }
 
-    private void PositionNearSlot(Slot slot)
+    private void PositionNearRectTransform(RectTransform targetTransform)
     {
-        if (_panelRoot == null || slot == null)
-            return;
-
-        var slotTransform = slot.transform as RectTransform;
-        if (slotTransform == null)
+        if (_panelRoot == null || targetTransform == null || _canvas == null)
             return;
 
         var worldCorners = new Vector3[4];
-        slotTransform.GetWorldCorners(worldCorners);
+        targetTransform.GetWorldCorners(worldCorners);
 
         var topRight = worldCorners[2];
-        var screenTopRight = RectTransformUtility.WorldToScreenPoint(_canvas != null ? _canvas.worldCamera : null, topRight);
+        var screenTopRight = RectTransformUtility.WorldToScreenPoint(_canvas.worldCamera, topRight);
 
         var canvasRect = _canvas.transform as RectTransform;
         if (canvasRect == null)
             return;
 
-        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenTopRight, _canvas != null ? _canvas.worldCamera : null, out var localPoint))
+        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenTopRight, _canvas.worldCamera, out var localPoint))
             return;
 
         var desired = localPoint + _slotOffset;

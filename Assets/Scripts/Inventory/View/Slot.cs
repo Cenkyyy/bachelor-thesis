@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
-public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IItemTooltipSource
 {
     [Header("UI References")]
     [SerializeField] protected Image backgroundImage;
@@ -121,5 +121,19 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     public void OnPointerExit(PointerEventData eventData)
     {
         OnPointerExited?.Invoke(this, eventData);
+    }
+
+    public RectTransform TooltipAnchor => transform as RectTransform;
+
+    public bool TryGetTooltipData(out Slot slotContext, out InventoryItem inventoryItem)
+    {
+        slotContext = this;
+        inventoryItem = InventoryItem.Empty;
+
+        if (Owner == null || SlotIndex < 0)
+            return false;
+
+        inventoryItem = Owner.GetItemAt(SlotIndex);
+        return !inventoryItem.IsEmpty && inventoryItem.Item != null;
     }
 }

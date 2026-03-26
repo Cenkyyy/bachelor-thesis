@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public sealed class CraftingRecipeSlot : MonoBehaviour
+public sealed class CraftingRecipeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IItemTooltipSource
 {
     [SerializeField] private Image _icon;
     [SerializeField] private Button _button;
@@ -19,6 +20,14 @@ public sealed class CraftingRecipeSlot : MonoBehaviour
         if (_button != null)
         {
             _button.onClick.AddListener(HandleClick);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (_button != null)
+        {
+            _button.onClick.RemoveListener(HandleClick);
         }
     }
 
@@ -54,11 +63,33 @@ public sealed class CraftingRecipeSlot : MonoBehaviour
         OnSelected?.Invoke(_recipe);
     }
 
-    private void OnDestroy()
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_button != null)
-        {
-            _button.onClick.RemoveListener(HandleClick);
-        }
+        ItemTooltipController.Instance?.OnTooltipSourcePointerEnter(this);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ItemTooltipController.Instance?.OnTooltipSourcePointerExit(this);
+    }
+
+    private void OnDisable()
+    {
+        ItemTooltipController.Instance?.OnTooltipSourcePointerExit(this);
+    }
+
+    public RectTransform TooltipAnchor => transform as RectTransform;
+
+    public bool TryGetTooltipData(out Slot slotContext, out InventoryItem inventoryItem)
+    {
+        slotContext = null;
+        inventoryItem = InventoryItem.Empty;
+
+        if (_recipe == null || _recipe.OutputItem == null)
+            return false;
+
+        var outputAmount = Mathf.Max(1, _recipe.OutputAmount);
+        inventoryItem = new InventoryItem(_recipe.OutputItem, outputAmount);
+        return true;
     }
 }
