@@ -2,14 +2,14 @@
 
 public sealed class DeathChestHandle
 {
-    public string ChestId { get; }
+    public string DeathChestId { get; }
     public Vector3 WorldPosition { get; }
-    public ChestInventory Inventory { get; }
+    public DeathChestInventory Inventory { get; }
     public TemporaryDeathChestController Controller { get; }
 
-    public DeathChestHandle(string chestId, Vector3 worldPosition, ChestInventory inventory, TemporaryDeathChestController controller)
+    public DeathChestHandle(string deathChestId, Vector3 worldPosition, DeathChestInventory inventory, TemporaryDeathChestController controller)
     {
-        ChestId = chestId;
+        DeathChestId = deathChestId;
         WorldPosition = worldPosition;
         Inventory = inventory;
         Controller = controller;

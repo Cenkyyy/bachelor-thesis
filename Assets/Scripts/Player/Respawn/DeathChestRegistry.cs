@@ -11,22 +11,22 @@ public sealed class DeathChestRegistry : MonoBehaviour
 
     public void Register(DeathChestHandle handle)
     {
-        if (handle == null || string.IsNullOrEmpty(handle.ChestId) || handle.Inventory == null || handle.Inventory.Inventory == null)
+        if (handle == null || string.IsNullOrEmpty(handle.DeathChestId) || handle.Inventory == null || handle.Inventory.Inventory == null)
             return;
 
-        _byId[handle.ChestId] = handle;
+        _byId[handle.DeathChestId] = handle;
         _byInventory[handle.Inventory.Inventory] = handle;
     }
 
-    public void Unregister(string chestId)
+    public void Unregister(string deathChestId)
     {
-        if (string.IsNullOrEmpty(chestId))
+        if (string.IsNullOrEmpty(deathChestId))
             return;
 
-        if (!_byId.TryGetValue(chestId, out var handle))
+        if (!_byId.TryGetValue(deathChestId, out var handle))
             return;
 
-        _byId.Remove(chestId);
+        _byId.Remove(deathChestId);
 
         if (handle.Inventory != null && handle.Inventory.Inventory != null)
             _byInventory.Remove(handle.Inventory.Inventory);

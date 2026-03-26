@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public sealed class ChestInventory : MonoBehaviour
+public sealed class DeathChestInventory : MonoBehaviour
 {
     [SerializeField] private int _size = 24;
 

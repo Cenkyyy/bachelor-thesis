@@ -13,7 +13,7 @@ public sealed class PanelManager : MonoBehaviour
 
     [Header("Panels - Major")]
     [SerializeField] private BackpackPanel _backpackPanel;
-    [SerializeField] private ChestPanel _chestPanel;
+    [SerializeField] private DeathChestPanel _deathChestPanel;
     [SerializeField] private WorldMapPanelController _mapPanel;
     [SerializeField] private OverworldSettingsController _settingsPanel;
     [SerializeField] private CraftingPanel _craftingPanel;
@@ -22,15 +22,15 @@ public sealed class PanelManager : MonoBehaviour
     [SerializeField] private EquipmentPanel _equipmentPanel;
 
     private PanelId? _currentPanelId;
-    private IInventory _currentChestInventory;
+    private IInventory _currentDeathChestInventory;
 
     private IPanel[] _inventoryGroup;
-    private IPanel[] _chestGroup;
+    private IPanel[] _deathChestGroup;
     private IPanel[] _mapGroup;
     private IPanel[] _settingsGroup;
     private IPanel[] _craftingGroup;
 
-    public event Action<IInventory> OnChestClosed;
+    public event Action<IInventory> OnDeathChestClosed;
 
     public bool BlocksGameplayInput => _currentPanelId.HasValue && GetMajorPanel(_currentPanelId.Value).BlocksGameplayInput;
 
@@ -44,17 +44,14 @@ public sealed class PanelManager : MonoBehaviour
 
         Instance = this;
 
-        if (_spellCastingPanel == null)
-            _spellCastingPanel = FindFirstObjectByType<SpellCastingPanelController>();
-
         _inventoryGroup = new IPanel[] { _backpackPanel, _equipmentPanel };
-        _chestGroup = new IPanel[] { _chestPanel, _backpackPanel, _equipmentPanel };
+        _deathChestGroup = new IPanel[] { _deathChestPanel, _backpackPanel, _equipmentPanel };
         _mapGroup = new IPanel[] { _mapPanel };
         _settingsGroup = new IPanel[] { _settingsPanel };
         _craftingGroup = new IPanel[] { _craftingPanel };
 
         _currentPanelId = null;
-        _currentChestInventory = null;
+        _currentDeathChestInventory = null;
 
         GameStateManager.SetPause(false);
     }
@@ -124,7 +121,7 @@ public sealed class PanelManager : MonoBehaviour
         if (_currentPanelId.HasValue)
             CloseGroup(GetGroup(_currentPanelId.Value));
 
-        _currentChestInventory = null;
+        _currentDeathChestInventory = null;
         _currentPanelId = id;
 
         OpenGroup(GetGroup(id));
@@ -150,22 +147,22 @@ public sealed class PanelManager : MonoBehaviour
             return;
 
         var closingPanelId = _currentPanelId.Value;
-        var closingChestInventory = closingPanelId == PanelId.Chest ? _currentChestInventory : null;
+        var closingDeathChestInventory = closingPanelId == PanelId.DeathChest ? _currentDeathChestInventory : null;
 
         ItemInteractionController.Instance?.ResolveHeldItemToInventoryOrDrop();
 
         CloseGroup(GetGroup(closingPanelId));
 
         _currentPanelId = null;
-        _currentChestInventory = null;
+        _currentDeathChestInventory = null;
 
-        if (closingChestInventory != null)
-            OnChestClosed?.Invoke(closingChestInventory);
+        if (closingDeathChestInventory != null)
+            OnDeathChestClosed?.Invoke(closingDeathChestInventory);
 
         GameStateManager.SetPause(false);
     }
 
-    public void OpenChest(IInventory inventory)
+    public void OpenDeathChest(IInventory inventory)
     {
         if (SceneLoader.Instance != null && SceneLoader.Instance.IsTransitionActive)
             return;
@@ -175,16 +172,16 @@ public sealed class PanelManager : MonoBehaviour
         if (_currentPanelId.HasValue)
             CloseGroup(GetGroup(_currentPanelId.Value));
 
-        _currentChestInventory = inventory;
-        _chestPanel.Bind(inventory);
+        _currentDeathChestInventory = inventory;
+        _deathChestPanel.Bind(inventory);
 
-        _currentPanelId = PanelId.Chest;
+        _currentPanelId = PanelId.DeathChest;
 
-        OpenGroup(_chestGroup);
+        OpenGroup(_deathChestGroup);
         ApplyPauseRule();
     }
 
-    public void InteractWithChest(IInventory inventory)
+    public void InteractWithDeathChest(IInventory inventory)
     {
         if (_currentPanelId.HasValue)
         {
@@ -192,15 +189,15 @@ public sealed class PanelManager : MonoBehaviour
             return;
         }
 
-        OpenChest(inventory);
+        OpenDeathChest(inventory);
     }
 
-    public void CloseChestIfBoundTo(IInventory inventory)
+    public void CloseDeathChestIfBoundTo(IInventory inventory)
     {
-        if (!_currentPanelId.HasValue || _currentPanelId.Value != PanelId.Chest)
+        if (!_currentPanelId.HasValue || _currentPanelId.Value != PanelId.DeathChest)
             return;
 
-        if (!ReferenceEquals(_currentChestInventory, inventory))
+        if (!ReferenceEquals(_currentDeathChestInventory, inventory))
             return;
 
         CloseCurrentMajorPanel();
@@ -211,7 +208,7 @@ public sealed class PanelManager : MonoBehaviour
         return id switch
         {
             PanelId.Inventory => _inventoryGroup,
-            PanelId.Chest => _chestGroup,
+            PanelId.DeathChest => _deathChestGroup,
             PanelId.Map => _mapGroup,
             PanelId.Settings => _settingsGroup,
             PanelId.Crafting => _craftingGroup,
@@ -246,7 +243,7 @@ public sealed class PanelManager : MonoBehaviour
         return id switch
         {
             PanelId.Inventory => _backpackPanel,
-            PanelId.Chest => _chestPanel,
+            PanelId.DeathChest => _deathChestPanel,
             PanelId.Map => _mapPanel,
             PanelId.Settings => _settingsPanel,
             PanelId.Crafting => _craftingPanel,

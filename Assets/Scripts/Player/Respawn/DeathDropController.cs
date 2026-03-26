@@ -23,15 +23,15 @@ public sealed class DeathDropController : MonoBehaviour
         if (_deathChestFactory == null)
             return;
 
-        string chestId = Guid.NewGuid().ToString("N");
-        var chestHandle = _deathChestFactory.Create(chestId, deathWorldPosition);
-        if (chestHandle == null)
+        string deathChestId = Guid.NewGuid().ToString("N");
+        var deathChestHandle = _deathChestFactory.Create(deathChestId, deathWorldPosition);
+        if (deathChestHandle == null)
             return;
 
-        _deathChestDropper.MoveBackpackItemsToChest(player.Inventory, chestHandle.Inventory.Inventory);
+        _deathChestDropper.MoveBackpackItemsToDeathChest(player.Inventory, deathChestHandle.Inventory.Inventory);
 
-        chestHandle.Controller.Initialize(chestId, chestHandle.Inventory.Inventory, _deathMarkerController, _deathChestRegistry);
-        _deathChestRegistry?.Register(chestHandle);
-        _deathMarkerController?.AddDeathMarker(chestId, chestHandle.WorldPosition);
+        deathChestHandle.Controller.Initialize(deathChestId, deathChestHandle.Inventory.Inventory, _deathMarkerController, _deathChestRegistry);
+        _deathChestRegistry?.Register(deathChestHandle);
+        _deathMarkerController?.AddDeathMarker(deathChestId, deathChestHandle.WorldPosition);
     }
 }

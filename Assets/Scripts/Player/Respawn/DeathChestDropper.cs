@@ -1,12 +1,12 @@
 ﻿public sealed class DeathChestDropper
 {
-    public void MoveBackpackItemsToChest(PlayerInventory playerInventory, IInventory chestInventory)
+    public void MoveBackpackItemsToDeathChest(PlayerInventory playerInventory, IInventory deathChestInventory)
     {
-        if (playerInventory == null || chestInventory == null)
+        if (playerInventory == null || deathChestInventory == null)
             return;
 
         var backpackRange = playerInventory.GetBackpackSlotRange();
-        var chestRange = new SlotRange(0, chestInventory.Capacity);
+        var deathChestRange = new SlotRange(0, deathChestInventory.Capacity);
 
         for (int index = backpackRange.StartInclusive; index < backpackRange.EndExclusive; index++)
         {
@@ -14,7 +14,7 @@
             if (item.IsEmpty)
                 continue;
 
-            chestInventory.TryAddItemToRange(item, chestRange, out var leftover);
+            deathChestInventory.TryAddItemToRange(item, deathChestRange, out var leftover);
 
             if (leftover.IsEmpty)
                 playerInventory.ClearItemAt(index);

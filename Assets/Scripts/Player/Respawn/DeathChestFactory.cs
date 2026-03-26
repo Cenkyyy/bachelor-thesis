@@ -13,7 +13,7 @@ public sealed class DeathChestFactory : MonoBehaviour
     [SerializeField, Min(0.05f)] private float _placementStepDistance = 0.25f;
     [SerializeField, Min(0)] private int _placementSearchRadius = 3;
 
-    public DeathChestHandle Create(string chestId, Vector3 worldPosition)
+    public DeathChestHandle Create(string deathChestId, Vector3 worldPosition)
     {
         if (_deathChestPrefab == null)
         {
@@ -22,21 +22,21 @@ public sealed class DeathChestFactory : MonoBehaviour
         }
 
         var spawnPosition = ResolveSpawnPosition(worldPosition);
-        var chestObject = Instantiate(_deathChestPrefab, spawnPosition, Quaternion.identity, _deathChestParent);
-        var chestInventory = chestObject.GetComponent<ChestInventory>();
+        var deathChestObject = Instantiate(_deathChestPrefab, spawnPosition, Quaternion.identity, _deathChestParent);
+        var deathChestInventory = deathChestObject.GetComponent<DeathChestInventory>();
 
-        if (chestInventory == null)
+        if (deathChestInventory == null)
         {
             Debug.LogWarning("Death chest prefab must have a ChestInventory component.");
-            Destroy(chestObject);
+            Destroy(deathChestObject);
             return null;
         }
 
-        var chestController = chestObject.GetComponent<TemporaryDeathChestController>();
-        if (chestController == null)
-            chestController = chestObject.AddComponent<TemporaryDeathChestController>();
+        var deathChestController = deathChestObject.GetComponent<TemporaryDeathChestController>();
+        if (deathChestController == null)
+            deathChestController = deathChestObject.AddComponent<TemporaryDeathChestController>();
 
-        return new DeathChestHandle(chestId, chestObject.transform.position, chestInventory, chestController);
+        return new DeathChestHandle(deathChestId, deathChestObject.transform.position, deathChestInventory, deathChestController);
     }
 
     private Vector3 ResolveSpawnPosition(Vector3 desiredPosition)

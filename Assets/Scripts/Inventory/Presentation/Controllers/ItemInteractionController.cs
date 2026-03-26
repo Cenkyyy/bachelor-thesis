@@ -26,8 +26,8 @@ public class ItemInteractionController : MonoBehaviour
     [SerializeField] private HotbarPanel _hotbarPanel;
     [SerializeField] private RectTransform _hotbarPanelRect;
 
-    [SerializeField] private ChestPanel _chestPanel;
-    [SerializeField] private RectTransform _chestPanelRect;
+    [SerializeField] private DeathChestPanel _deathChestPanel;
+    [SerializeField] private RectTransform _deathChestPanelRect;
 
     [SerializeField] private EquipmentPanel _equipmentPanel;
     [SerializeField] private RectTransform _equipmentPanelRect;
@@ -125,8 +125,8 @@ public class ItemInteractionController : MonoBehaviour
         var overBackpack = _backpackPanel != null && _backpackPanel.IsOpen && _backpackPanelRect != null &&
             RectTransformUtility.RectangleContainsScreenPoint(_backpackPanelRect, screenPoint, uiCamera);
 
-        var overChest = _chestPanel != null && _chestPanel.IsOpen && _chestPanelRect != null &&
-            RectTransformUtility.RectangleContainsScreenPoint(_chestPanelRect, screenPoint, uiCamera);
+        var overDeathChest = _deathChestPanel != null && _deathChestPanel.IsOpen && _deathChestPanelRect != null &&
+            RectTransformUtility.RectangleContainsScreenPoint(_deathChestPanelRect, screenPoint, uiCamera);
 
         var overCharacter = _equipmentPanel != null && _equipmentPanel.IsOpen && _equipmentPanelRect != null &&
             RectTransformUtility.RectangleContainsScreenPoint(_equipmentPanelRect, screenPoint, uiCamera);
@@ -134,7 +134,7 @@ public class ItemInteractionController : MonoBehaviour
         var overCrafting = _craftingPanel != null && _craftingPanel.IsOpen && _craftingPanelRect != null &&
             RectTransformUtility.RectangleContainsScreenPoint(_craftingPanelRect, screenPoint, uiCamera);
 
-        return overHotbar || overBackpack || overChest || overCharacter || overCrafting;
+        return overHotbar || overBackpack || overDeathChest || overCharacter || overCrafting;
     }
 
     /// <summary>
@@ -349,15 +349,15 @@ public class ItemInteractionController : MonoBehaviour
         if (!IsValidSlot(slot) || !TryGetInventoryOwner(slot, out var sourceInventory))
             return;
 
-        if (_chestPanel != null && _chestPanel.IsOpen && _chestPanel.Inventory != null)
+        if (_deathChestPanel != null && _deathChestPanel.IsOpen && _deathChestPanel.Inventory != null)
         {
-            if (ReferenceEquals(sourceInventory, _chestPanel.Inventory))
+            if (ReferenceEquals(sourceInventory, _deathChestPanel.Inventory))
             {
-                TransferStackFromChestToPlayerInventory(sourceInventory, slot.SlotIndex);
+                TransferStackFromDeathChestToPlayerInventory(sourceInventory, slot.SlotIndex);
             }
             else
             {
-                TransferStack(sourceInventory, slot.SlotIndex, _chestPanel.Inventory);
+                TransferStack(sourceInventory, slot.SlotIndex, _deathChestPanel.Inventory);
             }
             return;
         }
@@ -380,7 +380,7 @@ public class ItemInteractionController : MonoBehaviour
             sourceInventory.SetItemAt(slot.SlotIndex, leftoverItem);
     }
 
-    private void TransferStackFromChestToPlayerInventory(IInventory chestInventory, int sourceIndex)
+    private void TransferStackFromDeathChestToPlayerInventory(IInventory chestInventory, int sourceIndex)
     {
         var item = chestInventory.GetItemAt(sourceIndex);
         if (item.IsEmpty)

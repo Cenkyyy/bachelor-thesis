@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public sealed class ChestPanel : MonoBehaviour, IMajorPanel
+public sealed class DeathChestPanel : MonoBehaviour, IMajorPanel
 {
     [Header("View")]
     [SerializeField] private Slot _slotPrefab;
@@ -9,7 +9,7 @@ public sealed class ChestPanel : MonoBehaviour, IMajorPanel
 
     public IInventory Inventory { get; private set; }
     public bool IsOpen => _slotParent.gameObject.activeSelf;
-    public PanelId Id => PanelId.Chest;
+    public PanelId Id => PanelId.DeathChest;
     public bool PausesGame => false;
     public bool BlocksGameplayInput => true;
 

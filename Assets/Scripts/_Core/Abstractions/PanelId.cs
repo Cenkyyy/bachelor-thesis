@@ -1,7 +1,7 @@
 public enum PanelId
 {
     Inventory,
-    Chest,
+    DeathChest,
     Map,
     Settings,
     ParallelWorld,

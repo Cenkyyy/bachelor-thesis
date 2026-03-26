@@ -1,22 +1,22 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(ChestInventory))]
-public sealed class ChestInteractable : InteractableBase
+[RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(DeathChestInventory))]
+public sealed class DeathChestInteractable : InteractableBase
 {
-    private ChestInventory _inventory;
+    private DeathChestInventory _inventory;
 
     private void Awake()
     {
         if (_inventory == null)
         {
-            _inventory = GetComponent<ChestInventory>();
+            _inventory = GetComponent<DeathChestInventory>();
         }
     }
 
     protected override void OnPlayerExitTrigger(Collider2D playerCollider)
     {
-        PanelManager.Instance.CloseChestIfBoundTo(_inventory.Inventory);
+        PanelManager.Instance.CloseDeathChestIfBoundTo(_inventory.Inventory);
     }
 
     public override bool CanInteract() =>
@@ -27,6 +27,6 @@ public sealed class ChestInteractable : InteractableBase
         if (!CanInteract())
             return;
 
-        PanelManager.Instance.InteractWithChest(_inventory.Inventory);
+        PanelManager.Instance.InteractWithDeathChest(_inventory.Inventory);
     }
 }
