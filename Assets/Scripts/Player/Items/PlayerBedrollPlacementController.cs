@@ -50,6 +50,9 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
 
     private bool CanProcessPlacementInput()
     {
+        if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
+            return false;
+
         if (!Input.GetKeyDown(_inputBindings.PlacementKey))
             return false;
 

@@ -87,6 +87,9 @@ public class SpellCombatController : MonoBehaviour
         if (!phrase.IsComplete)
             return;
 
+        if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
+            return;
+
         if (Time.time < _nextCastAllowedAt)
         {
             _feedbackPopup.ShowMessage(_castOnCooldownMessage);
