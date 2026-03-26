@@ -17,7 +17,6 @@ public sealed class DeathChestFactory : MonoBehaviour
     {
         if (_deathChestPrefab == null)
         {
-            Debug.LogWarning("Death chest prefab is missing.");
             return null;
         }
 
@@ -27,7 +26,6 @@ public sealed class DeathChestFactory : MonoBehaviour
 
         if (deathChestInventory == null)
         {
-            Debug.LogWarning("Death chest prefab must have a ChestInventory component.");
             Destroy(deathChestObject);
             return null;
         }

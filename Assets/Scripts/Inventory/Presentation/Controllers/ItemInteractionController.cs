@@ -380,9 +380,9 @@ public class ItemInteractionController : MonoBehaviour
             sourceInventory.SetItemAt(slot.SlotIndex, leftoverItem);
     }
 
-    private void TransferStackFromDeathChestToPlayerInventory(IInventory chestInventory, int sourceIndex)
+    private void TransferStackFromDeathChestToPlayerInventory(IInventory deathChestInventory, int sourceIndex)
     {
-        var item = chestInventory.GetItemAt(sourceIndex);
+        var item = deathChestInventory.GetItemAt(sourceIndex);
         if (item.IsEmpty)
             return;
 
@@ -392,9 +392,9 @@ public class ItemInteractionController : MonoBehaviour
             _player.Inventory.TryAddItemToRange(leftoverAfterHotbar, new SlotRange(_player.Inventory.HotbarSize, _player.Inventory.Capacity), out leftoverAfterHotbar);
 
         if (leftoverAfterHotbar.IsEmpty)
-            chestInventory.ClearItemAt(sourceIndex);
+            deathChestInventory.ClearItemAt(sourceIndex);
         else
-            chestInventory.SetItemAt(sourceIndex, leftoverAfterHotbar);
+            deathChestInventory.SetItemAt(sourceIndex, leftoverAfterHotbar);
     }
 
     /// <summary>
