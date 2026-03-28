@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -11,15 +13,22 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
 
     [Header("Spawn Tuning")]
     [SerializeField, Min(1)] private int _baseSpawnAttemptsPerChunk = 256;
+    [SerializeField, Min(0f)] private float _spawnDensityMultiplier = 1f;
+    [SerializeField, Min(0)] private int _maxPlacementsPerChunk;
     [SerializeField, Range(0f, 1f)] private float _tileCenterJitter = 0.45f;
+    [SerializeField, Min(1)] private int _spawnOperationsPerFrame = 32;
+    [SerializeField, Min(1)] private int _unloadOperationsPerFrame = 96;
 
-    private readonly Dictionary<Vector2Int, List<GameObject>> _spawnedChunkInstances = new Dictionary<Vector2Int, List<GameObject>>();
-    private readonly Dictionary<BiomeType, List<FoliageListEntry>> _entriesByBiome = new Dictionary<BiomeType, List<FoliageListEntry>>();
-    private readonly GameObjectInstancePool _instancePool = new GameObjectInstancePool();
+    private readonly Dictionary<Vector2Int, List<GameObject>> _spawnedChunkInstances = new();
+    private readonly Dictionary<BiomeType, List<FoliageEntryData>> _entriesByBiome = new();
+    private readonly GameObjectInstancePool _instancePool = new();
 
     protected override void OnEnable()
     {
-        RebuildBiomeIndex();
+        if (_spawnedFoliageRoot == null)
+            _spawnedFoliageRoot = transform;
+
+        WorldObjectPlacementUtility.BuildBiomeIndex(_foliageListData.Entries, _entriesByBiome, entry => entry.Prefab, entry => entry.FoliageId, entry => entry.AllowedBiomes);
         base.OnEnable();
     }
 
@@ -35,42 +44,12 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
 
     protected override void GenerateChunk(WorldRuntimeData data, Vector2Int chunkCoord)
     {
-        var placements = GeneratePlacementsForChunk(data, chunkCoord);
-        var instances = new List<GameObject>(placements.Count);
-
-        for (int i = 0; i < placements.Count; i++)
-        {
-            var placement = placements[i];
-            if (placement.Entry == null || placement.Entry.Prefab == null)
-                continue;
-
-            var instance = _instancePool.Acquire(placement.Entry.Prefab, placement.WorldPosition, Quaternion.identity, ResolveRootTransform(), out _);
-            if (instance == null)
-                continue;
-
-            instance.name = $"{placement.Entry.FoliageId}_{placement.Tile.x}_{placement.Tile.y}";
-            instance.transform.localScale = Vector3.one;
-            instances.Add(instance);
-        }
-
-        _spawnedChunkInstances[chunkCoord] = instances;
+        RunImmediate(SpawnChunkInstances(data, chunkCoord, 0, null));
     }
 
     protected override void UnloadChunk(Vector2Int chunk)
     {
-        if (!_spawnedChunkInstances.TryGetValue(chunk, out var instances))
-            return;
-
-        for (int i = 0; i < instances.Count; i++)
-        {
-            if (instances[i] == null)
-                continue;
-
-            if (!_instancePool.Release(instances[i], ResolveRootTransform()))
-                Destroy(instances[i]);
-        }
-
-        _spawnedChunkInstances.Remove(chunk);
+        RunImmediate(UnloadChunkInstances(chunk, 0, null));
     }
 
     protected override IEnumerable<Vector2Int> GetLoadedChunks()
@@ -89,65 +68,13 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
                 if (instances[i] == null)
                     continue;
 
-                if (!_instancePool.Release(instances[i], ResolveRootTransform()))
+                if (!_instancePool.Release(instances[i], _spawnedFoliageRoot))
                     Destroy(instances[i]);
             }
         }
 
         _spawnedChunkInstances.Clear();
         _instancePool.Clear();
-    }
-
-    private void RebuildBiomeIndex()
-    {
-        _entriesByBiome.Clear();
-        if (_foliageListData == null || _foliageListData.Entries == null)
-            return;
-
-        var allEntries = _foliageListData.Entries;
-        for (int i = 0; i < allEntries.Count; i++)
-        {
-            var entry = allEntries[i];
-            if (entry == null || entry.Prefab == null || string.IsNullOrWhiteSpace(entry.FoliageId))
-                continue;
-
-            var allowedBiomes = entry.AllowedBiomes;
-            if (allowedBiomes == null || allowedBiomes.Count == 0)
-            {
-                AddEntryToBiome(BiomeType.Grassland, entry);
-                AddEntryToBiome(BiomeType.IceTundra, entry);
-                AddEntryToBiome(BiomeType.Desert, entry);
-                AddEntryToBiome(BiomeType.AmethystRift, entry);
-                continue;
-            }
-
-            for (int biomeIndex = 0; biomeIndex < allowedBiomes.Count; biomeIndex++)
-                AddEntryToBiome(allowedBiomes[biomeIndex], entry);
-        }
-    }
-
-    private void AddEntryToBiome(BiomeType biome, FoliageListEntry entry)
-    {
-        if (biome == BiomeType.None)
-            return;
-
-        if (!_entriesByBiome.TryGetValue(biome, out var list))
-        {
-            list = new List<FoliageListEntry>();
-            _entriesByBiome.Add(biome, list);
-        }
-
-        if (!list.Contains(entry))
-            list.Add(entry);
-    }
-
-    private Transform ResolveRootTransform()
-    {
-        if (_spawnedFoliageRoot != null)
-            return _spawnedFoliageRoot;
-
-        _spawnedFoliageRoot = transform;
-        return _spawnedFoliageRoot;
     }
 
     private List<FoliagePlacement> GeneratePlacementsForChunk(WorldRuntimeData data, Vector2Int chunkCoord)
@@ -165,10 +92,13 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
         var rng = new System.Random(chunkSeed);
 
         var placements = new List<FoliagePlacement>();
-        int attempts = Mathf.Max(1, _baseSpawnAttemptsPerChunk);
+        int attempts = Mathf.Max(1, Mathf.RoundToInt(_baseSpawnAttemptsPerChunk * Mathf.Max(0f, _spawnDensityMultiplier)));
 
         for (int attemptIndex = 0; attemptIndex < attempts; attemptIndex++)
         {
+            if (HasReachedPlacementLimit(placements.Count))
+                break;
+
             int localX = rng.Next(0, width);
             int localY = rng.Next(0, height);
             int worldX = startX + localX;
@@ -181,11 +111,11 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
             if (!_entriesByBiome.TryGetValue(worldTile.Biome, out var biomeEntries) || biomeEntries == null || biomeEntries.Count == 0)
                 continue;
 
-            var selectedEntry = SelectWeightedEntry(rng, biomeEntries);
+            var selectedEntry = WorldObjectPlacementUtility.SelectWeightedEntry(rng, biomeEntries, entry => entry.SpawnWeight);
             if (selectedEntry == null)
                 continue;
 
-            var centerPlacement = TryBuildPlacement(data, selectedEntry, worldX, worldY, placements, rng);
+            var centerPlacement = TryBuildPlacement(data, selectedEntry, worldX, worldY, chunkCoord, placements, rng);
             if (!centerPlacement.HasValue)
                 continue;
 
@@ -200,7 +130,10 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
 
             for (int clusterIndex = 1; clusterIndex < clusterCount; clusterIndex++)
             {
-                var clusterPlacement = TryBuildClusterPlacement(data, selectedEntry, centerPlacement.Value, placements, rng);
+                if (HasReachedPlacementLimit(placements.Count))
+                    break;
+
+                var clusterPlacement = TryBuildClusterPlacement(data, selectedEntry, centerPlacement.Value, chunkCoord, placements, rng);
                 if (clusterPlacement.HasValue)
                     placements.Add(clusterPlacement.Value);
             }
@@ -209,15 +142,24 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
         return placements;
     }
 
-    private FoliagePlacement? TryBuildPlacement(WorldRuntimeData data, FoliageListEntry entry, int tileX, int tileY, List<FoliagePlacement> existing, System.Random rng)
+    private bool HasReachedPlacementLimit(int currentPlacementCount)
+    {
+        if (_maxPlacementsPerChunk <= 0)
+            return false;
+
+        return currentPlacementCount >= _maxPlacementsPerChunk;
+    }
+
+    private FoliagePlacement? TryBuildPlacement(WorldRuntimeData data, FoliageEntryData entry, int tileX, int tileY, Vector2Int chunkCoord, List<FoliagePlacement> existing, System.Random rng)
     {
         float jitterX = ((float)rng.NextDouble() * 2f - 1f) * _tileCenterJitter;
         float jitterY = ((float)rng.NextDouble() * 2f - 1f) * _tileCenterJitter;
 
-        var worldPosition = TileToWorldPosition(data, tileX, tileY, jitterX, jitterY);
+        var worldPosition = WorldObjectPlacementUtility.TileToWorldPosition(data, _worldGenerator.GroundTilemap, tileX, tileY, jitterX, jitterY);
+
         float minSpacing = Mathf.Max(0f, entry.MinimumSpacingTiles);
 
-        if (!HasValidSpacing(existing, worldPosition, minSpacing))
+        if (!WorldObjectPlacementUtility.HasValidSpacing(existing, worldPosition, minSpacing, placement => placement.WorldPosition, placement => placement.SpacingRadius))
             return null;
 
         return new FoliagePlacement
@@ -225,11 +167,11 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
             Entry = entry,
             Tile = new Vector2Int(tileX, tileY),
             WorldPosition = worldPosition,
-            SpacingRadius = minSpacing,
+            SpacingRadius = minSpacing
         };
     }
 
-    private FoliagePlacement? TryBuildClusterPlacement(WorldRuntimeData data, FoliageListEntry entry, FoliagePlacement center, List<FoliagePlacement> existing, System.Random rng)
+    private FoliagePlacement? TryBuildClusterPlacement(WorldRuntimeData data, FoliageEntryData entry, FoliagePlacement center, Vector2Int chunkCoord, List<FoliagePlacement> existing, System.Random rng)
     {
         float radius = Mathf.Max(0.25f, entry.ClusterRadiusTiles);
         float angle = (float)rng.NextDouble() * Mathf.PI * 2f;
@@ -246,12 +188,14 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
         if (tile.TileType == TileType.Void)
             return null;
 
-        if (!IsBiomeAllowed(entry, tile.Biome))
+        if (!WorldObjectPlacementUtility.IsBiomeAllowed(entry.AllowedBiomes, tile.Biome))
             return null;
 
-        var worldPosition = TileToWorldPosition(data, tileX, tileY, 0f, 0f);
+        var worldPosition = WorldObjectPlacementUtility.TileToWorldPosition(data, _worldGenerator.GroundTilemap, tileX, tileY, 0f, 0f);
+
         float minSpacing = Mathf.Max(0f, entry.MinimumSpacingTiles);
-        if (!HasValidSpacing(existing, worldPosition, minSpacing))
+
+        if (!WorldObjectPlacementUtility.HasValidSpacing(existing, worldPosition, minSpacing, placement => placement.WorldPosition, placement => placement.SpacingRadius))
             return null;
 
         return new FoliagePlacement
@@ -263,77 +207,82 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
         };
     }
 
-    private bool IsBiomeAllowed(FoliageListEntry entry, BiomeType biome)
-    {
-        var allowed = entry.AllowedBiomes;
-        if (allowed == null || allowed.Count == 0)
-            return biome != BiomeType.None;
-
-        for (int i = 0; i < allowed.Count; i++)
-        {
-            if (allowed[i] == biome)
-                return true;
-        }
-
-        return false;
-    }
-
-    private bool HasValidSpacing(List<FoliagePlacement> existing, Vector3 candidatePosition, float candidateSpacing)
-    {
-        if (candidateSpacing <= 0f)
-            return true;
-
-        for (int i = 0; i < existing.Count; i++)
-        {
-            float requiredSpacing = Mathf.Max(candidateSpacing, existing[i].SpacingRadius);
-            if (requiredSpacing <= 0f)
-                continue;
-
-            float sqrDistance = (existing[i].WorldPosition - candidatePosition).sqrMagnitude;
-            if (sqrDistance < requiredSpacing * requiredSpacing)
-                return false;
-        }
-
-        return true;
-    }
-
-    private FoliageListEntry SelectWeightedEntry(System.Random rng, List<FoliageListEntry> entries)
-    {
-        float total = 0f;
-        for (int i = 0; i < entries.Count; i++)
-            total += Mathf.Max(0f, entries[i].SpawnWeight);
-
-        if (total <= Mathf.Epsilon)
-            return entries[rng.Next(0, entries.Count)];
-
-        float pick = (float)rng.NextDouble() * total;
-        float cumulative = 0f;
-
-        for (int i = 0; i < entries.Count; i++)
-        {
-            cumulative += Mathf.Max(0f, entries[i].SpawnWeight);
-            if (pick <= cumulative)
-                return entries[i];
-        }
-
-        return entries[entries.Count - 1];
-    }
-
-    private Vector3 TileToWorldPosition(WorldRuntimeData data, int tileX, int tileY, float jitterX, float jitterY)
-    {
-        if (_worldGenerator.GroundTilemap == null)
-            return new Vector3(tileX + jitterX, tileY + jitterY, 0f);
-
-        var cell = data.DataToCell(tileX, tileY);
-        var basePosition = _worldGenerator.GroundTilemap.CellToWorld(cell) + new Vector3(0.5f, 0.5f, 0f);
-        return new Vector3(basePosition.x + jitterX, basePosition.y + jitterY, 0f);
-    }
-
     private struct FoliagePlacement
     {
-        public FoliageListEntry Entry;
+        public FoliageEntryData Entry;
         public Vector2Int Tile;
         public Vector3 WorldPosition;
         public float SpacingRadius;
+    }
+
+    protected override IEnumerator GenerateChunkCoroutine(WorldRuntimeData data, Vector2Int chunkCoord)
+    {
+        yield return SpawnChunkInstances(data, chunkCoord, Mathf.Max(1, _spawnOperationsPerFrame), null);
+    }
+
+    protected override IEnumerator UnloadChunkCoroutine(Vector2Int chunkCoord)
+    {
+        yield return UnloadChunkInstances(chunkCoord, Mathf.Max(1, _unloadOperationsPerFrame), null);
+    }
+
+    private IEnumerator SpawnChunkInstances(WorldRuntimeData data, Vector2Int chunkCoord, int yieldEveryOperations, YieldInstruction yieldInstruction)
+    {
+        var placements = GeneratePlacementsForChunk(data, chunkCoord);
+        var instances = new List<GameObject>(placements.Count);
+        int operationCount = 0;
+
+        for (int i = 0; i < placements.Count; i++)
+        {
+            var placement = placements[i];
+            if (placement.Entry == null || placement.Entry.Prefab == null)
+                continue;
+
+            var instance = _instancePool.Acquire(placement.Entry.Prefab, placement.WorldPosition, Quaternion.identity, _spawnedFoliageRoot, out _);
+            if (instance == null)
+                continue;
+
+            instance.name = $"{placement.Entry.FoliageId}_{placement.Tile.x}_{placement.Tile.y}";
+            instance.transform.localScale = Vector3.one;
+            instances.Add(instance);
+
+            operationCount++;
+            if (yieldEveryOperations > 0 && operationCount >= yieldEveryOperations)
+            {
+                operationCount = 0;
+                yield return yieldInstruction;
+            }
+        }
+
+        _spawnedChunkInstances[chunkCoord] = instances;
+    }
+
+    private IEnumerator UnloadChunkInstances(Vector2Int chunkCoord, int yieldEveryOperations, YieldInstruction yieldInstruction)
+    {
+        if (!_spawnedChunkInstances.TryGetValue(chunkCoord, out var instances))
+            yield break;
+
+        int operationCount = 0;
+        for (int i = 0; i < instances.Count; i++)
+        {
+            if (instances[i] == null)
+                continue;
+
+            if (!_instancePool.Release(instances[i], _spawnedFoliageRoot))
+                Destroy(instances[i]);
+
+            operationCount++;
+            if (yieldEveryOperations > 0 && operationCount >= yieldEveryOperations)
+            {
+                operationCount = 0;
+                yield return yieldInstruction;
+            }
+        }
+
+        _spawnedChunkInstances.Remove(chunkCoord);
+    }
+
+    private static void RunImmediate(IEnumerator routine)
+    {
+        while (routine.MoveNext()) { }
     }
 }

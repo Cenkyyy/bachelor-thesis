@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Consumes consumables from the selected hotbar slot and applies their instant effects.
@@ -10,8 +9,6 @@ public sealed class PlayerConsumableController : MonoBehaviour
     [SerializeField] private PlayerItemStatController _itemStatController;
     [SerializeField] private ItemCooldownTrackController _itemCooldownTrackController;
     [SerializeField] private GameplayInputBindingsData _inputBindings;
-
-    private readonly Dictionary<ItemData, float> _itemCooldownEndTimes = new();
 
     private void Awake()
     {
@@ -52,37 +49,6 @@ public sealed class PlayerConsumableController : MonoBehaviour
         ApplyConsumable(consumable);
         _itemCooldownTrackController?.TryStartCooldown(consumable);
         ConsumeOne(slotIndex, slotItem);
-    }
-
-    private bool IsOnCooldown(ConsumableItemData consumable)
-    {
-        if (GetCooldownSeconds(consumable) <= 0f)
-            return false;
-
-        if (!_itemCooldownEndTimes.TryGetValue(consumable, out var cooldownEndTime))
-            return false;
-
-        if (cooldownEndTime <= Time.time)
-        {
-            _itemCooldownEndTimes.Remove(consumable);
-            return false;
-        }
-
-        return true;
-    }
-
-    private void StartCooldown(ConsumableItemData consumable)
-    {
-        var cooldownSeconds = GetCooldownSeconds(consumable);
-        if (cooldownSeconds <= 0f)
-            return;
-
-        _itemCooldownEndTimes[consumable] = Time.time + cooldownSeconds;
-    }
-
-    private float GetCooldownSeconds(ConsumableItemData consumable)
-    {
-        return consumable.Kind == ConsumableKind.Potion ? consumable.CooldownSeconds : 0f;
     }
 
     private void ApplyConsumable(ConsumableItemData consumable)

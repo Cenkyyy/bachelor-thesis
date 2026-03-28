@@ -9300,13 +9300,17 @@ MonoBehaviour:
   _generationRadiusInChunks: 2
   _unloadRadiusInChunks: 4
   _refreshIntervalSeconds: 0.1
+  _initialRefreshOffsetSeconds: 0.03
   _chunksGeneratedPerFrame: 1
   _chunksUnloadedPerFrame: 1
   _terrainChunkGenerator: {fileID: 1097722632}
   _decorationsListData: {fileID: 11400000, guid: 4dcbe27d436906443b34cdd482169e10, type: 2}
   _spawnedDecorationsRoot: {fileID: 568387668}
   _baseSpawnAttemptsPerChunk: 72
+  _maxPlacementsPerChunk: 56
   _tileCenterJitter: 0.35
+  _spawnOperationsPerFrame: 16
+  _unloadOperationsPerFrame: 48
 --- !u!114 &1097722631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9321,18 +9325,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _worldGenerator: {fileID: 1097722629}
   _playerTransform: {fileID: 2010244813}
-  _chunkSize: 32
-  _initialGenerationRadiusInChunks: 2
-  _generationRadiusInChunks: 1
+  _chunkSize: 16
+  _initialGenerationRadiusInChunks: 3
+  _generationRadiusInChunks: 2
   _unloadRadiusInChunks: 3
   _refreshIntervalSeconds: 0.1
+  _initialRefreshOffsetSeconds: 0.03
   _chunksGeneratedPerFrame: 1
   _chunksUnloadedPerFrame: 1
   _decorationChunkGenerator: {fileID: 1097722630}
   _foliageListData: {fileID: 11400000, guid: 5388b32ddb2585947af1f01a056937d4, type: 2}
   _spawnedFoliageRoot: {fileID: 1426833342}
-  _baseSpawnAttemptsPerChunk: 512
+  _baseSpawnAttemptsPerChunk: 650
+  _spawnDensityMultiplier: 1.5
+  _maxPlacementsPerChunk: 300
   _tileCenterJitter: 0.65
+  _spawnOperationsPerFrame: 32
+  _unloadOperationsPerFrame: 96
 --- !u!114 &1097722632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9352,9 +9361,9 @@ MonoBehaviour:
   _generationRadiusInChunks: 3
   _unloadRadiusInChunks: 5
   _refreshIntervalSeconds: 0.2
+  _initialRefreshOffsetSeconds: 0.03
   _chunksGeneratedPerFrame: 1
   _chunksUnloadedPerFrame: 1
-  _clearTilemapsOnEnable: 0
   _enableChunkUnloading: 1
 --- !u!1 &1118528052
 GameObject:

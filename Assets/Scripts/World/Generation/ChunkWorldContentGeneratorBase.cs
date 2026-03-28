@@ -14,12 +14,15 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
     [SerializeField, Min(0)] protected int _generationRadiusInChunks = 4;
     [SerializeField, Min(0)] protected int _unloadRadiusInChunks = 6;
     [SerializeField, Min(0.02f)] protected float _refreshIntervalSeconds = 0.1f;
+    [SerializeField, Min(0f)] protected float _initialRefreshOffsetSeconds = 0.03f;
     [SerializeField, Min(1)] protected int _chunksGeneratedPerFrame = 1;
     [SerializeField, Min(1)] protected int _chunksUnloadedPerFrame = 1;
 
     private Coroutine _streamingCoroutine;
 
     public bool IsReadyForSceneReveal { get; private set; }
+
+    protected virtual bool EnableChunkUnloading => true;
 
     protected virtual void OnEnable()
     {
@@ -50,11 +53,9 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
 
         var focusTile = _worldGenerator.RuntimeState.ResolveTileFromWorld(worldPosition);
         var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, _chunkSize);
-        var desiredChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, Mathf.Max(0, radiusInChunks));
+        var desiredChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, radiusInChunks);
 
         int spawnedCount = 0;
-        int spawnBudget = Mathf.Max(1, maxChunksToSpawn);
-
         for (int i = 0; i < desiredChunks.Count; i++)
         {
             var chunkCoord = desiredChunks[i];
@@ -64,7 +65,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
             GenerateChunk(data, chunkCoord);
             spawnedCount++;
 
-            if (spawnedCount >= spawnBudget)
+            if (spawnedCount >= maxChunksToSpawn)
                 break;
         }
 
@@ -78,7 +79,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
 
         var focusTile = _worldGenerator.RuntimeState.ResolveTileFromWorld(worldPosition);
         var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, _chunkSize);
-        var desiredChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, Mathf.Max(0, radiusInChunks));
+        var desiredChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, radiusInChunks);
 
         for (int i = 0; i < desiredChunks.Count; i++)
         {
@@ -94,16 +95,27 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
         return true;
     }
 
-    protected virtual bool EnableChunkUnloading => true;
-
     protected abstract bool IsChunkLoaded(Vector2Int chunkCoord);
     protected abstract void GenerateChunk(WorldRuntimeData data, Vector2Int chunkCoord);
     protected abstract void UnloadChunk(Vector2Int chunkCoord);
     protected abstract IEnumerable<Vector2Int> GetLoadedChunks();
     protected abstract void ClearGeneratedChunks();
 
+    protected virtual IEnumerator GenerateChunkCoroutine(WorldRuntimeData data, Vector2Int chunkCoord)
+    {
+        GenerateChunk(data, chunkCoord);
+        yield break;
+    }
+
+    protected virtual IEnumerator UnloadChunkCoroutine(Vector2Int chunkCoord)
+    {
+        UnloadChunk(chunkCoord);
+        yield break;
+    }
+
     private IEnumerator StreamChunksCoroutine()
     {
+        // get data, do initial fill, set the scene to be ready for reveal
         WorldRuntimeData initialData;
         while (!TryGetWorldData(out initialData) || !CanStartStreaming(initialData))
             yield return null;
@@ -111,6 +123,11 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
         yield return StreamInitialChunksCoroutine(initialData);
         IsReadyForSceneReveal = true;
 
+        float initialOffset = _initialRefreshOffsetSeconds;
+        if (initialOffset > 0f)
+            yield return new WaitForSecondsRealtime(initialOffset);
+
+        // generate missing desired chunks, unload far chunks
         while (enabled && gameObject.activeInHierarchy)
         {
             if (!TryGetWorldData(out var data))
@@ -130,10 +147,10 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
                 if (IsChunkLoaded(chunk))
                     continue;
 
-                GenerateChunk(data, chunk);
+                yield return GenerateChunkCoroutine(data, chunk);
                 chunkBudget++;
 
-                if (chunkBudget >= Mathf.Max(1, _chunksGeneratedPerFrame))
+                if (chunkBudget >= _chunksGeneratedPerFrame)
                 {
                     chunkBudget = 0;
                     yield return null;
@@ -141,7 +158,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
             }
 
             yield return UnloadFarChunksCoroutine(focusChunk);
-            yield return new WaitForSecondsRealtime(Mathf.Max(0.02f, _refreshIntervalSeconds));
+            yield return new WaitForSecondsRealtime(_refreshIntervalSeconds);
         }
     }
 
@@ -152,7 +169,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
         var initialChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, _initialGenerationRadiusInChunks);
 
         int chunkBudget = 0;
-        int perFrameBudget = Mathf.Max(1, _chunksGeneratedPerFrame);
+        int perFrameBudget = _chunksGeneratedPerFrame;
 
         for (int i = 0; i < initialChunks.Count; i++)
         {
@@ -160,7 +177,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
             if (IsChunkLoaded(chunk))
                 continue;
 
-            GenerateChunk(data, chunk);
+            yield return GenerateChunkCoroutine(data, chunk);
             chunkBudget++;
 
             if (chunkBudget >= perFrameBudget)
@@ -188,12 +205,12 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
                 chunksToUnload.Add(chunkCoord);
         }
 
-        int unloadBudget = Mathf.Max(1, _chunksUnloadedPerFrame);
+        int unloadBudget = _chunksUnloadedPerFrame;
         int unloadedThisFrame = 0;
 
         for (int i = 0; i < chunksToUnload.Count; i++)
         {
-            UnloadChunk(chunksToUnload[i]);
+            yield return UnloadChunkCoroutine(chunksToUnload[i]);
             unloadedThisFrame++;
 
             if (unloadedThisFrame >= unloadBudget)

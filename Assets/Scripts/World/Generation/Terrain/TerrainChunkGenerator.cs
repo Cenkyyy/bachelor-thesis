@@ -6,20 +6,11 @@ using UnityEngine.Tilemaps;
 public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
 {
     [Header("Terrain Streaming")]
-    [SerializeField] private bool _clearTilemapsOnEnable = true;
     [SerializeField] private bool _enableChunkUnloading;
 
     private readonly HashSet<Vector2Int> _renderedChunks = new HashSet<Vector2Int>();
 
     protected override bool EnableChunkUnloading => _enableChunkUnloading;
-
-    protected override void OnEnable()
-    {
-        if (_clearTilemapsOnEnable)
-            ClearTilemaps();
-
-        base.OnEnable();
-    }
 
     protected override bool IsChunkLoaded(Vector2Int chunkCoord)
     {
@@ -34,19 +25,20 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
         if (_worldGenerator == null)
             return;
 
-        int chunkSize = Mathf.Max(1, _chunkSize);
-        int startX = chunkCoord.x * chunkSize;
-        int startY = chunkCoord.y * chunkSize;
+        // get the final chunk's width and height
+        int startX = chunkCoord.x * _chunkSize;
+        int startY = chunkCoord.y * _chunkSize;
 
         if (startX < 0 || startY < 0 || startX >= data.Width || startY >= data.Height)
             return;
 
-        int width = Mathf.Min(chunkSize, data.Width - startX);
-        int height = Mathf.Min(chunkSize, data.Height - startY);
+        int width = Mathf.Min(_chunkSize, data.Width - startX);
+        int height = Mathf.Min(_chunkSize, data.Height - startY);
 
         if (width <= 0 || height <= 0)
             return;
 
+        // build ground and border tile arrays from the world data
         var groundTiles = new TileBase[width * height];
         var borderTiles = new TileBase[width * height];
         var borderTileAsset = _worldGenerator.GetBorderTileAsset();
@@ -70,6 +62,7 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
             }
         }
 
+        // write the tile arrays onto the tilemaps
         var chunkOriginCell = data.DataToCell(startX, startY);
         var chunkBounds = new BoundsInt(chunkOriginCell.x, chunkOriginCell.y, 0, width, height, 1);
 
@@ -90,20 +83,21 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
         if (!_enableChunkUnloading || _worldGenerator == null || _worldGenerator.CurrentWorldData == null)
             return;
 
+        // get the final chunk's width and height
         var data = _worldGenerator.CurrentWorldData;
-        int chunkSize = Mathf.Max(1, _chunkSize);
-        int startX = chunkCoord.x * chunkSize;
-        int startY = chunkCoord.y * chunkSize;
+        int startX = chunkCoord.x * _chunkSize;
+        int startY = chunkCoord.y * _chunkSize;
 
         if (startX < 0 || startY < 0 || startX >= data.Width || startY >= data.Height)
             return;
 
-        int width = Mathf.Min(chunkSize, data.Width - startX);
-        int height = Mathf.Min(chunkSize, data.Height - startY);
+        int width = Mathf.Min(_chunkSize, data.Width - startX);
+        int height = Mathf.Min(_chunkSize, data.Height - startY);
 
         if (width <= 0 || height <= 0)
             return;
 
+        // write empty tile arrays to clear the chunk and remove it from rendered chunks
         var emptyTiles = new TileBase[width * height];
         var chunkOriginCell = data.DataToCell(startX, startY);
         var chunkBounds = new BoundsInt(chunkOriginCell.x, chunkOriginCell.y, 0, width, height, 1);
