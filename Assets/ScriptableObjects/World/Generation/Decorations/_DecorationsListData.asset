@@ -13,4 +13,16 @@ MonoBehaviour:
   m_Name: _DecorationsListData
   m_EditorClassIdentifier: 
   _entries:
+  - {fileID: 11400000, guid: d58139b8290e587468320aa264ead972, type: 2}
+  - {fileID: 11400000, guid: 295f792340ddee1468fdd51ee8ee7340, type: 2}
+  - {fileID: 11400000, guid: 0f261d115b470b345a0a958c3c24b645, type: 2}
+  - {fileID: 11400000, guid: 413d6d4fae89d3943a5eb0c9f029825a, type: 2}
+  - {fileID: 11400000, guid: 2974e8552885006498ded19cbd90c78d, type: 2}
+  - {fileID: 11400000, guid: a2994d18b6477c4439363e4bd9c3e2ef, type: 2}
+  - {fileID: 11400000, guid: 995ee9b013ab94a4496abb833fdaf079, type: 2}
   - {fileID: 11400000, guid: 1ab74e8f63059f948a4704d7dd92d5fd, type: 2}
+  - {fileID: 11400000, guid: 13d46b5b8cda27140ace04d450993259, type: 2}
+  - {fileID: 11400000, guid: 1629440135906714d8488d2bcac181a7, type: 2}
+  - {fileID: 11400000, guid: 40d23215ad881df47aa0770ff67cbcef, type: 2}
+  - {fileID: 11400000, guid: 08fab8f5980c22f4082746f79f9d8ff7, type: 2}
+  - {fileID: 11400000, guid: 4a8d08a6f2d322847baa6fd67b3e8217, type: 2}
