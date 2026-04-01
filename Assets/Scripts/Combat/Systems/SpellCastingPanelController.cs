@@ -53,6 +53,8 @@ public class SpellCastingPanelController : MonoBehaviour
             _player.Inventory.OnHotbarSelectionChanged += HandleSelectedHotbarChanged;
             _player.Inventory.OnItemChanged += HandleInventoryItemChanged;
         }
+
+        RefreshInteractionAvailability();
     }
 
     private void OnDestroy()
