@@ -8,17 +8,17 @@ public static class ItemTooltipFormatter
         return InsertWordBoundaries(rarity.ToString());
     }
 
-    public static string FormatStatName(ItemStatType statType)
+    public static string FormatStatName(ItemStatusEffectType statType)
     {
         return statType switch
         {
-            ItemStatType.MaxHealth => "Max Health",
-            ItemStatType.HealthRegen => "Health Regen",
-            ItemStatType.MaxMana => "Max Mana",
-            ItemStatType.ManaRegen => "Mana Regen",
-            ItemStatType.SpellDamage => "Spell Damage",
-            ItemStatType.MoveSpeed => "Move Speed",
-            ItemStatType.Defence => "Defence",
+            ItemStatusEffectType.MaxHealth => "Max Health",
+            ItemStatusEffectType.HealthRegen => "Health Regen",
+            ItemStatusEffectType.MaxMana => "Max Mana",
+            ItemStatusEffectType.ManaRegen => "Mana Regen",
+            ItemStatusEffectType.SpellDamage => "Spell Damage",
+            ItemStatusEffectType.MoveSpeed => "Move Speed",
+            ItemStatusEffectType.Defence => "Defence",
             _ => InsertWordBoundaries(statType.ToString())
         };
     }

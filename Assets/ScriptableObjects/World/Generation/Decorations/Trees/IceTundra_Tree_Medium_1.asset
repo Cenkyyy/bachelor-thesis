@@ -18,7 +18,7 @@ MonoBehaviour:
   <Category>k__BackingField: 0
   <Size>k__BackingField: 1
   _allowedBiomes: 02000000
-  <SpawnWeight>k__BackingField: 1
+  <SpawnWeight>k__BackingField: 6
   <MinimumSpacingTiles>k__BackingField: 1.85
   <AllowCluster>k__BackingField: 1
   <MinClusterCount>k__BackingField: 1

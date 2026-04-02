@@ -13,25 +13,25 @@ public sealed class StatModifiersTooltipProvider : IItemTooltipProvider
     {
         if (inventoryItem.Item is EquipmentItemData equipment)
         {
-            AppendModifiers(equipment.StatBonuses, lines);
+            AppendStatusEffects(equipment.StatusEffect, lines);
             return;
         }
 
         if (inventoryItem.Item is ConsumableItemData consumable)
         {
-            AppendModifiers(consumable.TimedModifiers, lines);
+            AppendStatusEffects(consumable.StatusEffects, lines);
         }
     }
 
-    private static void AppendModifiers(IReadOnlyList<ItemStatModifier> modifiers, List<ItemTooltipLineRuntimeData> lines)
+    private static void AppendStatusEffects(IReadOnlyList<ItemStatusEffect> statusEffects, List<ItemTooltipLineRuntimeData> lines)
     {
-        if (modifiers == null)
+        if (statusEffects == null)
             return;
 
-        for (int i = 0; i < modifiers.Count; i++)
+        for (int i = 0; i < statusEffects.Count; i++)
         {
-            var modifier = modifiers[i];
-            lines.Add(new ItemTooltipLineRuntimeData(ItemTooltipFormatter.FormatStatName(modifier.Stat), ItemTooltipFormatter.FormatModifierValue(modifier.Value)));
+            var modifier = statusEffects[i];
+            lines.Add(new ItemTooltipLineRuntimeData(ItemTooltipFormatter.FormatStatName(modifier.StatusEffectType), ItemTooltipFormatter.FormatModifierValue(modifier.Value)));
         }
     }
 }

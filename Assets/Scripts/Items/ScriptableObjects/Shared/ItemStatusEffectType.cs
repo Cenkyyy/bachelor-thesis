@@ -1,4 +1,4 @@
-public enum ItemStatType
+public enum ItemStatusEffectType
 {
     MaxHealth = 0,
     HealthRegen = 1,

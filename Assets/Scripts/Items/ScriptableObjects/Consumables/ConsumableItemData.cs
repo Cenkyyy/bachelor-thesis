@@ -14,10 +14,10 @@ public class ConsumableItemData : ItemData, ICooldownItem
     [field: Header("Usage")]
     [field: SerializeField, Min(0f)] public float CooldownSeconds { get; private set; }
 
-    [field: Header("Optional Timed Effects")]
+    [field: Header("Optional Timed Status Effects")]
     [field: SerializeField] public float EffectDurationSeconds { get; private set; }
-    [SerializeField] private List<ItemStatModifier> _timedModifiers = new();
-    public IReadOnlyList<ItemStatModifier> TimedModifiers => _timedModifiers;
+    [SerializeField] private List<ItemStatusEffect> _timedStatusEffects = new();
+    public IReadOnlyList<ItemStatusEffect> StatusEffects => _timedStatusEffects;
 
     public ConsumableItemData()
     {

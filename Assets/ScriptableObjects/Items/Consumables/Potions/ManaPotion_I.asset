@@ -25,4 +25,6 @@ MonoBehaviour:
   <RestoreHunger>k__BackingField: 0
   <CooldownSeconds>k__BackingField: 10
   <EffectDurationSeconds>k__BackingField: 0
-  _timedModifiers: []
+  _timedStatusEffects:
+  - <StatusEffectType>k__BackingField: 2
+    <Value>k__BackingField: 15

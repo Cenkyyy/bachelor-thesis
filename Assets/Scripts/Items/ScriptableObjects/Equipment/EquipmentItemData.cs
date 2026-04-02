@@ -7,9 +7,9 @@ public sealed class EquipmentItemData : ItemData
     [field: SerializeField] public EquipmentSlotType Slot { get; private set; }
     [field: SerializeField] public ToolTier ProgressionTier { get; private set; } = ToolTier.Copper;
 
-    [SerializeField] private List<ItemStatModifier> _statBonuses = new();
+    [SerializeField] private List<ItemStatusEffect> _statusEffects = new();
 
-    public IReadOnlyList<ItemStatModifier> StatBonuses => _statBonuses;
+    public IReadOnlyList<ItemStatusEffect> StatusEffect => _statusEffects;
     public bool HasProgressionTier => !IsAccessorySlot(Slot) && ProgressionTier != ToolTier.None;
 
     protected override ItemType? ExpectedCategory => IsAccessorySlot(Slot) ? ItemType.Accessory : ItemType.Armor;

@@ -2,18 +2,21 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public sealed class PlayerItemStatController : MonoBehaviour
+public sealed class PlayerItemStatusEffectsController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Player _player;
     [SerializeField] private PlayerMovement _playerMovement;
 
-    private readonly List<ActiveTimedModifiers> _activeTimedModifiers = new();
+    private readonly List<ActiveTimedItemStatusEffects> _activeTimedStatusEffects = new();
     private bool _isEquipmentSubscribed;
 
-    private sealed class ActiveTimedModifiers
-    {
-        public IReadOnlyList<ItemStatModifier> Modifiers;
+    public IReadOnlyList<ActiveTimedItemStatusEffects> ActiveTimedStatusEffects => _activeTimedStatusEffects;
+
+    public sealed class ActiveTimedItemStatusEffects
+    { 
+        public IReadOnlyList<ItemStatusEffect> StatusEffects;
+        public float DurationSeconds;
         public float ExpiresAt;
     }
 
@@ -65,16 +68,16 @@ public sealed class PlayerItemStatController : MonoBehaviour
     {
         EnsureEquipmentSubscription();
 
-        if (_activeTimedModifiers.Count == 0)
+        if (_activeTimedStatusEffects.Count == 0)
             return;
 
-        if (!RemoveExpiredTimedModifiers())
+        if (!RemoveExpiredTimedStatusEffects())
             return;
 
         RecalculateAndApply();
     }
 
-    public void ApplyTimedConsumableModifiers(ConsumableItemData consumable)
+    public void ApplyTimedConsumableStatusEffect(ConsumableItemData consumable)
     {
         if (consumable == null)
             return;
@@ -82,30 +85,31 @@ public sealed class PlayerItemStatController : MonoBehaviour
         if (consumable.EffectDurationSeconds <= 0f)
             return;
 
-        var timedModifiers = consumable.TimedModifiers;
+        var timedModifiers = consumable.StatusEffects;
         if (timedModifiers == null || timedModifiers.Count == 0)
             return;
 
-        _activeTimedModifiers.Add(new ActiveTimedModifiers
+        _activeTimedStatusEffects.Add(new ActiveTimedItemStatusEffects
         {
-            Modifiers = timedModifiers,
+            StatusEffects = timedModifiers,
+            DurationSeconds = consumable.EffectDurationSeconds,
             ExpiresAt = Time.time + consumable.EffectDurationSeconds
         });
 
         RecalculateAndApply();
     }
 
-    private bool RemoveExpiredTimedModifiers()
+    private bool RemoveExpiredTimedStatusEffects()
     {
         bool removedAny = false;
         float now = Time.time;
 
-        for (int i = _activeTimedModifiers.Count - 1; i >= 0; i--)
+        for (int i = _activeTimedStatusEffects.Count - 1; i >= 0; i--)
         {
-            if (_activeTimedModifiers[i].ExpiresAt > now)
+            if (_activeTimedStatusEffects[i].ExpiresAt > now)
                 continue;
 
-            _activeTimedModifiers.RemoveAt(i);
+            _activeTimedStatusEffects.RemoveAt(i);
             removedAny = true;
         }
 
@@ -141,14 +145,14 @@ public sealed class PlayerItemStatController : MonoBehaviour
             return;
 
         var aggregation = new StatAggregation();
-        AggregateEquippedModifiers(ref aggregation);
-        AggregateTimedConsumableModifiers(ref aggregation);
+        AggregateEquippedStatusEffects(ref aggregation);
+        AggregateTimedConsumableStatusEffects(ref aggregation);
 
         _player.Data.ApplyCombatItemModifiers(aggregation.DefenceAdditive, aggregation.HealthRegenAdditive, aggregation.ManaRegenAdditive, aggregation.MaxHealthAdditive, aggregation.MaxManaAdditive, aggregation.SpellDamageAdditive);
         ApplyMoveSpeed(aggregation.MoveSpeedPercentAdditive);
     }
 
-    private void AggregateEquippedModifiers(ref StatAggregation aggregation)
+    private void AggregateEquippedStatusEffects(ref StatAggregation aggregation)
     {
         if (_player.Equipment == null)
             return;
@@ -159,52 +163,52 @@ public sealed class PlayerItemStatController : MonoBehaviour
             if (inventoryItem.IsEmpty || inventoryItem.Item is not EquipmentItemData equipmentItem)
                 continue;
 
-            AggregateModifierList(equipmentItem.StatBonuses, ref aggregation);
+            AggregateStatusEffectsList(equipmentItem.StatusEffect, ref aggregation);
         }
     }
 
-    private void AggregateTimedConsumableModifiers(ref StatAggregation aggregation)
+    private void AggregateTimedConsumableStatusEffects(ref StatAggregation aggregation)
     {
-        for (int i = 0; i < _activeTimedModifiers.Count; i++)
+        for (int i = 0; i < _activeTimedStatusEffects.Count; i++)
         {
-            AggregateModifierList(_activeTimedModifiers[i].Modifiers, ref aggregation);
+            AggregateStatusEffectsList(_activeTimedStatusEffects[i].StatusEffects, ref aggregation);
         }
     }
 
-    private void AggregateModifierList(IReadOnlyList<ItemStatModifier> modifiers, ref StatAggregation aggregation)
+    private void AggregateStatusEffectsList(IReadOnlyList<ItemStatusEffect> modifiers, ref StatAggregation aggregation)
     {
         if (modifiers == null || modifiers.Count == 0)
             return;
 
         for (int i = 0; i < modifiers.Count; i++)
         {
-            ApplyModifier(modifiers[i], ref aggregation);
+            ApplyStatusEffect(modifiers[i], ref aggregation);
         }
     }
 
-    private static void ApplyModifier(ItemStatModifier modifier, ref StatAggregation aggregation)
+    private static void ApplyStatusEffect(ItemStatusEffect modifier, ref StatAggregation aggregation)
     {
-        switch (modifier.Stat)
+        switch (modifier.StatusEffectType)
         {
-            case ItemStatType.MaxHealth:
+            case ItemStatusEffectType.MaxHealth:
                 ApplyValue(modifier, ref aggregation.MaxHealthAdditive);
                 break;
-            case ItemStatType.MaxMana:
+            case ItemStatusEffectType.MaxMana:
                 ApplyValue(modifier, ref aggregation.MaxManaAdditive);
                 break;
-            case ItemStatType.Defence:
+            case ItemStatusEffectType.Defence:
                 ApplyValue(modifier, ref aggregation.DefenceAdditive);
                 break;
-            case ItemStatType.HealthRegen:
+            case ItemStatusEffectType.HealthRegen:
                 ApplyValue(modifier, ref aggregation.HealthRegenAdditive);
                 break;
-            case ItemStatType.ManaRegen:
+            case ItemStatusEffectType.ManaRegen:
                 ApplyValue(modifier, ref aggregation.ManaRegenAdditive);
                 break;
-            case ItemStatType.MoveSpeed:
+            case ItemStatusEffectType.MoveSpeed:
                 ApplyValue(modifier, ref aggregation.MoveSpeedPercentAdditive);
                 break;
-            case ItemStatType.SpellDamage:
+            case ItemStatusEffectType.SpellDamage:
                 ApplyValue(modifier, ref aggregation.SpellDamageAdditive);
                 break;
             default:
@@ -212,7 +216,7 @@ public sealed class PlayerItemStatController : MonoBehaviour
         }
     }
 
-    private static void ApplyValue(ItemStatModifier modifier, ref float additive)
+    private static void ApplyValue(ItemStatusEffect modifier, ref float additive)
     {
         additive += modifier.Value;
     }

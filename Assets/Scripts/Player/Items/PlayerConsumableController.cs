@@ -6,7 +6,7 @@
 public sealed class PlayerConsumableController : MonoBehaviour
 {
     [SerializeField] private Player _player;
-    [SerializeField] private PlayerItemStatController _itemStatController;
+    [SerializeField] private PlayerItemStatusEffectsController _itemStatController;
     [SerializeField] private ItemCooldownTrackController _itemCooldownTrackController;
     [SerializeField] private GameplayInputBindingsData _inputBindings;
 
@@ -16,7 +16,7 @@ public sealed class PlayerConsumableController : MonoBehaviour
             _player = GetComponent<Player>();
 
         if (_itemStatController == null)
-            _itemStatController = GetComponent<PlayerItemStatController>();
+            _itemStatController = GetComponent<PlayerItemStatusEffectsController>();
 
         if (_itemCooldownTrackController == null)
             _itemCooldownTrackController = GetComponent<ItemCooldownTrackController>();
@@ -57,7 +57,7 @@ public sealed class PlayerConsumableController : MonoBehaviour
         _player.Data.RecoverMana(consumable.RestoreMana);
         _player.Data.EatFood(consumable.RestoreHunger);
 
-        _itemStatController?.ApplyTimedConsumableModifiers(consumable);
+        _itemStatController?.ApplyTimedConsumableStatusEffect(consumable);
     }
 
     private void ConsumeOne(int slotIndex, InventoryItem slotItem)
