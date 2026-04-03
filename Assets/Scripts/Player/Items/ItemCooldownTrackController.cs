@@ -27,7 +27,22 @@ public sealed class ItemCooldownTrackController : MonoBehaviour
         if (!TryGetCooldownDuration(item, out var cooldownSeconds))
             return false;
 
-        _itemCooldownEndTimes[item] = Time.time + cooldownSeconds;
+        var cooldownEndTime = Time.time + cooldownSeconds;
+        SetCooldown(item, cooldownEndTime);
+
+        if (item is not ICooldownItem cooldownItem || cooldownItem.CooldownBlockedItems == null)
+            return true;
+
+        var blockedItems = cooldownItem.CooldownBlockedItems;
+        for (int i = 0; i < blockedItems.Count; i++)
+        {
+            var blockedItem = blockedItems[i];
+            if (blockedItem == null)
+                continue;
+
+            SetCooldown(blockedItem, cooldownEndTime);
+        }
+
         return true;
     }
 
@@ -49,6 +64,14 @@ public sealed class ItemCooldownTrackController : MonoBehaviour
 
         remainingNormalized = Mathf.Clamp01(remainingSeconds / cooldownSeconds);
         return true;
+    }
+
+    private void SetCooldown(ItemData item, float cooldownEndTime)
+    {
+        if (_itemCooldownEndTimes.TryGetValue(item, out var existingEndTime) && existingEndTime > cooldownEndTime)
+            return;
+
+        _itemCooldownEndTimes[item] = cooldownEndTime;
     }
 
     private static bool TryGetCooldownDuration(ItemData item, out float cooldownSeconds)

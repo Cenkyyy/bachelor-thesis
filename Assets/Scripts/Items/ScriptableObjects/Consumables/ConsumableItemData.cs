@@ -13,6 +13,8 @@ public class ConsumableItemData : ItemData, ICooldownItem
 
     [field: Header("Usage")]
     [field: SerializeField, Min(0f)] public float CooldownSeconds { get; private set; }
+    [SerializeField] private List<ItemData> _cooldownBlockedItems = new();
+    public IReadOnlyList<ItemData> CooldownBlockedItems => _cooldownBlockedItems;
 
     [field: Header("Optional Timed Status Effects")]
     [field: SerializeField] public float EffectDurationSeconds { get; private set; }
