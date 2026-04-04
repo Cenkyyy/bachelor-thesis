@@ -47,8 +47,8 @@ public sealed class BedrollInteractable : InteractableBase
             return;
         }
             
-
-        // Load Parallel World from SceneLoader
+        if (PanelManager.Instance != null)
+            PanelManager.Instance.OpenMajorPanel(PanelId.WordShop);
     }
 
     private bool HasEnemiesNearby()

@@ -17,6 +17,7 @@ public sealed class PanelManager : MonoBehaviour
     [SerializeField] private WorldMapPanelController _mapPanel;
     [SerializeField] private OverworldSettingsController _settingsPanel;
     [SerializeField] private CraftingPanel _craftingPanel;
+    [SerializeField] private WordShopPanelController _wordShopPanel;
 
     [Header("Panels - Secondary")]
     [SerializeField] private EquipmentPanel _equipmentPanel;
@@ -29,6 +30,7 @@ public sealed class PanelManager : MonoBehaviour
     private IPanel[] _mapGroup;
     private IPanel[] _settingsGroup;
     private IPanel[] _craftingGroup;
+    private IPanel[] _wordShopGroup;
 
     public event Action<IInventory> OnDeathChestClosed;
 
@@ -49,6 +51,7 @@ public sealed class PanelManager : MonoBehaviour
         _mapGroup = new IPanel[] { _mapPanel };
         _settingsGroup = new IPanel[] { _settingsPanel };
         _craftingGroup = new IPanel[] { _craftingPanel };
+        _wordShopGroup = new IPanel[] { _wordShopPanel };
 
         _currentPanelId = null;
         _currentDeathChestInventory = null;
@@ -212,6 +215,7 @@ public sealed class PanelManager : MonoBehaviour
             PanelId.Map => _mapGroup,
             PanelId.Settings => _settingsGroup,
             PanelId.Crafting => _craftingGroup,
+            PanelId.WordShop => _wordShopGroup,
             _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)
         };
     }
@@ -247,6 +251,7 @@ public sealed class PanelManager : MonoBehaviour
             PanelId.Map => _mapPanel,
             PanelId.Settings => _settingsPanel,
             PanelId.Crafting => _craftingPanel,
+            PanelId.WordShop => _wordShopPanel,
             _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)
         };
     }

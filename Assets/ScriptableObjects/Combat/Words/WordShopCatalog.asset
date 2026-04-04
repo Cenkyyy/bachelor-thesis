@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c31728ad665cad40a5ff76bd499218c, type: 3}
+  m_Name: WordShopCatalog
+  m_EditorClassIdentifier: 
+  _entries:
+  - _category: 0
+    _wordValue: 0
+    _memoryLevelCost: 10
+  - _category: 0
+    _wordValue: 1
+    _memoryLevelCost: 10
+  - _category: 0
+    _wordValue: 2
+    _memoryLevelCost: 10
+  - _category: 0
+    _wordValue: 3
+    _memoryLevelCost: 10
+  - _category: 0
+    _wordValue: 4
+    _memoryLevelCost: 10
+  - _category: 1
+    _wordValue: 0
+    _memoryLevelCost: 1
+  - _category: 1
+    _wordValue: 1
+    _memoryLevelCost: 1
+  - _category: 1
+    _wordValue: 2
+    _memoryLevelCost: 1
+  - _category: 1
+    _wordValue: 3
+    _memoryLevelCost: 1
+  - _category: 1
+    _wordValue: 4
+    _memoryLevelCost: 1
+  - _category: 2
+    _wordValue: 0
+    _memoryLevelCost: 0
+  - _category: 2
+    _wordValue: 1
+    _memoryLevelCost: 0
+  - _category: 2
+    _wordValue: 2
+    _memoryLevelCost: 0
+  - _category: 2
+    _wordValue: 3
+    _memoryLevelCost: 0

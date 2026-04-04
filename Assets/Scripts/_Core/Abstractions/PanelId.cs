@@ -4,6 +4,6 @@ public enum PanelId
     DeathChest,
     Map,
     Settings,
-    ParallelWorld,
+    WordShop,
     Crafting
 }
