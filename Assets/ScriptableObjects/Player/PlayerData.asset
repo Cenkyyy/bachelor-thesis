@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <BaseMaxHealth>k__BackingField: 100
   <BaseMaxMana>k__BackingField: 100
-  <BaseDefence>k__BackingField: 1
-  <BaseHealthRegeneration>k__BackingField: 1
-  <BaseManaRegeneration>k__BackingField: 1
+  <BaseDefence>k__BackingField: 0
+  <BaseHealthRegeneration>k__BackingField: 0
+  <BaseManaRegeneration>k__BackingField: 0
   <BaseMaxXP>k__BackingField: 100
   <MaxLevel>k__BackingField: 200
   <BaseMaxMemoryXP>k__BackingField: 100
