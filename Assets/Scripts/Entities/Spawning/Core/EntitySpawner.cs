@@ -1,21 +1,23 @@
 ﻿using UnityEngine;
 
-public sealed class EnemySpawner<TEnemy> where TEnemy : EnemyCore
+public sealed class EntitySpawner<TData, TEntity>
+    where TData : EntityData
+    where TEntity : EnemyCore
 {
-    private readonly IEnemyFactory<TEnemy> _factory;
+    private readonly IEntityFactory<TData, TEntity> _factory;
     private readonly ISpawnStrategy _spawnStrategy;
-    private readonly IEnemySelectionStrategy _selectionStrategy;
+    private readonly IEntitySelectionStrategy<TData> _selectionStrategy;
     private readonly ISpawnWorldQuery _worldQuery;
-    private readonly SpawnedEnemyRegistry _registry;
+    private readonly ISpawnRegistry<TEntity> _registry;
     private readonly EnemySpawnSettings _settings;
     private readonly Transform _spawnParent;
 
-    public EnemySpawner(
-        IEnemyFactory<TEnemy> factory,
+    public EntitySpawner(
+        IEntityFactory<TData, TEntity> factory,
         ISpawnStrategy spawnStrategy,
-        IEnemySelectionStrategy selectionStrategy,
+        IEntitySelectionStrategy<TData> selectionStrategy,
         ISpawnWorldQuery worldQuery,
-        SpawnedEnemyRegistry registry,
+        ISpawnRegistry<TEntity> registry,
         EnemySpawnSettings settings,
         Transform spawnParent)
     {
@@ -31,68 +33,56 @@ public sealed class EnemySpawner<TEnemy> where TEnemy : EnemyCore
     public void RunSpawnCycle(Vector2 playerPosition)
     {
         var effectiveMaxAliveMultiplier = DayNightSystem.Instance != null && DayNightSystem.Instance.IsNight ? _settings.NightMaxAliveEnemiesMultiplier : 1f;
-        var effectiveMaxAliveEnemies = Mathf.Max(1, Mathf.FloorToInt(_settings.MaxAliveEnemies * effectiveMaxAliveMultiplier));
+        var effectiveMaxAliveEntities = Mathf.Max(1, Mathf.FloorToInt(_settings.MaxAliveEnemies * effectiveMaxAliveMultiplier));
 
-        if (_registry.AliveCount >= effectiveMaxAliveEnemies)
+        if (_registry.AliveCount >= effectiveMaxAliveEntities)
         {
             return;
         }
 
-        var remainingCapacity = effectiveMaxAliveEnemies - _registry.AliveCount;
+        var remainingCapacity = effectiveMaxAliveEntities - _registry.AliveCount;
         var attempts = Mathf.Min(_settings.AttemptsPerCycle, remainingCapacity);
 
         for (var i = 0; i < attempts; i++)
         {
-            TrySpawnOne(playerPosition, _settings);
+            TrySpawnOne(playerPosition);
         }
     }
 
-    public void DespawnFarEnemies(Vector2 playerPosition)
+    public void DespawnFarEntities(Vector2 playerPosition)
     {
         _registry.DespawnOutsideRadius(playerPosition, _settings.DespawnRadius);
     }
 
-    private bool TrySpawnOne(Vector2 playerPosition, EnemySpawnSettings _settings)
+    private bool TrySpawnOne(Vector2 playerPosition)
     {
         for (var sample = 0; sample < _settings.MaxSamplesPerAttempt; sample++)
         {
             // Gets a candidate spawn point
             if (!_spawnStrategy.TryGetSpawnPoint(playerPosition, _settings, out var spawnPoint))
-            {
                 return false;
-            }
 
             // Checks if the spawn point is on walkable terrain
             if (!_worldQuery.IsWalkable(spawnPoint, _settings.WalkableProbeRadius))
-            {
                 continue;
-            }
 
             // Checks if the current spawn point is too close to an existing enemy
-            if (_registry.HasEnemyWithin(spawnPoint, _settings.MinSpacingFromEnemies))
-            {
+            if (_registry.HasAnyWithin(spawnPoint, _settings.MinSpacingFromEnemies))
                 continue;
-            }
 
             // Gets the biome at the spawn point, which is used to determine what type of enemy to spawn
             if (!_worldQuery.TryGetBiome(spawnPoint, out var biome))
-            {
                 continue;
-            }
 
             // Selects an enemy to spawn based on the biome
-            if (!_selectionStrategy.TrySelect(biome, out var enemyData))
-            {
+            if (!_selectionStrategy.TrySelect(biome, out var entityData))
                 return false;
-            }
 
-            var enemy = _factory.Create(enemyData, spawnPoint, _spawnParent);
-            if (enemy == null)
-            {
+            var entity = _factory.Create(entityData, spawnPoint, _spawnParent);
+            if (entity == null)
                 return false;
-            }
 
-            _registry.Register(enemy);
+            _registry.Register(entity);
             return true;
         }
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class WeightedBiomeEnemySelectionStrategy : IEnemySelectionStrategy
+public sealed class WeightedBiomeEnemySelectionStrategy : IEntitySelectionStrategy<EnemyData>
 {
     private readonly IReadOnlyList<EnemyData> _enemyDataEntries;
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class SpawnedEnemyRegistry
+public sealed class SpawnedEnemyRegistry : ISpawnRegistry<EnemyCore>
 {
     private readonly List<EnemyCore> _alive = new();
 
@@ -22,7 +22,7 @@ public sealed class SpawnedEnemyRegistry
         }
     }
 
-    public bool HasEnemyWithin(Vector2 point, float minDistance)
+    public bool HasAnyWithin(Vector2 point, float minDistance)
     {
         if (minDistance <= 0f)
         {
