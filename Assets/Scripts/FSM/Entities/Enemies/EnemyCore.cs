@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyCore : EntityCore
 {
@@ -21,15 +20,12 @@ public class EnemyCore : EntityCore
     [SerializeField] private float _pathProbeRadius = 0.18f;
 
     private const int PatrolSampleMaxAttempts = 12;
-    private readonly List<Vector2> _currentPath = new();
     private readonly Collider2D[] _detectionResults = new Collider2D[8];
     private ContactFilter2D _detectionFilter = new();
 
     private Vector2 _homePoint;
     private Vector2 _patrolTarget;
     private bool _hasPatrolTarget;
-    private int _pathIndex;
-    private float _nextAllowedRepathTime;
     private float _nextRetargetTime;
     private float _lostSightTimer;
     private Vector2 _lastKnownTargetPosition;
@@ -58,7 +54,7 @@ public class EnemyCore : EntityCore
 
     protected override void Start()
     {
-        ApplyDefinitionOverrides();
+        ApplyDataOverrides();
         ResolveHomePoint();
 
         if (_animation == null)
@@ -164,47 +160,15 @@ public class EnemyCore : EntityCore
 
     public void MoveToUsingPath(Vector2 worldTarget)
     {
-        if (Time.time >= _nextAllowedRepathTime)
-        {
-            RebuildPath(worldTarget);
-        }
-
-        if (_pathIndex >= 0 && _pathIndex < _currentPath.Count)
-        {
-            var waypoint = _currentPath[_pathIndex];
-            if (ArrivedAt(waypoint))
-            {
-                _pathIndex++;
-            }
-        }
-
-        if (_pathIndex >= 0 && _pathIndex < _currentPath.Count)
-        {
-            var nextWaypoint = _currentPath[_pathIndex];
-            MoveTowards(nextWaypoint);
-            SetAnimationMotion(nextWaypoint - (Vector2)transform.position);
-            return;
-        }
-
-        if (!CanMoveDirectlyTo(worldTarget))
-        {
-            if (_hasLastKnownTargetPosition && TryMoveToDetour(_lastKnownTargetPosition))
-            {
-                return;
-            }
-
-            StopMovement();
-            return;
-        }
-
-        MoveTowards(worldTarget);
-        SetAnimationMotion(worldTarget - (Vector2)transform.position);
-    }
-
-    public void StopMovement()
-    {
-        Stop();
-        SetAnimationMotion(Vector2.zero);
+        MoveToUsingPath(
+                    worldTarget: worldTarget,
+                    pathProbeRadius: _pathProbeRadius,
+                    repathIntervalSeconds: _data != null ? _data.RepathIntervalSeconds : 0.25f,
+                    pathNodeStep: _data != null ? _data.PathNodeStep : 0.5f,
+                    maxPathIterations: _data != null ? _data.MaxPathIterations : 1200,
+                    hasDetourTarget: _hasLastKnownTargetPosition,
+                    detourTarget: _lastKnownTargetPosition
+                );
     }
 
     public float SampleIdleDuration() => Random.Range(IdleDurationMin, IdleDurationMax);
@@ -277,7 +241,7 @@ public class EnemyCore : EntityCore
         _detectionFilter.useTriggers = true;
     }
 
-    private void ApplyDefinitionOverrides()
+    private void ApplyDataOverrides()
     {
         if (_data == null)
         {
@@ -294,85 +258,9 @@ public class EnemyCore : EntityCore
         _homePoint = _homePointOverride != null ? (Vector2)_homePointOverride.position : (Vector2)transform.position;
     }
 
-    private void RebuildPath(Vector2 worldTarget)
-    {
-        if (_data == null)
-        {
-            _currentPath.Clear();
-            _pathIndex = -1;
-            _nextAllowedRepathTime = Time.time + 0.25f;
-            return;
-        }
-
-        _nextAllowedRepathTime = Time.time + _data.RepathIntervalSeconds;
-        _pathIndex = 0;
-
-        var success = GridAStarPathfinder.TryBuildPath(
-            startWorld: transform.position,
-            goalWorld: worldTarget,
-            nodeStep: _data.PathNodeStep,
-            obstacleMask: obstacleMask,
-            probeRadius: _pathProbeRadius,
-            maxIterations: _data.MaxPathIterations,
-            output: _currentPath
-        );
-
-        if (!success)
-        {
-            _currentPath.Clear();
-            _pathIndex = -1;
-        }
-    }
-
-    private void SetAnimationMotion(Vector2 desiredDirection)
+    protected override void HandleMovementDirection(Vector2 desiredDirection)
     {
         _animation?.SetMoving(desiredDirection.normalized);
-    }
-
-    private bool CanMoveDirectlyTo(Vector2 worldTarget)
-    {
-        var from = (Vector2)transform.position;
-        var toTarget = worldTarget - from;
-        if (toTarget.sqrMagnitude <= arrivalEps * arrivalEps)
-        {
-            return true;
-        }
-
-        var hit = Physics2D.CircleCast(from, _pathProbeRadius, toTarget.normalized, toTarget.magnitude, obstacleMask);
-        return hit.collider == null;
-    }
-
-    private bool TryMoveToDetour(Vector2 worldTarget)
-    {
-        var from = (Vector2)transform.position;
-        var toTarget = worldTarget - from;
-        if (toTarget.sqrMagnitude <= 0.0001f)
-        {
-            return false;
-        }
-
-        var lateral = Vector2.Perpendicular(toTarget.normalized);
-        var probeDistance = Mathf.Max(_pathProbeRadius * 3f, arrivalEps * 2f);
-
-        var detourA = from + lateral * probeDistance;
-        var detourB = from - lateral * probeDistance;
-
-        var aBlocked = Physics2D.OverlapCircle(detourA, _pathProbeRadius, obstacleMask) != null;
-        var bBlocked = Physics2D.OverlapCircle(detourB, _pathProbeRadius, obstacleMask) != null;
-
-        if (aBlocked && bBlocked)
-        {
-            return false;
-        }
-
-        var aDistance = (detourA - worldTarget).sqrMagnitude;
-        var bDistance = (detourB - worldTarget).sqrMagnitude;
-        var chooseA = !aBlocked && (bBlocked || aDistance <= bDistance);
-        var detour = chooseA ? detourA : detourB;
-
-        MoveTowards(detour);
-        SetAnimationMotion(detour - from);
-        return true;
     }
 
     private void OnDrawGizmosSelected()
