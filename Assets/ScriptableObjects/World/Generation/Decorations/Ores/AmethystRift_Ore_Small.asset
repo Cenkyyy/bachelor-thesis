@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab734327975393b42af766d151fd89da, type: 3}
   m_Name: AmethystRift_Ore_Small
   m_EditorClassIdentifier: 
-  <DecorationId>k__BackingField: IceTundra_Ore_Small
+  <DecorationId>k__BackingField: AmethystRift_Ore_Small
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: b152433ac6eb17a4fbe77bd748233281, type: 3}
   <NodeData>k__BackingField: {fileID: 11400000, guid: 1da3cfb03d5ae7b42ac994daa5c1fa36, type: 2}
   <Category>k__BackingField: 1

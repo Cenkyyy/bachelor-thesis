@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab734327975393b42af766d151fd89da, type: 3}
-  m_Name: AmethystRift_Ore_Large
+  m_Name: Desert_Ore_Large
   m_EditorClassIdentifier: 
-  <DecorationId>k__BackingField: AmethystRift_Ore_Large
-  <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 5769d2838a7cf0140b2489f3b5d9966a, type: 3}
-  <NodeData>k__BackingField: {fileID: 11400000, guid: 172a631eef5746b428e5cb088b024c78, type: 2}
+  <DecorationId>k__BackingField: Desert_Ore_Large
+  <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 0dafd81e37a7ad948bae29deecd59b6c, type: 3}
+  <NodeData>k__BackingField: {fileID: 11400000, guid: b56522a32cc86424fa8f245b9c5034c3, type: 2}
   <Category>k__BackingField: 1
   <Size>k__BackingField: 2
-  _allowedBiomes: 04000000
+  _allowedBiomes: 03000000
   <SpawnWeight>k__BackingField: 1
   <MinimumSpacingTiles>k__BackingField: 2
   <AllowCluster>k__BackingField: 0

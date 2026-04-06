@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6f60f54d43184c44a56d5ffa4a794fd, type: 3}
-  m_Name: _DecorationsListData
+  m_Name: DecorationsListData
   m_EditorClassIdentifier: 
   _entries:
   - {fileID: 11400000, guid: d58139b8290e587468320aa264ead972, type: 2}
@@ -34,3 +34,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3ce856352bdaeb0498d4a315e578189a, type: 2}
   - {fileID: 11400000, guid: 8f0669313e544e4498a5794aee7c2608, type: 2}
   - {fileID: 11400000, guid: cf2a9268daf74d14d9d4f05df19c9660, type: 2}
+  - {fileID: 11400000, guid: 910c67264d5342149b2df49b771769c1, type: 2}
+  - {fileID: 11400000, guid: 6e8aa3786a229f54eb10957923ecdab4, type: 2}
+  - {fileID: 11400000, guid: 9fb90d549c239d74e8083ce920f2cd06, type: 2}
+  - {fileID: 11400000, guid: d1f03d52b774bba45a760d06c79f9c98, type: 2}
+  - {fileID: 11400000, guid: fd1b6eb567f80e8429aea542036155ab, type: 2}
+  - {fileID: 11400000, guid: 0f0fef56ce67fbb479b79f57373d2557, type: 2}
+  - {fileID: 11400000, guid: 140b65edb27b547438f5e7300bb88d4c, type: 2}
+  - {fileID: 11400000, guid: f2892cedc2f33ba4ebc0eaa45f91b560, type: 2}
