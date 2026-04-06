@@ -9,17 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92ba0adafdd511b47930cdf4105e6d46, type: 3}
+  m_Script: {fileID: 11500000, guid: f88c623f404c9cc428b917a762222950, type: 3}
   m_Name: AmethystBoots
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Amethyst Boots
-  <Icon>k__BackingField: {fileID: 0}
+  <OutputItem>k__BackingField: {fileID: 11400000, guid: d1faf6ae86e0cdf47b8e7bf3f1d65691, type: 2}
+  <OutputAmount>k__BackingField: 1
   <Description>k__BackingField: 
   <Category>k__BackingField: 0
-  <Rarity>k__BackingField: 3
-  <BiomeAffinity>k__BackingField: 4
-  <MaxStackSize>k__BackingField: 1
-  <Slot>k__BackingField: 3
-  <ProgressionTier>k__BackingField: 4
-  <ArmorValue>k__BackingField: 0
-  _statBonuses: []
+  _ingredients: []
+  _displayName: Amethyst Boots

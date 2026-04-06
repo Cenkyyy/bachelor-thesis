@@ -9,17 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92ba0adafdd511b47930cdf4105e6d46, type: 3}
+  m_Script: {fileID: 11500000, guid: f88c623f404c9cc428b917a762222950, type: 3}
   m_Name: CopperHelmet
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Copper Helmet
-  <Icon>k__BackingField: {fileID: 0}
+  <OutputItem>k__BackingField: {fileID: 11400000, guid: 47d97c2d46131214aa137f44ae61d25a, type: 2}
+  <OutputAmount>k__BackingField: 1
   <Description>k__BackingField: 
   <Category>k__BackingField: 0
-  <Rarity>k__BackingField: 1
-  <BiomeAffinity>k__BackingField: 1
-  <MaxStackSize>k__BackingField: 1
-  <Slot>k__BackingField: 0
-  <ProgressionTier>k__BackingField: 2
-  <ArmorValue>k__BackingField: 0
-  _statBonuses: []
+  _ingredients: []
+  _displayName: Copper Helmet

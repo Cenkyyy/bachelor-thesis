@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ba0adafdd511b47930cdf4105e6d46, type: 3}
-  m_Name: CopperChestplate
+  m_Name: CopperHelmet
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Copper Chestplate
-  <Icon>k__BackingField: {fileID: 1766183660, guid: 78b27ca8d880efd40a810ca556c42a4a, type: 3}
+  <ItemName>k__BackingField: Copper Helmet
+  <Icon>k__BackingField: {fileID: 2214101062971801023, guid: 0bbceb06760663a409587298001ad43c, type: 3}
   <Description>k__BackingField: 
   <Category>k__BackingField: 0
   <Rarity>k__BackingField: 1
   <BiomeAffinity>k__BackingField: 1
   <MaxStackSize>k__BackingField: 1
-  <Slot>k__BackingField: 1
+  <Slot>k__BackingField: 0
   <ProgressionTier>k__BackingField: 2
-  _statBonuses: []
+  _statusEffects: []
