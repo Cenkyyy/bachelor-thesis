@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
 [DisallowMultipleComponent]
-public sealed class EnemyDeathRewards : MonoBehaviour
+public sealed class EntityDeathRewards : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private EnemyCore _enemyCore;
+    [SerializeField] private EntityCore _entityCore;
     [SerializeField] private ItemDropSpawner _dropSpawner;
     [SerializeField] private Transform _dropAnchor;
 
@@ -15,8 +15,8 @@ public sealed class EnemyDeathRewards : MonoBehaviour
 
     private void Awake()
     {
-        if (_enemyCore == null)
-            _enemyCore = GetComponent<EnemyCore>() ?? GetComponentInParent<EnemyCore>();
+        if (_entityCore == null)
+            _entityCore = GetComponent<EntityCore>() ?? GetComponentInParent<EntityCore>();
 
         if (_dropSpawner == null)
         {
@@ -26,7 +26,7 @@ public sealed class EnemyDeathRewards : MonoBehaviour
         }
     }
 
-    public void HandleEnemyDied(object damageSource)
+    public void HandleEntityDied(object damageSource)
     {
         if (_wasHandled)
             return;
@@ -46,22 +46,18 @@ public sealed class EnemyDeathRewards : MonoBehaviour
 
     private void GrantXp(Player killer)
     {
-        if (killer == null || _enemyCore == null || _enemyCore.Data == null)
+        if (killer == null || _entityCore == null || _entityCore.Data == null)
             return;
 
-        var xpReward = Mathf.Max(0, _enemyCore.Data.XpReward);
-        if (xpReward <= 0)
-            return;
-
-        killer.Data.GainXP(xpReward);
+        killer.Data.GainXP(_entityCore.Data.XpReward);
     }
 
     private void SpawnLoot()
     {
-        if (_enemyCore == null || _enemyCore.Data == null || _dropSpawner == null)
+        if (_entityCore == null || _entityCore.Data == null || _dropSpawner == null)
             return;
 
-        var lootTable = _enemyCore.Data.Drops;
+        var lootTable = _entityCore.Data.Drops;
         if (lootTable == null || lootTable.Count == 0)
             return;
 

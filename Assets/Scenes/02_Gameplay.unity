@@ -676,7 +676,7 @@ MonoBehaviour:
   _obstacleMask:
     serializedVersion: 2
     m_Bits: 1280
-  _spawnableEnemies:
+  _spawnableEntities:
   - {fileID: 11400000, guid: ae968297b73e64d4fb319c407e633881, type: 2}
   - {fileID: 11400000, guid: c1523698214b240419fd070c9878a6c5, type: 2}
   _spawnStrategyType: 0
@@ -686,12 +686,12 @@ MonoBehaviour:
     <SpawnIntervalSeconds>k__BackingField: 3
     <NightSpawnAccelerationMultiplier>k__BackingField: 0.9
     <AttemptsPerCycle>k__BackingField: 3
-    <MaxAliveEnemies>k__BackingField: 5
-    <NightMaxAliveEnemiesMultiplier>k__BackingField: 1.25
+    <MaxAliveEntities>k__BackingField: 20
+    <NightMaxAliveEntitiesMultiplier>k__BackingField: 1.25
     <SpawnRadius>k__BackingField: 16
     <MinSpawnDistance>k__BackingField: 7
     <DespawnRadius>k__BackingField: 24
-    <MinSpacingFromEnemies>k__BackingField: 2
+    <MinSpacingFromEntities>k__BackingField: 2
     <WalkableProbeRadius>k__BackingField: 0.2
     <MaxSamplesPerAttempt>k__BackingField: 6
 --- !u!1 &54743637

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawnController : MonoBehaviour
+public class EntitySpawnController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform _player;
@@ -10,13 +10,13 @@ public class EnemySpawnController : MonoBehaviour
     [SerializeField] private LayerMask _obstacleMask;
 
     [Header("Spawn Data")]
-    [SerializeField] private List<EnemyData> _spawnableEnemies = new();
+    [SerializeField] private List<EnemyData> _spawnableEntities = new();
 
     [Header("Behaviour")]
     [SerializeField] private SpawnStrategyType _spawnStrategyType = SpawnStrategyType.AroundPlayer;
     [SerializeField] private EntitySpawnSettings _settings = new();
 
-    private EntitySpawner<EnemyData, EnemyCore> _enemySpawner;
+    private EntitySpawner<EnemyData, EnemyCore> _entitySpawner;
     private float _nextSpawnTime;
 
     private void Awake()
@@ -25,20 +25,14 @@ public class EnemySpawnController : MonoBehaviour
         {
             var taggedPlayer = GameObject.FindGameObjectWithTag("Player");
             if (taggedPlayer != null)
-            {
                 _player = taggedPlayer.transform;
-            }
         }
 
         if (_spawnParent == null)
-        {
             _spawnParent = transform;
-        }
 
         if (_worldGenerator == null)
-        {
             _worldGenerator = FindFirstObjectByType<WorldGenerationController>();
-        }
     }
 
     private void Start()
@@ -48,36 +42,28 @@ public class EnemySpawnController : MonoBehaviour
 
     private void Update()
     {
-        if (_enemySpawner == null)
+        if (_entitySpawner == null)
         {
             if (!TryBuildSpawner())
-            {
                 return;
-            }
         }
 
         if (_player == null)
-        {
             return;
-        }
 
         var playerPosition = (Vector2)_player.position;
 
         // Check for despawning far enemies before attempting to spawn new ones
-        _enemySpawner.DespawnFarEntities(playerPosition);
+        _entitySpawner.DespawnFarEntities(playerPosition);
 
         if (Time.time < _nextSpawnTime)
-        {
             return;
-        }
 
         if (!CanSpawnForCurrentDay())
-        {
             return;
-        }
 
         // Spawn cycle
-        _enemySpawner.RunSpawnCycle(playerPosition);
+        _entitySpawner.RunSpawnCycle(playerPosition);
         _nextSpawnTime = DayNightSystem.Instance != null && DayNightSystem.Instance.IsNight
             ? Time.time + _settings.SpawnIntervalSeconds * _settings.NightSpawnAccelerationMultiplier
             : Time.time + _settings.SpawnIntervalSeconds;
@@ -90,25 +76,24 @@ public class EnemySpawnController : MonoBehaviour
             return false;
         }
 
-        var factory = new EnemyFactory();
+        var factory = new EntityFactory<EnemyData, EnemyCore>();
         var strategy = CreateSpawnStrategy();
-        var selection = new WeightedBiomeEnemySelectionStrategy(_spawnableEnemies);
+        var selection = new WeightedBiomeEntitySelectionStrategy<EnemyData>(_spawnableEntities);
         var worldQuery = new TilemapSpawnWorldQuery(_worldGenerator.GroundTilemap, _worldGenerator.CurrentWorldData, _obstacleMask);
-        var registry = new SpawnedEnemyRegistry();
+        var registry = new SpawnedEntityRegistry<EnemyCore>();
 
-        _enemySpawner = new EntitySpawner<EnemyData, EnemyCore>(factory, strategy, selection, worldQuery, registry, _settings, _spawnParent);
+        _entitySpawner = new EntitySpawner<EnemyData, EnemyCore>(factory, strategy, selection, worldQuery, registry, _settings, _spawnParent);
 
         return true;
     }
 
     private ISpawnStrategy CreateSpawnStrategy()
     {
-        switch (_spawnStrategyType)
+        return _spawnStrategyType switch
         {
-            case SpawnStrategyType.AroundPlayer:
-            default:
-                return new AroundPlayerSpawnStrategy();
-        }
+            SpawnStrategyType.AroundPlayer => new AroundPlayerSpawnStrategy(),
+            _ => new AroundPlayerSpawnStrategy()
+        };
     }
 
     private bool CanSpawnForCurrentDay()
@@ -125,9 +110,7 @@ public class EnemySpawnController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         if (_player == null || _settings == null)
-        {
             return;
-        }
 
         // Draw radius for minimum spawn distance
         Gizmos.color = Color.yellow;

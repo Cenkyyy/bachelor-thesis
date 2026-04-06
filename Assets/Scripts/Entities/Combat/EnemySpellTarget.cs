@@ -7,7 +7,7 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget, ISpellWordEf
 {
     [Header("References")]
     [SerializeField] private EnemyCore _enemyCore;
-    [SerializeField] private EnemyDamageable _damageable;
+    [SerializeField] private EntityDamageable _damageable;
 
     [Header("Status Runtime")]
     [SerializeField] private float _statusTickInterval = 0.5f;
@@ -38,7 +38,7 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget, ISpellWordEf
             _enemyCore = GetComponent<EnemyCore>() ?? GetComponentInParent<EnemyCore>();
 
         if (_damageable == null)
-            _damageable = GetComponent<EnemyDamageable>() ?? GetComponentInParent<EnemyDamageable>();
+            _damageable = GetComponent<EntityDamageable>() ?? GetComponentInParent<EntityDamageable>();
     }
 
     public bool TryGetSpellWordEffectivenessData(out BiomeAffinity biome, out EnemyRoleTag roleTags)

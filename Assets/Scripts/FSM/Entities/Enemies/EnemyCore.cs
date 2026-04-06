@@ -33,8 +33,8 @@ public class EnemyCore : EntityCore
     private IDamageable _cachedDamageableTarget;
     private Transform _cachedDamageableTransform;
 
-    public EnemyData Data => _data;
-    public EnemyRuntimeData RuntimeData { get; } = new EnemyRuntimeData();
+    public override EntityData Data => _data;
+    public override EntityRuntimeData RuntimeData { get; } = new();
     public EnemySpecies Species => _data != null ? _data.Species : EnemySpecies.Troll;
     public EnemyArchetype Archetype => _data != null ? _data.Archetype : EnemyArchetype.Bruiser;
     public EnemyRoleTag RoleTags => _data != null ? _data.RoleTags : EnemyRoleTag.None;

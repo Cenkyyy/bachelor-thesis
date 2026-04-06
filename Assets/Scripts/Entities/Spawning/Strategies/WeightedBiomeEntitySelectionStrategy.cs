@@ -1,29 +1,30 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class WeightedBiomeEnemySelectionStrategy : IEntitySelectionStrategy<EnemyData>
+public sealed class WeightedBiomeEntitySelectionStrategy<TData> : IEntitySelectionStrategy<TData>
+    where TData : EntityData
 {
-    private readonly IReadOnlyList<EnemyData> _enemyDataEntries;
+    private readonly IReadOnlyList<TData> _entityDataEntries;
 
-    public WeightedBiomeEnemySelectionStrategy(IReadOnlyList<EnemyData> enemyDataEntries)
+    public WeightedBiomeEntitySelectionStrategy(IReadOnlyList<TData> entityDataEntries)
     {
-        _enemyDataEntries = enemyDataEntries;
+        _entityDataEntries = entityDataEntries;
     }
 
-    public bool TrySelect(BiomeAffinity biome, out EnemyData enemyData)
+    public bool TrySelect(BiomeAffinity biome, out TData entityData)
     {
-        enemyData = null;
+        entityData = null;
 
-        if (_enemyDataEntries == null || _enemyDataEntries.Count == 0)
+        if (_entityDataEntries == null || _entityDataEntries.Count == 0)
         {
             return false;
         }
 
         // Calculate the total weight of all the valid entries (spawnable enemies) in the given biome
         var totalWeight = 0f;
-        for (var i = 0; i < _enemyDataEntries.Count; i++)
+        for (var i = 0; i < _entityDataEntries.Count; i++)
         {
-            var entry = _enemyDataEntries[i];
+            var entry = _entityDataEntries[i];
             if (!CanSpawnInBiome(entry, biome))
             {
                 continue;
@@ -37,13 +38,13 @@ public sealed class WeightedBiomeEnemySelectionStrategy : IEntitySelectionStrate
             return false;
         }
 
-        // Then pick a random value between 0 and the total weight and choose the entry (spawnable enemy) that corresponds to that value
+        // Then pick a random value between 0 and the total weight and choose the entry (spawnable entity) that corresponds to that value
         var pick = Random.Range(0f, totalWeight);
         var running = 0f;
 
-        for (var i = 0; i < _enemyDataEntries.Count; i++)
+        for (var i = 0; i < _entityDataEntries.Count; i++)
         {
-            var entry = _enemyDataEntries[i];
+            var entry = _entityDataEntries[i];
             if (!CanSpawnInBiome(entry, biome))
             {
                 continue;
@@ -52,7 +53,7 @@ public sealed class WeightedBiomeEnemySelectionStrategy : IEntitySelectionStrate
             running += entry.SpawnWeight;
             if (pick <= running)
             {
-                enemyData = entry;
+                entityData = entry;
                 return true;
             }
         }
@@ -60,7 +61,7 @@ public sealed class WeightedBiomeEnemySelectionStrategy : IEntitySelectionStrate
         return false;
     }
 
-    private static bool CanSpawnInBiome(EnemyData entry, BiomeAffinity biome)
+    private static bool CanSpawnInBiome(TData entry, BiomeAffinity biome)
     {
         return entry != null && entry.Prefab != null && entry.SpawnWeight > 0f && entry.HomeBiome == biome;
     }

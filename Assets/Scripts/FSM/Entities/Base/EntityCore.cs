@@ -25,6 +25,9 @@ public abstract class EntityCore : StateMachineCore
     private int _pathIndex = -1;
     private float _nextAllowedRepathTime;
 
+    public virtual EntityData Data => null;
+    public virtual EntityRuntimeData RuntimeData => null;
+
     protected override void Start()
     {
         body = GetComponent<Rigidbody2D>();

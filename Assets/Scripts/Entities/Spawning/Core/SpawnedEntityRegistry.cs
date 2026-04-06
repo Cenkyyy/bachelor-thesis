@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class SpawnedEnemyRegistry : ISpawnRegistry<EnemyCore>
+public sealed class SpawnedEntityRegistry<TEntity> : ISpawnRegistry<TEntity>
+    where TEntity : EntityCore
 {
-    private readonly List<EnemyCore> _alive = new();
+    private readonly List<TEntity> _alive = new();
 
     public int AliveCount
     {
@@ -14,36 +15,30 @@ public sealed class SpawnedEnemyRegistry : ISpawnRegistry<EnemyCore>
         }
     }
 
-    public void Register(EnemyCore enemy)
+    public void Register(TEntity entity)
     {
-        if (enemy != null)
-        {
-            _alive.Add(enemy);
-        }
+        if (entity != null)
+            _alive.Add(entity);
     }
 
     public bool HasAnyWithin(Vector2 point, float minDistance)
     {
         if (minDistance <= 0f)
-        {
             return false;
-        }
 
         var sqrDistance = minDistance * minDistance;
 
         for (var i = _alive.Count - 1; i >= 0; i--)
         {
-            var enemy = _alive[i];
-            if (enemy == null)
+            var entity = _alive[i];
+            if (entity == null)
             {
                 _alive.RemoveAt(i);
                 continue;
             }
 
-            if (((Vector2)enemy.transform.position - point).sqrMagnitude < sqrDistance)
-            {
+            if (((Vector2)entity.transform.position - point).sqrMagnitude < sqrDistance)
                 return true;
-            }
         }
 
         return false;
@@ -55,19 +50,17 @@ public sealed class SpawnedEnemyRegistry : ISpawnRegistry<EnemyCore>
 
         for (var i = _alive.Count - 1; i >= 0; i--)
         {
-            var enemy = _alive[i];
-            if (enemy == null)
+            var entity = _alive[i];
+            if (entity == null)
             {
                 _alive.RemoveAt(i);
                 continue;
             }
 
-            if (((Vector2)enemy.transform.position - center).sqrMagnitude <= sqrRadius)
-            {
+            if (((Vector2)entity.transform.position - center).sqrMagnitude <= sqrRadius)
                 continue;
-            }
 
-            Object.Destroy(enemy.gameObject);
+            Object.Destroy(entity.gameObject);
             _alive.RemoveAt(i);
         }
     }
@@ -77,9 +70,7 @@ public sealed class SpawnedEnemyRegistry : ISpawnRegistry<EnemyCore>
         for (var i = _alive.Count - 1; i >= 0; i--)
         {
             if (_alive[i] == null)
-            {
                 _alive.RemoveAt(i);
-            }
         }
     }
 }
