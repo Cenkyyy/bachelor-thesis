@@ -9,7 +9,6 @@ public class CraftingRecipeData : ScriptableObject
     [field: SerializeField] public int OutputAmount { get; private set; } = 1;
 
     [field: Header("Presentation")]
-    [field: SerializeField][TextArea(2, 6)] public string Description { get; private set; }
     [field: SerializeField] public CraftingCategory Category { get; private set; } = CraftingCategory.Other;
 
     [Header("Requirements")]

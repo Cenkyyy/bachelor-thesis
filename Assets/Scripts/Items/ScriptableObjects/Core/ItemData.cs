@@ -5,7 +5,6 @@ public abstract class ItemData : ScriptableObject
     [field: Header("Basic Info")]
     [field: SerializeField] public string ItemName { get; private set; }
     [field: SerializeField] public Sprite Icon { get; private set; }
-    [field: SerializeField][TextArea(2, 4)] public string Description { get; private set; }
 
     [field: Header("Classfication")]
     [field: SerializeField] public ItemType Category { get; protected set; }
