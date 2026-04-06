@@ -14,7 +14,7 @@ public class EnemySpawnController : MonoBehaviour
 
     [Header("Behaviour")]
     [SerializeField] private SpawnStrategyType _spawnStrategyType = SpawnStrategyType.AroundPlayer;
-    [SerializeField] private EnemySpawnSettings _settings = new();
+    [SerializeField] private EntitySpawnSettings _settings = new();
 
     private EntitySpawner<EnemyData, EnemyCore> _enemySpawner;
     private float _nextSpawnTime;

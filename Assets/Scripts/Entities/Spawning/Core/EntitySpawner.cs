@@ -2,14 +2,14 @@
 
 public sealed class EntitySpawner<TData, TEntity>
     where TData : EntityData
-    where TEntity : EnemyCore
+    where TEntity : EntityCore
 {
     private readonly IEntityFactory<TData, TEntity> _factory;
     private readonly ISpawnStrategy _spawnStrategy;
     private readonly IEntitySelectionStrategy<TData> _selectionStrategy;
     private readonly ISpawnWorldQuery _worldQuery;
     private readonly ISpawnRegistry<TEntity> _registry;
-    private readonly EnemySpawnSettings _settings;
+    private readonly EntitySpawnSettings _settings;
     private readonly Transform _spawnParent;
 
     public EntitySpawner(
@@ -18,7 +18,7 @@ public sealed class EntitySpawner<TData, TEntity>
         IEntitySelectionStrategy<TData> selectionStrategy,
         ISpawnWorldQuery worldQuery,
         ISpawnRegistry<TEntity> registry,
-        EnemySpawnSettings settings,
+        EntitySpawnSettings settings,
         Transform spawnParent)
     {
         _factory = factory;
@@ -32,8 +32,8 @@ public sealed class EntitySpawner<TData, TEntity>
 
     public void RunSpawnCycle(Vector2 playerPosition)
     {
-        var effectiveMaxAliveMultiplier = DayNightSystem.Instance != null && DayNightSystem.Instance.IsNight ? _settings.NightMaxAliveEnemiesMultiplier : 1f;
-        var effectiveMaxAliveEntities = Mathf.Max(1, Mathf.FloorToInt(_settings.MaxAliveEnemies * effectiveMaxAliveMultiplier));
+        var effectiveMaxAliveMultiplier = DayNightSystem.Instance != null && DayNightSystem.Instance.IsNight ? _settings.NightMaxAliveEntitiesMultiplier : 1f;
+        var effectiveMaxAliveEntities = Mathf.Max(1, Mathf.FloorToInt(_settings.MaxAliveEntities * effectiveMaxAliveMultiplier));
 
         if (_registry.AliveCount >= effectiveMaxAliveEntities)
         {
@@ -66,15 +66,15 @@ public sealed class EntitySpawner<TData, TEntity>
             if (!_worldQuery.IsWalkable(spawnPoint, _settings.WalkableProbeRadius))
                 continue;
 
-            // Checks if the current spawn point is too close to an existing enemy
-            if (_registry.HasAnyWithin(spawnPoint, _settings.MinSpacingFromEnemies))
+            // Checks if the current spawn point is too close to an existing entity
+            if (_registry.HasAnyWithin(spawnPoint, _settings.MinSpacingFromEntities))
                 continue;
 
-            // Gets the biome at the spawn point, which is used to determine what type of enemy to spawn
+            // Gets the biome at the spawn point, which is used to determine what type of entity to spawn
             if (!_worldQuery.TryGetBiome(spawnPoint, out var biome))
                 continue;
 
-            // Selects an enemy to spawn based on the biome
+            // Selects an entity to spawn based on the biome
             if (!_selectionStrategy.TrySelect(biome, out var entityData))
                 return false;
 

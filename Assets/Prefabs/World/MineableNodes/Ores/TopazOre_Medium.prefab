@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1786944493288244570}
   - component: {fileID: 5965792816487423154}
   m_Layer: 10
-  m_Name: AmberOre_Medium
+  m_Name: TopazOre_Medium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

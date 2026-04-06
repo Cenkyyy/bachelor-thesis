@@ -2,5 +2,5 @@
 
 public interface ISpawnStrategy
 {
-    bool TryGetSpawnPoint(Vector2 playerPosition, EnemySpawnSettings _settings, out Vector2 spawnPoint);
+    bool TryGetSpawnPoint(Vector2 playerPosition, EntitySpawnSettings _settings, out Vector2 spawnPoint);
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1786944493288244570}
   - component: {fileID: 5965792816487423154}
   m_Layer: 10
-  m_Name: AmberOre_Small
+  m_Name: TopazOre_ExtraLarge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de015b59478de6d4a8ec437b1ccce772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data: {fileID: 11400000, guid: abe7457ea7149fb419dec49c96ff6a6b, type: 2}
+  _data: {fileID: 11400000, guid: 8ac3d6b03ac82464baab86f4c9502572, type: 2}
   _dropAnchor: {fileID: 2423685725565155726}
   _feedbackPopup: {fileID: 5659910043473217245}
   _higherToolRequiredMessage: Higher tool is required
@@ -110,8 +110,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0018953979, y: -0.043248802}
-  m_Size: {x: 0.33971232, y: 0.37793028}
+  m_Offset: {x: 0.02147305, y: -0.24905838}
+  m_Size: {x: 1.4060326, y: 1.4060326}
   m_Direction: 0
 --- !u!212 &5965792816487423154
 SpriteRenderer:
@@ -157,7 +157,7 @@ SpriteRenderer:
   m_SortingLayerID: -1237781155
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1976526771944583259, guid: df1aec8fae513ce4d911184644d4739f, type: 3}
+  m_Sprite: {fileID: 485746193107839883, guid: 25cd66fc9afa5f140a1973beb1f3f9d8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -211,14 +211,6 @@ PrefabInstance:
       propertyPath: _node
       value: 
       objectReference: {fileID: 660355792212658065}
-    - target: {fileID: 2111380250455446116, guid: 2192519b60bece042b027bd588a9ef33, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2111380250455446116, guid: 2192519b60bece042b027bd588a9ef33, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2111380250455446116, guid: 2192519b60bece042b027bd588a9ef33, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46989a09e1edfd74594f4a6f05ebb304, type: 3}
-  m_Name: AmberOre_ExtraLarge
+  m_Name: TopazOre_Medium
   m_EditorClassIdentifier: 
-  <RequiredToolType>k__BackingField: 2
+  <RequiredToolType>k__BackingField: 1
   <MinimumTier>k__BackingField: 2
   <AllowHandMining>k__BackingField: 0
   <MaxDurability>k__BackingField: 10
   <ToolPowerMultiplier>k__BackingField: 1
   _drops:
   - _item: {fileID: 11400000, guid: a32204ad7b421c84cb9fc6248609b8ea, type: 2}
-    _minAmount: 7
-    _maxAmount: 10
+    _minAmount: 2
+    _maxAmount: 4
   <GrantsMemoryXP>k__BackingField: 0
   <MemoryXpAmount>k__BackingField: 0

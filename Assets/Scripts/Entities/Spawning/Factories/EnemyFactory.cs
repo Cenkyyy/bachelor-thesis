@@ -15,6 +15,7 @@ public sealed class EnemyFactory : IEntityFactory<EnemyData, EnemyCore>
             return null;
         }
 
+        enemy.SetData(data);
         return enemy;
     }
 }
