@@ -1,0 +1,1457 @@
+fileFormatVersion: 2
+guid: 590d5164fbedbc24fbe608e5a5a4ab33
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7352975832193460653
+    second: Plant1_Death_without_shadow_0
+  - first:
+      213: 4638932486121751310
+    second: Plant1_Death_without_shadow_1
+  - first:
+      213: 8813340742311937688
+    second: Plant1_Death_without_shadow_2
+  - first:
+      213: 5771077518055468881
+    second: Plant1_Death_without_shadow_3
+  - first:
+      213: 367037443381720651
+    second: Plant1_Death_without_shadow_4
+  - first:
+      213: -6440183690167909461
+    second: Plant1_Death_without_shadow_5
+  - first:
+      213: -4516904670421001446
+    second: Plant1_Death_without_shadow_6
+  - first:
+      213: -6496317238894999519
+    second: Plant1_Death_without_shadow_7
+  - first:
+      213: 565452123672610343
+    second: Plant1_Death_without_shadow_8
+  - first:
+      213: 2998454335374336509
+    second: Plant1_Death_without_shadow_9
+  - first:
+      213: 7795365825962345819
+    second: Plant1_Death_without_shadow_10
+  - first:
+      213: -7733405842708266927
+    second: Plant1_Death_without_shadow_11
+  - first:
+      213: 3613929437251477637
+    second: Plant1_Death_without_shadow_12
+  - first:
+      213: 1786316116036666235
+    second: Plant1_Death_without_shadow_13
+  - first:
+      213: -7821469748856180346
+    second: Plant1_Death_without_shadow_14
+  - first:
+      213: -929925034739369493
+    second: Plant1_Death_without_shadow_15
+  - first:
+      213: 9175208807223981016
+    second: Plant1_Death_without_shadow_16
+  - first:
+      213: 2087161645457417966
+    second: Plant1_Death_without_shadow_17
+  - first:
+      213: 510416710098775089
+    second: Plant1_Death_without_shadow_18
+  - first:
+      213: 160742597152416223
+    second: Plant1_Death_without_shadow_19
+  - first:
+      213: -231856460201259471
+    second: Plant1_Death_without_shadow_20
+  - first:
+      213: 5149207380775959910
+    second: Plant1_Death_without_shadow_21
+  - first:
+      213: -4974955796516358508
+    second: Plant1_Death_without_shadow_22
+  - first:
+      213: 4965707011305889900
+    second: Plant1_Death_without_shadow_23
+  - first:
+      213: 2987439362320441225
+    second: Plant1_Death_without_shadow_24
+  - first:
+      213: -8089734531756946175
+    second: Plant1_Death_without_shadow_25
+  - first:
+      213: 5416163063602661379
+    second: Plant1_Death_without_shadow_26
+  - first:
+      213: 2104686710167781309
+    second: Plant1_Death_without_shadow_27
+  - first:
+      213: 113262566411605391
+    second: Plant1_Death_without_shadow_28
+  - first:
+      213: 4091377715773609344
+    second: Plant1_Death_without_shadow_29
+  - first:
+      213: -7393964900857247789
+    second: Plant1_Death_without_shadow_30
+  - first:
+      213: -3987815479908965812
+    second: Plant1_Death_without_shadow_31
+  - first:
+      213: -6974520413063941241
+    second: Plant1_Death_without_shadow_32
+  - first:
+      213: 668295474106988092
+    second: Plant1_Death_without_shadow_33
+  - first:
+      213: -1086077974759174086
+    second: Plant1_Death_without_shadow_34
+  - first:
+      213: 7984239562985669129
+    second: Plant1_Death_without_shadow_35
+  - first:
+      213: -4201911501510782214
+    second: Plant1_Death_without_shadow_36
+  - first:
+      213: -4669967564501288815
+    second: Plant1_Death_without_shadow_37
+  - first:
+      213: -5171554579965167818
+    second: Plant1_Death_without_shadow_38
+  - first:
+      213: -3197159784985141546
+    second: Plant1_Death_without_shadow_39
+  - first:
+      213: 1885978898868203687
+    second: Plant1_Death_without_shadow_40
+  - first:
+      213: -7730984739768545619
+    second: Plant1_Death_without_shadow_41
+  - first:
+      213: -1362400534255779810
+    second: Plant1_Death_without_shadow_42
+  - first:
+      213: -8201853684867488289
+    second: Plant1_Death_without_shadow_43
+  - first:
+      213: 1636862163998001135
+    second: Plant1_Death_without_shadow_44
+  - first:
+      213: 1330262328052088868
+    second: Plant1_Death_without_shadow_45
+  - first:
+      213: 9007480634409844216
+    second: Plant1_Death_without_shadow_46
+  - first:
+      213: 8110269532078036217
+    second: Plant1_Death_without_shadow_47
+  - first:
+      213: 6843873942129730177
+    second: Plant1_Death_without_shadow_48
+  - first:
+      213: 4881391033172139574
+    second: Plant1_Death_without_shadow_49
+  - first:
+      213: -1930510895159456906
+    second: Plant1_Death_without_shadow_50
+  - first:
+      213: 3257796289577269910
+    second: Plant1_Death_without_shadow_51
+  - first:
+      213: -1500139602657109300
+    second: Plant1_Death_without_shadow_52
+  - first:
+      213: -635534366260308950
+    second: Plant1_Death_without_shadow_53
+  - first:
+      213: -477899116394952302
+    second: Plant1_Death_without_shadow_54
+  - first:
+      213: 3874158195604940862
+    second: Plant1_Death_without_shadow_55
+  - first:
+      213: -5720847297782055001
+    second: Plant1_Death_without_shadow_56
+  - first:
+      213: 5034716453342012143
+    second: Plant1_Death_without_shadow_57
+  - first:
+      213: -3660484736368200284
+    second: Plant1_Death_without_shadow_58
+  - first:
+      213: 1490218093224257652
+    second: Plant1_Death_without_shadow_59
+  - first:
+      213: 6309895102858858087
+    second: Plant1_Death_without_shadow_60
+  - first:
+      213: 7982276338047812845
+    second: Plant1_Death_without_shadow_61
+  - first:
+      213: 792602903528163098
+    second: Plant1_Death_without_shadow_62
+  - first:
+      213: 1845683970923130403
+    second: Plant1_Death_without_shadow_63
+  - first:
+      213: 739034482953425110
+    second: Plant1_Death_without_shadow_64
+  - first:
+      213: -8720022300077409619
+    second: Plant1_Death_without_shadow_65
+  - first:
+      213: -7307766122548911820
+    second: Plant1_Death_without_shadow_66
+  - first:
+      213: 1331664115860807371
+    second: Plant1_Death_without_shadow_67
+  - first:
+      213: -2079275883019240064
+    second: Plant1_Death_without_shadow_68
+  - first:
+      213: -8661443567688395841
+    second: Plant1_Death_without_shadow_69
+  - first:
+      213: 3248639719038596780
+    second: Plant1_Death_without_shadow_70
+  - first:
+      213: -1612974182788228835
+    second: Plant1_Death_without_shadow_71
+  - first:
+      213: 5350366094592518662
+    second: Plant1_Death_without_shadow_72
+  - first:
+      213: -1162524128473129385
+    second: Plant1_Death_without_shadow_73
+  - first:
+      213: 1552125669578106916
+    second: Plant1_Death_without_shadow_74
+  - first:
+      213: -2520699696887748319
+    second: Plant1_Death_without_shadow_75
+  - first:
+      213: -8106625261349528158
+    second: Plant1_Death_without_shadow_76
+  - first:
+      213: -6588024281114735116
+    second: Plant1_Death_without_shadow_77
+  - first:
+      213: -3423601297921836714
+    second: Plant1_Death_without_shadow_78
+  - first:
+      213: -7678388544644074842
+    second: Plant1_Death_without_shadow_79
+  - first:
+      213: 56842009585280407
+    second: Plant1_Death_without_shadow_80
+  - first:
+      213: 1379204008511472451
+    second: Plant1_Death_without_shadow_81
+  - first:
+      213: 6867594316570425605
+    second: Plant1_Death_without_shadow_82
+  - first:
+      213: -6458795405460380282
+    second: Plant1_Death_without_shadow_83
+  - first:
+      213: 249623001263599306
+    second: Plant1_Death_without_shadow_84
+  - first:
+      213: -2004479193406181172
+    second: Plant1_Death_without_shadow_85
+  - first:
+      213: 5586488755679438725
+    second: Plant1_Death_without_shadow_86
+  - first:
+      213: 3376240431364863720
+    second: Plant1_Death_without_shadow_87
+  - first:
+      213: -7939644853466076863
+    second: Plant1_Death_without_shadow_88
+  - first:
+      213: 8681885078128397002
+    second: Plant1_Death_without_shadow_89
+  - first:
+      213: -6713288028989744864
+    second: Plant1_Death_without_shadow_90
+  - first:
+      213: -1658387755727000876
+    second: Plant1_Death_without_shadow_91
+  - first:
+      213: -6620604412483038196
+    second: Plant1_Death_without_shadow_92
+  - first:
+      213: 2711257158118679394
+    second: Plant1_Death_without_shadow_93
+  - first:
+      213: -362059191252980994
+    second: Plant1_Death_without_shadow_94
+  - first:
+      213: -3061506033016486221
+    second: Plant1_Death_without_shadow_95
+  - first:
+      213: -2964700734240634839
+    second: Plant1_Death_without_shadow_96
+  - first:
+      213: 1838398005458973538
+    second: Plant1_Death_without_shadow_97
+  - first:
+      213: -7806254933909874593
+    second: Plant1_Death_without_shadow_98
+  - first:
+      213: 4277094909799781231
+    second: Plant1_Death_without_shadow_99
+  - first:
+      213: -714160358399061506
+    second: Plant1_Death_without_shadow_100
+  - first:
+      213: -5428083439498186179
+    second: Plant1_Death_without_shadow_101
+  - first:
+      213: 8478777486676157846
+    second: Plant1_Death_without_shadow_102
+  - first:
+      213: 2785648820305080871
+    second: Plant1_Death_without_shadow_103
+  - first:
+      213: -5931169784028544088
+    second: Plant1_Death_without_shadow_104
+  - first:
+      213: -8191336396125893916
+    second: Plant1_Death_without_shadow_105
+  - first:
+      213: -4403498176911782591
+    second: Plant1_Death_without_shadow_106
+  - first:
+      213: 6414034315476431488
+    second: Plant1_Death_without_shadow_107
+  - first:
+      213: 2803423441837323690
+    second: Plant1_Death_without_shadow_108
+  - first:
+      213: -2127506480337814583
+    second: Plant1_Death_without_shadow_109
+  - first:
+      213: 8604184139770505118
+    second: Plant1_Death_without_shadow_110
+  - first:
+      213: -722140665466016465
+    second: Plant1_Death_without_shadow_111
+  - first:
+      213: -1699784185125328026
+    second: Plant1_Death_without_shadow_112
+  - first:
+      213: 6585191077674356966
+    second: Plant1_Death_without_shadow_113
+  - first:
+      213: -6586243041012234078
+    second: Plant1_Death_without_shadow_114
+  - first:
+      213: 2320540364946354029
+    second: Plant1_Death_without_shadow_115
+  - first:
+      213: -4858583492923757215
+    second: Plant1_Death_without_shadow_116
+  - first:
+      213: 281256350649118757
+    second: Plant1_Death_without_shadow_117
+  - first:
+      213: -9181257617539050408
+    second: Plant1_Death_without_shadow_118
+  - first:
+      213: 1440390119026441801
+    second: Plant1_Death_without_shadow_119
+  - first:
+      213: 6319143030176795594
+    second: Plant1_Death_without_shadow_120
+  - first:
+      213: 9120051497858445984
+    second: Plant1_Death_without_shadow_121
+  - first:
+      213: 523921177452498026
+    second: Plant1_Death_without_shadow_122
+  - first:
+      213: 3805673231142858022
+    second: Plant1_Death_without_shadow_123
+  - first:
+      213: 3447663065223371585
+    second: Plant1_Death_without_shadow_124
+  - first:
+      213: 6732489654175639195
+    second: Plant1_Death_without_shadow_125
+  - first:
+      213: 7618672056486266206
+    second: Plant1_Death_without_shadow_126
+  - first:
+      213: -3162710544987362019
+    second: Plant1_Death_without_shadow_127
+  - first:
+      213: -8525450246793508967
+    second: Plant1_Death_without_shadow_128
+  - first:
+      213: -3679260287535688478
+    second: Plant1_Death_without_shadow_129
+  - first:
+      213: 866577113876894457
+    second: Plant1_Death_without_shadow_130
+  - first:
+      213: 4813916636103191317
+    second: Plant1_Death_without_shadow_131
+  - first:
+      213: -4002247413440941005
+    second: Plant1_Death_without_shadow_132
+  - first:
+      213: 9031158402423513029
+    second: Plant1_Death_without_shadow_133
+  - first:
+      213: 3213852933285370140
+    second: Plant1_Death_without_shadow_134
+  - first:
+      213: 1795898915978225325
+    second: Plant1_Death_without_shadow_135
+  - first:
+      213: 2429035324607299938
+    second: Plant1_Death_without_shadow_136
+  - first:
+      213: 1359205493862259916
+    second: Plant1_Death_without_shadow_137
+  - first:
+      213: -8548786443502115842
+    second: Plant1_Death_without_shadow_138
+  - first:
+      213: -6642134277968751018
+    second: Plant1_Death_without_shadow_139
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3569318307bf4f990800000000000000
+      internalID: -7352975832193460653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e038e4c948cc06040800000000000000
+      internalID: 4638932486121751310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8960bf5c5b64f4a70800000000000000
+      internalID: 8813340742311937688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15f60fa1d6cf61050800000000000000
+      internalID: 5771077518055468881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b46f8003c9af71500800000000000000
+      internalID: 367037443381720651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba3074b2e0fdf96a0800000000000000
+      internalID: -6440183690167909461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1bd043422bb051c0800000000000000
+      internalID: -4516904670421001446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 128ca63e3e178d5a0800000000000000
+      internalID: -6496317238894999519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7260ff8e5b3e8d700800000000000000
+      internalID: 565452123672610343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df1a73fd456ac9920800000000000000
+      internalID: 2998454335374336509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5584b6cae3be2c60800000000000000
+      internalID: 7795365825962345819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_11
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15081710c5c6da490800000000000000
+      internalID: -7733405842708266927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_12
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 580a3befca1472230800000000000000
+      internalID: 3613929437251477637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_13
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b73cbe01b054ac810800000000000000
+      internalID: 1786316116036666235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_14
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 681b6fd04be847390800000000000000
+      internalID: -7821469748856180346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_15
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be9fd9c9b1e3813f0800000000000000
+      internalID: -929925034739369493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_16
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d3fe9e3cc3e45f70800000000000000
+      internalID: 9175208807223981016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_17
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee62f42557617fc10800000000000000
+      internalID: 2087161645457417966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_18
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13c6cd42b4d551700800000000000000
+      internalID: 510416710098775089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_19
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd12b8b5a821b3200800000000000000
+      internalID: 160742597152416223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13e03d227c748ccf0800000000000000
+      internalID: -231856460201259471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_21
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66d78f5c4d8a57740800000000000000
+      internalID: 5149207380775959910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_22
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4963f5fbf0865fab0800000000000000
+      internalID: -4974955796516358508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_23
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c60ed83a73cb9e440800000000000000
+      internalID: 4965707011305889900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_24
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98f112b9544857920800000000000000
+      internalID: 2987439362320441225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_25
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10d8a6bfd4d7bbf80800000000000000
+      internalID: -8089734531756946175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_26
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 308c0ab3c931a2b40800000000000000
+      internalID: 5416163063602661379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_27
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbf390b6969553d10800000000000000
+      internalID: 2104686710167781309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_28
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f85105d34b3629100800000000000000
+      internalID: 113262566411605391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_29
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08592aefa5e77c830800000000000000
+      internalID: 4091377715773609344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d782baf81c536990800000000000000
+      internalID: -7393964900857247789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_31
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c42e83a03fe68a8c0800000000000000
+      internalID: -3987815479908965812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_32
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 783fc9c03a6853f90800000000000000
+      internalID: -6974520413063941241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_33
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c36f5236133464900800000000000000
+      internalID: 668295474106988092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_34
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a309a1416d97de0f0800000000000000
+      internalID: -1086077974759174086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_35
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90281698497bdce60800000000000000
+      internalID: 7984239562985669129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_36
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af252d680cfcfa5c0800000000000000
+      internalID: -4201911501510782214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_37
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 198fd4d1e31f03fb0800000000000000
+      internalID: -4669967564501288815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_38
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 637b1a47282fa38b0800000000000000
+      internalID: -5171554579965167818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_Death_without_shadow_39
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dedbc56d1861a3d0800000000000000
+      internalID: -3197159784985141546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 67069e15149c0c94eb873c280a351c62
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Plant1_Death_without_shadow_0: -7352975832193460653
+      Plant1_Death_without_shadow_1: 4638932486121751310
+      Plant1_Death_without_shadow_10: 7795365825962345819
+      Plant1_Death_without_shadow_11: -7733405842708266927
+      Plant1_Death_without_shadow_12: 3613929437251477637
+      Plant1_Death_without_shadow_13: 1786316116036666235
+      Plant1_Death_without_shadow_14: -7821469748856180346
+      Plant1_Death_without_shadow_15: -929925034739369493
+      Plant1_Death_without_shadow_16: 9175208807223981016
+      Plant1_Death_without_shadow_17: 2087161645457417966
+      Plant1_Death_without_shadow_18: 510416710098775089
+      Plant1_Death_without_shadow_19: 160742597152416223
+      Plant1_Death_without_shadow_2: 8813340742311937688
+      Plant1_Death_without_shadow_20: -231856460201259471
+      Plant1_Death_without_shadow_21: 5149207380775959910
+      Plant1_Death_without_shadow_22: -4974955796516358508
+      Plant1_Death_without_shadow_23: 4965707011305889900
+      Plant1_Death_without_shadow_24: 2987439362320441225
+      Plant1_Death_without_shadow_25: -8089734531756946175
+      Plant1_Death_without_shadow_26: 5416163063602661379
+      Plant1_Death_without_shadow_27: 2104686710167781309
+      Plant1_Death_without_shadow_28: 113262566411605391
+      Plant1_Death_without_shadow_29: 4091377715773609344
+      Plant1_Death_without_shadow_3: 5771077518055468881
+      Plant1_Death_without_shadow_30: -7393964900857247789
+      Plant1_Death_without_shadow_31: -3987815479908965812
+      Plant1_Death_without_shadow_32: -6974520413063941241
+      Plant1_Death_without_shadow_33: 668295474106988092
+      Plant1_Death_without_shadow_34: -1086077974759174086
+      Plant1_Death_without_shadow_35: 7984239562985669129
+      Plant1_Death_without_shadow_36: -4201911501510782214
+      Plant1_Death_without_shadow_37: -4669967564501288815
+      Plant1_Death_without_shadow_38: -5171554579965167818
+      Plant1_Death_without_shadow_39: -3197159784985141546
+      Plant1_Death_without_shadow_4: 367037443381720651
+      Plant1_Death_without_shadow_5: -6440183690167909461
+      Plant1_Death_without_shadow_6: -4516904670421001446
+      Plant1_Death_without_shadow_7: -6496317238894999519
+      Plant1_Death_without_shadow_8: 565452123672610343
+      Plant1_Death_without_shadow_9: 2998454335374336509
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
