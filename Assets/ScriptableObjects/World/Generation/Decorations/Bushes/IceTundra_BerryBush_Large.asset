@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab734327975393b42af766d151fd89da, type: 3}
+  m_Name: IceTundra_BerryBush_Large
+  m_EditorClassIdentifier: 
+  <DecorationId>k__BackingField: IceTundra_BerryBush_Large
+  <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 7e6b5b8af7732414ea2ba80be4666e8f, type: 3}
+  <NodeData>k__BackingField: {fileID: 11400000, guid: bcc3c626c1e47be45b26d1264f894679, type: 2}
+  <Category>k__BackingField: 2
+  <Size>k__BackingField: 2
+  _allowedBiomes: 02000000
+  <SpawnWeight>k__BackingField: 1
+  <MinimumSpacingTiles>k__BackingField: 2
+  <AllowCluster>k__BackingField: 0
+  <MinClusterCount>k__BackingField: 1
+  <MaxClusterCount>k__BackingField: 1
+  <ClusterRadiusTiles>k__BackingField: 1

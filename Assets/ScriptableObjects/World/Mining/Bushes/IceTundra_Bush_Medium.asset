@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46989a09e1edfd74594f4a6f05ebb304, type: 3}
-  m_Name: GrasslandBush_1
+  m_Name: IceTundra_Bush_Medium
   m_EditorClassIdentifier: 
   <RequiredToolType>k__BackingField: 0
   <MinimumTier>k__BackingField: 0

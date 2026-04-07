@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab734327975393b42af766d151fd89da, type: 3}
+  m_Name: IceTundra_Bush_Small
+  m_EditorClassIdentifier: 
+  <DecorationId>k__BackingField: IceTundra_Bush_Small
+  <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 07569c701a9e23846804b6e87e160eb2, type: 3}
+  <NodeData>k__BackingField: {fileID: 11400000, guid: 064b12c3bb4b46946a3c6b9c788aa515, type: 2}
+  <Category>k__BackingField: 2
+  <Size>k__BackingField: 0
+  _allowedBiomes: 02000000
+  <SpawnWeight>k__BackingField: 1
+  <MinimumSpacingTiles>k__BackingField: 0.8
+  <AllowCluster>k__BackingField: 1
+  <MinClusterCount>k__BackingField: 2
+  <MaxClusterCount>k__BackingField: 5
+  <ClusterRadiusTiles>k__BackingField: 3
