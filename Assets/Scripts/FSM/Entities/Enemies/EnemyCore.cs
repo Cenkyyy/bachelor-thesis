@@ -213,6 +213,11 @@ public class EnemyCore : EntityCore
         _animation?.TriggerAttack();
     }
 
+    public void SetRunningAnimation(bool isRunning)
+    {
+        _animation?.SetRunning(isRunning);
+    }
+
     public bool TryDealDamageToCurrentTarget(int amount)
     {
         if (!HasTarget || amount <= 0 || !IsTargetInAttackRange())

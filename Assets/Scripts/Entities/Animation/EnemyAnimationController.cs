@@ -13,6 +13,7 @@ public class EnemyAnimationController : MonoBehaviour
     [SerializeField] private string _moveYParam = "MoveY";
     [SerializeField] private string _lastMoveXParam = "LastMoveX";
     [SerializeField] private string _lastMoveYParam = "LastMoveY";
+    [SerializeField] private string _isRunningParam = "IsRunning";
     [SerializeField] private string _attackTriggerParam = "Attack";
     [SerializeField] private string _isDeadParam = "IsDead";
 
@@ -56,6 +57,11 @@ public class EnemyAnimationController : MonoBehaviour
     public void SetDead(bool isDead)
     {
         _animator.SetBool(_isDeadParam, isDead);
+    }
+
+    public void SetRunning(bool isRunning)
+    {
+        _animator.SetBool(_isRunningParam, isRunning);
     }
 
     private void UpdateSideFlip(Vector2 direction)

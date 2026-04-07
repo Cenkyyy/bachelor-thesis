@@ -679,6 +679,7 @@ MonoBehaviour:
   _spawnableEntities:
   - {fileID: 11400000, guid: ae968297b73e64d4fb319c407e633881, type: 2}
   - {fileID: 11400000, guid: c1523698214b240419fd070c9878a6c5, type: 2}
+  - {fileID: 11400000, guid: 914ce686352d5c543976a433064290b1, type: 2}
   _spawnStrategyType: 0
   _settings:
     <FirstSpawnDay>k__BackingField: 2
@@ -688,9 +689,9 @@ MonoBehaviour:
     <AttemptsPerCycle>k__BackingField: 3
     <MaxAliveEntities>k__BackingField: 20
     <NightMaxAliveEntitiesMultiplier>k__BackingField: 1.25
-    <SpawnRadius>k__BackingField: 16
-    <MinSpawnDistance>k__BackingField: 7
-    <DespawnRadius>k__BackingField: 24
+    <SpawnRadius>k__BackingField: 20
+    <MinSpawnDistance>k__BackingField: 9
+    <DespawnRadius>k__BackingField: 38
     <MinSpacingFromEntities>k__BackingField: 2
     <WalkableProbeRadius>k__BackingField: 0.2
     <MaxSamplesPerAttempt>k__BackingField: 6

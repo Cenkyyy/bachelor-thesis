@@ -7,5 +7,6 @@
         base.OnEnter();
         enemyCore = (EnemyCore)core;
         enemyCore.SetDeadAnimation(false);
+        enemyCore.SetRunningAnimation(false);
     }
 }

@@ -3,6 +3,7 @@ public class EnemyChaseState : EnemyStateBase
     public override void OnEnter()
     {
         base.OnEnter();
+        enemyCore.SetRunningAnimation(true);
         enemyCore.ResetLostSightTimer();
     }
 
@@ -44,6 +45,7 @@ public class EnemyChaseState : EnemyStateBase
 
     public override void OnExit()
     {
+        enemyCore.SetRunningAnimation(false);
         enemyCore.StopMovement();
     }
 }
