@@ -170,7 +170,6 @@ MonoBehaviour:
   _audioSlider: {fileID: 1487180391}
   _cursorColorSlider: {fileID: 866217980}
   _cursorColorReferenceImage: {fileID: 868604664}
-  _cursorController: {fileID: 0}
   _fallbackSaturation: 1
   _fallbackValue: 1
 --- !u!1 &190116529
@@ -183,7 +182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 190116530}
   m_Layer: 0
-  m_Name: ------------ Camera --------------
+  m_Name: ------- Camera -------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -608,7 +607,7 @@ GameObject:
   - component: {fileID: 403471234}
   - component: {fileID: 403471235}
   m_Layer: 5
-  m_Name: MainMenuBackgroundVFX
+  m_Name: BackgroundParticlesRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1678,7 +1677,7 @@ GameObject:
   - component: {fileID: 996746179}
   - component: {fileID: 996746178}
   m_Layer: 5
-  m_Name: Background
+  m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1725,7 +1724,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 7071881630838703602, guid: 31a451a1530b4e244af45484a01af482, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -2278,7 +2277,7 @@ GameObject:
   - component: {fileID: 1328208527}
   - component: {fileID: 1328208526}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MainMenuCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2542,7 +2541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1573955578}
   m_Layer: 5
-  m_Name: Visuals
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2581,7 +2580,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1602784883}
   m_Layer: 0
-  m_Name: -------------- UI ----------------
+  m_Name: ---------- UI ----------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2892,7 +2891,7 @@ GameObject:
   - component: {fileID: 1827484919}
   - component: {fileID: 1827484918}
   m_Layer: 5
-  m_Name: GameTitle
+  m_Name: GameTitleImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2939,7 +2938,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 3907721248601932646, guid: 090726d4bed9ec044aee6831f9166dbf, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

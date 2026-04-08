@@ -13,7 +13,6 @@ public sealed class MainMenuSettingsPanelController : MonoBehaviour
     [Header("Cursor")]
     [SerializeField] private Slider _cursorColorSlider;
     [SerializeField] private Image _cursorColorReferenceImage;
-    [SerializeField] private CustomCursorController _cursorController;
     [SerializeField, Range(0f, 1f)] private float _fallbackSaturation = 1f;
     [SerializeField, Range(0f, 1f)] private float _fallbackValue = 1f;
 
@@ -53,7 +52,7 @@ public sealed class MainMenuSettingsPanelController : MonoBehaviour
 
     private void OnCursorColorChanged(float value)
     {
-        var cursor = ResolveCursorController();
+        var cursor = CustomCursorController.Instance;
         if (cursor == null)
             return;
 
@@ -65,7 +64,7 @@ public sealed class MainMenuSettingsPanelController : MonoBehaviour
         if (_cursorColorSlider == null)
             return;
 
-        var cursor = ResolveCursorController();
+        var cursor = CustomCursorController.Instance;
         float sliderValue = 0f;
 
         if (cursor != null)
@@ -75,14 +74,5 @@ public sealed class MainMenuSettingsPanelController : MonoBehaviour
         }
 
         _cursorColorSlider.SetValueWithoutNotify(sliderValue);
-    }
-
-    private CustomCursorController ResolveCursorController()
-    {
-        if (_cursorController != null)
-            return _cursorController;
-
-        _cursorController = CustomCursorController.Instance;
-        return _cursorController;
     }
 }

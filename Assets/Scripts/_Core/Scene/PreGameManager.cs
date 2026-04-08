@@ -27,11 +27,11 @@ public class PreGameManager : MonoBehaviour
 
     [Header("Word Selection")]
     [SerializeField] private StarterWordSelectionData _starterWordSelectionData;
-    [SerializeField] private Player _player;
 
     public PreGameState CurrentState { get; private set; } = PreGameState.Idle;
     public bool IsPreGameEnabled => _enablePreGame;
 
+    private Player _player;
     private string _expectedGameplaySceneName;
     private Coroutine _preGameCoroutine;
 
@@ -46,11 +46,10 @@ public class PreGameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        _player = FindFirstObjectByType<Player>();
+
         if (_sceneTransitionController == null)
             _sceneTransitionController = GetComponent<SceneTransitionController>();
-
-        if (_player == null)
-            _player = FindFirstObjectByType<Player>();
 
         if (_narrativeIntroductionController != null)
             _narrativeIntroductionController.Hide();
