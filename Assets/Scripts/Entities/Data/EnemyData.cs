@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Entities/Enemy Data")]
+[CreateAssetMenu(fileName = "EnemyData", menuName = "Game/Entities/Enemy Data")]
 public class EnemyData : EntityData
 {
     [field: Header("Identity")]
