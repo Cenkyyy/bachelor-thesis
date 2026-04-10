@@ -152,11 +152,12 @@ MonoBehaviour:
   initialState: {fileID: 6824101350984700763}
   moveSpeed: 2.5
   arrivalEps: 0.12
-  entityPushMultiplier: 0.2
-  entityPushCastExtraDistance: 0.02
+  entityPushMultiplier: 0
+  entityPushCastExtraDistance: 0
   entityPushTargetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 640
+  stopMovementWhenBlockedByPushTarget: 1
   visionRadius: 6
   obstacleMask:
     serializedVersion: 2
@@ -190,6 +191,7 @@ MonoBehaviour:
   _moveYParam: MoveY
   _lastMoveXParam: LastMoveX
   _lastMoveYParam: LastMoveY
+  _isRunningParam: IsRunning
   _attackTriggerParam: Attack
   _isDeadParam: IsDead
 --- !u!114 &2908348382214334344
@@ -204,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7868daeb6fc1ae439601a56a1ce2040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyCore: {fileID: 1670540943250230566}
+  _entityCore: {fileID: 1670540943250230566}
   _deathRewards: {fileID: 5744313436986119435}
   _currentHealth: 0
   _maxHealth: 0
@@ -221,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df82921f6d483f7499f298c72b806482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyCore: {fileID: 1670540943250230566}
+  _entityCore: {fileID: 1670540943250230566}
   _dropSpawner: {fileID: 0}
   _dropAnchor: {fileID: 3227767779565571614}
   _destroyAfterSeconds: 1.5
@@ -596,7 +598,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 790479049
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 10
   m_Sprite: {fileID: 5955512598667797552, guid: a40bb29af805f3c4c98c52a72e17a77b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

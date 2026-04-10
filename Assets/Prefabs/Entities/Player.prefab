@@ -324,11 +324,11 @@ MonoBehaviour:
   _speed: 4
   _externalSpeedMultiplier: 1
   _itemSpeedMultiplier: 1
-  _entityPushMultiplier: 0.2
-  _entityPushCastExtraDistance: 0.02
+  _entityPushMultiplier: 0.06
+  _entityPushCastExtraDistance: 0.01
   _entityPushTargetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!114 &5402159747806690286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,11 +695,8 @@ MonoBehaviour:
   _upAnchor: {fileID: 7997464942132067181}
   _leftAnchor: {fileID: 4511603196516569221}
   _rightAnchor: {fileID: 6497527114572648334}
-  _sortingLayerName: Player
-  _downOrder: 12
-  _upOrder: 8
-  _leftOrder: 12
-  _rightOrder: 12
+  _abovePlayerOrder: 12
+  _belowPlayerOrder: 8
   _itemLocalScale: {x: 0.3, y: 0.3, z: 1}
 --- !u!1 &3653677619089745102
 GameObject:
