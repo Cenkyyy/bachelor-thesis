@@ -18404,10 +18404,6 @@ PrefabInstance:
       propertyPath: _castingPanel
       value: 
       objectReference: {fileID: 192015840}
-    - target: {fileID: 4319894653538523301, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _showEffectivenessValueInDebugBuilds
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5815203664740908025, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _camera
       value: 

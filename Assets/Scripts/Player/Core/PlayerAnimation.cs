@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
@@ -6,6 +7,11 @@ public class PlayerAnimation : MonoBehaviour
 
     private Vector2 _lastMouseAimedDirection = Vector2.down;
     private bool _isWalking = false;
+
+    public Vector2 LastMouseAimedDirection => _lastMouseAimedDirection;
+    public PlayerFacingDirection FacingDirection { get; private set; } = PlayerFacingDirection.Down;
+
+    public event Action<PlayerFacingDirection> OnFacingDirectionChanged;
 
     private void Awake()
     {
@@ -32,6 +38,13 @@ public class PlayerAnimation : MonoBehaviour
         // update last aim direction only when mouse moves noticeably
         if (aimDirection.magnitude > 0.01f)
             _lastMouseAimedDirection = aimDirection;
+
+        var facingDirection = PlayerFacingDirectionUtility.FromVector(_lastMouseAimedDirection);
+        if (facingDirection != FacingDirection)
+        {
+            FacingDirection = facingDirection;
+            OnFacingDirectionChanged?.Invoke(FacingDirection);
+        }
 
         _animator.SetBool("isWalking", _isWalking);
 
