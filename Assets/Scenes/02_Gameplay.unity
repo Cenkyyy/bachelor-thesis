@@ -691,7 +691,7 @@ MonoBehaviour:
     <SpawnIntervalSeconds>k__BackingField: 3
     <NightSpawnAccelerationMultiplier>k__BackingField: 0.9
     <AttemptsPerCycle>k__BackingField: 3
-    <MaxAliveEntities>k__BackingField: 20
+    <MaxAliveEntities>k__BackingField: 6
     <NightMaxAliveEntitiesMultiplier>k__BackingField: 1.25
     <SpawnRadius>k__BackingField: 20
     <MinSpawnDistance>k__BackingField: 9

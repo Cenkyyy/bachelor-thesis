@@ -195,7 +195,6 @@ MonoBehaviour:
   entityPushTargetMask:
     serializedVersion: 2
     m_Bits: 640
-  stopMovementWhenBlockedByPushTarget: 1
   visionRadius: 6
   obstacleMask:
     serializedVersion: 2
@@ -209,6 +208,9 @@ MonoBehaviour:
   _retargetIntervalSeconds: 0.2
   _animation: {fileID: 3686757145256087193}
   _pathProbeRadius: 0.18
+  _dynamicObstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &3686757145256087193
 MonoBehaviour:
   m_ObjectHideFlags: 0
