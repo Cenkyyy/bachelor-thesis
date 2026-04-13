@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: DecorationsListData
   m_EditorClassIdentifier: 
   _entries:
-  - {fileID: 11400000, guid: d58139b8290e587468320aa264ead972, type: 2}
-  - {fileID: 11400000, guid: 295f792340ddee1468fdd51ee8ee7340, type: 2}
   - {fileID: 11400000, guid: 0f261d115b470b345a0a958c3c24b645, type: 2}
   - {fileID: 11400000, guid: 413d6d4fae89d3943a5eb0c9f029825a, type: 2}
   - {fileID: 11400000, guid: 2974e8552885006498ded19cbd90c78d, type: 2}
