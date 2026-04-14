@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 373337172}
   - component: {fileID: 373337171}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ExitGameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -786,7 +786,7 @@ GameObject:
   - component: {fileID: 418342835}
   - component: {fileID: 418342834}
   m_Layer: 5
-  m_Name: Background
+  m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -861,7 +861,7 @@ GameObject:
   - component: {fileID: 456004113}
   - component: {fileID: 456004112}
   m_Layer: 5
-  m_Name: Handle
+  m_Name: HandleImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -973,7 +973,7 @@ GameObject:
   - component: {fileID: 566104119}
   - component: {fileID: 566104118}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: StartGameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1110,7 +1110,7 @@ GameObject:
   - component: {fileID: 598320607}
   - component: {fileID: 598320606}
   m_Layer: 5
-  m_Name: Background
+  m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1183,7 +1183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 688284578}
   m_Layer: 5
-  m_Name: Handle Slide Area
+  m_Name: HandleSlideAreaRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1219,7 +1219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 695219130}
   m_Layer: 5
-  m_Name: Fill Area
+  m_Name: FillAreaRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1602,7 +1602,7 @@ GameObject:
   - component: {fileID: 868604665}
   - component: {fileID: 868604664}
   m_Layer: 5
-  m_Name: Background
+  m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1902,7 +1902,7 @@ GameObject:
   - component: {fileID: 1118169854}
   - component: {fileID: 1118169853}
   m_Layer: 5
-  m_Name: Background
+  m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1977,7 +1977,7 @@ GameObject:
   - component: {fileID: 1156712895}
   - component: {fileID: 1156712894}
   m_Layer: 5
-  m_Name: Fill
+  m_Name: FillImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2050,7 +2050,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1251565492}
   m_Layer: 5
-  m_Name: Handle Slide Area
+  m_Name: HandleSlideAreaRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2377,7 +2377,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1471882692}
   m_Layer: 5
-  m_Name: Fill Area
+  m_Name: FillAreaRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2616,7 +2616,7 @@ GameObject:
   - component: {fileID: 1676980481}
   - component: {fileID: 1676980483}
   m_Layer: 5
-  m_Name: SettingPanelRoot
+  m_Name: SettingsPanelRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2719,7 +2719,7 @@ GameObject:
   - component: {fileID: 1677858021}
   - component: {fileID: 1677858020}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: SettingsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2966,7 +2966,7 @@ GameObject:
   - component: {fileID: 1924472702}
   - component: {fileID: 1924472701}
   m_Layer: 5
-  m_Name: Fill
+  m_Name: FillImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3169,7 +3169,7 @@ GameObject:
   - component: {fileID: 2091063104}
   - component: {fileID: 2091063103}
   m_Layer: 5
-  m_Name: Handle
+  m_Name: HandleImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
