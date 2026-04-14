@@ -25,6 +25,13 @@ public class EnemyData : EntityData
     [field: SerializeField] public float AttackHitWindowSeconds { get; private set; } = 0.15f;
     [field: SerializeField] public float AttackRecoverySeconds { get; private set; } = 0.8f;
 
+    [field: Header("Ranged Combat")]
+    [field: SerializeField] public float PreferredRangedDistance { get; private set; } = 4.5f;
+    [field: SerializeField] public float RangedRetreatBuffer { get; private set; } = 1f;
+    [field: SerializeField] public EnemyProjectile ProjectilePrefab { get; private set; }
+    [field: SerializeField] public float ProjectileSpeed { get; private set; } = 8f;
+    [field: SerializeField] public float ProjectileLifetimeSeconds { get; private set; } = 3f;
+
     protected override void OnValidate()
     {
         base.OnValidate();
@@ -61,5 +68,17 @@ public class EnemyData : EntityData
 
         if (AttackRecoverySeconds < 0f)
             AttackRecoverySeconds = 0f;
+
+        if (PreferredRangedDistance < 0f)
+            PreferredRangedDistance = 0f;
+
+        if (RangedRetreatBuffer < 0f)
+            RangedRetreatBuffer = 0f;
+
+        if (ProjectileSpeed < 0f)
+            ProjectileSpeed = 0f;
+
+        if (ProjectileLifetimeSeconds < 0f)
+            ProjectileLifetimeSeconds = 0f;
     }
 }

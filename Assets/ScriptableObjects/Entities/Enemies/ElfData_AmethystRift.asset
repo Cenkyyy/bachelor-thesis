@@ -23,9 +23,9 @@ MonoBehaviour:
   <RepathIntervalSeconds>k__BackingField: 0.25
   <PathNodeStep>k__BackingField: 0.5
   <MaxPathIterations>k__BackingField: 1200
-  <Species>k__BackingField: 0
-  <Archetype>k__BackingField: 0
-  <RoleTags>k__BackingField: 1
+  <Species>k__BackingField: 2
+  <Archetype>k__BackingField: 1
+  <RoleTags>k__BackingField: 2
   <DetectionRadius>k__BackingField: 6
   <LeashRadius>k__BackingField: 10
   <LostSightGraceSeconds>k__BackingField: 1.2
@@ -33,7 +33,12 @@ MonoBehaviour:
   <IdleDurationMin>k__BackingField: 0.8
   <IdleDurationMax>k__BackingField: 1.6
   <AttackDamage>k__BackingField: 15
-  <AttackRange>k__BackingField: 1.2
+  <AttackRange>k__BackingField: 6
   <AttackWindupSeconds>k__BackingField: 0.6
   <AttackHitWindowSeconds>k__BackingField: 0.15
   <AttackRecoverySeconds>k__BackingField: 0.8
+  <PreferredRangedDistance>k__BackingField: 5.2
+  <RangedRetreatBuffer>k__BackingField: 1.2
+  <ProjectilePrefab>k__BackingField: {fileID: 6972902530202342435, guid: f7eda292a5b3e6a44b425a3588f4d256, type: 3}
+  <ProjectileSpeed>k__BackingField: 8
+  <ProjectileLifetimeSeconds>k__BackingField: 3

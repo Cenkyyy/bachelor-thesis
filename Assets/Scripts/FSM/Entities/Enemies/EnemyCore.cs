@@ -20,6 +20,13 @@ public class EnemyCore : EntityCore
     [SerializeField] private float _pathProbeRadius = 0.18f;
     [SerializeField] private LayerMask _dynamicObstacleMask;
 
+    [Header("Ranged Combat")]
+    [SerializeField] private Transform _projectileSpawnPoint;
+    [SerializeField] private Transform _projectileSpawnUp;
+    [SerializeField] private Transform _projectileSpawnDown;
+    [SerializeField] private Transform _projectileSpawnLeft;
+    [SerializeField] private Transform _projectileSpawnRight;
+
     private const int PatrolSampleMaxAttempts = 12;
     private readonly Collider2D[] _detectionResults = new Collider2D[8];
     private ContactFilter2D _detectionFilter = new();
@@ -52,6 +59,9 @@ public class EnemyCore : EntityCore
     public float AttackWindupSeconds => _data != null ? _data.AttackWindupSeconds : 0f;
     public float AttackHitWindowSeconds => _data != null ? _data.AttackHitWindowSeconds : 0f;
     public float AttackRecoverySeconds => _data != null ? _data.AttackRecoverySeconds : 0f;
+    public float PreferredRangedDistance => _data != null ? _data.PreferredRangedDistance : 0f;
+    public float RangedRetreatBuffer => _data != null ? _data.RangedRetreatBuffer : 0f;
+    public bool IsRanged => Archetype == EnemyArchetype.Ranged || (RoleTags & EnemyRoleTag.Ranged) != 0;
 
     protected override void Start()
     {
@@ -226,6 +236,22 @@ public class EnemyCore : EntityCore
         _animation?.TriggerAttack();
     }
 
+    public void FaceTargetWhileKiting()
+    {
+        if (!HasTarget)
+        {
+            return;
+        }
+
+        var directionToTarget = (Vector2)Target.position - (Vector2)transform.position;
+        _animation?.SetFacingOverride(directionToTarget);
+    }
+
+    public void ClearFacingOverride()
+    {
+        _animation?.ClearFacingOverride();
+    }
+
     public void SetRunningAnimation(bool isRunning)
     {
         _animation?.SetRunning(isRunning);
@@ -245,6 +271,52 @@ public class EnemyCore : EntityCore
 
         damageable.ReceiveDamage(amount, this);
         return true;
+    }
+
+    public bool TryShootProjectileAtCurrentTarget()
+    {
+        if (!HasTarget || _data == null || _data.ProjectilePrefab == null)
+        {
+            return false;
+        }
+
+        var directionToTarget = ((Vector2)Target.position - (Vector2)transform.position).normalized;
+        var spawnPoint = ResolveDirectionalProjectileSpawn(directionToTarget);
+        var origin = spawnPoint != null ? (Vector2)spawnPoint.position : (Vector2)transform.position;
+        var direction = ((Vector2)Target.position - origin).normalized;
+
+        var projectile = Instantiate(_data.ProjectilePrefab, origin, Quaternion.identity);
+        projectile.Launch(this, origin, direction, AttackDamage, _data.ProjectileSpeed, _data.ProjectileLifetimeSeconds);
+        return true;
+    }
+
+    public bool IsTargetTooCloseForRanged()
+    {
+        if (!HasTarget)
+        {
+            return false;
+        }
+
+        var desiredDistance = Mathf.Max(0f, PreferredRangedDistance - RangedRetreatBuffer);
+        var sqrDistance = ((Vector2)Target.position - (Vector2)transform.position).sqrMagnitude;
+        return sqrDistance < desiredDistance * desiredDistance;
+    }
+
+    public Vector2 GetRangedKitePosition()
+    {
+        if (!HasTarget)
+        {
+            return transform.position;
+        }
+
+        var away = ((Vector2)transform.position - (Vector2)Target.position).normalized;
+        if (away.sqrMagnitude < 0.0001f)
+        {
+            away = Random.insideUnitCircle.normalized;
+        }
+
+        var desiredDistance = Mathf.Max(AttackRange, PreferredRangedDistance);
+        return (Vector2)Target.position + away * desiredDistance;
     }
 
     public void SetDeadAnimation(bool isDead)
@@ -331,5 +403,30 @@ public class EnemyCore : EntityCore
         damageable = _cachedDamageableTarget;
 
         return damageable != null;
+    }
+
+    private Transform ResolveDirectionalProjectileSpawn(Vector2 facingDirection)
+    {
+        if (facingDirection.sqrMagnitude < 0.0001f)
+        {
+            return _projectileSpawnPoint != null ? _projectileSpawnPoint : transform;
+        }
+
+        Transform directionalRoot;
+        if (Mathf.Abs(facingDirection.x) > Mathf.Abs(facingDirection.y))
+        {
+            directionalRoot = facingDirection.x >= 0f ? _projectileSpawnRight : _projectileSpawnLeft;
+        }
+        else
+        {
+            directionalRoot = facingDirection.y >= 0f ? _projectileSpawnUp : _projectileSpawnDown;
+        }
+
+        if (directionalRoot != null)
+        {
+            return directionalRoot;
+        }
+
+        return _projectileSpawnPoint != null ? _projectileSpawnPoint : transform;
     }
 }

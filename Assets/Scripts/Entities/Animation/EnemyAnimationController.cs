@@ -18,6 +18,8 @@ public class EnemyAnimationController : MonoBehaviour
     [SerializeField] private string _isDeadParam = "IsDead";
 
     private Vector2 _lastMoveDirection = Vector2.down;
+    private bool _hasFacingOverride;
+    private Vector2 _facingOverride = Vector2.down;
 
     private void Awake()
     {
@@ -40,13 +42,31 @@ public class EnemyAnimationController : MonoBehaviour
             _lastMoveDirection = moveDirection.normalized;
         }
 
+        var facingDirection = _hasFacingOverride ? _facingOverride : _lastMoveDirection;
+
         _animator.SetBool(_isMovingParam, isMoving);
         _animator.SetFloat(_moveXParam, moveDirection.x);
         _animator.SetFloat(_moveYParam, moveDirection.y);
-        _animator.SetFloat(_lastMoveXParam, _lastMoveDirection.x);
-        _animator.SetFloat(_lastMoveYParam, _lastMoveDirection.y);
+        _animator.SetFloat(_lastMoveXParam, facingDirection.x);
+        _animator.SetFloat(_lastMoveYParam, facingDirection.y);
 
-        UpdateSideFlip(_lastMoveDirection);
+        UpdateSideFlip(facingDirection);
+    }
+
+    public void SetFacingOverride(Vector2 direction)
+    {
+        if (direction.sqrMagnitude < 0.0001f)
+        {
+            return;
+        }
+
+        _facingOverride = direction.normalized;
+        _hasFacingOverride = true;
+    }
+
+    public void ClearFacingOverride()
+    {
+        _hasFacingOverride = false;
     }
 
     public void TriggerAttack()

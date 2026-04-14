@@ -12,6 +12,11 @@
 
     public override void Do()
     {
+        if (enemyCore.IsRanged && enemyCore.HasTarget)
+        {
+            enemyCore.FaceTargetWhileKiting();
+        }
+
         TryApplyAttackDamage();
 
         var totalCommit = enemyCore.AttackWindupSeconds + enemyCore.AttackHitWindowSeconds + enemyCore.AttackRecoverySeconds;
@@ -43,8 +48,32 @@
         Set(EntityStateId.Chase, forceReset: true);
     }
 
+    public override void FixedDo()
+    {
+        if (!enemyCore.IsRanged || !enemyCore.HasTarget)
+        {
+            return;
+        }
+
+        var recoveryStart = enemyCore.AttackWindupSeconds + enemyCore.AttackHitWindowSeconds;
+        if (time < recoveryStart || time >= recoveryStart + enemyCore.AttackRecoverySeconds)
+        {
+            return;
+        }
+
+        if (enemyCore.IsTargetTooCloseForRanged())
+        {
+            enemyCore.MoveToUsingPath(enemyCore.GetRangedKitePosition());
+        }
+        else
+        {
+            enemyCore.StopMovement();
+        }
+    }
+
     public override void OnExit()
     {
+        enemyCore.ClearFacingOverride();
         enemyCore.StopMovement();
     }
 
@@ -66,6 +95,8 @@
             return;
         }
 
-        _hasAppliedDamage = enemyCore.TryDealDamageToCurrentTarget(enemyCore.AttackDamage);
+        _hasAppliedDamage = enemyCore.IsRanged
+            ? enemyCore.TryShootProjectileAtCurrentTarget()
+            : enemyCore.TryDealDamageToCurrentTarget(enemyCore.AttackDamage);
     }
 }

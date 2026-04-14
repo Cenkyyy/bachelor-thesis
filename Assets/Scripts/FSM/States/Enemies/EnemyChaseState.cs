@@ -17,6 +17,11 @@ public class EnemyChaseState : EnemyStateBase
             return;
         }
 
+        if (enemyCore.IsRanged)
+        {
+            enemyCore.FaceTargetWhileKiting();
+        }
+
         var canSee = enemyCore.CanSeeTarget(out _);
         if (canSee)
         {
@@ -49,11 +54,18 @@ public class EnemyChaseState : EnemyStateBase
             return;
         }
 
+        if (enemyCore.IsRanged && enemyCore.IsTargetTooCloseForRanged())
+        {
+            enemyCore.MoveToUsingPath(enemyCore.GetRangedKitePosition());
+            return;
+        }
+
         enemyCore.MoveToUsingPath(enemyCore.Target.position);
     }
 
     public override void OnExit()
     {
+        enemyCore.ClearFacingOverride();
         enemyCore.SetRunningAnimation(false);
         enemyCore.StopMovement();
     }
