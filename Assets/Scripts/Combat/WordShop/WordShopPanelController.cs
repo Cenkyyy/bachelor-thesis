@@ -17,6 +17,10 @@ public sealed class WordShopPanelController : MonoBehaviour, IMajorPanel
     [SerializeField] private Button _buyButton;
     [SerializeField] private TMP_Text _buyButtonLabel;
 
+    [Header("Memory Display")]
+    [SerializeField] private TMP_Text _currentMemoryLevelLabel;
+    [SerializeField] private string _currentMemoryLevelLabelFormat = "Current Memory Level: {0}";
+
     [Header("Word List")]
     [SerializeField] private Transform _wordButtonContainer;
     [SerializeField] private WordShopWordButton _wordButtonPrefab;
@@ -111,6 +115,7 @@ public sealed class WordShopPanelController : MonoBehaviour, IMajorPanel
 
     private void HandleMemoryChanged(int _, int __, int ___)
     {
+        RefreshCurrentMemoryLevelLabel();
         RefreshBuyButtonState();
     }
 
@@ -125,6 +130,7 @@ public sealed class WordShopPanelController : MonoBehaviour, IMajorPanel
         RebuildWordButtons();
         SelectFirstEntryIfNeeded();
         RefreshStateVisibility();
+        RefreshCurrentMemoryLevelLabel();
         RefreshBuyButtonState();
     }
 
@@ -214,6 +220,15 @@ public sealed class WordShopPanelController : MonoBehaviour, IMajorPanel
 
         if (!hasAnyWordsToBuy)
             _selectedEntry = null;
+    }
+
+    private void RefreshCurrentMemoryLevelLabel()
+    {
+        if (_currentMemoryLevelLabel == null)
+            return;
+
+        int currentMemoryLevel = _player?.Data != null ? _player.Data.CurrentMemoryLevel : 0;
+        _currentMemoryLevelLabel.text = string.Format(_currentMemoryLevelLabelFormat, currentMemoryLevel);
     }
 
     private void RefreshBuyButtonState()
