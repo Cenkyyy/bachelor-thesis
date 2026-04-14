@@ -22,13 +22,13 @@ public class EnemyChaseState : EnemyStateBase
         {
             enemyCore.ResetLostSightTimer();
         }
-        else if (enemyCore.TickLostSight(UnityEngine.Time.deltaTime))
+        else if (!enemyCore.IsTargetWithinDetectionRadius() && enemyCore.TickLostSight(UnityEngine.Time.deltaTime))
         {
             Set(EntityStateId.Patrol, forceReset: true);
             return;
         }
 
-        if (enemyCore.IsOutsideLeash())
+        if (enemyCore.IsOutsideLeash() && !enemyCore.IsTargetWithinDetectionRadius())
         {
             Set(EntityStateId.Patrol, forceReset: true);
             return;
@@ -37,6 +37,15 @@ public class EnemyChaseState : EnemyStateBase
         if (enemyCore.IsTargetInAttackRange())
         {
             Set(EntityStateId.Attack, forceReset: true);
+            return;
+        }
+    }
+
+    public override void FixedDo()
+    {
+        if (!enemyCore.HasTarget)
+        {
+            enemyCore.StopMovement();
             return;
         }
 

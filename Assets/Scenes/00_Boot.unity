@@ -1146,7 +1146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913b1167da0702b4b836f5e35926ef1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enableWordSelection: 0
+  _enableWordSelection: 1
   _root: {fileID: 759133296}
   _backgroundImage: {fileID: 744961781}
   _modifierPanel: {fileID: 339803609}

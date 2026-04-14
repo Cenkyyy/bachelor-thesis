@@ -24,6 +24,8 @@ public abstract class EntityCore : StateMachineCore
     private readonly List<Vector2> _currentPath = new();
     private int _pathIndex = -1;
     private float _nextAllowedRepathTime;
+    private Vector2 _lastRepathTarget;
+    private bool _hasLastRepathTarget;
 
     public virtual EntityData Data => null;
     public virtual EntityRuntimeData RuntimeData => null;
@@ -111,12 +113,14 @@ public abstract class EntityCore : StateMachineCore
         float repathIntervalSeconds,
         float pathNodeStep,
         int maxPathIterations,
+        LayerMask dynamicObstacleMask,
         bool hasDetourTarget = false,
         Vector2 detourTarget = default)
     {
-        if (Time.time >= _nextAllowedRepathTime)
+        var targetShifted = _hasLastRepathTarget && (worldTarget - _lastRepathTarget).sqrMagnitude > (pathNodeStep * pathNodeStep);
+        if (_pathIndex < 0 || !_hasLastRepathTarget || targetShifted || Time.time >= _nextAllowedRepathTime)
         {
-            RebuildPath(worldTarget, pathProbeRadius, repathIntervalSeconds, pathNodeStep, maxPathIterations);
+            RebuildPath(worldTarget, pathProbeRadius, repathIntervalSeconds, pathNodeStep, maxPathIterations, dynamicObstacleMask);
         }
 
         if (_pathIndex >= 0 && _pathIndex < _currentPath.Count)
@@ -166,9 +170,11 @@ public abstract class EntityCore : StateMachineCore
         return MovementPushResistanceUtils.ShouldReducePush(body, direction, castDistance, _movementCastHits, entityPushTargetMask);
     }
 
-    private void RebuildPath(Vector2 worldTarget, float pathProbeRadius, float repathIntervalSeconds, float pathNodeStep, int maxPathIterations)
+    private void RebuildPath(Vector2 worldTarget, float pathProbeRadius, float repathIntervalSeconds, float pathNodeStep, int maxPathIterations, LayerMask dynamicObstacleMask)
     {
         _nextAllowedRepathTime = Time.time + Mathf.Max(0.05f, repathIntervalSeconds);
+        _lastRepathTarget = worldTarget;
+        _hasLastRepathTarget = true;
         _pathIndex = 0;
 
         var success = GridAStarPathfinder.TryBuildPath(
@@ -178,7 +184,10 @@ public abstract class EntityCore : StateMachineCore
             obstacleMask: obstacleMask,
             probeRadius: Mathf.Max(0.01f, pathProbeRadius),
             maxIterations: Mathf.Max(100, maxPathIterations),
-            output: _currentPath
+            output: _currentPath,
+            additionalBlockedMask: dynamicObstacleMask,
+            allowPartialPath: true,
+            ignoredRoot: transform
         );
 
         if (!success)

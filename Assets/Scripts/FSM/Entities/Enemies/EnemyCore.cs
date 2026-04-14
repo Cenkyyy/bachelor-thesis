@@ -18,6 +18,7 @@ public class EnemyCore : EntityCore
 
     [Header("Pathfinding")]
     [SerializeField] private float _pathProbeRadius = 0.18f;
+    [SerializeField] private LayerMask _dynamicObstacleMask;
 
     private const int PatrolSampleMaxAttempts = 12;
     private readonly Collider2D[] _detectionResults = new Collider2D[8];
@@ -136,6 +137,17 @@ public class EnemyCore : EntityCore
         return sqrDistance <= AttackRange * AttackRange;
     }
 
+    public bool IsTargetWithinDetectionRadius()
+    {
+        if (!HasTarget)
+        {
+            return false;
+        }
+
+        var sqrDistance = ((Vector2)Target.position - (Vector2)transform.position).sqrMagnitude;
+        return sqrDistance <= visionRadius * visionRadius;
+    }
+
     public bool IsOutsideLeash()
     {
         if (LeashRadius <= 0f)
@@ -166,6 +178,7 @@ public class EnemyCore : EntityCore
                     repathIntervalSeconds: _data != null ? _data.RepathIntervalSeconds : 0.25f,
                     pathNodeStep: _data != null ? _data.PathNodeStep : 0.5f,
                     maxPathIterations: _data != null ? _data.MaxPathIterations : 1200,
+                    dynamicObstacleMask: _dynamicObstacleMask,
                     hasDetourTarget: _hasLastKnownTargetPosition,
                     detourTarget: _lastKnownTargetPosition
                 );

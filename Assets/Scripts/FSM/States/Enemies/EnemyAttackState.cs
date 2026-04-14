@@ -28,7 +28,7 @@
             return;
         }
 
-        if (enemyCore.IsOutsideLeash())
+        if (enemyCore.IsOutsideLeash() && !enemyCore.IsTargetWithinDetectionRadius())
         {
             Set(EntityStateId.Patrol, forceReset: true);
             return;

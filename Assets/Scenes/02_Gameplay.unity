@@ -677,13 +677,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1280
   _spawnableEntities:
-  - {fileID: 11400000, guid: ae968297b73e64d4fb319c407e633881, type: 2}
   - {fileID: 11400000, guid: c1523698214b240419fd070c9878a6c5, type: 2}
-  - {fileID: 11400000, guid: 914ce686352d5c543976a433064290b1, type: 2}
   - {fileID: 11400000, guid: 4b2d4198c00a8f74a81be6c77b77d81f, type: 2}
   - {fileID: 11400000, guid: 108f928024f0ee44eb0e08dcb77dda3d, type: 2}
-  - {fileID: 11400000, guid: 874a188265eeb62429bf2f39a6dfe944, type: 2}
+  - {fileID: 11400000, guid: ae968297b73e64d4fb319c407e633881, type: 2}
   - {fileID: 11400000, guid: 956bc99afe1861d4395f3daa0f27b432, type: 2}
+  - {fileID: 11400000, guid: 01c95124a522212438cacc9eaf80fc06, type: 2}
+  - {fileID: 11400000, guid: 874a188265eeb62429bf2f39a6dfe944, type: 2}
+  - {fileID: 11400000, guid: 6753a1895fdd9f745acf9954387f91d8, type: 2}
+  - {fileID: 11400000, guid: 914ce686352d5c543976a433064290b1, type: 2}
+  - {fileID: 11400000, guid: a8bdc6f4d77bbab4facbacbbbd83a8c1, type: 2}
   _spawnStrategyType: 0
   _settings:
     <FirstSpawnDay>k__BackingField: 2

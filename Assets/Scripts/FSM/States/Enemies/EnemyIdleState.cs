@@ -12,7 +12,7 @@
 
     public override void Do()
     {
-        if (enemyCore.TryDetectTarget() && enemyCore.CanSeeTarget(out _))
+        if (enemyCore.TryDetectTarget() && (enemyCore.CanSeeTarget(out _) || enemyCore.IsTargetWithinDetectionRadius()))
         {
             var next = enemyCore.IsTargetInAttackRange() ? EntityStateId.Attack : EntityStateId.Chase;
             Set(next, forceReset: true);
