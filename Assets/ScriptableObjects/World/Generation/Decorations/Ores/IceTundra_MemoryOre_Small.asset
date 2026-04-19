@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab734327975393b42af766d151fd89da, type: 3}
+  m_Name: IceTundra_MemoryOre_Small
+  m_EditorClassIdentifier: 
+  <DecorationId>k__BackingField: IceTundra_MemoryOre_Small
+  <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: d46c2a4ea4f31324e888ce0c9938b07b, type: 3}
+  <NodeData>k__BackingField: {fileID: 11400000, guid: e3bc7821b0f057345bd282dce54b7476, type: 2}
+  <Category>k__BackingField: 1
+  <Size>k__BackingField: 0
+  _allowedBiomes: 02000000
+  <SpawnWeight>k__BackingField: 1
+  <MinimumSpacingTiles>k__BackingField: 0.6
+  <AllowCluster>k__BackingField: 1
+  <MinClusterCount>k__BackingField: 2
+  <MaxClusterCount>k__BackingField: 3
+  <ClusterRadiusTiles>k__BackingField: 3
