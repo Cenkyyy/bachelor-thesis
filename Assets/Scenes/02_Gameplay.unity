@@ -12350,9 +12350,9 @@ MonoBehaviour:
   _worldGenerator: {fileID: 1097722629}
   _playerTransform: {fileID: 2010244813}
   _chunkSize: 32
-  _initialGenerationRadiusInChunks: 4
-  _generationRadiusInChunks: 4
-  _unloadRadiusInChunks: 6
+  _initialGenerationRadiusInChunks: 3
+  _generationRadiusInChunks: 2
+  _unloadRadiusInChunks: 3
   _refreshIntervalSeconds: 0.1
   _initialRefreshOffsetSeconds: 0.03
   _chunksGeneratedPerFrame: 1

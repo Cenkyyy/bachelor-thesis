@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d15ecb9e5791b945bea4f384da70a48, type: 3}
   m_Name: PredatorPlantData_Grassland_1
   m_EditorClassIdentifier: 
-  <HomeBiome>k__BackingField: 1
+  <HomeBiome>k__BackingField: 3
   <Prefab>k__BackingField: {fileID: 1670540943250230566, guid: 99fbfd30f3ae4b5419c0ee4c440457c6, type: 3}
   <SpawnWeight>k__BackingField: 1
   <MaxHealth>k__BackingField: 100
@@ -37,3 +37,8 @@ MonoBehaviour:
   <AttackWindupSeconds>k__BackingField: 0.4
   <AttackHitWindowSeconds>k__BackingField: 0.15
   <AttackRecoverySeconds>k__BackingField: 0.8
+  <PreferredRangedDistance>k__BackingField: 4.5
+  <RangedRetreatBuffer>k__BackingField: 1
+  <ProjectilePrefab>k__BackingField: {fileID: 0}
+  <ProjectileSpeed>k__BackingField: 8
+  <ProjectileLifetimeSeconds>k__BackingField: 3

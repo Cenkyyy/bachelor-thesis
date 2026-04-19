@@ -11,6 +11,9 @@ public sealed class PlayerDamageable : MonoBehaviour, IDamageable
     [SerializeField, Min(0.01f)] private float _defenceCoefficient = 100f;
     [SerializeField, Min(0)] private int _minimumDamageTaken = 1;
 
+    [Header("Damage Word Text Popup Settings")]
+    [SerializeField] private DamageWordTextPopupSettings _damageWordTextPopupSettings = new();
+
     public bool CanReceiveDamage =>
         _player != null &&
         _player.Data != null &&
@@ -41,6 +44,7 @@ public sealed class PlayerDamageable : MonoBehaviour, IDamageable
             return;
 
         _player.Data.TakeDamage(finalDamage);
+        DamageWordTextPopupUtility.ShowForGameObject(gameObject, finalDamage, 1f, _damageWordTextPopupSettings);
     }
 
     private int CalculateFinalDamage(int incomingDamage, int defense)
