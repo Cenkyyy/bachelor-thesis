@@ -14,6 +14,8 @@ public sealed class MineableNode : MonoBehaviour
 
     private float _currentDurability;
     private bool _isDepleted;
+    private bool _isBeingMined;
+    private float _replenishTimer;
 
     public MineableNodeData Data => _data;
     public float CurrentDurability => _currentDurability;
@@ -34,9 +36,26 @@ public sealed class MineableNode : MonoBehaviour
             _feedbackPopup = gameObject.AddComponent<WorldTextPopupEmitter>();
     }
 
+    private void Update()
+    {
+        if (_isDepleted || _isBeingMined || !HasDamage())
+            return;
+
+        if (_replenishTimer <= 0f)
+            return;
+
+        _replenishTimer -= Time.deltaTime;
+        if (_replenishTimer > 0f)
+            return;
+
+        ResetDurability();
+    }
+
     public void ResetRuntimeState()
     {
         _isDepleted = false;
+        _isBeingMined = false;
+        _replenishTimer = 0f;
         _currentDurability = Mathf.Max(0f, _data != null ? _data.MaxDurability : 0f);
     }
 
@@ -61,6 +80,9 @@ public sealed class MineableNode : MonoBehaviour
         if (_isDepleted)
             return;
 
+        _isBeingMined = true;
+        _replenishTimer = 0f;
+
         var powerMultiplier = Mathf.Max(0f, _data.ToolPowerMultiplier);
         var power = Mathf.Max(0f, basePower * powerMultiplier);
         if (power <= 0f)
@@ -81,7 +103,18 @@ public sealed class MineableNode : MonoBehaviour
         if (_isDepleted)
             return;
 
-        OnMiningStopped?.Invoke();
+        _isBeingMined = false;
+        if (!HasDamage())
+            return;
+
+        var replenishDuration = Mathf.Max(0f, _data.ReplenishDurationSeconds);
+        if (replenishDuration <= 0f)
+        {
+            ResetDurability();
+            return;
+        }
+
+        _replenishTimer = replenishDuration;
     }
 
     private void RaiseProgressChanged()
@@ -108,6 +141,19 @@ public sealed class MineableNode : MonoBehaviour
         OnDepleted?.Invoke(this);
         OnMiningStopped?.Invoke();
         Destroy(gameObject);
+    }
+
+    private bool HasDamage()
+    {
+        return _currentDurability < MaxDurability;
+    }
+
+    private void ResetDurability()
+    {
+        _currentDurability = MaxDurability;
+        _replenishTimer = 0f;
+        RaiseProgressChanged();
+        OnMiningStopped?.Invoke();
     }
 
     private void TryDropLoot(Player player, ItemDropSpawner dropSpawner)

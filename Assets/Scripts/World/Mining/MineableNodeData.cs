@@ -13,6 +13,7 @@ public sealed class MineableNodeData : ScriptableObject
     [field: Header("Durability")]
     [field: SerializeField] public float MaxDurability { get; private set; } = 10f;
     [field: SerializeField] public float ToolPowerMultiplier { get; private set; } = 1f;
+    [field: SerializeField, Min(0f)] public float ReplenishDurationSeconds { get; private set; } = 4f;
 
     [field: Header("Drops")]
     [SerializeField] private List<MiningDropEntry> _drops = new List<MiningDropEntry>();

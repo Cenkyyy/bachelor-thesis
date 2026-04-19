@@ -55,11 +55,28 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     private readonly Dictionary<Vector2Int, List<Vector2Int>> _spawnedChunkTiles = new();
     private readonly Dictionary<Vector2Int, WallTileRuntimeData> _runtimeByTile = new();
     private readonly WallTileModificationState _modificationState = new();
+    private readonly List<Vector2Int> _replenishedTilesBuffer = new();
 
     private MiningProgressBar _activeMiningBar;
     private Vector2Int? _activeMiningBarTile;
 
     protected override bool EnableChunkUnloading => _enableChunkUnloading;
+
+    private void Update()
+    {
+        if (_runtimeByTile.Count == 0)
+            return;
+
+        _replenishedTilesBuffer.Clear();
+        foreach (var pair in _runtimeByTile)
+        {
+            if (pair.Value.TickReplenish(Time.deltaTime))
+                _replenishedTilesBuffer.Add(pair.Key);
+        }
+
+        for (int i = 0; i < _replenishedTilesBuffer.Count; i++)
+            HandleTileReplenished(_replenishedTilesBuffer[i]);
+    }
 
     protected override void OnEnable()
     {
@@ -201,7 +218,13 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
     public void NotifyMiningStopped(Vector2Int dataTile)
     {
-        HideMiningBarForTile(dataTile);
+        if (!_runtimeByTile.TryGetValue(dataTile, out var runtimeData))
+            return;
+
+        if (!runtimeData.NotifyMiningStopped())
+            return;
+
+        HandleTileReplenished(dataTile);
     }
 
     private void EnsureMiningBar(Vector2Int dataTile)
@@ -242,6 +265,14 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             DestroyImmediate(_activeMiningBar.gameObject);
 
         _activeMiningBar = null;
+    }
+
+    private void HandleTileReplenished(Vector2Int dataTile)
+    {
+        if (_activeMiningBar != null && _activeMiningBarTile.HasValue && _activeMiningBarTile.Value == dataTile)
+            _activeMiningBar.SetIdle();
+
+        HideMiningBarForTile(dataTile);
     }
 
     private List<PlannedWallTile> BuildWallTilesForChunk(WorldRuntimeData data, Vector2Int chunkCoord)

@@ -13,6 +13,7 @@ public sealed class PlayerMiningController : MonoBehaviour
     [SerializeField] private GameplayInputBindingsData _inputBindings;
     [SerializeField] private LayerMask _mineableMask;
     [SerializeField] private float _miningRange = 1.5f;
+    [SerializeField, Min(0.1f)] private float _miningTickIntervalSeconds = 1f;
 
     [Header("Hand Mining")]
     [SerializeField] private bool _allowHandMining = true;
@@ -20,6 +21,7 @@ public sealed class PlayerMiningController : MonoBehaviour
 
     private IMineableTarget _currentTarget;
     private int _currentToolSlot = -1;
+    private float _miningTickAccumulator;
 
     private void Update()
     {
@@ -58,18 +60,33 @@ public sealed class PlayerMiningController : MonoBehaviour
         }
 
         if (_currentTarget != null && !_currentTarget.IsSameTarget(target))
+        {
             _currentTarget.NotifyMiningStopped();
+            _miningTickAccumulator = 0f;
+        }
+
+        if (_currentToolSlot != toolContext.SlotIndex)
+            _miningTickAccumulator = 0f;
 
         _currentTarget = target;
         _currentToolSlot = toolContext.SlotIndex;
+        _miningTickAccumulator += Time.deltaTime;
 
-        target.ApplyMiningDamage(toolContext.Power * Time.deltaTime, _player, _itemDropSpawner);
-
-        if (toolContext.ConsumesDurability && _toolDurability != null)
+        var tickInterval = Mathf.Max(0.1f, _miningTickIntervalSeconds);
+        while (_miningTickAccumulator >= tickInterval)
         {
-            _toolDurability.TryConsumeDurability(toolContext.SlotIndex, toolContext.DurabilityLossPerSecond * Time.deltaTime, out _, out var broke);
-            if (broke)
-                ResetMining();
+            _miningTickAccumulator -= tickInterval;
+            target.ApplyMiningDamage(toolContext.Power * tickInterval, _player, _itemDropSpawner);
+
+            if (toolContext.ConsumesDurability && _toolDurability != null)
+            {
+                _toolDurability.TryConsumeDurability(toolContext.SlotIndex, toolContext.DurabilityLossPerSecond * tickInterval, out _, out var broke);
+                if (broke)
+                {
+                    ResetMining();
+                    return;
+                }
+            }
         }
     }
 
@@ -78,6 +95,7 @@ public sealed class PlayerMiningController : MonoBehaviour
         _currentTarget?.NotifyMiningStopped();
         _currentTarget = null;
         _currentToolSlot = -1;
+        _miningTickAccumulator = 0f;
     }
 
     private bool TryResolveTarget(out IMineableTarget target)
