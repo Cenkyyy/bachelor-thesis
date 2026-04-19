@@ -26,12 +26,14 @@ public class SpellCastingPanelController : MonoBehaviour
 
     [Header("Casting")]
     [SerializeField, Min(0f)] private float _castLockDurationSeconds = 0.2f;
+    [SerializeField, Min(0f)] private float _autoCancelCastingAfterSeconds = 4f;
 
     private SpellWordInventory _wordInventory;
     private SpellPhrase _currentPhrase;
     private CastingStage _stage;
     private bool _isCastLocked;
     private bool _canInteractWithSpellcasting;
+    private float _lastCastingProgressTimestamp;
 
     public event Action<SpellPhrase> OnPhraseCompleted;
 
@@ -75,6 +77,8 @@ public class SpellCastingPanelController : MonoBehaviour
 
         if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
             return;
+
+        TryHandleAutoCancel();
 
         var pressedIndex = _spellCastingKeys.TryGetPressedIndex();
         if (!pressedIndex.HasValue)
@@ -164,6 +168,7 @@ public class SpellCastingPanelController : MonoBehaviour
                 return;
         }
 
+        RegisterCastingProgress();
         ApplyStageVisuals();
         UpdateText();
     }
@@ -203,6 +208,17 @@ public class SpellCastingPanelController : MonoBehaviour
         ResetCastingState();
     }
 
+    private void TryHandleAutoCancel()
+    {
+        if (!IsCastingInProgress())
+            return;
+
+        if (Time.unscaledTime - _lastCastingProgressTimestamp < _autoCancelCastingAfterSeconds)
+            return;
+
+        CancelCasting();
+    }
+
     public bool TryCancelActiveCasting()
     {
         if (!IsCastingInProgress())
@@ -217,6 +233,11 @@ public class SpellCastingPanelController : MonoBehaviour
         return _currentPhrase.Modifier.HasValue ||
                _currentPhrase.Element.HasValue ||
                _currentPhrase.Form.HasValue;
+    }
+
+    private void RegisterCastingProgress()
+    {
+        _lastCastingProgressTimestamp = Time.unscaledTime;
     }
 
     private void ResetCastingState()
