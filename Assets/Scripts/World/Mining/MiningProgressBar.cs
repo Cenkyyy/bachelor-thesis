@@ -38,13 +38,23 @@ public sealed class MiningProgressBar : MonoBehaviour
 
     private void HandleProgressChanged(float progress)
     {
+        SetProgressValue(progress);
+    }
+
+    private void HandleMiningStopped()
+    {
+        SetIdle();
+    }
+
+    public void SetProgressValue(float progress)
+    {
         if (_hideWhenIdle)
             SetVisible(true);
 
         SetFill(progress);
     }
 
-    private void HandleMiningStopped()
+    public void SetIdle()
     {
         if (_hideWhenIdle)
             SetVisible(false);

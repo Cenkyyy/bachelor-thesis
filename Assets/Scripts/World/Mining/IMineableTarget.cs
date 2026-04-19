@@ -1,0 +1,12 @@
+﻿using UnityEngine;
+
+public interface IMineableTarget
+{
+    Vector3 WorldPosition { get; }
+
+    bool CanBeMinedWith(MiningToolContext tool);
+    void ShowHigherToolRequiredFeedback();
+    void ApplyMiningDamage(float basePower, Player miner, ItemDropSpawner dropSpawner);
+    void NotifyMiningStopped();
+    bool IsSameTarget(IMineableTarget other);
+}

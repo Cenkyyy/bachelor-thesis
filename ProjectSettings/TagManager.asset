@@ -51,6 +51,9 @@ TagManager:
   - name: Foliage
     uniqueID: 3482019401
     locked: 0
+  - name: Walls
+    uniqueID: 29921857
+    locked: 0
   - name: WorldItem
     uniqueID: 2163695611
     locked: 0

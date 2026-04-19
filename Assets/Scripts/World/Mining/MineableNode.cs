@@ -112,25 +112,7 @@ public sealed class MineableNode : MonoBehaviour
 
     private void TryDropLoot(Player player, ItemDropSpawner dropSpawner)
     {
-        if (_data.Drops == null || _data.Drops.Count == 0)
-            return;
-
         var dropPosition = _dropAnchor ? _dropAnchor.position : transform.position;
-        dropPosition.z = 0f;
-
-        for (int i = 0; i < _data.Drops.Count; i++)
-        {
-            var entry = _data.Drops[i];
-            var amount = entry.RollAmount();
-            if (amount <= 0 || entry.Item == null)
-                continue;
-
-            var dropItem = new InventoryItem(entry.Item, amount);
-            player.Inventory.TryAddItemToRange(dropItem, new SlotRange(0, player.Inventory.Capacity), out var leftoverItem);
-            ItemPickupFeedReporter.ReportAddedToInventory(dropItem, leftoverItem);
-
-            if (!leftoverItem.IsEmpty && dropSpawner != null)
-                dropSpawner.Spawn(leftoverItem, dropPosition);
-        }
+        MiningDropResolver.ResolveDrops(_data.Drops, player, dropSpawner, dropPosition);
     }
 }

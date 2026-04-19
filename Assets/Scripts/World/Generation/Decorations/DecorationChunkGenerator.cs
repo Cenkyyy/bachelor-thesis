@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.LightTransport;
 
 [DisallowMultipleComponent]
 public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
 {
     [Header("Dependencies")]
     [SerializeField] private TerrainChunkGenerator _terrainChunkGenerator;
+    [SerializeField] private WallChunkGenerator _wallChunkGenerator;
     [SerializeField] private DecorationsListData _decorationsListData;
     [SerializeField] private Transform _spawnedDecorationsRoot;
 
@@ -113,6 +115,9 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
             if (worldTile.TileType == TileType.Void)
                 continue;
 
+            if (IsBlockedByWall(new Vector2Int(worldX, worldY)))
+                continue;
+
             if (!_entriesByBiome.TryGetValue(worldTile.Biome, out var biomeEntries) || biomeEntries == null || biomeEntries.Count == 0)
                 continue;
 
@@ -187,6 +192,9 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         if (tile.TileType == TileType.Void)
             return null;
 
+        if (IsBlockedByWall(new Vector2Int(tileX, tileY)))
+            return null;
+
         if (!WorldObjectPlacementUtility.IsBiomeAllowed(entry.AllowedBiomes, tile.Biome))
             return null;
 
@@ -205,6 +213,11 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
             WorldPosition = worldPosition,
             SpacingRadius = minSpacing
         };
+    }
+
+    private bool IsBlockedByWall(Vector2Int dataTile)
+    {
+        return _wallChunkGenerator != null && _wallChunkGenerator.HasWallAtDataTile(dataTile);
     }
 
     private static string BuildInstanceId(string decorationId, Vector2Int chunkCoord, int attemptIndex, int clusterIndex)

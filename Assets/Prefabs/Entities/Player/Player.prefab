@@ -137,14 +137,14 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -674802039
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.5625, y: 0.9375}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -376,6 +376,7 @@ MonoBehaviour:
   _toolDurability: {fileID: 4403078374656698331}
   _itemDropSpawner: {fileID: 0}
   _camera: {fileID: 0}
+  _wallChunkGenerator: {fileID: 0}
   _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
   _mineableMask:
     serializedVersion: 2
@@ -799,8 +800,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -674802039
-  m_SortingLayer: 6
-  m_SortingOrder: 10
+  m_SortingLayer: 7
+  m_SortingOrder: 0
   m_Sprite: {fileID: 7721919526164143042, guid: 9fecd170054307d4e9a06c8510674d6c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Riftstone
   <Icon>k__BackingField: {fileID: 0}
-  <Description>k__BackingField: 
   <Category>k__BackingField: 3
   <Rarity>k__BackingField: 0
   <BiomeAffinity>k__BackingField: 4
-  <MaxStackSize>k__BackingField: 999
+  <MaxStackSize>k__BackingField: 9999
   <Kind>k__BackingField: 1
   <TierTag>k__BackingField: 0

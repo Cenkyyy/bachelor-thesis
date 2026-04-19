@@ -7,6 +7,7 @@ public sealed class PlayerMiningController : MonoBehaviour
     [SerializeField] private PlayerToolDurability _toolDurability;
     [SerializeField] private ItemDropSpawner _itemDropSpawner;
     [SerializeField] private Camera _camera;
+    [SerializeField] private WallChunkGenerator _wallChunkGenerator;
 
     [Header("Mining Input")]
     [SerializeField] private GameplayInputBindingsData _inputBindings;
@@ -17,7 +18,7 @@ public sealed class PlayerMiningController : MonoBehaviour
     [SerializeField] private bool _allowHandMining = true;
     [SerializeField] private float _handMiningPower = 1f;
 
-    private MineableNode _currentNode;
+    private IMineableTarget _currentTarget;
     private int _currentToolSlot = -1;
 
     private void Update()
@@ -37,7 +38,7 @@ public sealed class PlayerMiningController : MonoBehaviour
             return;
         }
 
-        if (!TryResolveTarget(out var node))
+        if (!TryResolveTarget(out var target))
         {
             ResetMining();
             return;
@@ -49,20 +50,20 @@ public sealed class PlayerMiningController : MonoBehaviour
             return;
         }
 
-        if (!node.CanBeMinedWith(toolContext))
+        if (!target.CanBeMinedWith(toolContext))
         {
-            node.ShowHigherToolRequiredFeedback();
+            target.ShowHigherToolRequiredFeedback();
             ResetMining();
             return;
         }
 
-        if (_currentNode != null && _currentNode != node)
-            _currentNode.NotifyMiningStopped();
+        if (_currentTarget != null && !_currentTarget.IsSameTarget(target))
+            _currentTarget.NotifyMiningStopped();
 
-        _currentNode = node;
+        _currentTarget = target;
         _currentToolSlot = toolContext.SlotIndex;
 
-        node.ApplyMiningDamage(toolContext.Power * Time.deltaTime, _player, _itemDropSpawner);
+        target.ApplyMiningDamage(toolContext.Power * Time.deltaTime, _player, _itemDropSpawner);
 
         if (toolContext.ConsumesDurability && _toolDurability != null)
         {
@@ -74,26 +75,44 @@ public sealed class PlayerMiningController : MonoBehaviour
 
     private void ResetMining()
     {
-        _currentNode = null;
+        _currentTarget?.NotifyMiningStopped();
+        _currentTarget = null;
         _currentToolSlot = -1;
     }
 
-    private bool TryResolveTarget(out MineableNode node)
+    private bool TryResolveTarget(out IMineableTarget target)
     {
-        node = null;
+        target = null;
 
         var mouseWorld = _camera ? _camera.ScreenToWorldPoint(Input.mousePosition) : transform.position;
         mouseWorld.z = 0f;
 
         var hit = Physics2D.OverlapPoint(mouseWorld, _mineableMask);
-        if (hit == null)
+        if (hit != null)
+        {
+            var node = hit.GetComponent<MineableNode>() ?? hit.GetComponentInParent<MineableNode>();
+            if (node != null)
+            {
+                var nodeTarget = new MineableNodeMiningTarget(node);
+                if (IsWithinMiningRange(nodeTarget.WorldPosition))
+                {
+                    target = nodeTarget;
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        if (_wallChunkGenerator == null || !_wallChunkGenerator.TryCreateMiningTarget(mouseWorld, out target))
             return false;
 
-        node = hit.GetComponent<MineableNode>() ?? hit.GetComponentInParent<MineableNode>();
-        if (node == null)
-            return false;
+        return IsWithinMiningRange(target.WorldPosition);
+    }
 
-        var distance = Vector2.Distance(transform.position, node.transform.position);
+    private bool IsWithinMiningRange(Vector3 targetPosition)
+    {
+        var distance = Vector2.Distance(transform.position, targetPosition);
         return distance <= _miningRange;
     }
 
