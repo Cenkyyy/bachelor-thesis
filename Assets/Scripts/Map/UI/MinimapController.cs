@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -27,6 +28,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     [Header("Config")]
     [SerializeField] private int _minimapHalfSizeTiles = 18;
     [SerializeField] private int _revealRadiusTiles = 8;
+    [SerializeField, Min(1)] private int _rowsProcessedPerFrameDuringInitialization = 48;
     [SerializeField] private TileColor[] _tileColors;
 
     public WorldRuntimeData WorldData { get; private set; }
@@ -41,15 +43,15 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     private Vector2Int _lastPlayerTile = new Vector2Int(int.MinValue, int.MinValue);
     public bool IsInitialized { get; private set; } = false;
 
-    public void Initialize(WorldRuntimeData worldData)
+    public IEnumerator InitializeAsync(WorldRuntimeData worldData)
     {
         WorldData = worldData;
+        IsInitialized = false;
 
         BuildColorLookup();
-        BuildTerrainTexture();
+        yield return BuildTerrainTextureAsync();
 
         _exploration = new ExplorationData(WorldData.Width, WorldData.Height);
-
         _terrainImage.texture = TerrainTexture;
 
         UpdateView(force: true);
@@ -110,10 +112,11 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
             _colorByTile[_tileColors[i].TileType] = _tileColors[i].Color;
     }
 
-    private void BuildTerrainTexture()
+    private IEnumerator BuildTerrainTextureAsync()
     {
         int w = WorldData.Width;
         int h = WorldData.Height;
+        int rowsPerFrame = Mathf.Max(1, _rowsProcessedPerFrameDuringInitialization);
 
         TerrainTexture = new Texture2D(w, h, TextureFormat.RGBA32, mipChain: false);
         TerrainTexture.filterMode = FilterMode.Point;
@@ -122,6 +125,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
         _terrainPixelsByIndex = new Color32[w * h];
         var hiddenPixels = new Color32[w * h];
 
+        int processedRows = 0;
         for (int y = 0; y < h; y++)
         {
             for (int x = 0; x < w; x++)
@@ -134,6 +138,13 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
 
                 _terrainPixelsByIndex[index] = col;
                 hiddenPixels[index] = new Color32(col.r, col.g, col.b, 0);
+            }
+
+            processedRows++;
+            if (processedRows >= rowsPerFrame)
+            {
+                processedRows = 0;
+                yield return null;
             }
         }
 

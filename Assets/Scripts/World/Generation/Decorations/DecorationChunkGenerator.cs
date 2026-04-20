@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.LightTransport;
 
 [DisallowMultipleComponent]
 public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
@@ -269,7 +267,9 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
             if (node != null)
             {
                 node.ResetRuntimeState();
-                var tracker = instance.AddComponent<DecorationInstanceTracker>();
+                var tracker = instance.GetComponent<DecorationInstanceTracker>();
+                if (tracker == null)
+                    tracker = instance.AddComponent<DecorationInstanceTracker>();
                 tracker.Initialize(placement.InstanceId, this, node);
             }
 

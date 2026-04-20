@@ -4637,6 +4637,7 @@ MonoBehaviour:
   _currentPhraseText: {fileID: 1122847216}
   _spellCastingKeys: {fileID: 11400000, guid: 3e021325f9dbcae49a3b7568466162af, type: 2}
   _castLockDurationSeconds: 0.2
+  _autoCancelCastingAfterSeconds: 4
 --- !u!1 &201006413
 GameObject:
   m_ObjectHideFlags: 0
