@@ -45,10 +45,8 @@ public class SpellCastingPanelController : MonoBehaviour
 
     private IEnumerator InitializeSpellCastingCoroutine()
     {
-        yield return null;
-
-        if (_wordInventory == null)
-            yield break;
+        while (!TryResolveDependencies())
+            yield return null;
 
         _wordInventory.OnWordsChanged += RefreshPanels;
 
@@ -63,6 +61,14 @@ public class SpellCastingPanelController : MonoBehaviour
         ResetCastingState();
         RefreshInteractionAvailability();
         _isInitialized = true;
+    }
+
+    private bool TryResolveDependencies()
+    {
+        if (_player != null && _wordInventory == null)
+            _wordInventory = _player.SpellWords;
+
+        return _player != null && _wordInventory != null;
     }
 
     private void OnDestroy()
