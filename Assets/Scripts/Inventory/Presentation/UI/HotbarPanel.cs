@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class HotbarPanel : InventoryPanelBase<HotbarSlot>
@@ -10,6 +11,12 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
     protected override void Start()
     {
         base.Start();
+        StartCoroutine(BuildSlotsCoroutine());
+    }
+
+    private IEnumerator BuildSlotsCoroutine()
+    {
+        yield return null;
 
         slots = new HotbarSlot[SlotCount];
         for (int i = 0; i < SlotCount; i++)
@@ -23,9 +30,13 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
             slots[i].OnPointerEntered += HandleSlotEnter;
             slots[i].OnPointerExited += HandleSlotExit;
             slots[i].OnSlotDisabled += HandleSlotDisabled;
+
+            if ((i + 1) % slotBuildBatchSize == 0)
+                yield return null;
         }
 
-        slots[_selectedIndex].HighlightSelected();
+        if (slots.Length > 0)
+            slots[_selectedIndex].HighlightSelected();
 
         // subscribe to hotbar selection changes
         player.Inventory.OnHotbarSelectionChanged += ChangeSelectedSlot;
@@ -60,6 +71,9 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
 
     private void ChangeSelectedSlot(int newIndex)
     {
+        if (slots == null || slots.Length == 0)
+            return;
+
         slots[_selectedIndex].SetToDefault();
         _selectedIndex = newIndex;
         slots[_selectedIndex].HighlightSelected();
@@ -67,6 +81,9 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
 
     public override void RefreshSlot(int hotbarIndex)
     {
+        if (slots == null)
+            return;
+
         if (hotbarIndex >= 0 && hotbarIndex < slots.Length)
         {
             var slotItem = player.Inventory.GetItemAt(hotbarIndex);

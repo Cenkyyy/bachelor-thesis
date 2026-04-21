@@ -121,14 +121,22 @@ public sealed class SceneTransitionController : MonoBehaviour
 
         SetLoadingTextVisible(true);
 
-        // Load the scene asynchronously in the background
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-        loadOperation.allowSceneActivation = false;
-
-        // Keep updating the loading text until the 0.9 progress is reached, then allow scene activation
-        // and keep updating the loading text until the final load is done and the scene is ready to be revealed
         _loadingStep = 0;
         _loadingTimer = 0f;
+
+        Scene sourceScene = SceneManager.GetActiveScene();
+        yield return LoadTargetSceneCoroutine(sceneName, sourceScene);
+        yield return WaitForSceneRevealReadiness(sceneName);
+
+        SetLoadingTextVisible(false);
+        _isMiddleCompleted = true;
+        TransitionMiddleCompleted?.Invoke(sceneName); 
+    }
+
+    private IEnumerator LoadTargetSceneCoroutine(string sceneName, Scene sourceScene)
+    {
+        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        loadOperation.allowSceneActivation = false;
 
         while (loadOperation.progress < 0.9f)
         {
@@ -145,12 +153,37 @@ public sealed class SceneTransitionController : MonoBehaviour
             yield return null;
         }
 
-        yield return WaitForSceneRevealReadiness(sceneName);
+        yield return SetActiveSceneCoroutine(sceneName);
 
-        // Turn off the loading text, unpause the game and hide the transition root
-        SetLoadingTextVisible(false);
-        _isMiddleCompleted = true;
-        TransitionMiddleCompleted?.Invoke(sceneName);
+        if (!sourceScene.IsValid() || !sourceScene.isLoaded || sourceScene.name == sceneName)
+            yield break;
+
+        AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(sourceScene);
+        if (unloadOperation == null)
+            yield break;
+
+        while (!unloadOperation.isDone)
+        {
+            UpdateLoadingText();
+            yield return null;
+        }
+    }
+
+    private IEnumerator SetActiveSceneCoroutine(string sceneName)
+    {
+        Scene targetScene = SceneManager.GetSceneByName(sceneName);
+        while (!targetScene.IsValid() || !targetScene.isLoaded)
+        {
+            UpdateLoadingText();
+            yield return null;
+            targetScene = SceneManager.GetSceneByName(sceneName);
+        }
+
+        while (!SceneManager.SetActiveScene(targetScene))
+        {
+            UpdateLoadingText();
+            yield return null;
+        }
     }
 
     private IEnumerator RunTransitionFinishCoroutine(string sceneName)
@@ -199,10 +232,9 @@ public sealed class SceneTransitionController : MonoBehaviour
             yield break;
 
         // Keep updating the loading text until all blockers are ready for scene reveal
-        bool allReady;
         while (true)
         {
-            allReady = true;
+            bool allReady = true;
 
             for (int i = 0; i < blockers.Count; i++)
             {

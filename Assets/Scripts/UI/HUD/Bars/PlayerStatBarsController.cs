@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerStatBarsController : MonoBehaviour
@@ -11,6 +12,13 @@ public class PlayerStatBarsController : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(InitializeBarsCoroutine());
+    }
+
+    private IEnumerator InitializeBarsCoroutine()
+    {
+        yield return null;
+
         _healthBar.Initialize(_player.Data);
         _manaBar.Initialize(_player.Data);
         _hungerBar.Initialize(_player.Data);

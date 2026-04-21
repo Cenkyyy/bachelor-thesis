@@ -22,13 +22,14 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
     private readonly Dictionary<Vector2Int, List<GameObject>> _spawnedChunkInstances = new();
     private readonly Dictionary<BiomeType, List<FoliageEntryData>> _entriesByBiome = new();
     private readonly GameObjectInstancePool _instancePool = new();
+    private bool _isBiomeIndexBuilt;
 
     protected override void OnEnable()
     {
         if (_spawnedFoliageRoot == null)
             _spawnedFoliageRoot = transform;
 
-        WorldObjectPlacementUtility.BuildBiomeIndex(_foliageListData.Entries, _entriesByBiome, entry => entry.Prefab, entry => entry.FoliageId, entry => entry.AllowedBiomes);
+        _isBiomeIndexBuilt = false;
         base.OnEnable();
     }
 
@@ -79,6 +80,8 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
 
     private List<FoliagePlacement> GeneratePlacementsForChunk(WorldRuntimeData data, Vector2Int chunkCoord)
     {
+        EnsureBiomeIndexBuilt();
+
         int startX = chunkCoord.x * _chunkSize;
         int startY = chunkCoord.y * _chunkSize;
 
@@ -140,6 +143,16 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
         }
 
         return placements;
+    }
+
+    private void EnsureBiomeIndexBuilt()
+    {
+        if (_isBiomeIndexBuilt)
+            return;
+
+        _entriesByBiome.Clear();
+        WorldObjectPlacementUtility.BuildBiomeIndex(_foliageListData.Entries, _entriesByBiome, entry => entry.Prefab, entry => entry.FoliageId, entry => entry.AllowedBiomes);
+        _isBiomeIndexBuilt = true;
     }
 
     private bool HasReachedPlacementLimit(int currentPlacementCount)

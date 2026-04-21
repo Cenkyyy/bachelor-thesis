@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -14,6 +15,12 @@ public sealed class EquipmentPanel : MonoBehaviour, IPanel
 
     private void Start()
     {
+        StartCoroutine(InitializeEquipmentPanelCoroutine());
+    }
+
+    private IEnumerator InitializeEquipmentPanelCoroutine()
+    {
+        yield return null;
         BindSlots();
         if (_player?.Equipment != null)
             _player.Equipment.OnItemChanged += RefreshSlot;

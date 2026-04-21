@@ -1,4 +1,4 @@
-
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,18 +11,24 @@ public abstract class StateMachineCore : MonoBehaviour
 
     protected virtual void Start()
     {
+        StartCoroutine(InitializeStateMachineCoroutine());
+    }
+
+    private IEnumerator InitializeStateMachineCoroutine()
+    {
+        yield return null;
         SetUpInstances();
         machine.Set(initialState, forceReset: true);
     }
 
     protected virtual void Update()
     {
-        machine.state?.DoBranch();
+        machine?.state?.DoBranch();
     }
 
     protected virtual void FixedUpdate()
     {
-        machine.state?.FixedDoBranch();
+        machine?.state?.FixedDoBranch();
     }
 
     public void SetUpInstances()
@@ -56,6 +62,9 @@ public abstract class StateMachineCore : MonoBehaviour
 
     public bool RequestState(EntityStateId stateId, bool forceReset = false)
     {
+        if (machine == null)
+            return false;
+
         if (_stateByIdLookup.TryGetValue(stateId, out var state))
         {
             machine.Set(state, forceReset);

@@ -34,34 +34,41 @@ public class SpellCastingPanelController : MonoBehaviour
     private bool _isCastLocked;
     private bool _canInteractWithSpellcasting;
     private float _lastCastingProgressTimestamp;
+    private bool _isInitialized;
 
     public event Action<SpellPhrase> OnPhraseCompleted;
 
-    private void Awake()
-    {
-        _wordInventory = _player.GetComponent<SpellWordInventory>();
-        _wordInventory.OnWordsChanged += RefreshPanels;
-
-        RefreshPanels();
-        SetPhraseTextVisible(false);
-        ResetCastingState();
-        RefreshInteractionAvailability();
-    }
-
     private void Start()
     {
+        StartCoroutine(InitializeSpellCastingCoroutine());
+    }
+
+    private IEnumerator InitializeSpellCastingCoroutine()
+    {
+        yield return null;
+
+        if (_wordInventory == null)
+            yield break;
+
+        _wordInventory.OnWordsChanged += RefreshPanels;
+
         if (_player != null && _player.Inventory != null)
         {
             _player.Inventory.OnHotbarSelectionChanged += HandleSelectedHotbarChanged;
             _player.Inventory.OnItemChanged += HandleInventoryItemChanged;
         }
 
+        RefreshPanels();
+        SetPhraseTextVisible(false);
+        ResetCastingState();
         RefreshInteractionAvailability();
+        _isInitialized = true;
     }
 
     private void OnDestroy()
     {
-        _wordInventory.OnWordsChanged -= RefreshPanels;
+        if (_wordInventory != null)
+            _wordInventory.OnWordsChanged -= RefreshPanels;
 
         if (_player != null && _player.Inventory != null)
         {
@@ -72,6 +79,9 @@ public class SpellCastingPanelController : MonoBehaviour
 
     private void Update()
     {
+        if (!_isInitialized)
+            return;
+
         if (_isCastLocked || GameStateManager.IsGamePaused || !_canInteractWithSpellcasting)
             return;
 

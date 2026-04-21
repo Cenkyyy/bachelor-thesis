@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -29,13 +30,20 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        // initialize player's stats from defaults
-        Data.InitializeFrom(_playerData);
-
-        // initialize player's inventory with specified sizes and fill with starting items
         Inventory = new PlayerInventory(_hotbarSize, _inventorySize);
-        Inventory.InitializeFrom(_playerData);
-
         Equipment = new EquipmentInventory();
+
+        StartCoroutine(InitializeRuntimeDataCoroutine());
+    }
+
+    private IEnumerator InitializeRuntimeDataCoroutine()
+    {
+        yield return null;
+
+        if (_playerData == null)
+            yield break;
+
+        Data.InitializeFrom(_playerData);
+        Inventory.InitializeFrom(_playerData);
     }
 }

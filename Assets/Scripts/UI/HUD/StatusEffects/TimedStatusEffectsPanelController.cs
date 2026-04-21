@@ -11,11 +11,13 @@ public sealed class TimedStatusEffectsPanelController : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] private List<ItemStatusEffectData> _buffData = new();
+    [SerializeField, Min(0.02f)] private float _refreshIntervalSeconds = 0.1f;
 
     private readonly Dictionary<ItemStatusEffectType, ItemStatusEffectData> _dataByStat = new();
     private readonly Dictionary<ItemStatusEffectType, ItemStatusEffectEntryView> _entryByStat = new();
     private readonly Dictionary<ItemStatusEffectType, TimedBuffVisualState> _newestActiveStatusEffectByStat = new();
     private readonly HashSet<ItemStatusEffectType> _visibleStats = new();
+    private float _nextRefreshTime;
 
     private readonly struct TimedBuffVisualState
     {
@@ -39,6 +41,10 @@ public sealed class TimedStatusEffectsPanelController : MonoBehaviour
 
     private void Update()
     {
+        if (Time.unscaledTime < _nextRefreshTime)
+            return;
+
+        _nextRefreshTime = Time.unscaledTime + _refreshIntervalSeconds;
         RefreshActiveStatusEffectsView();
     }
 

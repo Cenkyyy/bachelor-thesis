@@ -8,6 +8,7 @@ public sealed class WallTileRuntimeData
     public float CurrentDurability { get; private set; }
     public float MaxDurability => MineableData != null ? Mathf.Max(0f, MineableData.MaxDurability) : 0f;
     public float MiningProgressNormalized => MaxDurability <= 0f ? 0f : Mathf.Clamp01(1f - (CurrentDurability / MaxDurability));
+    public bool IsAwaitingReplenishTick => !_isBeingMined && CurrentDurability < MaxDurability && _replenishTimer > 0f;
 
     private bool _isBeingMined;
     private float _replenishTimer;

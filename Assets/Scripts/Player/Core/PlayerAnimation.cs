@@ -3,7 +3,14 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
+    private static readonly int IsWalkingHash = Animator.StringToHash("isWalking");
+    private static readonly int InputXHash = Animator.StringToHash("InputX");
+    private static readonly int InputYHash = Animator.StringToHash("InputY");
+    private static readonly int LastInputXHash = Animator.StringToHash("LastInputX");
+    private static readonly int LastInputYHash = Animator.StringToHash("LastInputY");
+
     [SerializeField] private Animator _animator;
+    [SerializeField] private Camera _worldCamera;
 
     private Vector2 _lastMouseAimedDirection = Vector2.down;
     private bool _isWalking = false;
@@ -16,9 +23,10 @@ public class PlayerAnimation : MonoBehaviour
     private void Awake()
     {
         if (_animator == null)
-        {
             _animator = GetComponent<Animator>();
-        }
+
+        if (_worldCamera == null)
+            _worldCamera = Camera.main;
     }
 
     private void Update()
@@ -33,6 +41,9 @@ public class PlayerAnimation : MonoBehaviour
 
     private void UpdateAnimator()
     {
+        if (_animator == null || _worldCamera == null)
+            return;
+
         Vector2 aimDirection = GetMouseDirection();
 
         // update last aim direction only when mouse moves noticeably
@@ -46,20 +57,20 @@ public class PlayerAnimation : MonoBehaviour
             OnFacingDirectionChanged?.Invoke(FacingDirection);
         }
 
-        _animator.SetBool("isWalking", _isWalking);
+        _animator.SetBool(IsWalkingHash, _isWalking);
 
         // update animator parameters for aiming
-        _animator.SetFloat("InputX", aimDirection.x);
-        _animator.SetFloat("InputY", aimDirection.y);
+        _animator.SetFloat(InputXHash, aimDirection.x);
+        _animator.SetFloat(InputYHash, aimDirection.y);
 
         // record the last direction for idle animations
-        _animator.SetFloat("LastInputX", _lastMouseAimedDirection.x);
-        _animator.SetFloat("LastInputY", _lastMouseAimedDirection.y);
+        _animator.SetFloat(LastInputXHash, _lastMouseAimedDirection.x);
+        _animator.SetFloat(LastInputYHash, _lastMouseAimedDirection.y);
     }
 
     private Vector2 GetMouseDirection()
     {
-        var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var mouseWorldPos = _worldCamera.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0f;
         var direction = (mouseWorldPos - transform.position).normalized;
         return direction;

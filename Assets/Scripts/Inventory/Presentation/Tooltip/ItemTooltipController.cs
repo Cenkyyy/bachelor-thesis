@@ -43,7 +43,6 @@ public sealed class ItemTooltipController : MonoBehaviour
             return;
         }
 
-        RegisterProviders();
         Hide();
     }
 
@@ -160,6 +159,9 @@ public sealed class ItemTooltipController : MonoBehaviour
 
     private void RegisterProviders()
     {
+        if (_providers.Count > 0)
+            return;
+
         _providers.AddRange(ItemTooltipProviderFactory.CreateDefault(_playerToolDurability));
     }
 
@@ -204,6 +206,8 @@ public sealed class ItemTooltipController : MonoBehaviour
 
     private ItemTooltipRuntimeData BuildRuntimeData(Slot slot, InventoryItem slotItem)
     {
+        RegisterProviders();
+
         var itemData = slotItem.Item;
         var runtimeData = new ItemTooltipRuntimeData
         {

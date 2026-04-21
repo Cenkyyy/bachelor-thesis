@@ -15,7 +15,7 @@ public class SpellWordInventory : MonoBehaviour
 
     public event Action OnWordsChanged;
 
-    private void Awake()
+    private void OnValidate()
     {
         SortUnlockedWords();
     }

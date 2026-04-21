@@ -377,6 +377,94 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: IceTundra_Foliage_2
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d42cfbb0bc81ce41856ca0a8ad17ff2
+      internalID: -1167032237228474425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IceTundra_Foliage_3
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 9
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e800f980b845761469f0163d2c363c88
+      internalID: 2360244974263363294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IceTundra_Foliage_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3042d9ef5e2f7384d9384533c10553f3
+      internalID: -4226947841892457752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IceTundra_Foliage_16
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31835d461198c9d439d162c83f574d19
+      internalID: -359578134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -399,6 +487,7 @@ TextureImporter:
       IceTundra_Foliage_13: 1248610404
       IceTundra_Foliage_14: 261028183
       IceTundra_Foliage_15: -805447246
+      IceTundra_Foliage_16: -359578134
       IceTundra_Foliage_2: -1167032237228474425
       IceTundra_Foliage_3: 2360244974263363294
       IceTundra_Foliage_4: -4226947841892457752

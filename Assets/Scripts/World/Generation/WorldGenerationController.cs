@@ -79,10 +79,19 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
 
     private int _playableRadius => (_worldWidth - (2 * _borderThickness)) / 2;
     private Coroutine _generationCoroutine;
+    private Coroutine _startupCoroutine;
     private readonly WorldRuntimeState _runtimeState = new WorldRuntimeState();
 
     private void Start()
     {
+        _startupCoroutine = StartCoroutine(BeginGenerationNextFrameCoroutine());
+    }
+
+    private IEnumerator BeginGenerationNextFrameCoroutine()
+    {
+        IsReadyForSceneReveal = false;
+        yield return null;
+        _startupCoroutine = null;
         GenerateAndRender(ResolveSeed());
     }
 
@@ -103,6 +112,12 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
         {
             StopCoroutine(_generationCoroutine);
             _generationCoroutine = null;
+        }
+
+        if (_startupCoroutine != null)
+        {
+            StopCoroutine(_startupCoroutine);
+            _startupCoroutine = null;
         }
 
         _runtimeState.Clear();

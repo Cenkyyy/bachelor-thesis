@@ -56,6 +56,8 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     private readonly Dictionary<Vector2Int, WallTileRuntimeData> _runtimeByTile = new();
     private readonly WallTileModificationState _modificationState = new();
     private readonly List<Vector2Int> _replenishedTilesBuffer = new();
+    private readonly List<Vector2Int> _replenishTickTilesBuffer = new();
+    private readonly HashSet<Vector2Int> _tilesAwaitingReplenishTick = new();
 
     private MiningProgressBar _activeMiningBar;
     private Vector2Int? _activeMiningBarTile;
@@ -64,14 +66,31 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
     private void Update()
     {
-        if (_runtimeByTile.Count == 0)
+        if (_tilesAwaitingReplenishTick.Count == 0)
             return;
 
         _replenishedTilesBuffer.Clear();
-        foreach (var pair in _runtimeByTile)
+        _replenishTickTilesBuffer.Clear();
+        _replenishTickTilesBuffer.AddRange(_tilesAwaitingReplenishTick);
+
+        for (int i = 0; i < _replenishTickTilesBuffer.Count; i++)
         {
-            if (pair.Value.TickReplenish(Time.deltaTime))
-                _replenishedTilesBuffer.Add(pair.Key);
+            var tile = _replenishTickTilesBuffer[i];
+            if (!_runtimeByTile.TryGetValue(tile, out var runtimeData))
+            {
+                _tilesAwaitingReplenishTick.Remove(tile);
+                continue;
+            }
+
+            if (runtimeData.TickReplenish(Time.deltaTime))
+            {
+                _tilesAwaitingReplenishTick.Remove(tile);
+                _replenishedTilesBuffer.Add(tile);
+                continue;
+            }
+
+            if (!runtimeData.IsAwaitingReplenishTick)
+                _tilesAwaitingReplenishTick.Remove(tile);
         }
 
         for (int i = 0; i < _replenishedTilesBuffer.Count; i++)
@@ -128,6 +147,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
                 var tile = tiles[i];
                 _wallTilemap.SetTile(_worldGenerator.CurrentWorldData.DataToCell(tile.x, tile.y), null);
                 _runtimeByTile.Remove(tile);
+                _tilesAwaitingReplenishTick.Remove(tile);
             }
         }
 
@@ -147,6 +167,9 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
         _spawnedChunkTiles.Clear();
         _runtimeByTile.Clear();
+        _tilesAwaitingReplenishTick.Clear();
+        _replenishTickTilesBuffer.Clear();
+        _replenishedTilesBuffer.Clear();
         ClearMiningBar();
     }
 
@@ -209,6 +232,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             _wallTilemap.SetTile(_worldGenerator.CurrentWorldData.DataToCell(dataTile.x, dataTile.y), null);
 
         _runtimeByTile.Remove(dataTile);
+        _tilesAwaitingReplenishTick.Remove(dataTile);
         _modificationState.MarkRemoved(dataTile);
         HideMiningBarForTile(dataTile);
 
@@ -221,10 +245,15 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         if (!_runtimeByTile.TryGetValue(dataTile, out var runtimeData))
             return;
 
-        if (!runtimeData.NotifyMiningStopped())
+        if (runtimeData.NotifyMiningStopped())
+        {
+            _tilesAwaitingReplenishTick.Remove(dataTile);
+            HandleTileReplenished(dataTile);
             return;
+        }
 
-        HandleTileReplenished(dataTile);
+        if (runtimeData.IsAwaitingReplenishTick)
+            _tilesAwaitingReplenishTick.Add(dataTile);
     }
 
     private void EnsureMiningBar(Vector2Int dataTile)

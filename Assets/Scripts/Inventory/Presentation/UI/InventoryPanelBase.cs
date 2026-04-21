@@ -11,6 +11,9 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : Slot
     [SerializeField] protected Player player;
     [SerializeField] private ItemCooldownTrackController _itemCooldownTrackController;
 
+    [Header("Initialization")]
+    [SerializeField, Min(1)] protected int slotBuildBatchSize = 4;
+
     protected abstract int SlotCount { get; }
     protected abstract int GetInventorySlotIndex(int panelSlotIndex);
 

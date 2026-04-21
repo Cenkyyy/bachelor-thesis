@@ -23,13 +23,14 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
     private readonly Dictionary<BiomeType, List<DecorationEntryData>> _entriesByBiome = new();
     private readonly DecorationModificationState _modificationState = new();
     private readonly GameObjectInstancePool _instancePool = new();
+    private bool _isBiomeIndexBuilt;
 
     protected override void OnEnable()
     {
         if (_spawnedDecorationsRoot == null)
             _spawnedDecorationsRoot = transform;
 
-        WorldObjectPlacementUtility.BuildBiomeIndex(_decorationsListData.Entries, _entriesByBiome, entry => entry.Prefab, entry => entry.DecorationId, entry => entry.AllowedBiomes);
+        _isBiomeIndexBuilt = false;
         base.OnEnable();
     }
 
@@ -85,6 +86,8 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
 
     private List<DecorationPlacement> GeneratePlacementsForChunk(WorldRuntimeData data, Vector2Int chunkCoord)
     {
+        EnsureBiomeIndexBuilt();
+
         int startX = chunkCoord.x * _chunkSize;
         int startY = chunkCoord.y * _chunkSize;
 
@@ -148,6 +151,16 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         }
 
         return placements;
+    }
+
+    private void EnsureBiomeIndexBuilt()
+    {
+        if (_isBiomeIndexBuilt)
+            return;
+
+        _entriesByBiome.Clear();
+        WorldObjectPlacementUtility.BuildBiomeIndex(_decorationsListData.Entries, _entriesByBiome, entry => entry.Prefab, entry => entry.DecorationId, entry => entry.AllowedBiomes);
+        _isBiomeIndexBuilt = true;
     }
 
     private DecorationPlacement? TryBuildPlacement(WorldRuntimeData data, DecorationEntryData entry, int tileX, int tileY, Vector2Int chunkCoord, int attemptIndex, List<DecorationPlacement> existing, System.Random rng)

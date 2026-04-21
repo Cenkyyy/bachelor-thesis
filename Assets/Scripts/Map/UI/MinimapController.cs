@@ -17,6 +17,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     [Header("UI Refs")]
     [SerializeField] private RawImage _terrainImage;
     [SerializeField] private RectTransform _minimapViewport;
+    [SerializeField] private RectMask2D _minimapMask;
     [SerializeField] private RectTransform _playerMarker;
     [SerializeField] private RectTransform _markerContainer;
     [SerializeField] private RectTransform _markerPrefab;
@@ -42,6 +43,34 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     private Color32[] _terrainPixelsByIndex;
     private Vector2Int _lastPlayerTile = new Vector2Int(int.MinValue, int.MinValue);
     public bool IsInitialized { get; private set; } = false;
+    private Coroutine _enableMaskCoroutine;
+
+    private void OnEnable()
+    {
+        if (_minimapMask == null)
+            return;
+
+        _minimapMask.enabled = false;
+        _enableMaskCoroutine = StartCoroutine(EnableMaskNextFrameCoroutine());
+    }
+
+    private void OnDisable()
+    {
+        if (_enableMaskCoroutine != null)
+        {
+            StopCoroutine(_enableMaskCoroutine);
+            _enableMaskCoroutine = null;
+        }
+    }
+
+    private IEnumerator EnableMaskNextFrameCoroutine()
+    {
+        yield return null;
+        if (_minimapMask != null)
+            _minimapMask.enabled = true;
+
+        _enableMaskCoroutine = null;
+    }
 
     public IEnumerator InitializeAsync(WorldRuntimeData worldData)
     {

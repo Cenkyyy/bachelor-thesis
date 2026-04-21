@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// Moves the HUD time of the day indicator arrow along the horizontal bar based on the current time of day from the DayNightSystem.
@@ -16,13 +17,14 @@ public sealed class TimeOfDayIndicatorController : MonoBehaviour
     [Header("Debug (Inspector Debug Mode)")]
     [SerializeField] private string _currentTime = "06:00";
     [SerializeField, Range(0f, 1f)] private float _timeProgress;
+    private Coroutine _initialRefreshCoroutine;
 
     private void OnEnable()
     {
         if (_time != null)
         {
             _time.OnMinuteChanged += HandleMinuteChanged;
-            HandleMinuteChanged(_time.Hour, _time.Minute);
+            _initialRefreshCoroutine = StartCoroutine(RefreshIndicatorNextFrameCoroutine());
         }
     }
 
@@ -30,6 +32,19 @@ public sealed class TimeOfDayIndicatorController : MonoBehaviour
     {
         if (_time != null)
             _time.OnMinuteChanged -= HandleMinuteChanged;
+
+        if (_initialRefreshCoroutine != null)
+        {
+            StopCoroutine(_initialRefreshCoroutine);
+            _initialRefreshCoroutine = null;
+        }
+    }
+
+    private IEnumerator RefreshIndicatorNextFrameCoroutine()
+    {
+        yield return null;
+        HandleMinuteChanged(_time.Hour, _time.Minute);
+        _initialRefreshCoroutine = null;
     }
 
     private void HandleMinuteChanged(int _, int __)

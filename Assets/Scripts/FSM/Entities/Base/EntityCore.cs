@@ -21,6 +21,8 @@ public abstract class EntityCore : StateMachineCore
     protected Transform target;
 
     private readonly RaycastHit2D[] _movementCastHits = MovementPushResistanceUtils.CreateCastBuffer();
+    private readonly RaycastHit2D[] _visionObstacleHits = new RaycastHit2D[16];
+    private ContactFilter2D _visionObstacleFilter = new();
     private readonly List<Vector2> _currentPath = new();
     private int _pathIndex = -1;
     private float _nextAllowedRepathTime;
@@ -33,6 +35,7 @@ public abstract class EntityCore : StateMachineCore
     protected override void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        ConfigureVisionObstacleFilter();
         base.Start();
     }
 
@@ -63,10 +66,10 @@ public abstract class EntityCore : StateMachineCore
         }
 
         dirToTarget = d.normalized;
-        var hits = Physics2D.RaycastAll(from, d.normalized, d.magnitude, obstacleMask);
-        for (var i = 0; i < hits.Length; i++)
+        var hitCount = Physics2D.Raycast(from, d.normalized, _visionObstacleFilter, _visionObstacleHits, d.magnitude);
+        for (var i = 0; i < hitCount; i++)
         {
-            var hitTransform = hits[i].transform;
+            var hitTransform = _visionObstacleHits[i].transform;
             if (hitTransform == null)
             {
                 continue;
@@ -81,6 +84,13 @@ public abstract class EntityCore : StateMachineCore
         }
 
         return true;
+    }
+
+    private void ConfigureVisionObstacleFilter()
+    {
+        _visionObstacleFilter.useLayerMask = true;
+        _visionObstacleFilter.layerMask = obstacleMask;
+        _visionObstacleFilter.useTriggers = false;
     }
 
     public void MoveTowards(Vector2 worldTarget)

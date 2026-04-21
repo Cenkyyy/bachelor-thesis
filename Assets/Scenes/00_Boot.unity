@@ -1976,8 +1976,9 @@ GameObject:
   - component: {fileID: 1468049976}
   - component: {fileID: 1468049975}
   - component: {fileID: 1468049974}
+  - component: {fileID: 1468049977}
   m_Layer: 0
-  m_Name: EventSystem
+  m_Name: PersistentEventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2037,45 +2038,25 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1468049973}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1610249964}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1610249963
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1610249964}
-  m_Layer: 0
-  m_Name: ------------- UI -------------
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1610249964
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610249963}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1468049976}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1468049977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468049973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa773721f9d52b44b8f3d6145c8344e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1625545493
 GameObject:
   m_ObjectHideFlags: 0
@@ -2906,9 +2887,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 937980740}
-  - {fileID: 1610249964}
   - {fileID: 470396483}
   - {fileID: 1625545494}
   - {fileID: 974794751}
   - {fileID: 33247761}
   - {fileID: 1389004387}
+  - {fileID: 1468049976}

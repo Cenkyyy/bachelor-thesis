@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,8 +20,11 @@ public sealed class PlayerToolDurability : MonoBehaviour
     {
         if (_player == null)
             _player = GetComponent<Player>() ?? GetComponentInParent<Player>();
+    }
 
-        RefreshAllSlots();
+    private void Start()
+    {
+        StartCoroutine(InitializeDurabilityStateCoroutine());
     }
 
     private void OnEnable()
@@ -33,6 +37,12 @@ public sealed class PlayerToolDurability : MonoBehaviour
     {
         if (_player?.Inventory != null)
             _player.Inventory.OnItemChanged -= HandleItemChanged;
+    }
+
+    private IEnumerator InitializeDurabilityStateCoroutine()
+    {
+        yield return null;
+        RefreshAllSlots();
     }
 
     public bool TryGetToolState(int slotIndex, out ItemData toolDefinition, out float current, out float max)

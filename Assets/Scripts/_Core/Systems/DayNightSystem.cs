@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -45,6 +46,7 @@ public sealed class DayNightSystem : MonoBehaviour
 
     private int _prevMinute = -1;
     private float _prevBrightness = -1f;
+    private bool _isRuntimeInitialized;
 
     private void Awake()
     {
@@ -58,9 +60,11 @@ public sealed class DayNightSystem : MonoBehaviour
 
         CurrentDay = Mathf.Max(1, _startDay);
         Time01 = Mathf.Repeat(_initialTime01, 1f);
-        RecomputeHhMm();
-        RecomputeNightFlag();
-        RecomputeBrightness(forceInvoke: true);
+    }
+
+    private void Start()
+    {
+        StartCoroutine(InitializeRuntimeStateCoroutine());
     }
 
     private void OnDestroy()
@@ -71,6 +75,9 @@ public sealed class DayNightSystem : MonoBehaviour
 
     private void Update()
     {
+        if (!_isRuntimeInitialized)
+            return;
+
         if (GameStateManager.IsGamePaused)
             return;
 
@@ -144,6 +151,17 @@ public sealed class DayNightSystem : MonoBehaviour
     {
         float d = Mathf.DeltaAngle(x * 360f, mean * 360f) / 180f * Mathf.PI;
         return Mathf.Exp(-(d * d) / (2f * sigma * sigma));
+    }
+
+    private IEnumerator InitializeRuntimeStateCoroutine()
+    {
+        yield return null;
+
+        RecomputeHhMm();
+        RecomputeNightFlag();
+        RecomputeBrightness(forceInvoke: false);
+        _isRuntimeInitialized = true;
+        OnBrightnessChanged?.Invoke(Brightness);
     }
 
     public float GetHudTimeBarPosition01() => GetHudTimeBarPosition01(Time01);

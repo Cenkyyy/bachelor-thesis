@@ -1,3 +1,5 @@
+using System.Collections;
+
 public class BackpackPanel : InventoryPanelBase<Slot>, IMajorPanel
 {
     protected override int SlotCount => player.Inventory.BackpackSize;
@@ -11,6 +13,12 @@ public class BackpackPanel : InventoryPanelBase<Slot>, IMajorPanel
     protected override void Start()
     {
         base.Start();
+        StartCoroutine(BuildSlotsCoroutine());
+    }
+
+    private IEnumerator BuildSlotsCoroutine()
+    {
+        yield return null;
 
         // temporarly set the inventory panel active to instantiate slots
         bool wasActive = slotParent.gameObject.activeSelf;
@@ -28,6 +36,9 @@ public class BackpackPanel : InventoryPanelBase<Slot>, IMajorPanel
             slots[i].OnPointerEntered += HandleSlotEnter;
             slots[i].OnPointerExited += HandleSlotExit;
             slots[i].OnSlotDisabled += HandleSlotDisabled;
+
+            if ((i + 1) % slotBuildBatchSize == 0)
+                yield return null;
         }
 
         slotParent.gameObject.SetActive(wasActive);
@@ -45,6 +56,9 @@ public class BackpackPanel : InventoryPanelBase<Slot>, IMajorPanel
 
     public override void RefreshSlot(int backpackIndex)
     {
+        if (slots == null)
+            return;
+
         var slotIndex = backpackIndex - player.Inventory.HotbarSize;
         if (slotIndex >= 0 && slotIndex < slots.Length)
         {
