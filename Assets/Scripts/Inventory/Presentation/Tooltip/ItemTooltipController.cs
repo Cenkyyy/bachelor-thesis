@@ -18,7 +18,6 @@ public sealed class ItemTooltipController : MonoBehaviour
 
     [Header("Behavior")]
     [SerializeField, Range(0.1f, 3f)] private float _hoverDelaySeconds = 0.75f;
-    [SerializeField] private Vector2 _slotOffset = new Vector2(30f, 30f);
 
     [Header("Runtime Dependencies")]
     [SerializeField] private PlayerToolDurability _playerToolDurability;
@@ -257,12 +256,10 @@ public sealed class ItemTooltipController : MonoBehaviour
         if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenTopRight, _canvas.worldCamera, out var localPoint))
             return;
 
-        var desired = localPoint + _slotOffset;
-
         // force layout before clamping so rect has proper size
         LayoutRebuilder.ForceRebuildLayoutImmediate(_panelRoot);
 
-        var clamped = ClampToCanvas(desired, canvasRect, _panelRoot);
+        var clamped = ClampToCanvas(localPoint, canvasRect, _panelRoot);
         _panelRoot.anchoredPosition = clamped;
     }
 
