@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -33,7 +32,7 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
         base.OnEnable();
     }
 
-    protected override bool CanStartStreaming(WorldRuntimeData data)
+    protected override bool CanStartStreaming()
     {
         return _decorationChunkGenerator == null || _decorationChunkGenerator.IsReadyForSceneReveal;
     }

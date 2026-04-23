@@ -39,9 +39,11 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         _modificationState.MarkRemoved(decorationInstanceId);
     }
 
-    protected override bool CanStartStreaming(WorldRuntimeData data)
+    protected override bool CanStartStreaming()
     {
-        return _terrainChunkGenerator == null || _terrainChunkGenerator.IsReadyForSceneReveal;
+        bool terrainReady = _terrainChunkGenerator == null || _terrainChunkGenerator.IsReadyForSceneReveal;
+        bool wallsReady = _wallChunkGenerator == null || _wallChunkGenerator.IsReadyForSceneReveal;
+        return terrainReady && wallsReady;
     }
 
     protected override bool IsChunkLoaded(Vector2Int chunkCoord)
@@ -51,6 +53,9 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
 
     protected override void GenerateChunk(WorldRuntimeData data, Vector2Int chunkCoord)
     {
+        if (!CanGenerateChunk(chunkCoord))
+            return;
+
         RunImmediate(SpawnChunkInstances(data, chunkCoord, yieldEveryOperations: 0, yieldInstruction: null));
     }
 
@@ -231,6 +236,11 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         return _wallChunkGenerator != null && _wallChunkGenerator.HasWallAtDataTile(dataTile);
     }
 
+    private bool CanGenerateChunk(Vector2Int chunkCoord)
+    {
+        return _wallChunkGenerator == null || _wallChunkGenerator.IsChunkLoadedAt(chunkCoord);
+    }
+
     private static string BuildInstanceId(string decorationId, Vector2Int chunkCoord, int attemptIndex, int clusterIndex)
     {
         return $"{decorationId}:{chunkCoord.x}:{chunkCoord.y}:{attemptIndex}:{clusterIndex}";
@@ -247,6 +257,9 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
 
     protected override IEnumerator GenerateChunkCoroutine(WorldRuntimeData data, Vector2Int chunkCoord)
     {
+        if (!CanGenerateChunk(chunkCoord))
+            yield break;
+
         yield return SpawnChunkInstances(data, chunkCoord, Mathf.Max(1, _spawnOperationsPerFrame), null);
     }
 

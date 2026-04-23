@@ -106,7 +106,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         base.OnEnable();
     }
 
-    protected override bool CanStartStreaming(WorldRuntimeData data)
+    protected override bool CanStartStreaming()
     {
         return _terrainChunkGenerator == null || _terrainChunkGenerator.IsReadyForSceneReveal;
     }
@@ -197,6 +197,11 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     public bool HasWallAtDataTile(Vector2Int dataTile)
     {
         return _runtimeByTile.ContainsKey(dataTile);
+    }
+
+    public bool IsChunkLoadedAt(Vector2Int chunkCoord)
+    {
+        return _spawnedChunkTiles.ContainsKey(chunkCoord);
     }
 
     public Vector3 GetTileCenterWorld(Vector2Int dataTile)

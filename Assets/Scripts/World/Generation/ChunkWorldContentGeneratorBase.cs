@@ -90,7 +90,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
         return true;
     }
 
-    protected virtual bool CanStartStreaming(WorldRuntimeData data)
+    protected virtual bool CanStartStreaming()
     {
         return true;
     }
@@ -117,7 +117,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
     {
         // get data, do initial fill, set the scene to be ready for reveal
         WorldRuntimeData initialData;
-        while (!TryGetWorldData(out initialData) || !CanStartStreaming(initialData))
+        while (!TryGetWorldData(out initialData) || !CanStartStreaming())
             yield return null;
 
         yield return StreamInitialChunksCoroutine(initialData);
