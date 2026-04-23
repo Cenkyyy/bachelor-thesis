@@ -52,13 +52,13 @@ public class HotbarPanel : InventoryPanelBase<HotbarSlot>
         var scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll > 0f)
         {
-            // scroll up
-            player.Inventory.SelectHotbar((_selectedIndex + 1) % slots.Length);
+            // scroll up - to the left of the hotbar
+            player.Inventory.SelectHotbar((_selectedIndex - 1 + slots.Length) % slots.Length);
         }
         else if (scroll < 0f)
         {
-            // scroll down
-            player.Inventory.SelectHotbar((_selectedIndex - 1 + slots.Length) % slots.Length);
+            // scroll down - to the right of the hotbar
+            player.Inventory.SelectHotbar((_selectedIndex + 1) % slots.Length);
         }
     }
 
