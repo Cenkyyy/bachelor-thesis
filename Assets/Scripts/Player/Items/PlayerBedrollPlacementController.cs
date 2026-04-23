@@ -14,6 +14,7 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
     [Header("Placement")]
     [SerializeField] private LayerMask _blockingLayerMask = ~0;
     [SerializeField] private float _placementRadius = 2f;
+    [SerializeField] private Transform _placementParent;
 
     private void Awake()
     {
@@ -112,7 +113,7 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
 
     private void PlaceAndConsume(IPlaceableItem placeableItem, Vector3 targetPosition, int slotIndex, InventoryItem slotItem)
     {
-        Instantiate(placeableItem.PlacementPrefab, targetPosition, Quaternion.identity);
+        Instantiate(placeableItem.PlacementPrefab, targetPosition, Quaternion.identity, _placementParent);
         ConsumeOneItem(slotIndex, slotItem);
     }
 
