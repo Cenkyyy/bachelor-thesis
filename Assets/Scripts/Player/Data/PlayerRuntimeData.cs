@@ -70,6 +70,8 @@ public class PlayerRuntimeData
 
     /// <summary> Raised after health changes; args: currentHealth, maxHealth. </summary>
     public event Action<int, int> OnHealthChanged;
+    /// <summary> Raised when damage is applied; arg: applied damage amount. </summary>
+    public event Action<int> OnDamageTaken;
     /// <summary> Raised after mana changes; args: currentMana, maxMana. </summary>
     public event Action<int, int> OnManaChanged;
     /// <summary> Raised after hunger changes; args: currentHunger, maxHunger. </summary>
@@ -149,7 +151,13 @@ public class PlayerRuntimeData
         if (amount <= 0)
             return;
 
+        var previousHealth = CurrentHealth;
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
+        var actualDamageTaken = previousHealth - CurrentHealth;
+
+        if (actualDamageTaken > 0)
+            OnDamageTaken?.Invoke(actualDamageTaken);
+
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
 

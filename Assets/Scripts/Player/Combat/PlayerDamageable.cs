@@ -32,6 +32,18 @@ public sealed class PlayerDamageable : MonoBehaviour, IDamageable
         }
     }
 
+    private void OnEnable()
+    {
+        if (_player != null && _player.Data != null)
+            _player.Data.OnDamageTaken += HandleDamageTaken;
+    }
+
+    private void OnDisable()
+    {
+        if (_player != null && _player.Data != null)
+            _player.Data.OnDamageTaken -= HandleDamageTaken;
+    }
+
     public void ReceiveDamage(int amount, object source = null)
     {
         if (!CanReceiveDamage || amount <= 0)
@@ -44,7 +56,14 @@ public sealed class PlayerDamageable : MonoBehaviour, IDamageable
             return;
 
         _player.Data.TakeDamage(finalDamage);
-        DamageWordTextPopupUtility.ShowForGameObject(gameObject, finalDamage, 1f, _damageWordTextPopupSettings);
+    }
+
+    private void HandleDamageTaken(int damage)
+    {
+        if (damage <= 0)
+            return;
+
+        DamageWordTextPopupUtility.ShowForGameObject(gameObject, damage, 1f, _damageWordTextPopupSettings);
     }
 
     private int CalculateFinalDamage(int incomingDamage, int defense)
