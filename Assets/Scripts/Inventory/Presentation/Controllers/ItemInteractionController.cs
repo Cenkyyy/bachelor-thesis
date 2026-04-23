@@ -144,6 +144,9 @@ public class ItemInteractionController : MonoBehaviour
     /// <param name="eventData">Pointer event data.</param>
     public void OnSlotPointerClicked(Slot slot, PointerEventData eventData)
     {
+        if (GameStateManager.IsGamePaused)
+            return;
+
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             if (ReferenceEquals(slot.Owner, _player.Equipment))
@@ -173,6 +176,9 @@ public class ItemInteractionController : MonoBehaviour
     /// <param name="eventData">Pointer event data.</param>
     public void OnSlotPointerEnter(Slot slot, PointerEventData eventData)
     {
+        if (GameStateManager.IsGamePaused)
+            return;
+
         if (ReferenceEquals(slot.Owner, _player.Equipment))
         {
             return;
