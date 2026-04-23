@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Buffers;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -39,9 +40,15 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
             return;
 
         // build ground and border tile arrays from the world data
-        var groundTiles = new TileBase[width * height];
-        var borderTiles = new TileBase[width * height];
+        int tileCount = width * height;
+        var groundTiles = ArrayPool<TileBase>.Shared.Rent(tileCount);
+        var borderTiles = ArrayPool<TileBase>.Shared.Rent(tileCount);
+        var borderCollisionTiles = ArrayPool<TileBase>.Shared.Rent(tileCount);
+        System.Array.Clear(groundTiles, 0, tileCount);
+        System.Array.Clear(borderTiles, 0, tileCount);
+        System.Array.Clear(borderCollisionTiles, 0, tileCount);
         var borderTileAsset = _worldGenerator.GetBorderTileAsset();
+        var borderCollisionTileAsset = _worldGenerator.GetBorderCollisionTileAsset();
 
         for (int y = 0; y < height; y++)
         {
@@ -55,6 +62,12 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
                 if (tile.TileType == TileType.Void)
                 {
                     borderTiles[index] = borderTileAsset;
+
+                    if (IsInnerBorderTile(data, dataX, dataY))
+                    {
+                        borderCollisionTiles[index] = borderCollisionTileAsset;
+                    }
+
                     continue;
                 }
 
@@ -67,10 +80,23 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
         var chunkBounds = new BoundsInt(chunkOriginCell.x, chunkOriginCell.y, 0, width, height, 1);
 
         if (_worldGenerator.GroundTilemap != null)
+        {
             _worldGenerator.GroundTilemap.SetTilesBlock(chunkBounds, groundTiles);
+            ArrayPool<TileBase>.Shared.Return(groundTiles, clearArray: false);
+        }
 
-        if (_worldGenerator.BorderTilemap != null)
-            _worldGenerator.BorderTilemap.SetTilesBlock(chunkBounds, borderTiles);
+
+        if (_worldGenerator.BorderVisualTilemap != null)
+        {
+            _worldGenerator.BorderVisualTilemap.SetTilesBlock(chunkBounds, borderTiles);
+            ArrayPool<TileBase>.Shared.Return(borderTiles, clearArray: false);
+        }
+                
+        if (_worldGenerator.BorderCollisionTilemap != null)
+        {
+            _worldGenerator.BorderCollisionTilemap.SetTilesBlock(chunkBounds, borderCollisionTiles);
+            ArrayPool<TileBase>.Shared.Return(borderCollisionTiles, clearArray: false);
+        }
 
         _renderedChunks.Add(chunkCoord);
     }
@@ -105,8 +131,11 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
         if (_worldGenerator.GroundTilemap != null)
             _worldGenerator.GroundTilemap.SetTilesBlock(chunkBounds, emptyTiles);
 
-        if (_worldGenerator.BorderTilemap != null)
-            _worldGenerator.BorderTilemap.SetTilesBlock(chunkBounds, emptyTiles);
+        if (_worldGenerator.BorderVisualTilemap != null)
+            _worldGenerator.BorderVisualTilemap.SetTilesBlock(chunkBounds, emptyTiles);
+
+        if (_worldGenerator.BorderCollisionTilemap != null)
+            _worldGenerator.BorderCollisionTilemap.SetTilesBlock(chunkBounds, emptyTiles);
 
         _renderedChunks.Remove(chunkCoord);
     }
@@ -131,7 +160,41 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
         if (_worldGenerator.GroundTilemap != null)
             _worldGenerator.GroundTilemap.ClearAllTiles();
 
-        if (_worldGenerator.BorderTilemap != null)
-            _worldGenerator.BorderTilemap.ClearAllTiles();
+        if (_worldGenerator.BorderVisualTilemap != null)
+            _worldGenerator.BorderVisualTilemap.ClearAllTiles();
+
+        if (_worldGenerator.BorderCollisionTilemap != null)
+            _worldGenerator.BorderCollisionTilemap.ClearAllTiles();
+    }
+
+    private static bool IsInnerBorderTile(WorldRuntimeData data, int x, int y)
+    {
+        if (!data.IsInside(x, y))
+            return false;
+
+        if (data.GetTile(x, y).TileType != TileType.Void)
+            return false;
+
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                if (i == 0 && j == 0)
+                    continue;
+
+                if (HasWalkableNeighbour(data, x + i, y + j))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool HasWalkableNeighbour(WorldRuntimeData data, int x, int y)
+    {
+        if (!data.IsInside(x, y))
+            return false;
+
+        return data.GetTile(x, y).TileType != TileType.Void;
     }
 }

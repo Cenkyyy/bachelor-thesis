@@ -12,7 +12,8 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
 
     [Header("Tilemaps")]
     [SerializeField] private Tilemap _groundTilemap;
-    [SerializeField] private Tilemap _borderTilemap;
+    [SerializeField] private Tilemap _borderVisualTilemap;
+    [SerializeField] private Tilemap _borderCollisionTilemap;
 
     [Header("Tiles")]
     [SerializeField] private TileBase _voidTile;
@@ -53,7 +54,8 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
     public int CurrentSeed => _runtimeState.Seed;
     public WorldRuntimeData CurrentWorldData => _runtimeState.Data;
     public Tilemap GroundTilemap => _runtimeState.GroundTilemap;
-    public Tilemap BorderTilemap => _borderTilemap;
+    public Tilemap BorderVisualTilemap => _borderVisualTilemap;
+    public Tilemap BorderCollisionTilemap => _borderCollisionTilemap;
     public WorldRuntimeState RuntimeState => _runtimeState;
     public bool IsReadyForSceneReveal { get; private set; }
 
@@ -360,13 +362,9 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
         return allowedBiomes[idx];
     }
 
-    public TileBase GetBorderTileAsset()
-    {
-        if (_borderTile != null)
-            return _borderTile;
+    public TileBase GetBorderTileAsset() => _borderTile;
 
-        return _voidTile;
-    }
+    public TileBase GetBorderCollisionTileAsset() => _voidTile;
 
     public TileBase GetTileAsset(TileType tileType)
     {

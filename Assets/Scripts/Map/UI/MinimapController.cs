@@ -29,7 +29,8 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     [Header("Config")]
     [SerializeField] private int _minimapHalfSizeTiles = 18;
     [SerializeField] private int _revealRadiusTiles = 8;
-    [SerializeField, Min(1)] private int _rowsProcessedPerFrameDuringInitialization = 48;
+    [SerializeField, Min(1)] private int _rowsProcessedPerFrameDuringInitialization = 24;
+    [SerializeField, Min(0.1f)] private float _maxInitializationMillisecondsPerFrame = 4.0f;
     [SerializeField] private TileColor[] _tileColors;
 
     public WorldRuntimeData WorldData { get; private set; }
@@ -37,7 +38,8 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
 
     public Texture2D TerrainTexture { get; private set; }
 
-    private Dictionary<TileType, Color32> _colorByTile;
+    private Color32[] _tileColorLookup;
+    private bool[] _hasColorOverrideForTileType;
     private readonly Dictionary<string, MapMarkerRuntimeData> _markerDataById = new Dictionary<string, MapMarkerRuntimeData>();
     private readonly Dictionary<string, RectTransform> _markerViewById = new Dictionary<string, RectTransform>();
     private Color32[] _terrainPixelsByIndex;
@@ -136,9 +138,20 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
 
     private void BuildColorLookup()
     {
-        _colorByTile = new Dictionary<TileType, Color32>();
+        int maxTileTypeValue = 0;
         for (int i = 0; i < _tileColors.Length; i++)
-            _colorByTile[_tileColors[i].TileType] = _tileColors[i].Color;
+            maxTileTypeValue = Mathf.Max(maxTileTypeValue, (int)_tileColors[i].TileType);
+
+        int lookupSize = Mathf.Max(maxTileTypeValue + 1, Enum.GetValues(typeof(TileType)).Length);
+        _tileColorLookup = new Color32[lookupSize];
+        _hasColorOverrideForTileType = new bool[lookupSize];
+
+        for (int i = 0; i < _tileColors.Length; i++)
+        {
+            int tileTypeIndex = (int)_tileColors[i].TileType;
+            _tileColorLookup[tileTypeIndex] = _tileColors[i].Color;
+            _hasColorOverrideForTileType[tileTypeIndex] = true;
+        }
     }
 
     private IEnumerator BuildTerrainTextureAsync()
@@ -146,39 +159,53 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
         int w = WorldData.Width;
         int h = WorldData.Height;
         int rowsPerFrame = Mathf.Max(1, _rowsProcessedPerFrameDuringInitialization);
+        float maxFrameTimeSeconds = Mathf.Max(0.0001f, _maxInitializationMillisecondsPerFrame * 0.001f);
 
         TerrainTexture = new Texture2D(w, h, TextureFormat.RGBA32, mipChain: false);
         TerrainTexture.filterMode = FilterMode.Point;
         TerrainTexture.wrapMode = TextureWrapMode.Clamp;
 
         _terrainPixelsByIndex = new Color32[w * h];
-        var hiddenPixels = new Color32[w * h];
 
         int processedRows = 0;
+        float frameStartTime = Time.realtimeSinceStartup;
         for (int y = 0; y < h; y++)
         {
             for (int x = 0; x < w; x++)
             {
                 int index = (y * w) + x;
+
                 var tileType = WorldData.GetTile(x, y).TileType;
-
-                if (!_colorByTile.TryGetValue(tileType, out var col))
-                    col = new Color32(0, 0, 0, 255);
-
+                var col = ResolveTileColor(tileType);
                 _terrainPixelsByIndex[index] = col;
-                hiddenPixels[index] = new Color32(col.r, col.g, col.b, 0);
             }
 
             processedRows++;
-            if (processedRows >= rowsPerFrame)
+            if (processedRows >= rowsPerFrame || Time.realtimeSinceStartup - frameStartTime >= maxFrameTimeSeconds)
             {
                 processedRows = 0;
+                frameStartTime = Time.realtimeSinceStartup;
                 yield return null;
             }
         }
 
-        TerrainTexture.SetPixels32(hiddenPixels);
+        TerrainTexture.SetPixels32(new Color32[w * h]);
         TerrainTexture.Apply(updateMipmaps: false);
+    }
+
+    private Color32 ResolveTileColor(TileType tileType)
+    {
+        int tileTypeIndex = (int)tileType;
+        if (_tileColorLookup != null
+            && _hasColorOverrideForTileType != null
+            && tileTypeIndex >= 0
+            && tileTypeIndex < _tileColorLookup.Length
+            && _hasColorOverrideForTileType[tileTypeIndex])
+        {
+            return _tileColorLookup[tileTypeIndex];
+        }
+
+        return new Color32(0, 0, 0, 255);
     }
 
     private void UpdateView(bool force)
