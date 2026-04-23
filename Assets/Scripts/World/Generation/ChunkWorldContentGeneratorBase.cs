@@ -42,7 +42,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
             _streamingCoroutine = null;
         }
 
-        ClearGeneratedChunks();
+        RunImmediate(ClearGeneratedChunksCoroutine());
         IsReadyForSceneReveal = false;
     }
 
@@ -100,6 +100,12 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
     protected abstract void UnloadChunk(Vector2Int chunkCoord);
     protected abstract IEnumerable<Vector2Int> GetLoadedChunks();
     protected abstract void ClearGeneratedChunks();
+
+    protected virtual IEnumerator ClearGeneratedChunksCoroutine()
+    {
+        ClearGeneratedChunks();
+        yield break;
+    }
 
     protected virtual IEnumerator GenerateChunkCoroutine(WorldRuntimeData data, Vector2Int chunkCoord)
     {
@@ -229,5 +235,13 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
 
         data = _worldGenerator.CurrentWorldData;
         return true;
+    }
+
+    private void RunImmediate(IEnumerator routine)
+    {
+        if (routine == null)
+            return;
+
+        while (routine.MoveNext()) { }
     }
 }

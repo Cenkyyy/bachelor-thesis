@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
@@ -18,6 +21,11 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
     [SerializeField] private CustomCursorController _cursorController;
     [SerializeField, Range(0f, 1f)] private float _fallbackSaturation = 1f;
     [SerializeField, Range(0f, 1f)] private float _fallbackValue = 1f;
+
+    [Header("Scene Switch Optimization")]
+    [SerializeField, Min(1)] private int _colliderDisableOperationsPerFrame = 200;
+
+    private bool _isReturningToMenu;
 
     public PanelId Id => PanelId.Settings;
     public bool IsOpen => _settingsPanel.activeSelf;
@@ -123,9 +131,48 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
 
     private void ReturnToMenu()
     {
+        if (_isReturningToMenu)
+            return;
+
+        StartCoroutine(ReturnToMenuCoroutine());
+    }
+
+    private IEnumerator ReturnToMenuCoroutine()
+    {
+        _isReturningToMenu = true;
+
+        if (_returnToMenuButton != null)
+            _returnToMenuButton.interactable = false;
+
+        yield return DisableActiveSceneCollidersCoroutine();
+
         if (SceneLoader.Instance != null)
-        {
             SceneLoader.Instance.LoadMenuWithTransition();
+
+        _isReturningToMenu = false;
+
+        if (_returnToMenuButton != null)
+            _returnToMenuButton.interactable = true;
+    }
+
+    private IEnumerator DisableActiveSceneCollidersCoroutine()
+    {
+        var colliders = FindObjectsByType<Collider2D>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+
+        if (colliders.Length == 0)
+            yield break;
+
+        int operations = 0;
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            colliders[i].enabled = false;
+            operations++;
+
+            if (operations >= _colliderDisableOperationsPerFrame)
+            {
+                operations = 0;
+                yield return null;
+            }
         }
     }
 

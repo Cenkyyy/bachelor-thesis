@@ -77,6 +77,22 @@ public sealed class FoliageChunkGenerator : ChunkWorldContentGeneratorBase
         _instancePool.Clear();
     }
 
+    protected override IEnumerator ClearGeneratedChunksCoroutine()
+    {
+        if (_spawnedChunkInstances.Count == 0)
+        {
+            _instancePool.Clear();
+            yield break;
+        }
+
+        var loadedChunks = new List<Vector2Int>(_spawnedChunkInstances.Keys);
+
+        for (int i = 0; i < loadedChunks.Count; i++)
+            yield return UnloadChunkInstances(loadedChunks[i], _unloadOperationsPerFrame, null);
+
+        _instancePool.Clear();
+    }
+
     private List<FoliagePlacement> GeneratePlacementsForChunk(WorldRuntimeData data, Vector2Int chunkCoord)
     {
         EnsureBiomeIndexBuilt();
