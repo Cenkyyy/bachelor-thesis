@@ -6061,7 +6061,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1486129156}
+  - {fileID: 1541602682}
   m_Father: {fileID: 1097722628}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &626142997
@@ -10756,7 +10758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _groundTilemap: {fileID: 188757767}
-  _borderVisualTilemap: {fileID: 0}
+  _borderVisualTilemap: {fileID: 1915761084}
   _borderCollisionTilemap: {fileID: 270447266}
   _voidTile: {fileID: 11400000, guid: 2338bd3061057b1419c8a04c4c675237, type: 2}
   _grasslandBaseTile: {fileID: 11400000, guid: 4f587eafb0690284cae2a8e47e8caaef, type: 2}
@@ -10899,9 +10901,10 @@ MonoBehaviour:
   _chunksUnloadedPerFrame: 1
   _terrainChunkGenerator: {fileID: 1097722632}
   _wallTilemap: {fileID: 626142998}
+  _wallMiningBarsContainer: {fileID: 1486129156}
   _miningBarPrefab: {fileID: 169936977825393500, guid: 2192519b60bece042b027bd588a9ef33, type: 3}
-  _miningBarRoot: {fileID: 0}
-  _miningBarOffset: {x: 0, y: 0, z: 0}
+  _feedbackPopupEmitter: {fileID: 1541602683}
+  _higherToolRequiredMessage: Higher tool is required
   _biomeWallTiles:
   - <Biome>k__BackingField: 1
     <RuleTile>k__BackingField: {fileID: 11400000, guid: f066bbd9ae960df479f1e79527e5cb76, type: 2}
@@ -10915,7 +10918,6 @@ MonoBehaviour:
   - <Biome>k__BackingField: 4
     <RuleTile>k__BackingField: {fileID: 11400000, guid: f066bbd9ae960df479f1e79527e5cb76, type: 2}
     <MineableData>k__BackingField: {fileID: 11400000, guid: 07c04f9c8f16ee041a8bf72d9dfa537c, type: 2}
-  _higherToolRequiredMessage: Higher tool is required
   _enableChunkUnloading: 1
   _minClustersPerChunk: 1
   _maxClustersPerChunk: 3
@@ -12725,6 +12727,37 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 86271b6dce74fc0448dcb9d3d6f91b9c, type: 2}
   - {fileID: 11400000, guid: e1856262e87f6a54dacf55f87fdde13e, type: 2}
   _refreshIntervalSeconds: 0.1
+--- !u!1 &1486129155
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1486129156}
+  m_Layer: 0
+  m_Name: Wall_MiningBarsContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1486129156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1486129155}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 626142996}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1486302467
 GameObject:
   m_ObjectHideFlags: 0
@@ -13654,6 +13687,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1540793180}
   m_CullTransparentMesh: 1
+--- !u!1 &1541602681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1541602682}
+  - component: {fileID: 1541602683}
+  m_Layer: 10
+  m_Name: Wall_FeedbackPopup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1541602682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541602681}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 626142996}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1541602683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541602681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1971731234e694f4ab34acd03d85fe09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localOffset: {x: 0, y: 0.5, z: 0}
+  _textColor: {r: 1, g: 1, b: 1, a: 1}
+  _fontSize: 2.5
+  _fontAsset: {fileID: 11400000, guid: b38523a5958474b49b379ba60931379c, type: 2}
+  _inheritHostRendererSorting: 0
+  _sortingOrderOffset: 10
+  _sortingLayerName: WorldObject
+  _sortingOrder: 50
+  _duration: 1.2
+  _riseDistance: 0.5
+  _cooldownSeconds: 2.5
+  _stackSpacing: 0.2
+  _maxActivePopups: 1
 --- !u!1 &1544745940
 GameObject:
   m_ObjectHideFlags: 0

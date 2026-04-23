@@ -28,6 +28,8 @@ public sealed class WorldTextPopupEmitter : MonoBehaviour
     private float _nextAllowedShowTime;
     private readonly List<WordTextPopupRuntimeData> _activePopups = new();
 
+    public bool HasActivePopup => _activePopups.Count > 0;
+
     private void Awake()
     {
         if (_fontAsset == null)

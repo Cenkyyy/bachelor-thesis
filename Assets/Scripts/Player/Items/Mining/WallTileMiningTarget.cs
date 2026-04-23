@@ -20,7 +20,7 @@ public sealed class WallTileMiningTarget : IMineableTarget
 
     public void ShowHigherToolRequiredFeedback()
     {
-        _wallGenerator?.ShowHigherToolRequiredFeedback();
+        _wallGenerator?.ShowHigherToolRequiredFeedback(_tile);
     }
 
     public void NotifyMiningStarted()
