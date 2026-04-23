@@ -8,7 +8,8 @@ public sealed class WallTileRuntimeData
     public float CurrentDurability { get; private set; }
     public float MaxDurability => MineableData != null ? Mathf.Max(0f, MineableData.MaxDurability) : 0f;
     public float MiningProgressNormalized => MaxDurability <= 0f ? 0f : Mathf.Clamp01(1f - (CurrentDurability / MaxDurability));
-    public bool IsAwaitingReplenishTick => !_isBeingMined && CurrentDurability < MaxDurability && _replenishTimer > 0f;
+    public bool HasDamage => CurrentDurability < MaxDurability;
+    public bool IsAwaitingReplenishTick => !_isBeingMined && HasDamage && _replenishTimer > 0f;
 
     private bool _isBeingMined;
     private float _replenishTimer;
@@ -39,8 +40,7 @@ public sealed class WallTileRuntimeData
         if (MineableData == null)
             return false;
 
-        _isBeingMined = true;
-        _replenishTimer = 0f;
+        NotifyMiningStarted();
 
         var powerMultiplier = Mathf.Max(0f, MineableData.ToolPowerMultiplier);
         var power = Mathf.Max(0f, basePower * powerMultiplier);
@@ -51,10 +51,16 @@ public sealed class WallTileRuntimeData
         return CurrentDurability <= 0f;
     }
 
+    public void NotifyMiningStarted()
+    {
+        _isBeingMined = true;
+        _replenishTimer = 0f;
+    }
+
     public bool NotifyMiningStopped()
     {
         _isBeingMined = false;
-        if (!HasDamage())
+        if (!HasDamage)
             return false;
 
         var replenishDuration = Mathf.Max(0f, MineableData.ReplenishDurationSeconds);
@@ -70,7 +76,7 @@ public sealed class WallTileRuntimeData
 
     public bool TickReplenish(float deltaTime)
     {
-        if (_isBeingMined || !HasDamage() || _replenishTimer <= 0f)
+        if (_isBeingMined || !HasDamage || _replenishTimer <= 0f)
             return false;
 
         _replenishTimer -= deltaTime;
@@ -79,11 +85,6 @@ public sealed class WallTileRuntimeData
 
         ResetDurability();
         return true;
-    }
-
-    private bool HasDamage()
-    {
-        return CurrentDurability < MaxDurability;
     }
 
     private void ResetDurability()

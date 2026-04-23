@@ -23,6 +23,11 @@ public sealed class WallTileMiningTarget : IMineableTarget
         _wallGenerator?.ShowHigherToolRequiredFeedback();
     }
 
+    public void NotifyMiningStarted()
+    {
+        _wallGenerator?.NotifyMiningStarted(_tile);
+    }
+
     public void ApplyMiningDamage(float basePower, Player miner, ItemDropSpawner dropSpawner)
     {
         _wallGenerator?.ApplyMiningDamage(_tile, basePower, miner, dropSpawner);

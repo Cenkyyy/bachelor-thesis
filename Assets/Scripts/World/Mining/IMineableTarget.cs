@@ -6,6 +6,7 @@ public interface IMineableTarget
 
     bool CanBeMinedWith(MiningToolContext tool);
     void ShowHigherToolRequiredFeedback();
+    void NotifyMiningStarted();
     void ApplyMiningDamage(float basePower, Player miner, ItemDropSpawner dropSpawner);
     void NotifyMiningStopped();
     bool IsSameTarget(IMineableTarget other);

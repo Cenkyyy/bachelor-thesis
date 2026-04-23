@@ -75,13 +75,22 @@ public sealed class MineableNode : MonoBehaviour
         _feedbackPopup.ShowMessage(_higherToolRequiredMessage);
     }
 
-    public void ApplyMiningDamage(float basePower, Player miner, ItemDropSpawner dropSpawner)
+    public void NotifyMiningStarted()
     {
         if (_isDepleted)
             return;
 
         _isBeingMined = true;
         _replenishTimer = 0f;
+        RaiseProgressChanged();
+    }
+
+    public void ApplyMiningDamage(float basePower, Player miner, ItemDropSpawner dropSpawner)
+    {
+        if (_isDepleted)
+            return;
+
+        NotifyMiningStarted();
 
         var powerMultiplier = Mathf.Max(0f, _data.ToolPowerMultiplier);
         var power = Mathf.Max(0f, basePower * powerMultiplier);
@@ -103,9 +112,15 @@ public sealed class MineableNode : MonoBehaviour
         if (_isDepleted)
             return;
 
+        bool wasBeingMined = _isBeingMined;
         _isBeingMined = false;
         if (!HasDamage())
+        {
+            if (wasBeingMined)
+                OnMiningStopped?.Invoke();
             return;
+        }
+
 
         var replenishDuration = Mathf.Max(0f, _data.ReplenishDurationSeconds);
         if (replenishDuration <= 0f)

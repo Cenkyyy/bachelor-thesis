@@ -59,17 +59,23 @@ public sealed class PlayerMiningController : MonoBehaviour
             return;
         }
 
-        if (_currentTarget != null && !_currentTarget.IsSameTarget(target))
+        bool targetChanged = _currentTarget == null || !_currentTarget.IsSameTarget(target);
+        if (_currentTarget != null && targetChanged)
         {
             _currentTarget.NotifyMiningStopped();
             _miningTickAccumulator = 0f;
         }
 
-        if (_currentToolSlot != toolContext.SlotIndex)
+        bool toolChanged = _currentToolSlot != toolContext.SlotIndex;
+        if (toolChanged)
             _miningTickAccumulator = 0f;
 
         _currentTarget = target;
         _currentToolSlot = toolContext.SlotIndex;
+
+        if (targetChanged || toolChanged)
+            _currentTarget.NotifyMiningStarted();
+
         _miningTickAccumulator += Time.deltaTime;
 
         var tickInterval = Mathf.Max(0.1f, _miningTickIntervalSeconds);
