@@ -2,6 +2,8 @@ using UnityEngine;
 
 public sealed class PlayerMiningController : MonoBehaviour
 {
+    private const float HandMiningPower = 1f;
+
     [Header("Refs")]
     [SerializeField] private Player _player;
     [SerializeField] private PlayerToolDurability _toolDurability;
@@ -17,7 +19,6 @@ public sealed class PlayerMiningController : MonoBehaviour
 
     [Header("Hand Mining")]
     [SerializeField] private bool _allowHandMining = true;
-    [SerializeField] private float _handMiningPower = 1f;
 
     private IMineableTarget _currentTarget;
     private int _currentToolSlot = -1;
@@ -46,8 +47,11 @@ public sealed class PlayerMiningController : MonoBehaviour
             return;
         }
 
-        if (!TryResolveTool(out var toolContext))
+        if (!TryResolveTool(target, out var toolContext))
         {
+            if (ShouldShowToolRequirementFeedback(target))
+                target.ShowHigherToolRequiredFeedback();
+
             ResetMining();
             return;
         }
@@ -96,6 +100,14 @@ public sealed class PlayerMiningController : MonoBehaviour
         }
     }
 
+    private bool ShouldShowToolRequirementFeedback(IMineableTarget target)
+    {
+        if (target == null)
+            return false;
+
+        return !target.CanBeMinedWith(MiningToolContext.Hand(HandMiningPower));
+    }
+
     private void ResetMining()
     {
         _currentTarget?.NotifyMiningStopped();
@@ -140,9 +152,19 @@ public sealed class PlayerMiningController : MonoBehaviour
         return distance <= _miningRange;
     }
 
-    private bool TryResolveTool(out MiningToolContext toolContext)
+    private bool TryResolveTool(IMineableTarget target, out MiningToolContext toolContext)
     {
         toolContext = default;
+
+        if (target != null && _allowHandMining)
+        {
+            var handContext = MiningToolContext.Hand(HandMiningPower);
+            if (target.CanBeMinedWith(handContext))
+            {
+                toolContext = handContext;
+                return true;
+            }
+        }
 
         if (_player.Inventory == null)
             return false;
@@ -150,24 +172,13 @@ public sealed class PlayerMiningController : MonoBehaviour
         var slotIndex = _player.Inventory.SelectedHotbarIndex;
         var item = _player.Inventory.GetItemAt(slotIndex);
 
-        if (item.Item is IMiningTool tool)
-        {
-            if (_toolDurability != null && _toolDurability.TryGetToolState(slotIndex, out _, out var currentDurability, out _))
-            {
-                if (currentDurability <= 0f)
-                    return false;
-            }
+        if (item.Item is not IMiningTool tool)
+            return false;
 
-            toolContext = MiningToolContext.Tool(slotIndex, tool);
-            return true;
-        }
+        if (_toolDurability != null && _toolDurability.TryGetToolState(slotIndex, out _, out var currentDurability, out _) && currentDurability <= 0f)
+            return false;
 
-        if (_allowHandMining)
-        {
-            toolContext = MiningToolContext.Hand(_handMiningPower);
-            return true;
-        }
-
-        return false;
+        toolContext = MiningToolContext.Tool(slotIndex, tool);
+        return true;
     }
 }
