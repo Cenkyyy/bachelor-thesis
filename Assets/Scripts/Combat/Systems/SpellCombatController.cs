@@ -7,6 +7,7 @@ public class SpellCombatController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Player _player;
+    [SerializeField] private PlayerHeldItemVisual _playerHeldItemVisual;
     [SerializeField] private SpellCastingPanelController _castingPanel;
     [SerializeField] private WorldTextPopupEmitter _feedbackPopup;
 
@@ -134,7 +135,7 @@ public class SpellCombatController : MonoBehaviour
 
     private IEnumerator ExecuteCast(CastState castState)
     {
-        var directions = GetCastDirections();
+        var directions = GetCastDirections(_playerHeldItemVisual.CurrentHandAnchor.position);
         if (castState.Modifier == ModifierWord.Splitting)
         {
             for (var i = 0; i < directions.Length; i++)
@@ -195,7 +196,7 @@ public class SpellCombatController : MonoBehaviour
 
     private void FireLineSpell(CastState castState, Vector2 direction, bool oncePerTarget)
     {
-        var origin = (Vector2)transform.position;
+        Vector2 origin = _playerHeldItemVisual.CurrentHandAnchor.position;
         QueryTargetsInRadius(origin, _settings.Range);
         var nearestDistance = float.MaxValue;
         var nearestTarget = (ISpellTarget)null;
@@ -243,7 +244,7 @@ public class SpellCombatController : MonoBehaviour
 
     private void FireWaveSpell(CastState castState, Vector2 direction)
     {
-        var origin = (Vector2)transform.position;
+        Vector2 origin = _playerHeldItemVisual.CurrentHandAnchor.position;
         QueryTargetsInRadius(origin, _settings.Range);
 
         for (var i = 0; i < _targetBuffer.Count; i++)
@@ -372,11 +373,11 @@ public class SpellCombatController : MonoBehaviour
         zone.Initialize(_settings.PoisonCloudRadius, _settings.PoisonCloudDuration, _settings.DotDamagePerSecond, _targetMask, _player);
     }
 
-    private Vector2[] GetCastDirections()
+    private Vector2[] GetCastDirections(Vector2 origin)
     {
-        var mouseWorld = Camera.main != null ? (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) : (Vector2)transform.position + Vector2.right;
+        var mouseWorld = Camera.main != null ? (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) : origin + Vector2.right;
 
-        var forward = (mouseWorld - (Vector2)transform.position).normalized;
+        var forward = (mouseWorld - origin).normalized;
         if (forward == Vector2.zero)
             forward = Vector2.right;
 

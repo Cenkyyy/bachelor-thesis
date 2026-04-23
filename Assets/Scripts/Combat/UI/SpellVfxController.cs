@@ -6,11 +6,17 @@ public class SpellVfxController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private SpellCombatController _spellCombatController;
+    [SerializeField] private PlayerHeldItemVisual _playerHeldItemVisual;
     [SerializeField] private SpellVfxData _vfxData;
 
     [Header("Spawning")]
-    [SerializeField] private Transform _spawnOrigin;
     [SerializeField, Min(0.01f)] private float _barrageInterval = 0.08f;
+
+    private void Awake()
+    {
+        if (_playerHeldItemVisual == null)
+            _playerHeldItemVisual = GetComponentInChildren<PlayerHeldItemVisual>();
+    }
 
     private void OnEnable()
     {
@@ -29,7 +35,8 @@ public class SpellVfxController : MonoBehaviour
         if (!phrase.IsComplete || _vfxData == null || _vfxData.BaseSpellPrefab == null)
             return;
 
-        var direction = GetForwardDirection();
+        var origin = _playerHeldItemVisual.CurrentHandAnchor.position;
+        var direction = GetForwardDirection(origin);
         var directions = BuildDirections(direction, phrase.Modifier.Value);
         var profile = _vfxData.GetProfile(phrase.Form.Value);
         var tint = _vfxData.GetElementColor(phrase.Element.Value);
@@ -55,9 +62,10 @@ public class SpellVfxController : MonoBehaviour
 
     private void SpawnBatch(IReadOnlyList<Vector2> directions, SpellVfxProfile profile, Color tint)
     {
+        var origin = _playerHeldItemVisual.CurrentHandAnchor.position;
         for (var i = 0; i < directions.Count; i++)
         {
-            var spellObject = Instantiate(_vfxData.BaseSpellPrefab, _spawnOrigin.position, Quaternion.identity);
+            var spellObject = Instantiate(_vfxData.BaseSpellPrefab, origin, Quaternion.identity);
             var instance = spellObject.GetComponent<SpellVfxInstance>();
             if (instance == null)
                 instance = spellObject.AddComponent<SpellVfxInstance>();
@@ -79,11 +87,11 @@ public class SpellVfxController : MonoBehaviour
         };
     }
 
-    private Vector2 GetForwardDirection()
+    private Vector2 GetForwardDirection(Vector2 origin)
     {
-        var mouseWorld = Camera.main != null ? (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) : (Vector2)_spawnOrigin.position + Vector2.right;
+        var mouseWorld = Camera.main != null ? (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) : origin + Vector2.right;
 
-        var forward = (mouseWorld - (Vector2)_spawnOrigin.position).normalized;
+        var forward = (mouseWorld - origin).normalized;
         return forward == Vector2.zero ? Vector2.right : forward;
     }
 

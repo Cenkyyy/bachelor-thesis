@@ -5693,6 +5693,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 323979528}
   m_CullTransparentMesh: 1
+--- !u!1 &325433511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 325433512}
+  m_Layer: 0
+  m_Name: BedrollsContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &325433512
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325433511}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1327090048}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &360906240
 GameObject:
   m_ObjectHideFlags: 0
@@ -13811,6 +13842,7 @@ Transform:
   - {fileID: 2002939701}
   - {fileID: 568387668}
   - {fileID: 1426833342}
+  - {fileID: 325433512}
   m_Father: {fileID: 174293338}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1362542294
@@ -21082,6 +21114,10 @@ PrefabInstance:
       propertyPath: _deathFadeCanvasGroup
       value: 
       objectReference: {fileID: 669887594}
+    - target: {fileID: 2737436318412507732, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _decorationChunkGenerator
+      value: 
+      objectReference: {fileID: 1097722630}
     - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _uiRaycaster
       value: 
@@ -21150,6 +21186,10 @@ PrefabInstance:
       propertyPath: _castingPanel
       value: 
       objectReference: {fileID: 192015840}
+    - target: {fileID: 5402159747806690286, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _worldCamera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 5815203664740908025, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _camera
       value: 
@@ -21158,6 +21198,10 @@ PrefabInstance:
       propertyPath: _worldGrid
       value: 
       objectReference: {fileID: 1097722627}
+    - target: {fileID: 5815203664740908025, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _placementParent
+      value: 
+      objectReference: {fileID: 325433512}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

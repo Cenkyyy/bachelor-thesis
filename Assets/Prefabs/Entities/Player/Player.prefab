@@ -342,6 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1856092043942259651}
+  _worldCamera: {fileID: 0}
 --- !u!114 &3255990485141274289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,6 +383,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _miningRange: 1.5
+  _miningTickIntervalSeconds: 1
   _allowHandMining: 1
   _handMiningPower: 1
 --- !u!114 &4403078374656698331
@@ -425,6 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
+  _playerHeldItemVisual: {fileID: 758897473396495506}
   _castingPanel: {fileID: 0}
   _feedbackPopup: {fileID: 4686141728631495212}
   _castOnCooldownMessage: Spell is recharging
@@ -530,8 +533,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spellCombatController: {fileID: 4319894653538523301}
+  _playerHeldItemVisual: {fileID: 758897473396495506}
   _vfxData: {fileID: 11400000, guid: d596ae22048838d4ba36735254e29ae2, type: 2}
-  _spawnOrigin: {fileID: 3689139185868277431}
   _barrageInterval: 0.08
 --- !u!114 &2737436318412507732
 MonoBehaviour:
@@ -581,7 +584,8 @@ MonoBehaviour:
   _blockingLayerMask:
     serializedVersion: 2
     m_Bits: 1408
-  _placementRadius: 2
+  _placementRadius: 1
+  _placementParent: {fileID: 0}
 --- !u!114 &691936326778899438
 MonoBehaviour:
   m_ObjectHideFlags: 0

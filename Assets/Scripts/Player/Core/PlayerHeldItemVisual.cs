@@ -26,6 +26,8 @@ public sealed class PlayerHeldItemVisual : MonoBehaviour
 
     private bool _isSubscribed;
 
+    public Transform CurrentHandAnchor { get; private set; }
+
     private void Awake()
     {
         if (_player == null)
@@ -36,6 +38,8 @@ public sealed class PlayerHeldItemVisual : MonoBehaviour
 
         if (_heldItemRenderer != null)
             _heldItemRenderer.gameObject.SetActive(true);
+
+        CurrentHandAnchor = _downAnchor;
     }
 
     private void Start()
@@ -151,7 +155,8 @@ public sealed class PlayerHeldItemVisual : MonoBehaviour
         if (_heldItemRenderer == null)
             return;
 
-        var anchor = GetAnchor(direction);
+        var anchor = GetAnchorForFacingDirection(direction);
+        CurrentHandAnchor = anchor;
         if (anchor != null && _heldItemRenderer.transform.parent != anchor)
         {
             _heldItemRenderer.transform.SetParent(anchor, false);
@@ -163,7 +168,7 @@ public sealed class PlayerHeldItemVisual : MonoBehaviour
         _heldItemRenderer.sortingOrder = GetSortingOrder(direction);
     }
 
-    private Transform GetAnchor(PlayerFacingDirection direction)
+    private Transform GetAnchorForFacingDirection(PlayerFacingDirection direction)
     {
         return direction switch
         {
