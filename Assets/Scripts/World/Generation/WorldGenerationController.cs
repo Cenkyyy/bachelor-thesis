@@ -178,6 +178,11 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
 
     private int ResolveSeed()
     {
+        if (WorldSeedUtils.TryGetCustomSeed(out int configuredSeed))
+        {
+            return configuredSeed;
+        }
+
         if (_randomizeSeedOnPlay)
         {
             return WorldSeedUtils.CreateRandomSeed();

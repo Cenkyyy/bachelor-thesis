@@ -13,10 +13,27 @@ public static class WorldSeedUtils
     private const float PerlinSeedScaleX = 0.01713f;
     private const float PerlinSeedScaleY = 0.00971f;
 
+    public static string SeedText { get; private set; }
+    public static bool HasCustomSeed => !string.IsNullOrEmpty(SeedText);
+
     public static int CreateRandomSeed()
     {
         var bytes = Guid.NewGuid().ToByteArray();
         return BitConverter.ToInt32(bytes, 0);
+    }
+
+    public static void SetSeedText(string seedText)
+    {
+        SeedText = seedText ?? string.Empty;
+    }
+
+    public static bool TryGetCustomSeed(out int seed)
+    {
+        seed = default;
+        if (!HasCustomSeed)
+            return false;
+
+        return int.TryParse(SeedText, out seed);
     }
 
     /// <summary>

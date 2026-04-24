@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -7,6 +8,9 @@ using UnityEngine.UI;
 /// </summary>
 public sealed class MainMenuSettingsPanelController : MonoBehaviour
 {
+    [Header("World Seed)")]
+    [SerializeField] private TMP_InputField _worldSeedInputField;
+
     [Header("Audio")]
     [SerializeField] private Slider _audioSlider;
 
@@ -29,6 +33,7 @@ public sealed class MainMenuSettingsPanelController : MonoBehaviour
             _cursorColorSlider.onValueChanged.AddListener(OnCursorColorChanged);
         }
 
+        BindWorldSeedInput();
         SyncCursorSliderFromCurrentColor();
     }
 
@@ -43,6 +48,34 @@ public sealed class MainMenuSettingsPanelController : MonoBehaviour
         {
             _cursorColorSlider.onValueChanged.RemoveListener(OnCursorColorChanged);
         }
+
+        if (_worldSeedInputField != null)
+        {
+            SaveWorldSeedFromInputField();
+            _worldSeedInputField.onEndEdit.RemoveListener(OnWorldSeedEndEdit);
+        }
+    }
+
+    private void BindWorldSeedInput()
+    {
+        if (_worldSeedInputField == null)
+            return;
+
+        _worldSeedInputField.SetTextWithoutNotify(WorldSeedUtils.SeedText);
+        _worldSeedInputField.onEndEdit.AddListener(OnWorldSeedEndEdit);
+    }
+
+    private void OnWorldSeedEndEdit(string _)
+    {
+        SaveWorldSeedFromInputField();
+    }
+
+    private void SaveWorldSeedFromInputField()
+    {
+        if (_worldSeedInputField == null)
+            return;
+
+        WorldSeedUtils.SetSeedText(_worldSeedInputField.text);
     }
 
     private void OnAudioChanged(float volume)
