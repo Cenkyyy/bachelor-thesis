@@ -17,6 +17,8 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
     [SerializeField, Min(0f)] protected float _initialRefreshOffsetSeconds = 0.03f;
     [SerializeField, Min(1)] protected int _chunksGeneratedPerFrame = 1;
     [SerializeField, Min(1)] protected int _chunksUnloadedPerFrame = 1;
+    [SerializeField, Min(1)] protected int _loadOperationsPerFrame = 32;
+    [SerializeField, Min(1)] protected int _unloadOperationsPerFrame = 64;
 
     private Coroutine _streamingCoroutine;
 
@@ -237,7 +239,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
         return true;
     }
 
-    private void RunImmediate(IEnumerator routine)
+    protected void RunImmediate(IEnumerator routine)
     {
         if (routine == null)
             return;

@@ -16,8 +16,6 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
     [SerializeField, Min(1)] private int _baseSpawnAttemptsPerChunk = 72;
     [SerializeField, Min(1)] private int _maxPlacementsPerChunk = 56;
     [SerializeField, Range(0f, 1f)] private float _tileCenterJitter = 0.35f;
-    [SerializeField, Min(1)] private int _spawnOperationsPerFrame = 16;
-    [SerializeField, Min(1)] private int _unloadOperationsPerFrame = 48;
 
     private readonly Dictionary<Vector2Int, List<GameObject>> _spawnedChunkInstances = new();
     private readonly Dictionary<BiomeType, List<DecorationEntryData>> _entriesByBiome = new();
@@ -276,12 +274,12 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         if (!CanGenerateChunk(chunkCoord))
             yield break;
 
-        yield return SpawnChunkInstances(data, chunkCoord, Mathf.Max(1, _spawnOperationsPerFrame), null);
+        yield return SpawnChunkInstances(data, chunkCoord, _loadOperationsPerFrame, null);
     }
 
     protected override IEnumerator UnloadChunkCoroutine(Vector2Int chunkCoord)
     {
-        yield return UnloadChunkInstances(chunkCoord, Mathf.Max(1, _unloadOperationsPerFrame), null);
+        yield return UnloadChunkInstances(chunkCoord, _unloadOperationsPerFrame, null);
     }
 
     private IEnumerator SpawnChunkInstances(WorldRuntimeData data, Vector2Int chunkCoord, int yieldEveryOperations, YieldInstruction yieldInstruction)
@@ -351,10 +349,5 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         }
 
         _spawnedChunkInstances.Remove(chunkCoord);
-    }
-
-    private static void RunImmediate(IEnumerator routine)
-    {
-        while (routine.MoveNext()) { }
     }
 }
