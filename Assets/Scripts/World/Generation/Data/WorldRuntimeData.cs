@@ -6,6 +6,7 @@ public sealed class WorldRuntimeData
 
     public int Width { get; }
     public int Height { get; }
+    public Vector2Int DefaultSpawnTile { get; private set; }
     public Vector2Int SpawnTile { get; set; }
 
     public int OffsetX => -Width / 2;
@@ -16,7 +17,9 @@ public sealed class WorldRuntimeData
         Width = width;
         Height = height;
         _tiles = new WorldTile[width, height];
-        SpawnTile = new Vector2Int(width / 2, height / 2);
+        var initialSpawn = new Vector2Int(width / 2, height / 2);
+        DefaultSpawnTile = initialSpawn;
+        SpawnTile = initialSpawn;
     }
 
     public bool IsInside(int x, int y)

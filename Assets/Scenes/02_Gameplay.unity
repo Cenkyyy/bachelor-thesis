@@ -10910,7 +10910,7 @@ MonoBehaviour:
   chunksGeneratedPerFrame: 1
   chunksUnloadedPerFrame: 1
   loadOperationsPerFrame: 32
-  unloadOperationsPerFrame: 64
+  unloadOperationsPerFrame: 48
   _terrainChunkGenerator: {fileID: 1097722632}
   _wallChunkGenerator: {fileID: 1097722633}
   _decorationsListData: {fileID: 11400000, guid: 4dcbe27d436906443b34cdd482169e10, type: 2}
@@ -10918,6 +10918,7 @@ MonoBehaviour:
   _baseSpawnAttemptsPerChunk: 48
   _maxPlacementsPerChunk: 28
   _tileCenterJitter: 0.35
+  _defaultSpawnExclusionRadiusTiles: 3
 --- !u!114 &1097722631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11026,6 +11027,7 @@ MonoBehaviour:
   _branchingChance: 0.35
   _expansionChance: 0.8
   _maxSeedSearchAttempts: 24
+  _defaultSpawnExclusionRadiusTiles: 5
 --- !u!1 &1114828489
 GameObject:
   m_ObjectHideFlags: 0

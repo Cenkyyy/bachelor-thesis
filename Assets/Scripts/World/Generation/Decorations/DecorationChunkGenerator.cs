@@ -16,6 +16,7 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
     [SerializeField, Min(1)] private int _baseSpawnAttemptsPerChunk = 72;
     [SerializeField, Min(1)] private int _maxPlacementsPerChunk = 56;
     [SerializeField, Range(0f, 1f)] private float _tileCenterJitter = 0.35f;
+    [SerializeField, Min(0)] private int _defaultSpawnExclusionRadiusTiles = 3;
 
     private readonly Dictionary<Vector2Int, List<GameObject>> _spawnedChunkInstances = new();
     private readonly Dictionary<BiomeType, List<DecorationEntryData>> _entriesByBiome = new();
@@ -135,6 +136,9 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
             if (worldTile.TileType == TileType.Void)
                 continue;
 
+            if (IsInsideDefaultSpawnExclusionRadius(data, worldX, worldY))
+                continue;
+
             if (IsBlockedByWall(new Vector2Int(worldX, worldY)))
                 continue;
 
@@ -222,6 +226,9 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         if (tile.TileType == TileType.Void)
             return null;
 
+        if (IsInsideDefaultSpawnExclusionRadius(data, tileX, tileY))
+            return null;
+
         if (IsBlockedByWall(new Vector2Int(tileX, tileY)))
             return null;
 
@@ -253,6 +260,17 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
     private bool CanGenerateChunk(Vector2Int chunkCoord)
     {
         return _wallChunkGenerator == null || _wallChunkGenerator.IsChunkLoadedAt(chunkCoord);
+    }
+
+    private bool IsInsideDefaultSpawnExclusionRadius(WorldRuntimeData data, int tileX, int tileY)
+    {
+        if (_defaultSpawnExclusionRadiusTiles <= 0)
+            return false;
+
+        int dx = tileX - data.DefaultSpawnTile.x;
+        int dy = tileY - data.DefaultSpawnTile.y;
+        int exclusionRadiusSquared = _defaultSpawnExclusionRadiusTiles * _defaultSpawnExclusionRadiusTiles;
+        return dx * dx + dy * dy <= exclusionRadiusSquared;
     }
 
     private static string BuildInstanceId(string decorationId, Vector2Int chunkCoord, int attemptIndex, int clusterIndex)
@@ -350,4 +368,17 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
 
         _spawnedChunkInstances.Remove(chunkCoord);
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        if (worldGenerator == null || worldGenerator.GroundTilemap == null || worldGenerator.CurrentWorldData == null)
+            return;
+        
+        var spawnCell = worldGenerator.CurrentWorldData.DataToCell(worldGenerator.CurrentWorldData.DefaultSpawnTile.x, worldGenerator.CurrentWorldData.DefaultSpawnTile.y);
+        var spawnCellCenter =  worldGenerator.GroundTilemap.GetCellCenterWorld(spawnCell);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(spawnCellCenter, _defaultSpawnExclusionRadiusTiles);
+    }
+#endif
 }

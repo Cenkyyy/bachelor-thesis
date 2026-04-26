@@ -83,9 +83,6 @@ public class WorldGenerator
             }
         }
 
-        // Compute spawn tile near world center
-        data.SpawnTile = FindSpawnTile(data, _settings.WorldShape.Center);
-
         return data;
     }
 
@@ -173,42 +170,4 @@ public class WorldGenerator
                 return TileType.Void;
         }
     }
-
-    private Vector2Int FindSpawnTile(WorldRuntimeData data, Vector2 desiredPosition)
-    {
-        int bestX = Mathf.Clamp(Mathf.RoundToInt(desiredPosition.x), 0, data.Width - 1);
-        int bestY = Mathf.Clamp(Mathf.RoundToInt(desiredPosition.y), 0, data.Height - 1);
-
-        if (IsTileWalkable(data, bestX, bestY))
-        {
-            return new Vector2Int(bestX, bestY);
-        }
-
-        int maxRadius = Mathf.Max(data.Width, data.Height);
-
-        // Spiral outwards to find the nearest walkable tile
-        for (int r = 1; r < maxRadius; r++)
-        {
-            for (int dy = -r; dy <= r; dy++)
-            {
-                for (int dx = -r; dx <= r; dx++)
-                {
-                    int x = bestX + dx;
-                    int y = bestY + dy;
-
-                    if (x < 0 || x >= data.Width || y < 0 || y >= data.Height)
-                        continue;
-
-                    if (IsTileWalkable(data, x, y))
-                    {
-                        return new Vector2Int(x, y);
-                    }
-                }
-            }
-        }
-
-        return new Vector2Int(bestX, bestY);
-    }
-
-    private bool IsTileWalkable(WorldRuntimeData data, int x, int y) => data.GetTile(x, y).TileType != TileType.Void;
 }

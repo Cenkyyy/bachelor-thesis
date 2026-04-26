@@ -54,6 +54,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     [SerializeField, Range(0f, 1f)] private float _branchingChance = 0.35f;
     [SerializeField, Range(0f, 1f)] private float _expansionChance = 0.8f;
     [SerializeField, Min(1)] private int _maxSeedSearchAttempts = 24;
+    [SerializeField, Min(0)] private int _defaultSpawnExclusionRadiusTiles = 5;
 
     private readonly Dictionary<BiomeType, BiomeWallTileSettings> _wallSettingsByBiome = new();
     private readonly Dictionary<Vector2Int, List<Vector2Int>> _spawnedChunkTiles = new();
@@ -519,8 +520,10 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         int maxClusterSize = Mathf.Max(minClusterSize, _maxClusterSizeTiles);
         int targetTileCount = rng.Next(minClusterSize, maxClusterSize + 1);
 
+        if (!TryPlanTile(data, seedTile, plannedTiles))
+            return;
+
         var clusterTiles = new List<Vector2Int>(targetTileCount) { seedTile };
-        TryPlanTile(data, seedTile, plannedTiles);
 
         int safetyBudget = targetTileCount * 20;
         int safety = 0;
@@ -569,6 +572,9 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
     private bool TryPlanTile(WorldRuntimeData data, Vector2Int dataTile, Dictionary<Vector2Int, PlannedWallTile> plannedTiles)
     {
+        if (IsInsideDefaultSpawnExclusionRadius(data, dataTile.x, dataTile.y))
+            return false;
+
         var worldTile = data.GetTile(dataTile.x, dataTile.y);
         if (!_wallSettingsByBiome.TryGetValue(worldTile.Biome, out var wallSettings) || wallSettings == null)
             return false;
@@ -598,6 +604,9 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             if (data.GetTile(x, y).TileType == TileType.Void)
                 continue;
 
+            if (IsInsideDefaultSpawnExclusionRadius(data, x, y))
+                continue;
+
             var biome = data.GetTile(x, y).Biome;
             if (!_wallSettingsByBiome.TryGetValue(biome, out var wallSettings) || wallSettings == null || wallSettings.RuleTile == null || wallSettings.MineableData == null)
                 continue;
@@ -608,6 +617,17 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
         seed = default;
         return false;
+    }
+
+    private bool IsInsideDefaultSpawnExclusionRadius(WorldRuntimeData data, int tileX, int tileY)
+    {
+        if (_defaultSpawnExclusionRadiusTiles <= 0)
+            return false;
+
+        int dx = tileX - data.DefaultSpawnTile.x;
+        int dy = tileY - data.DefaultSpawnTile.y;
+        int exclusionRadiusSquared = _defaultSpawnExclusionRadiusTiles * _defaultSpawnExclusionRadiusTiles;
+        return dx * dx + dy * dy <= exclusionRadiusSquared;
     }
 
     private void BuildBiomeWallIndex()
@@ -623,4 +643,17 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             _wallSettingsByBiome[entry.Biome] = entry;
         }
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        if (worldGenerator == null || worldGenerator.GroundTilemap == null || worldGenerator.CurrentWorldData == null)
+            return;
+
+        var spawnCell = worldGenerator.CurrentWorldData.DataToCell(worldGenerator.CurrentWorldData.DefaultSpawnTile.x, worldGenerator.CurrentWorldData.DefaultSpawnTile.y);
+        var spawnCellCenter = worldGenerator.GroundTilemap.GetCellCenterWorld(spawnCell);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(spawnCellCenter, _defaultSpawnExclusionRadiusTiles);
+    }
+#endif
 }
