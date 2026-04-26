@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -64,6 +65,8 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     private readonly List<Vector2Int> _replenishedTilesBuffer = new();
     private readonly List<Vector2Int> _replenishTickTilesBuffer = new();
     private readonly HashSet<Vector2Int> _tilesAwaitingReplenishTick = new();
+    private readonly List<Vector3Int> _tileWriteCellsBuffer = new();
+    private readonly List<TileBase> _tileWriteAssetsBuffer = new();
 
     protected override bool EnableChunkUnloading => _enableChunkUnloading;
 
@@ -118,44 +121,12 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
     protected override void GenerateChunk(WorldRuntimeData data, Vector2Int chunkCoord)
     {
-        if (_wallTilemap == null || _spawnedChunkTiles.ContainsKey(chunkCoord))
-            return;
-
-        var plannedTiles = BuildWallTilesForChunk(data, chunkCoord);
-        var chunkTiles = new List<Vector2Int>(plannedTiles.Count);
-
-        for (int i = 0; i < plannedTiles.Count; i++)
-        {
-            var planned = plannedTiles[i];
-            if (_modificationState.IsRemoved(planned.DataTile))
-                continue;
-
-            _wallTilemap.SetTile(data.DataToCell(planned.DataTile.x, planned.DataTile.y), planned.TileAsset);
-            _runtimeByTile[planned.DataTile] = new WallTileRuntimeData(planned.DataTile, planned.MineableData);
-            chunkTiles.Add(planned.DataTile);
-        }
-
-        _spawnedChunkTiles[chunkCoord] = chunkTiles;
+        RunImmediate(GenerateChunkTiles(data, chunkCoord, 0, null));
     }
 
     protected override void UnloadChunk(Vector2Int chunkCoord)
     {
-        if (!_spawnedChunkTiles.TryGetValue(chunkCoord, out var tiles))
-            return;
-
-        if (_wallTilemap != null)
-        {
-            for (int i = 0; i < tiles.Count; i++)
-            {
-                var tile = tiles[i];
-                _wallTilemap.SetTile(_worldGenerator.CurrentWorldData.DataToCell(tile.x, tile.y), null);
-                _runtimeByTile.Remove(tile);
-                _tilesAwaitingReplenishTick.Remove(tile);
-                DestroyMiningBarForTile(tile);
-            }
-        }
-
-        _spawnedChunkTiles.Remove(chunkCoord);
+        RunImmediate(UnloadChunkTiles(chunkCoord, 0, null));
     }
 
     protected override IEnumerable<Vector2Int> GetLoadedChunks()
@@ -177,6 +148,16 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         DestroyMiningBars();
     }
 
+    protected override IEnumerator GenerateChunkCoroutine(WorldRuntimeData data, Vector2Int chunkCoord)
+    {
+        yield return GenerateChunkTiles(data, chunkCoord, loadOperationsPerFrame, null);
+    }
+
+    protected override IEnumerator UnloadChunkCoroutine(Vector2Int chunkCoord)
+    {
+        yield return UnloadChunkTiles(chunkCoord, loadOperationsPerFrame, null);
+    }
+
     public bool TryCreateMiningTarget(Vector3 worldPosition, out IMineableTarget target)
     {
         target = null;
@@ -185,7 +166,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             return false;
 
         var cell = _wallTilemap.WorldToCell(worldPosition);
-        var dataTile = _worldGenerator.CurrentWorldData.CellToData(cell);
+        var dataTile = worldGenerator.CurrentWorldData.CellToData(cell);
 
         if (!_runtimeByTile.ContainsKey(dataTile))
             return false;
@@ -209,7 +190,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         if (_wallTilemap == null)
             return Vector3.zero;
 
-        var cell = _worldGenerator.CurrentWorldData.DataToCell(dataTile.x, dataTile.y);
+        var cell = worldGenerator.CurrentWorldData.DataToCell(dataTile.x, dataTile.y);
         return _wallTilemap.GetCellCenterWorld(cell);
     }
 
@@ -245,7 +226,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             return;
 
         if (_wallTilemap != null)
-            _wallTilemap.SetTile(_worldGenerator.CurrentWorldData.DataToCell(dataTile.x, dataTile.y), null);
+            _wallTilemap.SetTile(worldGenerator.CurrentWorldData.DataToCell(dataTile.x, dataTile.y), null);
 
         _runtimeByTile.Remove(dataTile);
         _tilesAwaitingReplenishTick.Remove(dataTile);
@@ -401,23 +382,114 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             DestroyMiningBarForTile(_inactiveMiningBarTilesBuffer[i]);
     }
 
+    private IEnumerator GenerateChunkTiles(WorldRuntimeData data, Vector2Int chunkCoord, int yieldEveryOperations, YieldInstruction yieldInstruction)
+    {
+        if (_wallTilemap == null || _spawnedChunkTiles.ContainsKey(chunkCoord))
+            yield break;
+
+        var plannedTiles = BuildWallTilesForChunk(data, chunkCoord);
+        var chunkTiles = new List<Vector2Int>(plannedTiles.Count);
+        int operationCount = 0;
+        _tileWriteCellsBuffer.Clear();
+        _tileWriteAssetsBuffer.Clear();
+
+        for (int i = 0; i < plannedTiles.Count; i++)
+        {
+            var planned = plannedTiles[i];
+            if (_modificationState.IsRemoved(planned.DataTile))
+                continue;
+
+            _tileWriteCellsBuffer.Add(data.DataToCell(planned.DataTile.x, planned.DataTile.y));
+            _tileWriteAssetsBuffer.Add(planned.TileAsset);
+            _runtimeByTile[planned.DataTile] = new WallTileRuntimeData(planned.DataTile, planned.MineableData);
+            chunkTiles.Add(planned.DataTile);
+
+            operationCount++;
+            if (yieldEveryOperations > 0 && operationCount >= yieldEveryOperations)
+            {
+                ApplyBufferedTileWrites();
+                operationCount = 0;
+                yield return yieldInstruction;
+            }
+        }
+
+        ApplyBufferedTileWrites();
+        _spawnedChunkTiles[chunkCoord] = chunkTiles;
+    }
+
+    private IEnumerator UnloadChunkTiles(Vector2Int chunkCoord, int yieldEveryOperations, YieldInstruction yieldInstruction)
+    {
+        if (!_spawnedChunkTiles.TryGetValue(chunkCoord, out var tiles))
+            yield break;
+
+        int operationCount = 0;
+        _tileWriteCellsBuffer.Clear();
+        _tileWriteAssetsBuffer.Clear();
+
+        if (_wallTilemap != null)
+        {
+            var worldData = worldGenerator.CurrentWorldData;
+            for (int i = 0; i < tiles.Count; i++)
+            {
+                var tile = tiles[i];
+                _tileWriteCellsBuffer.Add(worldData.DataToCell(tile.x, tile.y));
+                _tileWriteAssetsBuffer.Add(null);
+                _runtimeByTile.Remove(tile);
+                _tilesAwaitingReplenishTick.Remove(tile);
+                DestroyMiningBarForTile(tile);
+
+                operationCount++;
+                if (yieldEveryOperations > 0 && operationCount >= yieldEveryOperations)
+                {
+                    ApplyBufferedTileWrites();
+                    operationCount = 0;
+                    yield return yieldInstruction;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < tiles.Count; i++)
+            {
+                var tile = tiles[i];
+                _runtimeByTile.Remove(tile);
+                _tilesAwaitingReplenishTick.Remove(tile);
+                DestroyMiningBarForTile(tile);
+            }
+        }
+
+        ApplyBufferedTileWrites();
+        _spawnedChunkTiles.Remove(chunkCoord);
+    }
+
+    private void ApplyBufferedTileWrites()
+    {
+        if (_wallTilemap == null || _tileWriteCellsBuffer.Count == 0)
+            return;
+
+        _wallTilemap.SetTiles(_tileWriteCellsBuffer.ToArray(), _tileWriteAssetsBuffer.ToArray());
+
+        _tileWriteCellsBuffer.Clear();
+        _tileWriteAssetsBuffer.Clear();
+    }
+
     private List<PlannedWallTile> BuildWallTilesForChunk(WorldRuntimeData data, Vector2Int chunkCoord)
     {
         var plannedTiles = new Dictionary<Vector2Int, PlannedWallTile>();
 
-        int startX = chunkCoord.x * _chunkSize;
-        int startY = chunkCoord.y * _chunkSize;
+        int startX = chunkCoord.x * chunkSize;
+        int startY = chunkCoord.y * chunkSize;
 
         if (startX < 0 || startY < 0 || startX >= data.Width || startY >= data.Height)
             return new List<PlannedWallTile>();
 
-        int width = Mathf.Min(_chunkSize, data.Width - startX);
-        int height = Mathf.Min(_chunkSize, data.Height - startY);
+        int width = Mathf.Min(chunkSize, data.Width - startX);
+        int height = Mathf.Min(chunkSize, data.Height - startY);
 
         if (width <= 0 || height <= 0)
             return new List<PlannedWallTile>();
 
-        int chunkSeed = WorldSeedUtils.CombineSeed(_worldGenerator.CurrentSeed, chunkCoord.x, chunkCoord.y);
+        int chunkSeed = WorldSeedUtils.CombineSeed(worldGenerator.CurrentSeed, chunkCoord.x, chunkCoord.y);
         int seed = WorldSeedUtils.CombineSeed(chunkSeed, 99173, -99173);
         var rng = new System.Random(seed);
 

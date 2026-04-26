@@ -5,20 +5,20 @@ using UnityEngine;
 public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTransitionReadinessBlocker
 {
     [Header("Dependencies")]
-    [SerializeField] protected WorldGenerationController _worldGenerator;
-    [SerializeField] protected Transform _playerTransform;
+    [SerializeField] protected WorldGenerationController worldGenerator;
+    [SerializeField] protected Transform playerTransform;
 
     [Header("Chunk Settings")]
-    [SerializeField, Min(8)] protected int _chunkSize = 32;
-    [SerializeField, Min(0)] protected int _initialGenerationRadiusInChunks = 4;
-    [SerializeField, Min(0)] protected int _generationRadiusInChunks = 4;
-    [SerializeField, Min(0)] protected int _unloadRadiusInChunks = 6;
-    [SerializeField, Min(0.02f)] protected float _refreshIntervalSeconds = 0.1f;
-    [SerializeField, Min(0f)] protected float _initialRefreshOffsetSeconds = 0.03f;
-    [SerializeField, Min(1)] protected int _chunksGeneratedPerFrame = 1;
-    [SerializeField, Min(1)] protected int _chunksUnloadedPerFrame = 1;
-    [SerializeField, Min(1)] protected int _loadOperationsPerFrame = 32;
-    [SerializeField, Min(1)] protected int _unloadOperationsPerFrame = 64;
+    [SerializeField, Min(8)] protected int chunkSize = 32;
+    [SerializeField, Min(0)] protected int initialGenerationRadiusInChunks = 4;
+    [SerializeField, Min(0)] protected int generationRadiusInChunks = 4;
+    [SerializeField, Min(0)] protected int unloadRadiusInChunks = 6;
+    [SerializeField, Min(0.02f)] protected float refreshIntervalSeconds = 0.1f;
+    [SerializeField, Min(0f)] protected float initialRefreshOffsetSeconds = 0.03f;
+    [SerializeField, Min(1)] protected int chunksGeneratedPerFrame = 1;
+    [SerializeField, Min(1)] protected int chunksUnloadedPerFrame = 1;
+    [SerializeField, Min(1)] protected int loadOperationsPerFrame = 32;
+    [SerializeField, Min(1)] protected int unloadOperationsPerFrame = 64;
 
     private Coroutine _streamingCoroutine;
 
@@ -53,8 +53,8 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
         if (!TryGetWorldData(out var data))
             return 0;
 
-        var focusTile = _worldGenerator.RuntimeState.ResolveTileFromWorld(worldPosition);
-        var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, _chunkSize);
+        var focusTile = worldGenerator.RuntimeState.ResolveTileFromWorld(worldPosition);
+        var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, chunkSize);
         var desiredChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, radiusInChunks);
 
         int spawnedCount = 0;
@@ -79,8 +79,8 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
         if (!TryGetWorldData(out _))
             return false;
 
-        var focusTile = _worldGenerator.RuntimeState.ResolveTileFromWorld(worldPosition);
-        var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, _chunkSize);
+        var focusTile = worldGenerator.RuntimeState.ResolveTileFromWorld(worldPosition);
+        var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, chunkSize);
         var desiredChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, radiusInChunks);
 
         for (int i = 0; i < desiredChunks.Count; i++)
@@ -131,7 +131,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
         yield return StreamInitialChunksCoroutine(initialData);
         IsReadyForSceneReveal = true;
 
-        float initialOffset = _initialRefreshOffsetSeconds;
+        float initialOffset = initialRefreshOffsetSeconds;
         if (initialOffset > 0f)
             yield return new WaitForSecondsRealtime(initialOffset);
 
@@ -144,9 +144,9 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
                 continue;
             }
 
-            var focusTile = WorldChunkUtility.ResolveFocusTile(data, _worldGenerator.GroundTilemap, _playerTransform);
-            var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, _chunkSize);
-            var desiredChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, _generationRadiusInChunks);
+            var focusTile = WorldChunkUtility.ResolveFocusTile(data, worldGenerator.GroundTilemap, playerTransform);
+            var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, chunkSize);
+            var desiredChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, generationRadiusInChunks);
 
             int chunkBudget = 0;
             for (int i = 0; i < desiredChunks.Count; i++)
@@ -158,7 +158,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
                 yield return GenerateChunkCoroutine(data, chunk);
                 chunkBudget++;
 
-                if (chunkBudget >= _chunksGeneratedPerFrame)
+                if (chunkBudget >= chunksGeneratedPerFrame)
                 {
                     chunkBudget = 0;
                     yield return null;
@@ -166,18 +166,18 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
             }
 
             yield return UnloadFarChunksCoroutine(focusChunk);
-            yield return new WaitForSecondsRealtime(_refreshIntervalSeconds);
+            yield return new WaitForSecondsRealtime(refreshIntervalSeconds);
         }
     }
 
     private IEnumerator StreamInitialChunksCoroutine(WorldRuntimeData data)
     {
-        var focusTile = WorldChunkUtility.ResolveFocusTile(data, _worldGenerator.GroundTilemap, _playerTransform);
-        var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, _chunkSize);
-        var initialChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, _initialGenerationRadiusInChunks);
+        var focusTile = WorldChunkUtility.ResolveFocusTile(data, worldGenerator.GroundTilemap, playerTransform);
+        var focusChunk = WorldChunkUtility.GetChunkCoordFromTile(focusTile, chunkSize);
+        var initialChunks = WorldChunkUtility.BuildChunkSetInRadius(focusChunk, initialGenerationRadiusInChunks);
 
         int chunkBudget = 0;
-        int perFrameBudget = _chunksGeneratedPerFrame;
+        int perFrameBudget = chunksGeneratedPerFrame;
 
         for (int i = 0; i < initialChunks.Count; i++)
         {
@@ -201,7 +201,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
         if (!EnableChunkUnloading)
             yield break;
 
-        int unloadRadius = Mathf.Max(_generationRadiusInChunks, _unloadRadiusInChunks);
+        int unloadRadius = Mathf.Max(generationRadiusInChunks, unloadRadiusInChunks);
         int sqrRadius = unloadRadius * unloadRadius;
 
         var chunksToUnload = new List<Vector2Int>();
@@ -213,7 +213,7 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
                 chunksToUnload.Add(chunkCoord);
         }
 
-        int unloadBudget = _chunksUnloadedPerFrame;
+        int unloadBudget = chunksUnloadedPerFrame;
         int unloadedThisFrame = 0;
 
         for (int i = 0; i < chunksToUnload.Count; i++)
@@ -232,10 +232,10 @@ public abstract class ChunkWorldContentGeneratorBase : MonoBehaviour, ISceneTran
     private bool TryGetWorldData(out WorldRuntimeData data)
     {
         data = null;
-        if (_worldGenerator == null || !_worldGenerator.IsReadyForSceneReveal || _worldGenerator.CurrentWorldData == null)
+        if (worldGenerator == null || !worldGenerator.IsReadyForSceneReveal || worldGenerator.CurrentWorldData == null)
             return false;
 
-        data = _worldGenerator.CurrentWorldData;
+        data = worldGenerator.CurrentWorldData;
         return true;
     }
 

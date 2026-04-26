@@ -98,7 +98,7 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         var loadedChunks = new List<Vector2Int>(_spawnedChunkInstances.Keys);
 
         for (int i = 0; i < loadedChunks.Count; i++)
-            yield return UnloadChunkInstances(loadedChunks[i], _unloadOperationsPerFrame, null);
+            yield return UnloadChunkInstances(loadedChunks[i], unloadOperationsPerFrame, null);
 
         _instancePool.Clear();
     }
@@ -107,15 +107,15 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
     {
         EnsureBiomeIndexBuilt();
 
-        int startX = chunkCoord.x * _chunkSize;
-        int startY = chunkCoord.y * _chunkSize;
+        int startX = chunkCoord.x * chunkSize;
+        int startY = chunkCoord.y * chunkSize;
 
         if (startX < 0 || startY < 0 || startX >= data.Width || startY >= data.Height)
             return new List<DecorationPlacement>();
 
-        int width = Mathf.Min(_chunkSize, data.Width - startX);
-        int height = Mathf.Min(_chunkSize, data.Height - startY);
-        int chunkSeed = WorldSeedUtils.CombineSeed(_worldGenerator.CurrentSeed, chunkCoord.x, chunkCoord.y);
+        int width = Mathf.Min(chunkSize, data.Width - startX);
+        int height = Mathf.Min(chunkSize, data.Height - startY);
+        int chunkSeed = WorldSeedUtils.CombineSeed(worldGenerator.CurrentSeed, chunkCoord.x, chunkCoord.y);
         var rng = new System.Random(chunkSeed);
 
         var placements = new List<DecorationPlacement>();
@@ -189,7 +189,7 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         float jitterX = ((float)rng.NextDouble() * 2f - 1f) * _tileCenterJitter;
         float jitterY = ((float)rng.NextDouble() * 2f - 1f) * _tileCenterJitter;
 
-        var worldPosition = WorldObjectPlacementUtility.TileToWorldPosition(data, _worldGenerator.GroundTilemap, tileX, tileY, jitterX, jitterY);
+        var worldPosition = WorldObjectPlacementUtility.TileToWorldPosition(data, worldGenerator.GroundTilemap, tileX, tileY, jitterX, jitterY);
         float minSpacing = Mathf.Max(0f, entry.MinimumSpacingTiles);
 
         if (!WorldObjectPlacementUtility.HasValidSpacing(existing, worldPosition, minSpacing, placement => placement.WorldPosition, placement => placement.SpacingRadius))
@@ -230,7 +230,7 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
 
         string instanceId = BuildInstanceId(entry.DecorationId, chunkCoord, attemptIndex, clusterIndex);
 
-        var worldPosition = WorldObjectPlacementUtility.TileToWorldPosition(data, _worldGenerator.GroundTilemap, tileX, tileY, 0f, 0f);
+        var worldPosition = WorldObjectPlacementUtility.TileToWorldPosition(data, worldGenerator.GroundTilemap, tileX, tileY, 0f, 0f);
         float minSpacing = Mathf.Max(0f, entry.MinimumSpacingTiles);
         if (!WorldObjectPlacementUtility.HasValidSpacing(existing, worldPosition, minSpacing, placement => placement.WorldPosition, placement => placement.SpacingRadius))
             return null;
@@ -274,12 +274,12 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         if (!CanGenerateChunk(chunkCoord))
             yield break;
 
-        yield return SpawnChunkInstances(data, chunkCoord, _loadOperationsPerFrame, null);
+        yield return SpawnChunkInstances(data, chunkCoord, loadOperationsPerFrame, null);
     }
 
     protected override IEnumerator UnloadChunkCoroutine(Vector2Int chunkCoord)
     {
-        yield return UnloadChunkInstances(chunkCoord, _unloadOperationsPerFrame, null);
+        yield return UnloadChunkInstances(chunkCoord, unloadOperationsPerFrame, null);
     }
 
     private IEnumerator SpawnChunkInstances(WorldRuntimeData data, Vector2Int chunkCoord, int yieldEveryOperations, YieldInstruction yieldInstruction)

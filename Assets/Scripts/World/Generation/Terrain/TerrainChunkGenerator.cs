@@ -31,12 +31,12 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
 
     protected override IEnumerator GenerateChunkCoroutine(WorldRuntimeData data, Vector2Int chunkCoord)
     {
-        yield return GenerateChunkTiles(data, chunkCoord, _loadOperationsPerFrame, null);
+        yield return GenerateChunkTiles(data, chunkCoord, loadOperationsPerFrame, null);
     }
 
     protected override IEnumerator UnloadChunkCoroutine(Vector2Int chunkCoord)
     {
-        yield return UnloadChunkTiles(chunkCoord, _unloadOperationsPerFrame, null);
+        yield return UnloadChunkTiles(chunkCoord, unloadOperationsPerFrame, null);
     }
 
     protected override IEnumerable<Vector2Int> GetLoadedChunks()
@@ -53,17 +53,17 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
 
     private void ClearTilemaps()
     {
-        if (_worldGenerator == null)
+        if (worldGenerator == null)
             return;
 
-        if (_worldGenerator.GroundTilemap != null)
-            _worldGenerator.GroundTilemap.ClearAllTiles();
+        if (worldGenerator.GroundTilemap != null)
+            worldGenerator.GroundTilemap.ClearAllTiles();
 
-        if (_worldGenerator.BorderVisualTilemap != null)
-            _worldGenerator.BorderVisualTilemap.ClearAllTiles();
+        if (worldGenerator.BorderVisualTilemap != null)
+            worldGenerator.BorderVisualTilemap.ClearAllTiles();
 
-        if (_worldGenerator.BorderCollisionTilemap != null)
-            _worldGenerator.BorderCollisionTilemap.ClearAllTiles();
+        if (worldGenerator.BorderCollisionTilemap != null)
+            worldGenerator.BorderCollisionTilemap.ClearAllTiles();
     }
 
     private bool IsInnerBorderTile(WorldRuntimeData data, int x, int y)
@@ -99,17 +99,17 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
 
     private IEnumerator GenerateChunkTiles(WorldRuntimeData data, Vector2Int chunkCoord, int yieldEveryOperations, YieldInstruction yieldInstruction)
     {
-        if (_renderedChunks.Contains(chunkCoord) || _worldGenerator == null)
+        if (_renderedChunks.Contains(chunkCoord) || worldGenerator == null)
             yield break;
 
-        int startX = chunkCoord.x * _chunkSize;
-        int startY = chunkCoord.y * _chunkSize;
+        int startX = chunkCoord.x * chunkSize;
+        int startY = chunkCoord.y * chunkSize;
 
         if (startX < 0 || startY < 0 || startX >= data.Width || startY >= data.Height)
             yield break;
 
-        int width = Mathf.Min(_chunkSize, data.Width - startX);
-        int height = Mathf.Min(_chunkSize, data.Height - startY);
+        int width = Mathf.Min(chunkSize, data.Width - startX);
+        int height = Mathf.Min(chunkSize, data.Height - startY);
 
         if (width <= 0 || height <= 0)
             yield break;
@@ -123,8 +123,8 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
         System.Array.Clear(borderTiles, 0, tileCount);
         System.Array.Clear(borderCollisionTiles, 0, tileCount);
 
-        var borderTileAsset = _worldGenerator.GetBorderTileAsset();
-        var borderCollisionTileAsset = _worldGenerator.GetBorderCollisionTileAsset();
+        var borderTileAsset = worldGenerator.GetBorderTileAsset();
+        var borderCollisionTileAsset = worldGenerator.GetBorderCollisionTileAsset();
 
         int operations = 0;
         for (int y = 0; y < height; y++)
@@ -145,7 +145,7 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
                 }
                 else
                 {
-                    groundTiles[index] = _worldGenerator.GetTileAsset(tile.TileType);
+                    groundTiles[index] = worldGenerator.GetTileAsset(tile.TileType);
                 }
 
                 operations++;
@@ -161,16 +161,16 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
         var chunkOriginCell = data.DataToCell(startX, startY);
         var chunkBounds = new BoundsInt(chunkOriginCell.x, chunkOriginCell.y, 0, width, height, 1);
 
-        if (_worldGenerator.GroundTilemap != null)
-            _worldGenerator.GroundTilemap.SetTilesBlock(chunkBounds, groundTiles);
+        if (worldGenerator.GroundTilemap != null)
+            worldGenerator.GroundTilemap.SetTilesBlock(chunkBounds, groundTiles);
 
 
-        if (_worldGenerator.BorderVisualTilemap != null)
-            _worldGenerator.BorderVisualTilemap.SetTilesBlock(chunkBounds, borderTiles);
+        if (worldGenerator.BorderVisualTilemap != null)
+            worldGenerator.BorderVisualTilemap.SetTilesBlock(chunkBounds, borderTiles);
 
 
-        if (_worldGenerator.BorderCollisionTilemap != null)
-            _worldGenerator.BorderCollisionTilemap.SetTilesBlock(chunkBounds, borderCollisionTiles);
+        if (worldGenerator.BorderCollisionTilemap != null)
+            worldGenerator.BorderCollisionTilemap.SetTilesBlock(chunkBounds, borderCollisionTiles);
 
         ArrayPool<TileBase>.Shared.Return(groundTiles, clearArray: false);
         ArrayPool<TileBase>.Shared.Return(borderTiles, clearArray: false);
@@ -182,19 +182,19 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
 
     private IEnumerator UnloadChunkTiles(Vector2Int chunkCoord, int yieldEveryOperations, YieldInstruction yieldInstruction)
     {
-        if (!_renderedChunks.Contains(chunkCoord) || !_enableChunkUnloading || _worldGenerator == null || _worldGenerator.CurrentWorldData == null)
+        if (!_renderedChunks.Contains(chunkCoord) || !_enableChunkUnloading || worldGenerator == null || worldGenerator.CurrentWorldData == null)
             yield break;
 
         // get the final chunk's width and height
-        var data = _worldGenerator.CurrentWorldData;
-        int startX = chunkCoord.x * _chunkSize;
-        int startY = chunkCoord.y * _chunkSize;
+        var data = worldGenerator.CurrentWorldData;
+        int startX = chunkCoord.x * chunkSize;
+        int startY = chunkCoord.y * chunkSize;
 
         if (startX < 0 || startY < 0 || startX >= data.Width || startY >= data.Height)
             yield break;
 
-        int width = Mathf.Min(_chunkSize, data.Width - startX);
-        int height = Mathf.Min(_chunkSize, data.Height - startY);
+        int width = Mathf.Min(chunkSize, data.Width - startX);
+        int height = Mathf.Min(chunkSize, data.Height - startY);
 
         if (width <= 0 || height <= 0)
             yield break;
@@ -217,14 +217,14 @@ public sealed class TerrainChunkGenerator : ChunkWorldContentGeneratorBase
         var chunkOriginCell = data.DataToCell(startX, startY);
         var chunkBounds = new BoundsInt(chunkOriginCell.x, chunkOriginCell.y, 0, width, height, 1);
 
-        if (_worldGenerator.GroundTilemap != null)
-            _worldGenerator.GroundTilemap.SetTilesBlock(chunkBounds, emptyTiles);
+        if (worldGenerator.GroundTilemap != null)
+            worldGenerator.GroundTilemap.SetTilesBlock(chunkBounds, emptyTiles);
 
-        if (_worldGenerator.BorderVisualTilemap != null)
-            _worldGenerator.BorderVisualTilemap.SetTilesBlock(chunkBounds, emptyTiles);
+        if (worldGenerator.BorderVisualTilemap != null)
+            worldGenerator.BorderVisualTilemap.SetTilesBlock(chunkBounds, emptyTiles);
 
-        if (_worldGenerator.BorderCollisionTilemap != null)
-            _worldGenerator.BorderCollisionTilemap.SetTilesBlock(chunkBounds, emptyTiles);
+        if (worldGenerator.BorderCollisionTilemap != null)
+            worldGenerator.BorderCollisionTilemap.SetTilesBlock(chunkBounds, emptyTiles);
 
         ArrayPool<TileBase>.Shared.Return(emptyTiles, clearArray: false);
         _renderedChunks.Remove(chunkCoord);
