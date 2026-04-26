@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf2351c3ce515a4f9f8530e93f903fc, type: 3}
+  m_Name: IceTundra_Walls_List_Data
+  m_EditorClassIdentifier: 
+  <Biome>k__BackingField: 2
+  _walls:
+  - {fileID: 11400000, guid: 44af56e8976deea48a6b820036909415, type: 2}
+  <MinClusterSizeTiles>k__BackingField: 70
+  <MaxClusterSizeTiles>k__BackingField: 150
+  <BranchingChance>k__BackingField: 0.35
+  <ExpansionChance>k__BackingField: 0.8
+  <OreClusterSpawnChance>k__BackingField: 0.3
+  <MinOresPerCluster>k__BackingField: 0
+  <MaxOresPerCluster>k__BackingField: 2

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92a61cbdf3d482947a5076daae1dd15d, type: 3}
+  m_Name: RiftstoneWall
+  m_EditorClassIdentifier: 
+  <WallId>k__BackingField: RiftstoneWall
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: 5c5d4d796d9b9de4ab735632dae42a3b, type: 2}
+  <MineableData>k__BackingField: {fileID: 11400000, guid: b521dbf1f8f2abf4ab15b46fb7ebdc71, type: 2}
+  _oreDecorations:
+  - {fileID: 11400000, guid: ea5eee8adfee5e94e9cf1195739c0b4e, type: 2}
+  - {fileID: 11400000, guid: 48fbec5af3c5eaa4089c7193bb470f66, type: 2}
+  - {fileID: 11400000, guid: a7991f182b25f1641b326342ef018e7a, type: 2}
+  - {fileID: 11400000, guid: ba4ecdf14e1a2d945bd6f415d386f062, type: 2}
+  - {fileID: 11400000, guid: 211d60a7a4d5546419fa12b598c4019b, type: 2}
+  - {fileID: 11400000, guid: 8a247730d08ea8b47b030d91864b5c15, type: 2}
+  - {fileID: 11400000, guid: ba7effc62bd69594aa0af1a19309f7c4, type: 2}
+  - {fileID: 11400000, guid: f6a9499b43bc04b4cbf2501c4fbb50a7, type: 2}

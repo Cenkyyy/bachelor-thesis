@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92a61cbdf3d482947a5076daae1dd15d, type: 3}
+  m_Name: StoneWall
+  m_EditorClassIdentifier: 
+  <WallId>k__BackingField: StoneWall
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: f066bbd9ae960df479f1e79527e5cb76, type: 2}
+  <MineableData>k__BackingField: {fileID: 11400000, guid: 07c04f9c8f16ee041a8bf72d9dfa537c, type: 2}
+  _oreDecorations:
+  - {fileID: 11400000, guid: 18d083b28e0061b4f9797ae6b8eb8f72, type: 2}
+  - {fileID: 11400000, guid: 56336166d003248449776b7d42cf0ae2, type: 2}
+  - {fileID: 11400000, guid: 096ead749759ec94f95f791ab81c20b1, type: 2}
+  - {fileID: 11400000, guid: 0ec8f03c789f4a44fbd36f1242c0d86a, type: 2}
+  - {fileID: 11400000, guid: f2892cedc2f33ba4ebc0eaa45f91b560, type: 2}
+  - {fileID: 11400000, guid: 140b65edb27b547438f5e7300bb88d4c, type: 2}
+  - {fileID: 11400000, guid: 0f0fef56ce67fbb479b79f57373d2557, type: 2}
+  - {fileID: 11400000, guid: fd1b6eb567f80e8429aea542036155ab, type: 2}

@@ -2540,28 +2540,42 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
       e00: 0
       e01: 0
       e02: 1e-45
-      e03: 3.8750038
+      e03: 7.1481204e+19
       e10: 0
       e11: 0
       e12: 0
-      e13: 7.2e-43
-      e20: -3.480273e+9
-      e21: 3.8750038
-      e22: -4.426904e-29
-      e23: -2.485746e-19
-      e30: 4.5914e-41
-      e31: 7.2e-43
-      e32: 7.23e-43
-      e33: 7.2e-43
+      e13: 7.36e-43
+      e20: 7.146461e-10
+      e21: 7.1481204e+19
+      e22: -4.7005643e-29
+      e23: -2.5093735e-17
+      e30: 4.5908e-41
+      e31: 7.36e-43
+      e32: 7.38e-43
+      e33: 7.36e-43
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: -2.4857356e-19, g: -2.4857356e-19, b: -2.4857356e-19, a: -2.4857356e-19}
+    m_Data: {r: -2.5093669e-17, g: -2.5093669e-17, b: -2.5093669e-17, a: -2.5093669e-17}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7531,6 +7545,7 @@ MonoBehaviour:
   _cursorController: {fileID: 0}
   _fallbackSaturation: 1
   _fallbackValue: 1
+  _colliderDisableOperationsPerFrame: 200
 --- !u!1 &790329154
 GameObject:
   m_ObjectHideFlags: 0
@@ -10765,7 +10780,7 @@ MonoBehaviour:
   _iceTundraBaseTile: {fileID: 11400000, guid: e8aa19b3ae5ba4d45ace0ac550f02d18, type: 2}
   _desertBaseTile: {fileID: 11400000, guid: 41ce95c70781cd740bdbe91a3bd6d42d, type: 2}
   _amethystRiftBaseTile: {fileID: 11400000, guid: ce1d79f143210d7419932146dc87f46a, type: 2}
-  _borderTile: {fileID: 11400000, guid: f066bbd9ae960df479f1e79527e5cb76, type: 2}
+  _borderTile: {fileID: 11400000, guid: 428fb27ffe4618b42a1f5fa7fbd89d6e, type: 2}
   _worldWidth: 2048
   _worldHeight: 2048
   _borderThickness: 32
@@ -10806,10 +10821,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _worldGenerator: {fileID: 1097722629}
   _playerTransform: {fileID: 2010244813}
-  _chunkSize: 32
-  _initialGenerationRadiusInChunks: 3
-  _generationRadiusInChunks: 2
-  _unloadRadiusInChunks: 3
+  _chunkSize: 16
+  _initialGenerationRadiusInChunks: 4
+  _generationRadiusInChunks: 3
+  _unloadRadiusInChunks: 4
   _refreshIntervalSeconds: 0.1
   _initialRefreshOffsetSeconds: 0.03
   _chunksGeneratedPerFrame: 1
@@ -10818,8 +10833,8 @@ MonoBehaviour:
   _wallChunkGenerator: {fileID: 1097722633}
   _decorationsListData: {fileID: 11400000, guid: 4dcbe27d436906443b34cdd482169e10, type: 2}
   _spawnedDecorationsRoot: {fileID: 568387668}
-  _baseSpawnAttemptsPerChunk: 72
-  _maxPlacementsPerChunk: 56
+  _baseSpawnAttemptsPerChunk: 48
+  _maxPlacementsPerChunk: 28
   _tileCenterJitter: 0.35
   _spawnOperationsPerFrame: 16
   _unloadOperationsPerFrame: 48
@@ -10868,10 +10883,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _worldGenerator: {fileID: 1097722629}
   _playerTransform: {fileID: 2010244813}
-  _chunkSize: 32
-  _initialGenerationRadiusInChunks: 3
-  _generationRadiusInChunks: 2
-  _unloadRadiusInChunks: 3
+  _chunkSize: 16
+  _initialGenerationRadiusInChunks: 4
+  _generationRadiusInChunks: 3
+  _unloadRadiusInChunks: 4
   _refreshIntervalSeconds: 0.2
   _initialRefreshOffsetSeconds: 0.03
   _chunksGeneratedPerFrame: 1
@@ -10891,10 +10906,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _worldGenerator: {fileID: 1097722629}
   _playerTransform: {fileID: 2010244813}
-  _chunkSize: 32
-  _initialGenerationRadiusInChunks: 3
-  _generationRadiusInChunks: 2
-  _unloadRadiusInChunks: 3
+  _chunkSize: 16
+  _initialGenerationRadiusInChunks: 4
+  _generationRadiusInChunks: 3
+  _unloadRadiusInChunks: 4
   _refreshIntervalSeconds: 0.1
   _initialRefreshOffsetSeconds: 0.03
   _chunksGeneratedPerFrame: 1
@@ -10903,6 +10918,7 @@ MonoBehaviour:
   _wallTilemap: {fileID: 626142998}
   _wallMiningBarsContainer: {fileID: 1486129156}
   _miningBarPrefab: {fileID: 169936977825393500, guid: 2192519b60bece042b027bd588a9ef33, type: 3}
+  _maxInactiveMiningBars: 32
   _feedbackPopupEmitter: {fileID: 1541602683}
   _higherToolRequiredMessage: Higher tool is required
   _biomeWallTiles:
@@ -10910,18 +10926,18 @@ MonoBehaviour:
     <RuleTile>k__BackingField: {fileID: 11400000, guid: f066bbd9ae960df479f1e79527e5cb76, type: 2}
     <MineableData>k__BackingField: {fileID: 11400000, guid: 07c04f9c8f16ee041a8bf72d9dfa537c, type: 2}
   - <Biome>k__BackingField: 2
-    <RuleTile>k__BackingField: {fileID: 11400000, guid: f066bbd9ae960df479f1e79527e5cb76, type: 2}
-    <MineableData>k__BackingField: {fileID: 11400000, guid: 07c04f9c8f16ee041a8bf72d9dfa537c, type: 2}
+    <RuleTile>k__BackingField: {fileID: 11400000, guid: dd27e1917a7c84146bf5b1354f729c8e, type: 2}
+    <MineableData>k__BackingField: {fileID: 11400000, guid: 2a30e4ede2aa0b648808a3302f4b65ea, type: 2}
   - <Biome>k__BackingField: 3
-    <RuleTile>k__BackingField: {fileID: 11400000, guid: f066bbd9ae960df479f1e79527e5cb76, type: 2}
-    <MineableData>k__BackingField: {fileID: 11400000, guid: 07c04f9c8f16ee041a8bf72d9dfa537c, type: 2}
+    <RuleTile>k__BackingField: {fileID: 11400000, guid: 63e8e26cc60d0934eae753132e2fa974, type: 2}
+    <MineableData>k__BackingField: {fileID: 11400000, guid: 951018047d4b30444ac4f979e99bf631, type: 2}
   - <Biome>k__BackingField: 4
-    <RuleTile>k__BackingField: {fileID: 11400000, guid: f066bbd9ae960df479f1e79527e5cb76, type: 2}
-    <MineableData>k__BackingField: {fileID: 11400000, guid: 07c04f9c8f16ee041a8bf72d9dfa537c, type: 2}
+    <RuleTile>k__BackingField: {fileID: 11400000, guid: 5c5d4d796d9b9de4ab735632dae42a3b, type: 2}
+    <MineableData>k__BackingField: {fileID: 11400000, guid: b521dbf1f8f2abf4ab15b46fb7ebdc71, type: 2}
   _enableChunkUnloading: 1
   _minClustersPerChunk: 1
-  _maxClustersPerChunk: 3
-  _minClusterSizeTiles: 20
+  _maxClustersPerChunk: 2
+  _minClusterSizeTiles: 30
   _maxClusterSizeTiles: 50
   _branchingChance: 0.35
   _expansionChance: 0.8

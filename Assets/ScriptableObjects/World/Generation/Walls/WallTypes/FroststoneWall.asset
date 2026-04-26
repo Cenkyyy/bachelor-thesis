@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92a61cbdf3d482947a5076daae1dd15d, type: 3}
+  m_Name: FroststoneWall
+  m_EditorClassIdentifier: 
+  <WallId>k__BackingField: FroststoneWall
+  <RuleTile>k__BackingField: {fileID: 11400000, guid: dd27e1917a7c84146bf5b1354f729c8e, type: 2}
+  <MineableData>k__BackingField: {fileID: 11400000, guid: 2a30e4ede2aa0b648808a3302f4b65ea, type: 2}
+  _oreDecorations:
+  - {fileID: 11400000, guid: 73a378bc852410b41a8c73c346943450, type: 2}
+  - {fileID: 11400000, guid: a750c380afdb82a4588c2d1890ef2e81, type: 2}
+  - {fileID: 11400000, guid: 7926d63cb877a2846a00f91a222c2f65, type: 2}
+  - {fileID: 11400000, guid: 325e96bb167faac458d03297bb45891c, type: 2}
+  - {fileID: 11400000, guid: cf2a9268daf74d14d9d4f05df19c9660, type: 2}
+  - {fileID: 11400000, guid: 8f0669313e544e4498a5794aee7c2608, type: 2}
+  - {fileID: 11400000, guid: 3ce856352bdaeb0498d4a315e578189a, type: 2}
+  - {fileID: 11400000, guid: 25753a52612aae24fbba9602226e03c5, type: 2}

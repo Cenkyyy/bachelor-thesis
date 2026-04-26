@@ -4,16 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "World/Decorations/Decoration Entry")]
 public sealed class DecorationEntryData : ScriptableObject
 {
-    [field: Header("Identity")]
+    [field: Header("Definition")]
     [field: SerializeField] public string DecorationId { get; private set; }
-
-    [field: Header("References")]
     [field: SerializeField] public GameObject Prefab { get; private set; }
-    [field: SerializeField] public MineableNodeData NodeData { get; private set; }
-
-    [field: Header("Classification")]
-    [field: SerializeField] public DecorationCategory Category { get; private set; } = DecorationCategory.Tree;
-    [field: SerializeField] public DecorationSize Size { get; private set; } = DecorationSize.Small;
 
     [Header("Biome Rules")]
     [SerializeField] private List<BiomeType> _allowedBiomes = new List<BiomeType>();
