@@ -81,7 +81,7 @@ public sealed class PlayerRespawnController : MonoBehaviour
         _deathDropController.CreateDeathChestFromBackpack(_player, _playerTransform.position);
 
         // teleport player to his last spawn point
-        _playerTransform.position = GetSafeRespawnPosition(_player.Data.SpawnPoint);
+        _playerTransform.position = SpawnPointPlacementUtility.ResolveNearestFreePosition(_player.Data.SpawnPoint, _respawnObstacleMask, _respawnProbeRadius, _searchRadius);
 
         if (_playerTransform.TryGetComponent<Rigidbody2D>(out var body))
         {
@@ -96,38 +96,6 @@ public sealed class PlayerRespawnController : MonoBehaviour
         // TODO: reset other player stats
 
         IsDefeated = false;
-    }
-
-    private Vector3 GetSafeRespawnPosition(Vector3 spawnPoint)
-    {
-        // in case the spawn point has obstacle on it (e.g. death chest, spawn the player to the closest free tile)
-        if (!HasObstacleAt(spawnPoint))
-            return spawnPoint;
-
-        // iterate through all radii starting from 1 to max search radius
-        // and check if the position has an obstacle on it, if not, spawn the player there
-        for (var radius = 1; radius <= _searchRadius; radius++)
-        {
-            for (var y = -radius; y <= radius; y++)
-            {
-                for (var x = -radius; x <= radius; x++)
-                {
-                    if (x == 0 && y == 0)
-                        continue;
-
-                    var candidate = spawnPoint + new Vector3(x, y, 0f);
-                    if (!HasObstacleAt(candidate))
-                        return candidate;
-                }
-            }
-        }
-
-        return spawnPoint;
-    }
-
-    private bool HasObstacleAt(Vector3 worldPoint)
-    {
-        return Physics2D.OverlapCircle(worldPoint, _respawnProbeRadius, _respawnObstacleMask) != null;
     }
 
     private void HandleHealthChanged(int currentHealth, int maxHealth)
