@@ -583,6 +583,7 @@ MonoBehaviour:
   _blockingLayerMask:
     serializedVersion: 2
     m_Bits: 1408
+  _safePlacementRadius: 0.37
   _placementRadius: 1
   _placementParent: {fileID: 0}
 --- !u!114 &691936326778899438
