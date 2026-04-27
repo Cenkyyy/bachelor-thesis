@@ -13,7 +13,10 @@ public class SpellWordInventory : MonoBehaviour
     public IReadOnlyList<ElementWord> UnlockedElements => _unlockedElements;
     public IReadOnlyList<FormWord> UnlockedForms => _unlockedForms;
 
+    public event Action OnWordsInitialized;
     public event Action OnWordsChanged;
+
+    private bool _hasInitializedWords;
 
     private void OnValidate()
     {
@@ -36,6 +39,12 @@ public class SpellWordInventory : MonoBehaviour
             _unlockedForms.AddRange(forms);
 
         SortUnlockedWords();
+        if (!_hasInitializedWords)
+        {
+            _hasInitializedWords = true;
+            OnWordsInitialized?.Invoke();
+        }
+
         OnWordsChanged?.Invoke();
     }
 
