@@ -255,6 +255,7 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
         _previewRenderer = null;
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         if (_player == null)
@@ -274,4 +275,5 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
             Handles.Label(_player.transform.position + Vector3.right * _placementRadius, "Max placement radius");
         }
     }
+#endif
 }

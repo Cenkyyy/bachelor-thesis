@@ -373,6 +373,7 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         _spawnedChunkInstances.Remove(chunkCoord);
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         if (worldGenerator == null || worldGenerator.GroundTilemap == null || worldGenerator.CurrentWorldData == null)
@@ -384,4 +385,5 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         Gizmos.DrawWireSphere(spawnCellCenter, _defaultSpawnExclusionRadiusTiles);
         Handles.Label(spawnCellCenter + Vector3.up * _defaultSpawnExclusionRadiusTiles, "Default Spawn Exclusion Radius");
     }
+#endif
 }
