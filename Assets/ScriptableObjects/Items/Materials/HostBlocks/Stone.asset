@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stone
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Stone
-  <Icon>k__BackingField: {fileID: -3757110, guid: 94c8b197fc3b78e41b3943a8e352caa1, type: 3}
+  <Icon>k__BackingField: {fileID: 629178807, guid: 94c8b197fc3b78e41b3943a8e352caa1, type: 3}
   <Category>k__BackingField: 3
   <Rarity>k__BackingField: 0
   <BiomeAffinity>k__BackingField: 0

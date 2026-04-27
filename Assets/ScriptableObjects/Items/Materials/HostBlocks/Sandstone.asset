@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sandstone
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Sandstone
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 707196537, guid: 3b98f0c0503c67542b9e17ac67dd76be, type: 3}
   <Category>k__BackingField: 3
   <Rarity>k__BackingField: 0
   <BiomeAffinity>k__BackingField: 3

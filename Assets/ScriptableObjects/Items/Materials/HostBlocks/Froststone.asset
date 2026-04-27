@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Froststone
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Froststone
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: -82274869, guid: 93cd41cce49094049bc134e17fd4e59e, type: 3}
   <Category>k__BackingField: 3
   <Rarity>k__BackingField: 0
   <BiomeAffinity>k__BackingField: 2

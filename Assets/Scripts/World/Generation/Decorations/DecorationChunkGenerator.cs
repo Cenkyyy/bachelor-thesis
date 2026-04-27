@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 [DisallowMultipleComponent]
 public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
 {
@@ -369,7 +373,6 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         _spawnedChunkInstances.Remove(chunkCoord);
     }
 
-#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         if (worldGenerator == null || worldGenerator.GroundTilemap == null || worldGenerator.CurrentWorldData == null)
@@ -379,6 +382,6 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         var spawnCellCenter =  worldGenerator.GroundTilemap.GetCellCenterWorld(spawnCell);
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(spawnCellCenter, _defaultSpawnExclusionRadiusTiles);
+        Handles.Label(spawnCellCenter + Vector3.up * _defaultSpawnExclusionRadiusTiles, "Default Spawn Exclusion Radius");
     }
-#endif
 }

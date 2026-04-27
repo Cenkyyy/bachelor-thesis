@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Riftstone
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Riftstone
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: -15911263, guid: 2e091dc3f4e0d0f4db479764ce74866a, type: 3}
   <Category>k__BackingField: 3
   <Rarity>k__BackingField: 0
   <BiomeAffinity>k__BackingField: 4
