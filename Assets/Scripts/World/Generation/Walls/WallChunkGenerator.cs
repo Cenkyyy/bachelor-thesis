@@ -712,6 +712,8 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         for (int i = 0; i < ores.Count; i++)
         {
             var ore = ores[i];
+            EnsureWallClearedAtDataTile(ore.AnchorTile);
+
             var worldPos = WorldObjectPlacementUtility.TileToWorldPosition(data, worldGenerator.GroundTilemap, ore.AnchorTile.x, ore.AnchorTile.y, 0f, 0f);
             var instance = _orePool.Acquire(ore.Entry.Prefab, worldPos, Quaternion.identity, _spawnedWallOresRoot, out _);
             if (instance != null)
@@ -719,6 +721,23 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         }
 
         _spawnedChunkOres[chunkCoord] = spawned;
+    }
+
+    private void EnsureWallClearedAtDataTile(Vector2Int dataTile)
+    {
+        if (!_runtimeByTile.ContainsKey(dataTile))
+            return;
+
+        if (_wallTilemap != null)
+            _wallTilemap.SetTile(worldGenerator.CurrentWorldData.DataToCell(dataTile.x, dataTile.y), null);
+
+        _runtimeByTile.Remove(dataTile);
+        _tilesAwaitingReplenishTick.Remove(dataTile);
+        DestroyMiningBarForTile(dataTile);
+
+        var ownerChunk = WorldChunkUtility.GetChunkCoordFromTile(dataTile, chunkSize);
+        if (_spawnedChunkTiles.TryGetValue(ownerChunk, out var chunkTiles))
+            chunkTiles.Remove(dataTile);
     }
 
     private void UnloadChunkOres(Vector2Int chunkCoord)

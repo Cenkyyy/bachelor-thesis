@@ -300,7 +300,36 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
 
     private bool CanGenerateChunk(Vector2Int chunkCoord)
     {
-        return _wallChunkGenerator == null || _wallChunkGenerator.IsChunkLoadedAt(chunkCoord);
+        if (_wallChunkGenerator == null)
+            return true;
+
+        if (!_wallChunkGenerator.IsChunkLoadedAt(chunkCoord))
+            return false;
+
+        return AreNeighbourWallChunksLoaded(chunkCoord);
+    }
+
+    private bool AreNeighbourWallChunksLoaded(Vector2Int chunkCoord)
+    {
+        if (_wallClearanceTiles <= 0)
+            return true;
+
+        int neighbourRangeChunks = Mathf.CeilToInt((float)_wallClearanceTiles / Mathf.Max(1, chunkSize));
+
+        for (int offsetX = -neighbourRangeChunks; offsetX <= neighbourRangeChunks; offsetX++)
+        {
+            for (int offsetY = -neighbourRangeChunks; offsetY <= neighbourRangeChunks; offsetY++)
+            {
+                if (offsetX == 0 && offsetY == 0)
+                    continue;
+
+                var neighbourChunk = new Vector2Int(chunkCoord.x + offsetX, chunkCoord.y + offsetY);
+                if (!_wallChunkGenerator.IsChunkLoadedAt(neighbourChunk))
+                    return false;
+            }
+        }
+
+        return true;
     }
 
     private bool IsInsideDefaultSpawnExclusionRadius(WorldRuntimeData data, int tileX, int tileY)
