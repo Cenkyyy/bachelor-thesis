@@ -34,7 +34,8 @@ public class SpellCastingPanelController : MonoBehaviour
     private bool _isCastLocked;
     private bool _canInteractWithSpellcasting;
     private float _lastCastingProgressTimestamp;
-    private bool _isInitialized;
+    private bool _isWordInventoryInitialized;
+    private bool _isPlayerInventoryInitialized;
 
     public event Action<SpellPhrase> OnPhraseCompleted;
 
@@ -63,7 +64,7 @@ public class SpellCastingPanelController : MonoBehaviour
 
     private void HandleWordsInitialized() 
     {
-        if (_wordInventory == null || _isInitialized)
+        if (_wordInventory == null || _isWordInventoryInitialized)
             return;
 
         _wordInventory.OnWordsInitialized -= HandleWordsInitialized;
@@ -71,7 +72,20 @@ public class SpellCastingPanelController : MonoBehaviour
         RefreshPanels();
         ResetCastingState();
         RefreshInteractionAvailability();
-        _isInitialized = true;
+        _isWordInventoryInitialized = true;
+    }
+
+    private void HandleInventoryInitialized()
+    {
+        if (_isPlayerInventoryInitialized || _player == null || _player.Inventory == null)
+            return;
+
+        _player.Inventory.OnHotbarSelectionChanged -= HandleSelectedHotbarChanged;
+        _player.Inventory.OnItemChanged -= HandleInventoryItemChanged;
+        _player.Inventory.OnHotbarSelectionChanged += HandleSelectedHotbarChanged;
+        _player.Inventory.OnItemChanged += HandleInventoryItemChanged;
+        RefreshInteractionAvailability();
+        _isPlayerInventoryInitialized = true;
     }
 
     private bool TryResolveDependencies()
@@ -99,8 +113,14 @@ public class SpellCastingPanelController : MonoBehaviour
 
     private void Update()
     {
-        if (!_isInitialized)
+        if (!_isWordInventoryInitialized)
             return;
+
+        if (!_isPlayerInventoryInitialized)
+        {
+            HandleInventoryInitialized();
+            return;
+        }
 
         if (_isCastLocked || GameStateManager.IsGamePaused || !_canInteractWithSpellcasting)
             return;
