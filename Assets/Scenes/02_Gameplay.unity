@@ -6079,7 +6079,6 @@ Transform:
   m_Children:
   - {fileID: 1486129156}
   - {fileID: 1541602682}
-  - {fileID: 1087975137}
   m_Father: {fileID: 1097722628}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &626142997
@@ -10790,7 +10789,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1087975137}
   m_Layer: 10
-  m_Name: Wall_OresContainer
+  m_Name: WallsOresContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10804,12 +10803,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1087975136}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 626142996}
+  m_Father: {fileID: 1327090048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1097722626
 GameObject:
@@ -10943,6 +10942,7 @@ MonoBehaviour:
   _maxPlacementsPerChunk: 28
   _tileCenterJitter: 0.35
   _defaultSpawnExclusionRadiusTiles: 3
+  _wallClearanceTiles: 1
 --- !u!114 &1097722631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11026,30 +11026,15 @@ MonoBehaviour:
   _terrainChunkGenerator: {fileID: 1097722632}
   _wallTilemap: {fileID: 626142998}
   _wallMiningBarsContainer: {fileID: 1486129156}
+  _wallsListData: {fileID: 11400000, guid: 69b05b6e8b8de1346804b5160c377cba, type: 2}
+  _spawnedWallOresRoot: {fileID: 1087975137}
   _miningBarPrefab: {fileID: 169936977825393500, guid: 2192519b60bece042b027bd588a9ef33, type: 3}
   _maxInactiveMiningBars: 24
   _feedbackPopupEmitter: {fileID: 1541602683}
   _higherToolRequiredMessage: Higher tool is required
-  _biomeWallTiles:
-  - <Biome>k__BackingField: 1
-    <RuleTile>k__BackingField: {fileID: 11400000, guid: f066bbd9ae960df479f1e79527e5cb76, type: 2}
-    <MineableData>k__BackingField: {fileID: 11400000, guid: 07c04f9c8f16ee041a8bf72d9dfa537c, type: 2}
-  - <Biome>k__BackingField: 2
-    <RuleTile>k__BackingField: {fileID: 11400000, guid: dd27e1917a7c84146bf5b1354f729c8e, type: 2}
-    <MineableData>k__BackingField: {fileID: 11400000, guid: 2a30e4ede2aa0b648808a3302f4b65ea, type: 2}
-  - <Biome>k__BackingField: 3
-    <RuleTile>k__BackingField: {fileID: 11400000, guid: 63e8e26cc60d0934eae753132e2fa974, type: 2}
-    <MineableData>k__BackingField: {fileID: 11400000, guid: 951018047d4b30444ac4f979e99bf631, type: 2}
-  - <Biome>k__BackingField: 4
-    <RuleTile>k__BackingField: {fileID: 11400000, guid: 5c5d4d796d9b9de4ab735632dae42a3b, type: 2}
-    <MineableData>k__BackingField: {fileID: 11400000, guid: b521dbf1f8f2abf4ab15b46fb7ebdc71, type: 2}
   _enableChunkUnloading: 1
-  _minClustersPerChunk: 1
-  _maxClustersPerChunk: 2
-  _minClusterSizeTiles: 30
-  _maxClusterSizeTiles: 50
-  _branchingChance: 0.35
-  _expansionChance: 0.8
+  _minClustersPerChunk: 0
+  _maxClustersPerChunk: 1
   _maxSeedSearchAttempts: 24
   _defaultSpawnExclusionRadiusTiles: 5
 --- !u!1 &1114828489
@@ -12168,6 +12153,7 @@ Transform:
   - {fileID: 568387668}
   - {fileID: 1426833342}
   - {fileID: 325433512}
+  - {fileID: 1087975137}
   m_Father: {fileID: 174293338}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1362542294

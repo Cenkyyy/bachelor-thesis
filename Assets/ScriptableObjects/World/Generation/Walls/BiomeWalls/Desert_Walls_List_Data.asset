@@ -17,8 +17,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aa3a566d3693a8b428ca7ab252b4e75c, type: 2}
   <MinClusterSizeTiles>k__BackingField: 30
   <MaxClusterSizeTiles>k__BackingField: 60
-  <BranchingChance>k__BackingField: 0.35
+  <BranchingChance>k__BackingField: 0.45
   <ExpansionChance>k__BackingField: 0.8
-  <OreClusterSpawnChance>k__BackingField: 0.3
-  <MinOresPerCluster>k__BackingField: 0
-  <MaxOresPerCluster>k__BackingField: 2
+  <MinOresPerCluster>k__BackingField: 1
+  <MaxOresPerCluster>k__BackingField: 3

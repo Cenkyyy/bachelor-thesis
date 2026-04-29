@@ -18,9 +18,8 @@ public sealed class BiomeWallsListData : ScriptableObject
     [field: SerializeField, Range(0f, 1f)] public float ExpansionChance { get; private set; } = 0.8f;
 
     [field: Header("Cluster Ores")]
-    [field: SerializeField, Range(0f, 1f)] public float OreClusterSpawnChance { get; private set; } = 0.3f;
     [field: SerializeField, Min(0)] public int MinOresPerCluster { get; private set; }
-    [field: SerializeField, Min(0)] public int MaxOresPerCluster { get; private set; } = 2;
+    [field: SerializeField, Min(0)] public int MaxOresPerCluster { get; private set; }
 
     private void OnValidate()
     {
@@ -32,7 +31,6 @@ public sealed class BiomeWallsListData : ScriptableObject
 
         BranchingChance = Mathf.Clamp01(BranchingChance);
         ExpansionChance = Mathf.Clamp01(ExpansionChance);
-        OreClusterSpawnChance = Mathf.Clamp01(OreClusterSpawnChance);
 
         if (MinOresPerCluster < 0)
             MinOresPerCluster = 0;

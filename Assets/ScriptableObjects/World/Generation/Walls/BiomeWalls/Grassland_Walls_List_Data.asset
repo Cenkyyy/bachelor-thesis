@@ -15,10 +15,9 @@ MonoBehaviour:
   <Biome>k__BackingField: 1
   _walls:
   - {fileID: 11400000, guid: e0392dd87ca41e446a390d4dc1cdbe97, type: 2}
-  <MinClusterSizeTiles>k__BackingField: 60
-  <MaxClusterSizeTiles>k__BackingField: 100
-  <BranchingChance>k__BackingField: 0.35
+  <MinClusterSizeTiles>k__BackingField: 70
+  <MaxClusterSizeTiles>k__BackingField: 110
+  <BranchingChance>k__BackingField: 0.45
   <ExpansionChance>k__BackingField: 0.8
-  <OreClusterSpawnChance>k__BackingField: 0.3
-  <MinOresPerCluster>k__BackingField: 0
-  <MaxOresPerCluster>k__BackingField: 2
+  <MinOresPerCluster>k__BackingField: 1
+  <MaxOresPerCluster>k__BackingField: 7

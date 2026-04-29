@@ -21,8 +21,10 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
     [SerializeField, Min(1)] private int _maxPlacementsPerChunk = 56;
     [SerializeField, Range(0f, 1f)] private float _tileCenterJitter = 0.35f;
     [SerializeField, Min(0)] private int _defaultSpawnExclusionRadiusTiles = 3;
+    [SerializeField, Min(0)] private int _wallClearanceTiles = 1;
 
     private readonly Dictionary<Vector2Int, List<GameObject>> _spawnedChunkInstances = new();
+    private readonly Dictionary<GameObject, float> _spacingRadiusByInstance = new();
     private readonly Dictionary<BiomeType, List<DecorationEntryData>> _entriesByBiome = new();
     private readonly DecorationModificationState _modificationState = new();
     private readonly GameObjectInstancePool _instancePool = new();
@@ -89,6 +91,7 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         }
 
         _spawnedChunkInstances.Clear();
+        _spacingRadiusByInstance.Clear();
         _instancePool.Clear();
     }
 
@@ -144,6 +147,9 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
                 continue;
 
             if (IsBlockedByWall(new Vector2Int(worldX, worldY)))
+                continue;
+
+            if (IsBlockedByNearbyWall(data, worldX, worldY))
                 continue;
 
             if (!_entriesByBiome.TryGetValue(worldTile.Biome, out var biomeEntries) || biomeEntries == null || biomeEntries.Count == 0)
@@ -203,6 +209,9 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         if (!WorldObjectPlacementUtility.HasValidSpacing(existing, worldPosition, minSpacing, placement => placement.WorldPosition, placement => placement.SpacingRadius))
             return null;
 
+        if (!HasValidSpacingAgainstLoadedInstances(worldPosition, minSpacing))
+            return null;
+
         return new DecorationPlacement
         {
             Entry = entry,
@@ -236,6 +245,9 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         if (IsBlockedByWall(new Vector2Int(tileX, tileY)))
             return null;
 
+        if (IsBlockedByNearbyWall(data, tileX, tileY))
+            return null;
+
         if (!WorldObjectPlacementUtility.IsBiomeAllowed(entry.AllowedBiomes, tile.Biome))
             return null;
 
@@ -244,6 +256,9 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         var worldPosition = WorldObjectPlacementUtility.TileToWorldPosition(data, worldGenerator.GroundTilemap, tileX, tileY, 0f, 0f);
         float minSpacing = Mathf.Max(0f, entry.MinimumSpacingTiles);
         if (!WorldObjectPlacementUtility.HasValidSpacing(existing, worldPosition, minSpacing, placement => placement.WorldPosition, placement => placement.SpacingRadius))
+            return null;
+
+        if (!HasValidSpacingAgainstLoadedInstances(worldPosition, minSpacing))
             return null;
 
         return new DecorationPlacement
@@ -261,6 +276,28 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         return _wallChunkGenerator != null && _wallChunkGenerator.HasWallAtDataTile(dataTile);
     }
 
+    private bool IsBlockedByNearbyWall(WorldRuntimeData data, int tileX, int tileY)
+    {
+        if (_wallChunkGenerator == null || _wallClearanceTiles <= 0)
+            return false;
+
+        int minX = Mathf.Max(0, tileX - _wallClearanceTiles);
+        int maxX = Mathf.Min(data.Width - 1, tileX + _wallClearanceTiles);
+        int minY = Mathf.Max(0, tileY - _wallClearanceTiles);
+        int maxY = Mathf.Min(data.Height - 1, tileY + _wallClearanceTiles);
+
+        for (int x = minX; x <= maxX; x++)
+        {
+            for (int y = minY; y <= maxY; y++)
+            {
+                if (_wallChunkGenerator.HasWallAtDataTile(new Vector2Int(x, y)))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
     private bool CanGenerateChunk(Vector2Int chunkCoord)
     {
         return _wallChunkGenerator == null || _wallChunkGenerator.IsChunkLoadedAt(chunkCoord);
@@ -275,6 +312,39 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
         int dy = tileY - data.DefaultSpawnTile.y;
         int exclusionRadiusSquared = _defaultSpawnExclusionRadiusTiles * _defaultSpawnExclusionRadiusTiles;
         return dx * dx + dy * dy <= exclusionRadiusSquared;
+    }
+
+    private bool HasValidSpacingAgainstLoadedInstances(Vector3 candidatePosition, float candidateSpacing)
+    {
+        if (candidateSpacing <= 0f || _spawnedChunkInstances.Count == 0)
+            return true;
+
+        foreach (var chunkInstancesPair in _spawnedChunkInstances)
+        {
+            var instances = chunkInstancesPair.Value;
+            if (instances == null)
+                continue;
+
+            for (int i = 0; i < instances.Count; i++)
+            {
+                var instance = instances[i];
+                if (instance == null)
+                    continue;
+
+                if (!_spacingRadiusByInstance.TryGetValue(instance, out float existingSpacing))
+                    continue;
+
+                float requiredSpacing = Mathf.Max(candidateSpacing, existingSpacing);
+                if (requiredSpacing <= 0f)
+                    continue;
+
+                float sqrDistance = (instance.transform.position - candidatePosition).sqrMagnitude;
+                if (sqrDistance < requiredSpacing * requiredSpacing)
+                    return false;
+            }
+        }
+
+        return true;
     }
 
     private static string BuildInstanceId(string decorationId, Vector2Int chunkCoord, int attemptIndex, int clusterIndex)
@@ -336,6 +406,7 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
             }
 
             instances.Add(instance);
+            _spacingRadiusByInstance[instance] = Mathf.Max(0f, placement.SpacingRadius);
             operationCount++;
 
             if (yieldEveryOperations > 0 && operationCount >= yieldEveryOperations)
@@ -361,6 +432,8 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
 
             if (!_instancePool.Release(instances[i], _spawnedDecorationsRoot))
                 Destroy(instances[i]);
+
+            _spacingRadiusByInstance.Remove(instances[i]);
 
             operationCount++;
             if (yieldEveryOperations > 0 && operationCount >= yieldEveryOperations)

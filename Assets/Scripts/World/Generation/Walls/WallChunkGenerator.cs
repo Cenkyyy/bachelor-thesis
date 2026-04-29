@@ -18,14 +18,6 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         Vector2Int.left
     };
 
-    [System.Serializable]
-    private sealed class BiomeWallTileSettings
-    {
-        [field: SerializeField] public BiomeType Biome { get; private set; }
-        [field: SerializeField] public TileBase RuleTile { get; private set; }
-        [field: SerializeField] public MineableNodeData MineableData { get; private set; }
-    }
-
     private struct PlannedWallTile
     {
         public Vector2Int DataTile;
@@ -33,10 +25,24 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         public MineableNodeData MineableData;
     }
 
+    private struct PlannedWallOre
+    {
+        public DecorationEntryData Entry;
+        public Vector2Int AnchorTile;
+    }
+
+    private sealed class PlannedChunkContent
+    {
+        public List<PlannedWallTile> WallTiles = new();
+        public List<PlannedWallOre> Ores = new();
+    }
+
     [Header("Dependencies")]
     [SerializeField] private TerrainChunkGenerator _terrainChunkGenerator;
     [SerializeField] private Tilemap _wallTilemap;
     [SerializeField] private Transform _wallMiningBarsContainer;
+    [SerializeField] private WallsListData _wallsListData;
+    [SerializeField] private Transform _spawnedWallOresRoot;
 
     [Header("Mining Bar")]
     [SerializeField] private MiningProgressBar _miningBarPrefab;
@@ -46,22 +52,16 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     [SerializeField] private WorldTextPopupEmitter _feedbackPopupEmitter;
     [SerializeField] private string _higherToolRequiredMessage = "Higher tool is required";
 
-    [Header("Biome Wall Settings")]
-    [SerializeField] private List<BiomeWallTileSettings> _biomeWallTiles = new();
-
     [Header("Wall Cluster Tuning")]
     [SerializeField] private bool _enableChunkUnloading = true;
     [SerializeField, Min(0)] private int _minClustersPerChunk = 1;
     [SerializeField, Min(0)] private int _maxClustersPerChunk = 3;
-    [SerializeField, Min(1)] private int _minClusterSizeTiles = 20;
-    [SerializeField, Min(1)] private int _maxClusterSizeTiles = 50;
-    [SerializeField, Range(0f, 1f)] private float _branchingChance = 0.35f;
-    [SerializeField, Range(0f, 1f)] private float _expansionChance = 0.8f;
     [SerializeField, Min(1)] private int _maxSeedSearchAttempts = 24;
     [SerializeField, Min(0)] private int _defaultSpawnExclusionRadiusTiles = 5;
 
-    private readonly Dictionary<BiomeType, BiomeWallTileSettings> _wallSettingsByBiome = new();
+    private readonly Dictionary<BiomeType, BiomeWallsListData> _wallsByBiome = new();
     private readonly Dictionary<Vector2Int, List<Vector2Int>> _spawnedChunkTiles = new();
+    private readonly Dictionary<Vector2Int, List<GameObject>> _spawnedChunkOres = new();
     private readonly Dictionary<Vector2Int, WallTileRuntimeData> _runtimeByTile = new();
     private readonly WallTileModificationState _modificationState = new();
     private readonly Dictionary<Vector2Int, MiningProgressBar> _miningBarsByTile = new();
@@ -72,6 +72,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     private readonly HashSet<Vector2Int> _tilesAwaitingReplenishTick = new();
     private readonly List<Vector3Int> _tileWriteCellsBuffer = new();
     private readonly List<TileBase> _tileWriteAssetsBuffer = new();
+    private readonly GameObjectInstancePool _orePool = new();
 
     protected override bool EnableChunkUnloading => _enableChunkUnloading;
 
@@ -110,6 +111,8 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
     protected override void OnEnable()
     {
+        if (_spawnedWallOresRoot == null)
+            _spawnedWallOresRoot = transform;
         BuildBiomeWallIndex();
         base.OnEnable();
     }
@@ -146,10 +149,12 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             _wallTilemap.ClearAllTiles();
 
         _spawnedChunkTiles.Clear();
+        _spawnedChunkOres.Clear();
         _runtimeByTile.Clear();
         _tilesAwaitingReplenishTick.Clear();
         _replenishTickTilesBuffer.Clear();
         _replenishedTilesBuffer.Clear();
+        _orePool.Clear();
         DestroyMiningBars();
     }
 
@@ -392,15 +397,15 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         if (_wallTilemap == null || _spawnedChunkTiles.ContainsKey(chunkCoord))
             yield break;
 
-        var plannedTiles = BuildWallTilesForChunk(data, chunkCoord);
-        var chunkTiles = new List<Vector2Int>(plannedTiles.Count);
+        var plan = BuildChunkPlan(data, chunkCoord);
+        var chunkTiles = new List<Vector2Int>(plan.WallTiles.Count);
         int operationCount = 0;
         _tileWriteCellsBuffer.Clear();
         _tileWriteAssetsBuffer.Clear();
 
-        for (int i = 0; i < plannedTiles.Count; i++)
+        for (int i = 0; i < plan.WallTiles.Count; i++)
         {
-            var planned = plannedTiles[i];
+            var planned = plan.WallTiles[i];
             if (_modificationState.IsRemoved(planned.DataTile))
                 continue;
 
@@ -420,6 +425,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
         ApplyBufferedTileWrites();
         _spawnedChunkTiles[chunkCoord] = chunkTiles;
+        SpawnChunkOres(data, chunkCoord, plan.Ores);
     }
 
     private IEnumerator UnloadChunkTiles(Vector2Int chunkCoord, int yieldEveryOperations, YieldInstruction yieldInstruction)
@@ -465,6 +471,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
         ApplyBufferedTileWrites();
         _spawnedChunkTiles.Remove(chunkCoord);
+        UnloadChunkOres(chunkCoord);
     }
 
     private void ApplyBufferedTileWrites()
@@ -478,21 +485,22 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         _tileWriteAssetsBuffer.Clear();
     }
 
-    private List<PlannedWallTile> BuildWallTilesForChunk(WorldRuntimeData data, Vector2Int chunkCoord)
+    private PlannedChunkContent BuildChunkPlan(WorldRuntimeData data, Vector2Int chunkCoord)
     {
+        var content = new PlannedChunkContent();
         var plannedTiles = new Dictionary<Vector2Int, PlannedWallTile>();
 
         int startX = chunkCoord.x * chunkSize;
         int startY = chunkCoord.y * chunkSize;
 
         if (startX < 0 || startY < 0 || startX >= data.Width || startY >= data.Height)
-            return new List<PlannedWallTile>();
+            return content;
 
         int width = Mathf.Min(chunkSize, data.Width - startX);
         int height = Mathf.Min(chunkSize, data.Height - startY);
 
         if (width <= 0 || height <= 0)
-            return new List<PlannedWallTile>();
+            return content;
 
         int chunkSeed = WorldSeedUtils.CombineSeed(worldGenerator.CurrentSeed, chunkCoord.x, chunkCoord.y);
         int seed = WorldSeedUtils.CombineSeed(chunkSeed, 99173, -99173);
@@ -503,9 +511,10 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         int clusterCount = rng.Next(minClusterCount, maxClusterCount + 1);
 
         for (int i = 0; i < clusterCount; i++)
-            GrowSingleCluster(data, rng, startX, startY, width, height, plannedTiles);
+            GrowSingleCluster(data, rng, startX, startY, width, height, plannedTiles, content.Ores);
 
-        return new List<PlannedWallTile>(plannedTiles.Values);
+        content.WallTiles = new List<PlannedWallTile>(plannedTiles.Values);
+        return content;
     }
 
     private void GrowSingleCluster(
@@ -515,16 +524,19 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         int startY,
         int width,
         int height,
-        Dictionary<Vector2Int, PlannedWallTile> plannedTiles)
+        Dictionary<Vector2Int, PlannedWallTile> plannedTiles,
+        List<PlannedWallOre> plannedOres)
     {
         if (!TryFindValidSeedTile(data, rng, startX, startY, width, height, out var seedTile))
             return;
+        var biomeSettings = _wallsByBiome[data.GetTile(seedTile.x, seedTile.y).Biome];
+        var wallData = biomeSettings.Walls[rng.Next(0, biomeSettings.Walls.Count)];
+        if (wallData == null || wallData.RuleTile == null || wallData.MineableData == null)
+            return;
 
-        int minClusterSize = Mathf.Max(1, _minClusterSizeTiles);
-        int maxClusterSize = Mathf.Max(minClusterSize, _maxClusterSizeTiles);
-        int targetTileCount = rng.Next(minClusterSize, maxClusterSize + 1);
+        int targetTileCount = rng.Next(biomeSettings.MinClusterSizeTiles, biomeSettings.MaxClusterSizeTiles + 1);
 
-        if (!TryPlanTile(data, seedTile, plannedTiles))
+        if (!TryPlanTile(data, seedTile, wallData, plannedTiles))
             return;
 
         var clusterTiles = new List<Vector2Int>(targetTileCount) { seedTile };
@@ -549,15 +561,15 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             if (data.GetTile(candidate.x, candidate.y).TileType == TileType.Void)
                 continue;
 
-            if (rng.NextDouble() > _expansionChance)
+            if (rng.NextDouble() > biomeSettings.ExpansionChance)
                 continue;
 
-            if (!TryPlanTile(data, candidate, plannedTiles))
+            if (!TryPlanTile(data, candidate, wallData, plannedTiles))
                 continue;
 
             clusterTiles.Add(candidate);
 
-            if (rng.NextDouble() < _branchingChance)
+            if (rng.NextDouble() < biomeSettings.BranchingChance)
             {
                 var branchDirection = CardinalDirections[rng.Next(0, CardinalDirections.Length)];
                 var branchTile = candidate + branchDirection;
@@ -567,30 +579,29 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
                 if (branchWithinChunk && !plannedTiles.ContainsKey(branchTile) && data.GetTile(branchTile.x, branchTile.y).TileType != TileType.Void)
                 {
-                    if (TryPlanTile(data, branchTile, plannedTiles))
+                    if (TryPlanTile(data, branchTile, wallData, plannedTiles))
                         clusterTiles.Add(branchTile);
                 }
             }
         }
+
+        TryPlanClusterOres(data, rng, biomeSettings, wallData, clusterTiles, plannedTiles, plannedOres);
     }
 
-    private bool TryPlanTile(WorldRuntimeData data, Vector2Int dataTile, Dictionary<Vector2Int, PlannedWallTile> plannedTiles)
+    private bool TryPlanTile(WorldRuntimeData data, Vector2Int dataTile, WallData wallData, Dictionary<Vector2Int, PlannedWallTile> plannedTiles)
     {
         if (IsInsideDefaultSpawnExclusionRadius(data, dataTile.x, dataTile.y))
             return false;
 
         var worldTile = data.GetTile(dataTile.x, dataTile.y);
-        if (!_wallSettingsByBiome.TryGetValue(worldTile.Biome, out var wallSettings) || wallSettings == null)
-            return false;
-
-        if (wallSettings.RuleTile == null || wallSettings.MineableData == null)
+        if (!_wallsByBiome.ContainsKey(worldTile.Biome))
             return false;
 
         plannedTiles[dataTile] = new PlannedWallTile
         {
             DataTile = dataTile,
-            TileAsset = wallSettings.RuleTile,
-            MineableData = wallSettings.MineableData
+            TileAsset = wallData.RuleTile,
+            MineableData = wallData.MineableData
         };
 
         return true;
@@ -612,7 +623,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
                 continue;
 
             var biome = data.GetTile(x, y).Biome;
-            if (!_wallSettingsByBiome.TryGetValue(biome, out var wallSettings) || wallSettings == null || wallSettings.RuleTile == null || wallSettings.MineableData == null)
+            if (!_wallsByBiome.ContainsKey(biome))
                 continue;
 
             seed = new Vector2Int(x, y);
@@ -636,16 +647,89 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
     private void BuildBiomeWallIndex()
     {
-        _wallSettingsByBiome.Clear();
+        _wallsByBiome.Clear();
+        if (_wallsListData == null)
+            return;
 
-        for (int i = 0; i < _biomeWallTiles.Count; i++)
+        for (int i = 0; i < _wallsListData.BiomeWalls.Count; i++)
         {
-            var entry = _biomeWallTiles[i];
+            var entry = _wallsListData.BiomeWalls[i];
             if (entry == null)
                 continue;
 
-            _wallSettingsByBiome[entry.Biome] = entry;
+            _wallsByBiome[entry.Biome] = entry;
         }
+    }
+
+    private void TryPlanClusterOres(WorldRuntimeData data, System.Random rng, BiomeWallsListData biomeSettings, WallData wallData, List<Vector2Int> clusterTiles, Dictionary<Vector2Int, PlannedWallTile> plannedTiles, List<PlannedWallOre> plannedOres)
+    {
+        if (wallData.OreDecorations == null || wallData.OreDecorations.Count == 0)
+            return;
+
+        int oreCount = rng.Next(biomeSettings.MinOresPerCluster, biomeSettings.MaxOresPerCluster + 1);
+        int placementAttemptsPerOre = 12;
+        var clusterSet = new HashSet<Vector2Int>(clusterTiles);
+        var occupiedOreTiles = new HashSet<Vector2Int>();
+        var candidateTiles = new List<Vector2Int>(clusterTiles);
+        foreach (var tile in clusterTiles)
+            foreach (var dir in CardinalDirections)
+                if (!clusterSet.Contains(tile + dir) && !candidateTiles.Contains(tile + dir))
+                    candidateTiles.Add(tile + dir);
+
+        for (int i = 0; i < oreCount; i++)
+        {
+            var ore = wallData.OreDecorations[rng.Next(0, wallData.OreDecorations.Count)];
+            if (ore == null || ore.Prefab == null)
+                continue;
+
+            bool placed = false;
+            for (int attempt = 0; attempt < placementAttemptsPerOre && !placed; attempt++)
+            {
+                if (candidateTiles.Count == 0)
+                    continue;
+
+                var tile = candidateTiles[rng.Next(0, candidateTiles.Count)];
+                if (occupiedOreTiles.Contains(tile))
+                    continue;
+
+                bool inBounds = tile.x >= 0 && tile.x < data.Width && tile.y >= 0 && tile.y < data.Height;
+                if (!inBounds || data.GetTile(tile.x, tile.y).TileType == TileType.Void)
+                    continue;
+
+                if (plannedTiles.ContainsKey(tile))
+                    plannedTiles.Remove(tile);
+
+                plannedOres.Add(new PlannedWallOre { Entry = ore, AnchorTile = tile });
+                occupiedOreTiles.Add(tile);
+                placed = true;
+            }
+        }
+    }
+
+    private void SpawnChunkOres(WorldRuntimeData data, Vector2Int chunkCoord, List<PlannedWallOre> ores)
+    {
+        var spawned = new List<GameObject>();
+        for (int i = 0; i < ores.Count; i++)
+        {
+            var ore = ores[i];
+            var worldPos = WorldObjectPlacementUtility.TileToWorldPosition(data, worldGenerator.GroundTilemap, ore.AnchorTile.x, ore.AnchorTile.y, 0f, 0f);
+            var instance = _orePool.Acquire(ore.Entry.Prefab, worldPos, Quaternion.identity, _spawnedWallOresRoot, out _);
+            if (instance != null)
+                spawned.Add(instance);
+        }
+
+        _spawnedChunkOres[chunkCoord] = spawned;
+    }
+
+    private void UnloadChunkOres(Vector2Int chunkCoord)
+    {
+        if (!_spawnedChunkOres.TryGetValue(chunkCoord, out var spawned))
+            return;
+
+        for (int i = 0; i < spawned.Count; i++)
+            _orePool.Release(spawned[i], _spawnedWallOresRoot);
+
+        _spawnedChunkOres.Remove(chunkCoord);
     }
 
 #if UNITY_EDITOR

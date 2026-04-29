@@ -16,9 +16,8 @@ MonoBehaviour:
   _walls:
   - {fileID: 11400000, guid: 44af56e8976deea48a6b820036909415, type: 2}
   <MinClusterSizeTiles>k__BackingField: 70
-  <MaxClusterSizeTiles>k__BackingField: 150
-  <BranchingChance>k__BackingField: 0.35
+  <MaxClusterSizeTiles>k__BackingField: 140
+  <BranchingChance>k__BackingField: 0.45
   <ExpansionChance>k__BackingField: 0.8
-  <OreClusterSpawnChance>k__BackingField: 0.3
-  <MinOresPerCluster>k__BackingField: 0
-  <MaxOresPerCluster>k__BackingField: 2
+  <MinOresPerCluster>k__BackingField: 2
+  <MaxOresPerCluster>k__BackingField: 9
