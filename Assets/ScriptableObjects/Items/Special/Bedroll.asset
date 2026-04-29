@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Bedroll
   <Icon>k__BackingField: {fileID: 5312805574595449782, guid: becfb77c229afda49bb73cfd134ac235, type: 3}
-  <Description>k__BackingField: A bedroll for sleeping, to enter the parallel world
   <Category>k__BackingField: 6
   <Rarity>k__BackingField: 0
   <BiomeAffinity>k__BackingField: 0
   <MaxStackSize>k__BackingField: 1
-  <BedrollPrefab>k__BackingField: {fileID: 1143963826679536962, guid: b92248b1a6281594ebe5ace7394ad5a5, type: 3}
-  <PlacementCheckSize>k__BackingField: {x: 1, y: 1}
+  <Prefab>k__BackingField: {fileID: 1143963826679536962, guid: b92248b1a6281594ebe5ace7394ad5a5, type: 3}
+  <PlacementCheckSize>k__BackingField: {x: 0.95, y: 0.95}

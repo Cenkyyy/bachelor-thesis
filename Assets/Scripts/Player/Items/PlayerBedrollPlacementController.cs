@@ -107,7 +107,7 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
     {
         targetPosition = default;
 
-        if (placeableItem == null || placeableItem.PlacementPrefab == null)
+        if (placeableItem == null || placeableItem.Prefab == null)
             return false;
 
         if (!TryGetPlacementTarget(placeableItem.PlacementCheckSize, out targetPosition, out var canPlaceAtTarget))
@@ -206,17 +206,17 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
 
     private bool TryEnsurePreviewInstance(IPlaceableItem placeableItem)
     {
-        if (placeableItem == null || placeableItem.PlacementPrefab == null)
+        if (placeableItem == null || placeableItem.Prefab == null)
             return false;
 
-        if (_previewInstance != null && _previewSourcePrefab == placeableItem.PlacementPrefab)
+        if (_previewInstance != null && _previewSourcePrefab == placeableItem.Prefab)
             return true;
 
         DestroyPreview();
 
-        _previewInstance = Instantiate(placeableItem.PlacementPrefab, Vector3.zero, Quaternion.identity, _placementParent);
-        _previewInstance.name = $"{placeableItem.PlacementPrefab.name}_Preview";
-        _previewSourcePrefab = placeableItem.PlacementPrefab;
+        _previewInstance = Instantiate(placeableItem.Prefab, Vector3.zero, Quaternion.identity, _placementParent);
+        _previewInstance.name = $"{placeableItem.Prefab.name}_Preview";
+        _previewSourcePrefab = placeableItem.Prefab;
         _previewRenderer = _previewInstance.GetComponentInChildren<SpriteRenderer>(true);
 
         var colliders = _previewInstance.GetComponentsInChildren<Collider2D>(true);
@@ -232,7 +232,7 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
 
     private void PlaceAndConsume(IPlaceableItem placeableItem, Vector3 targetPosition, int slotIndex, InventoryItem slotItem)
     {
-        Instantiate(placeableItem.PlacementPrefab, targetPosition, Quaternion.identity, _placementParent);
+        Instantiate(placeableItem.Prefab, targetPosition, Quaternion.identity, _placementParent);
         ConsumeOneItem(slotIndex, slotItem);
     }
 

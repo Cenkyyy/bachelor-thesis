@@ -2,6 +2,6 @@
 
 public interface IPlaceableItem
 {
-    GameObject PlacementPrefab { get; }
+    GameObject Prefab { get; }
     Vector2 PlacementCheckSize { get; }
 }
