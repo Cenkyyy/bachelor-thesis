@@ -13,7 +13,7 @@ public sealed class EquipmentInventory : IInventory
     public event Action<int> OnItemChanged;
 
     private readonly InventoryItem[] _items;
-    private readonly EquipmentSlotType[] _slotLayout;
+    private readonly EquipmentType[] _slotLayout;
 
     /// <summary>
     /// Default layout: [Helmet, Chest, Legs, Boots, Necklace, RingLeft, RingRight, Amulet]
@@ -22,14 +22,14 @@ public sealed class EquipmentInventory : IInventory
     {
         _slotLayout = new[]
         {
-            EquipmentSlotType.Helmet,
-            EquipmentSlotType.Chest,
-            EquipmentSlotType.Legs,
-            EquipmentSlotType.Boots,
-            EquipmentSlotType.Necklace,
-            EquipmentSlotType.RingLeft,
-            EquipmentSlotType.RingRight,
-            EquipmentSlotType.Amulet
+            EquipmentType.Helmet,
+            EquipmentType.Chest,
+            EquipmentType.Legs,
+            EquipmentType.Boots,
+            EquipmentType.Necklace,
+            EquipmentType.RingLeft,
+            EquipmentType.RingRight,
+            EquipmentType.Amulet
         };
 
         _items = new InventoryItem[_slotLayout.Length];
@@ -45,7 +45,7 @@ public sealed class EquipmentInventory : IInventory
         return _items[index];
     }
 
-    public bool TryGetIndexForSlotType(EquipmentSlotType slotType, out int index)
+    public bool TryGetIndexForSlotType(EquipmentType slotType, out int index)
     {
         for (int i = 0; i < _slotLayout.Length; i++)
         {
@@ -164,10 +164,10 @@ public sealed class EquipmentInventory : IInventory
         if (!IsEquipment(item.Item, out var equip)) return false;
         var slotType = _slotLayout[index];
 
-        if (equip.Slot == EquipmentSlotType.RingLeft || equip.Slot == EquipmentSlotType.RingRight)
+        if (equip.Slot == EquipmentType.RingLeft || equip.Slot == EquipmentType.RingRight)
         {
             // Rings are mutually compatible: a "ring" scriptable object can target either left or right.
-            return slotType == EquipmentSlotType.RingLeft || slotType == EquipmentSlotType.RingRight;
+            return slotType == EquipmentType.RingLeft || slotType == EquipmentType.RingRight;
         }
 
         // If the SO declares generic "RingLeft/Right" we also accept the generic ring check above.

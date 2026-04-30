@@ -6,5 +6,5 @@ using UnityEngine;
 public sealed class EquipmentSlot : Slot
 {
     [field: Header("Equipment")]
-    [field: SerializeField] public EquipmentSlotType SlotType { get; private set; }
+    [field: SerializeField] public EquipmentType SlotType { get; private set; }
 }

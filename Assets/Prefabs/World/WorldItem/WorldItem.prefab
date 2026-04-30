@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 572908556607902943}
-  - component: {fileID: 2457298555320435077}
   - component: {fileID: 9095116602458889832}
+  - component: {fileID: 2457298555320435077}
   - component: {fileID: 6233144974217097816}
   - component: {fileID: 5286514155963621061}
   - component: {fileID: 5528480171935615697}
@@ -36,6 +36,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9095116602458889832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641457844802903899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf7f30fa539e894c84fd5c22450f9ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Collider>k__BackingField: {fileID: 5286514155963621061}
+  <Rigidbody>k__BackingField: {fileID: 5528480171935615697}
+  <SpriteRenderer>k__BackingField: {fileID: 6233144974217097816}
 --- !u!114 &2457298555320435077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,19 +68,6 @@ MonoBehaviour:
   _mergeDuration: 0.18
   _mergeShrink: 0.8
   _leftoverItemNudgeImpulse: 0.7
---- !u!114 &9095116602458889832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1641457844802903899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cf7f30fa539e894c84fd5c22450f9ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconRenderer: {fileID: 6233144974217097816}
 --- !u!212 &6233144974217097816
 SpriteRenderer:
   m_ObjectHideFlags: 0

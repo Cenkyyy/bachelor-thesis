@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Weapon Item")]
 public class WeaponItemData : ItemData
 {
-    [field: SerializeField] public WeaponArchetype Archetype { get; private set; } = WeaponArchetype.Wand;
+    [field: SerializeField] public WeaponType Archetype { get; private set; } = WeaponType.Wand;
     [field: SerializeField] public ToolTier ProgressionTier { get; private set; } = ToolTier.Wooden;
 
     [field: Header("Combat Baseline")]

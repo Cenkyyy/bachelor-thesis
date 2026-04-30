@@ -17,8 +17,6 @@ public sealed class WorldItemSpawnController : MonoBehaviour
     [SerializeField] private float _leftoverItemNudgeImpulse = 0.7f;
 
     private WorldItem _worldItem;
-    private Rigidbody2D _body;
-    private Collider2D _col;
     private float _spawnTime;
     private bool _isMerging;
 
@@ -27,8 +25,6 @@ public sealed class WorldItemSpawnController : MonoBehaviour
     private void Awake()
     {
         _worldItem = GetComponent<WorldItem>();
-        _worldItem.TryGetRigidbody(out _body);
-        _worldItem.TryGetCollider(out _col);
         _spawnTime = Time.time;
     }
 
@@ -92,15 +88,15 @@ public sealed class WorldItemSpawnController : MonoBehaviour
     {
         _isMerging = true;
 
-        if (_body != null)
+        if (_worldItem.Rigidbody != null)
         {
-            _body.linearVelocity = Vector2.zero;
-            _body.angularVelocity = 0f;
-            _body.bodyType = RigidbodyType2D.Kinematic;
+            _worldItem.Rigidbody.linearVelocity = Vector2.zero;
+            _worldItem.Rigidbody.angularVelocity = 0f;
+            _worldItem.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
         }
 
-        if (_col != null)
-            _col.enabled = false;
+        if (_worldItem.Collider != null)
+            _worldItem.Collider.enabled = false;
 
         var startPos = transform.position;
         var startScale = transform.localScale;
@@ -151,17 +147,17 @@ public sealed class WorldItemSpawnController : MonoBehaviour
     {
         transform.localScale = startScale;
 
-        if (_col != null)
-            _col.enabled = true;
+        if (_worldItem.Collider != null)
+            _worldItem.Collider.enabled = true;
 
-        if (_body != null)
+        if (_worldItem.Rigidbody != null)
         {
-            _body.bodyType = RigidbodyType2D.Dynamic;
+            _worldItem.Rigidbody.bodyType = RigidbodyType2D.Dynamic;
 
             if (nudge)
             {
                 var dir = Random.insideUnitCircle.normalized;
-                _body.AddForce(dir * _leftoverItemNudgeImpulse, ForceMode2D.Impulse);
+                _worldItem.Rigidbody.AddForce(dir * _leftoverItemNudgeImpulse, ForceMode2D.Impulse);
             }
         }
 

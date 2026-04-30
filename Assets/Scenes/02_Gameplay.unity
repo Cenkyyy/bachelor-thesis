@@ -19444,42 +19444,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 174293338}
     m_Modifications:
-    - target: {fileID: 691936326778899438, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _damageWordTextPopupSettings._neutralColor.b
-      value: 0.12941177
-      objectReference: {fileID: 0}
-    - target: {fileID: 691936326778899438, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _damageWordTextPopupSettings._neutralColor.g
-      value: 0.12941177
-      objectReference: {fileID: 0}
-    - target: {fileID: 691936326778899438, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _damageWordTextPopupSettings._neutralColor.r
-      value: 0.94509804
-      objectReference: {fileID: 0}
-    - target: {fileID: 691936326778899438, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _damageWordTextPopupSettings._resistedColor.b
-      value: 0.12941177
-      objectReference: {fileID: 0}
-    - target: {fileID: 691936326778899438, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _damageWordTextPopupSettings._resistedColor.g
-      value: 0.12941177
-      objectReference: {fileID: 0}
-    - target: {fileID: 691936326778899438, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _damageWordTextPopupSettings._resistedColor.r
-      value: 0.94509804
-      objectReference: {fileID: 0}
-    - target: {fileID: 691936326778899438, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _damageWordTextPopupSettings._effectiveColor.b
-      value: 0.12904951
-      objectReference: {fileID: 0}
-    - target: {fileID: 691936326778899438, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _damageWordTextPopupSettings._effectiveColor.g
-      value: 0.12904951
-      objectReference: {fileID: 0}
-    - target: {fileID: 691936326778899438, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _damageWordTextPopupSettings._effectiveColor.r
-      value: 0.9433962
-      objectReference: {fileID: 0}
     - target: {fileID: 2259951683026114348, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: m_Name
       value: Player
