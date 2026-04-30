@@ -26,7 +26,7 @@ public sealed class MineableNodeMiningTarget : IMineableTarget
         _node?.NotifyMiningStarted();
     }
 
-    public void ApplyMiningDamage(float basePower, Player miner, ItemDropSpawner dropSpawner)
+    public void ApplyMiningDamage(float basePower, Player miner, WorldItemSpawner dropSpawner)
     {
         _node?.ApplyMiningDamage(basePower, miner, dropSpawner);
     }

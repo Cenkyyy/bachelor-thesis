@@ -85,7 +85,7 @@ public sealed class MineableNode : MonoBehaviour
         RaiseProgressChanged();
     }
 
-    public void ApplyMiningDamage(float basePower, Player miner, ItemDropSpawner dropSpawner)
+    public void ApplyMiningDamage(float basePower, Player miner, WorldItemSpawner dropSpawner)
     {
         if (_isDepleted)
             return;
@@ -142,7 +142,7 @@ public sealed class MineableNode : MonoBehaviour
         OnMiningProgressChanged?.Invoke(progress);
     }
 
-    private void HandleBreak(Player player, ItemDropSpawner dropSpawner)
+    private void HandleBreak(Player player, WorldItemSpawner dropSpawner)
     {
         if (player != null && _data.GrantsMemoryXP)
         {
@@ -171,7 +171,7 @@ public sealed class MineableNode : MonoBehaviour
         OnMiningStopped?.Invoke();
     }
 
-    private void TryDropLoot(Player player, ItemDropSpawner dropSpawner)
+    private void TryDropLoot(Player player, WorldItemSpawner dropSpawner)
     {
         var dropPosition = _dropAnchor ? _dropAnchor.position : transform.position;
         MiningDropResolver.ResolveDrops(_data.Drops, player, dropSpawner, dropPosition);

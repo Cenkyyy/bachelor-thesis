@@ -20,7 +20,7 @@ public sealed class SpellWordEffectivenessData : ScriptableObject
     [Header("Enemy Tag -> Form/Modifier Rules")]
     [SerializeField] private List<EnemyRoleWordEffectivenessRule> _enemyRoleRules = new();
 
-    public float CalculateFinalMultiplier(BiomeAffinity biome, EnemyRoleTag roleTags, ModifierWord modifier, ElementWord element, FormWord form)
+    public float CalculateFinalMultiplier(ItemBiomeAffinity biome, EnemyRoleTag roleTags, ModifierWord modifier, ElementWord element, FormWord form)
     {
         var modifierMultiplier = ResolveModifierMultiplier(roleTags, modifier);
         var biomeMultiplier = ResolveBiomeElementMultiplier(biome, element);
@@ -30,7 +30,7 @@ public sealed class SpellWordEffectivenessData : ScriptableObject
         return Mathf.Clamp(combined, MinFinalMultiplier, MaxFinalMultiplier);
     }
 
-    private float ResolveBiomeElementMultiplier(BiomeAffinity biome, ElementWord element)
+    private float ResolveBiomeElementMultiplier(ItemBiomeAffinity biome, ElementWord element)
     {
         for (var i = 0; i < _biomeRules.Count; i++)
         {
@@ -124,7 +124,7 @@ public sealed class SpellWordEffectivenessData : ScriptableObject
     [Serializable]
     public sealed class BiomeElementEffectivenessRule
     {
-        [field: SerializeField] public BiomeAffinity Biome { get; private set; } = BiomeAffinity.Grassland;
+        [field: SerializeField] public ItemBiomeAffinity Biome { get; private set; } = ItemBiomeAffinity.Grassland;
 
         [SerializeField] private List<ElementWord> _effectiveElements = new();
         [SerializeField] private List<ElementWord> _ineffectiveElements = new();

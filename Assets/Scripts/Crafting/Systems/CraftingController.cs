@@ -5,7 +5,7 @@ public sealed class CraftingController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Player _player;
-    [SerializeField] private ItemDropSpawner _itemDropSpawner;
+    [SerializeField] private WorldItemSpawner _itemDropSpawner;
 
     public event Action<CraftingRecipeData> OnCraftStarted;
     public event Action<CraftingRecipeData> OnCraftCompleted;

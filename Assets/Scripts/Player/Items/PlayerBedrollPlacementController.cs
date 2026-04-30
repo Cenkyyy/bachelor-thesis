@@ -26,12 +26,15 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
     [SerializeField] private Color _validPlacementPreviewColor = Color.blue;
     [SerializeField] private Color _invalidPlacementPreviewColor = Color.red;
 
+    private readonly IPlacementStrategy[] _placementStrategies = new IPlacementStrategy[1];
     private GameObject _previewInstance;
     private GameObject _previewSourcePrefab;
     private SpriteRenderer _previewRenderer;
 
     private void Awake()
     {
+        _placementStrategies[0] = new PrefabPlacementStrategy();
+
         if (_player == null)
             _player = GetComponent<Player>() ?? GetComponentInParent<Player>();
 
@@ -232,8 +235,25 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
 
     private void PlaceAndConsume(IPlaceableItem placeableItem, Vector3 targetPosition, int slotIndex, InventoryItem slotItem)
     {
-        Instantiate(placeableItem.Prefab, targetPosition, Quaternion.identity, _placementParent);
+        if (!TryPlace(placeableItem, targetPosition))
+            return;
+
         ConsumeOneItem(slotIndex, slotItem);
+    }
+
+    private bool TryPlace(IPlaceableItem placeableItem, Vector3 targetPosition)
+    {
+        for (var i = 0; i < _placementStrategies.Length; i++)
+        {
+            var strategy = _placementStrategies[i];
+            if (strategy == null || !strategy.CanHandle(placeableItem))
+                continue;
+
+            strategy.Place(placeableItem, targetPosition, _placementParent);
+            return true;
+        }
+
+        return false;
     }
 
     private void ConsumeOneItem(int slotIndex, InventoryItem slotItem)

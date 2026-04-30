@@ -18377,7 +18377,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2031400804}
   - component: {fileID: 2031400805}
-  - component: {fileID: 2031400806}
   m_Layer: 0
   m_Name: WorldItemSpawnController
   m_TagString: Untagged
@@ -18412,22 +18411,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de665899ab31e0444b13650d6206c8a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _worldItemFactory: {fileID: 2031400806}
+  _worldItemPrefab: {fileID: 1641457844802903899, guid: 3c0c57e1281303742a8608169acddf62, type: 3}
   _dropParent: {fileID: 896982110}
   _scatterImpulse: 1.2
---- !u!114 &2031400806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2031400803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 472cf4f4e7a55114494578cd31b2c37d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _worldItemPrefab: {fileID: 9095116602458889832, guid: 3c0c57e1281303742a8608169acddf62, type: 3}
 --- !u!1 &2053194697
 GameObject:
   m_ObjectHideFlags: 0

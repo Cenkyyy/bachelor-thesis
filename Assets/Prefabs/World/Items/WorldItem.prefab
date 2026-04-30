@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 572908556607902943}
+  - component: {fileID: 2457298555320435077}
   - component: {fileID: 9095116602458889832}
   - component: {fileID: 6233144974217097816}
   - component: {fileID: 5286514155963621061}
@@ -35,6 +36,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2457298555320435077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641457844802903899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4857b4ec615b5e5498ffeae747c7da84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pickupDelay: 0.5
+  _lifetimeSeconds: 300
+  _mergeDuration: 0.18
+  _mergeShrink: 0.8
+  _leftoverItemNudgeImpulse: 0.7
 --- !u!114 &9095116602458889832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48,8 +66,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _iconRenderer: {fileID: 6233144974217097816}
-  _pickupDelay: 0.5
-  _lifetimeSeconds: 300
 --- !u!212 &6233144974217097816
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -92,7 +108,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2131271685
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

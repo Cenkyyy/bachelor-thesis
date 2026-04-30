@@ -4,7 +4,7 @@ using UnityEngine;
 public class EntityData : ScriptableObject
 {
     [field: Header("Identity")]
-    [field: SerializeField] public BiomeAffinity HomeBiome { get; private set; } = BiomeAffinity.Grassland;
+    [field: SerializeField] public ItemBiomeAffinity HomeBiome { get; private set; } = ItemBiomeAffinity.Grassland;
 
     [field: Header("Spawn")]
     [field: SerializeField] public EntityCore Prefab { get; private set; }

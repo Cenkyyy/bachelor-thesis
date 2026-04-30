@@ -3,5 +3,5 @@
 /// </summary>
 public interface ISpellWordEffectivenessTarget
 {
-    bool TryGetSpellWordEffectivenessData(out BiomeAffinity biome, out EnemyRoleTag roleTags);
+    bool TryGetSpellWordEffectivenessData(out ItemBiomeAffinity biome, out EnemyRoleTag roleTags);
 }

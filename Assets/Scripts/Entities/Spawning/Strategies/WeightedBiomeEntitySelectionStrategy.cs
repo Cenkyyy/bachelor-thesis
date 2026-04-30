@@ -11,7 +11,7 @@ public sealed class WeightedBiomeEntitySelectionStrategy<TData> : IEntitySelecti
         _entityDataEntries = entityDataEntries;
     }
 
-    public bool TrySelect(BiomeAffinity biome, out TData entityData)
+    public bool TrySelect(ItemBiomeAffinity biome, out TData entityData)
     {
         entityData = null;
 
@@ -61,7 +61,7 @@ public sealed class WeightedBiomeEntitySelectionStrategy<TData> : IEntitySelecti
         return false;
     }
 
-    private static bool CanSpawnInBiome(TData entry, BiomeAffinity biome)
+    private static bool CanSpawnInBiome(TData entry, ItemBiomeAffinity biome)
     {
         return entry != null && entry.Prefab != null && entry.SpawnWeight > 0f && entry.HomeBiome == biome;
     }

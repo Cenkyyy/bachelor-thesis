@@ -38,7 +38,7 @@ public class ItemInteractionController : MonoBehaviour
     // Item dropping
     [SerializeField] private Player _player;
 
-    [SerializeField] private ItemDropSpawner _worldItemSpawner;
+    [SerializeField] private WorldItemSpawner _worldItemSpawner;
     [SerializeField] private float _dropSpawnDistance = 0.6f;
 
     // Double click

@@ -41,11 +41,11 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget, ISpellWordEf
             _damageable = GetComponent<EntityDamageable>() ?? GetComponentInParent<EntityDamageable>();
     }
 
-    public bool TryGetSpellWordEffectivenessData(out BiomeAffinity biome, out EnemyRoleTag roleTags)
+    public bool TryGetSpellWordEffectivenessData(out ItemBiomeAffinity biome, out EnemyRoleTag roleTags)
     {
         if (_enemyCore == null || _enemyCore.Data == null)
         {
-            biome = BiomeAffinity.None;
+            biome = ItemBiomeAffinity.None;
             roleTags = EnemyRoleTag.None;
             return false;
         }

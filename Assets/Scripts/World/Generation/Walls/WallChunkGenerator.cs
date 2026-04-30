@@ -21,8 +21,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     private struct PlannedWallTile
     {
         public Vector2Int DataTile;
-        public TileBase TileAsset;
-        public MineableNodeData MineableData;
+        public WallData WallData;
     }
 
     private struct PlannedWallOre
@@ -221,7 +220,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         _feedbackPopupEmitter.ShowMessage(_higherToolRequiredMessage);
     }
 
-    public void ApplyMiningDamage(Vector2Int dataTile, float basePower, Player miner, ItemDropSpawner dropSpawner)
+    public void ApplyMiningDamage(Vector2Int dataTile, float basePower, Player miner, WorldItemSpawner dropSpawner)
     {
         if (!_runtimeByTile.TryGetValue(dataTile, out var runtimeData))
             return;
@@ -243,8 +242,8 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         _modificationState.MarkRemoved(dataTile);
         DestroyMiningBarForTile(dataTile);
 
-        if (miner != null && runtimeData.MineableData != null)
-            MiningDropResolver.ResolveDrops(runtimeData.MineableData.Drops, miner, dropSpawner, GetTileCenterWorld(dataTile));
+        if (miner != null && runtimeData.WallData.MineableData != null)
+            MiningDropResolver.ResolveDrops(runtimeData.WallData.MineableData.Drops, miner, dropSpawner, GetTileCenterWorld(dataTile));
     }
 
     public void NotifyMiningStarted(Vector2Int dataTile)
@@ -410,8 +409,8 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
                 continue;
 
             _tileWriteCellsBuffer.Add(data.DataToCell(planned.DataTile.x, planned.DataTile.y));
-            _tileWriteAssetsBuffer.Add(planned.TileAsset);
-            _runtimeByTile[planned.DataTile] = new WallTileRuntimeData(planned.DataTile, planned.MineableData);
+            _tileWriteAssetsBuffer.Add(planned.WallData.RuleTile);
+            _runtimeByTile[planned.DataTile] = new WallTileRuntimeData(planned.DataTile, planned.WallData);
             chunkTiles.Add(planned.DataTile);
 
             operationCount++;
@@ -600,8 +599,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         plannedTiles[dataTile] = new PlannedWallTile
         {
             DataTile = dataTile,
-            TileAsset = wallData.RuleTile,
-            MineableData = wallData.MineableData
+            WallData = wallData
         };
 
         return true;

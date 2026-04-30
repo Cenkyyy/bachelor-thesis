@@ -7,7 +7,7 @@ public sealed class PlayerMiningController : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private Player _player;
     [SerializeField] private PlayerToolDurability _toolDurability;
-    [SerializeField] private ItemDropSpawner _itemDropSpawner;
+    [SerializeField] private WorldItemSpawner _itemDropSpawner;
     [SerializeField] private Camera _camera;
     [SerializeField] private WallChunkGenerator _wallChunkGenerator;
 
@@ -20,9 +20,16 @@ public sealed class PlayerMiningController : MonoBehaviour
     [Header("Hand Mining")]
     [SerializeField] private bool _allowHandMining = true;
 
+    private readonly IMiningTargetStrategy[] _targetStrategies = new IMiningTargetStrategy[2];
     private IMineableTarget _currentTarget;
     private int _currentToolSlot = -1;
     private float _miningTickAccumulator;
+
+    private void Awake()
+    {
+        _targetStrategies[0] = new PrefabMiningTargetStrategy(_mineableMask);
+        _targetStrategies[1] = new TileMiningTargetStrategy(_wallChunkGenerator);
+    }
 
     private void Update()
     {
@@ -123,27 +130,20 @@ public sealed class PlayerMiningController : MonoBehaviour
         var mouseWorld = _camera ? _camera.ScreenToWorldPoint(Input.mousePosition) : transform.position;
         mouseWorld.z = 0f;
 
-        var hit = Physics2D.OverlapPoint(mouseWorld, _mineableMask);
-        if (hit != null)
+        for (var i = 0; i < _targetStrategies.Length; i++)
         {
-            var node = hit.GetComponent<MineableNode>() ?? hit.GetComponentInParent<MineableNode>();
-            if (node != null)
-            {
-                var nodeTarget = new MineableNodeMiningTarget(node);
-                if (IsWithinMiningRange(nodeTarget.WorldPosition))
-                {
-                    target = nodeTarget;
-                    return true;
-                }
+            var strategy = _targetStrategies[i];
+            if (strategy == null || !strategy.TryResolveTarget(mouseWorld, out var resolvedTarget))
+                continue;
 
+            if (!IsWithinMiningRange(resolvedTarget.WorldPosition))
                 return false;
-            }
+
+            target = resolvedTarget;
+            return true;
         }
 
-        if (_wallChunkGenerator == null || !_wallChunkGenerator.TryCreateMiningTarget(mouseWorld, out target))
-            return false;
-
-        return IsWithinMiningRange(target.WorldPosition);
+        return false;
     }
 
     private bool IsWithinMiningRange(Vector3 targetPosition)

@@ -8,7 +8,7 @@ public sealed class PlayerItemDropController : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private Player _player;
     [SerializeField] private BackpackPanel _backpackPanel;
-    [SerializeField] private ItemDropSpawner _worldItemSpawner;
+    [SerializeField] private WorldItemSpawner _worldItemSpawner;
     [SerializeField] private GraphicRaycaster _uiRaycaster; //  UI Canvas
 
     [Header("Input")]
@@ -27,7 +27,7 @@ public sealed class PlayerItemDropController : MonoBehaviour
 
         if (_worldItemSpawner == null)
         {
-            var arr = FindObjectsByType<ItemDropSpawner>(FindObjectsSortMode.None);
+            var arr = FindObjectsByType<WorldItemSpawner>(FindObjectsSortMode.None);
             if (arr != null && arr.Length > 0)
                 _worldItemSpawner = arr[0];
         }

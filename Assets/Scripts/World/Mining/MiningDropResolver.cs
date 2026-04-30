@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class MiningDropResolver
 {
-    public static void ResolveDrops(IReadOnlyList<MiningDropEntry> drops, Player player, ItemDropSpawner dropSpawner, Vector3 dropPosition)
+    public static void ResolveDrops(IReadOnlyList<MiningDropEntry> drops, Player player, WorldItemSpawner dropSpawner, Vector3 dropPosition)
     {
         if (drops == null || drops.Count == 0 || player == null)
             return;

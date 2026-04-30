@@ -19,9 +19,9 @@ public sealed class TilemapSpawnWorldQuery : ISpawnWorldQuery
         return Physics2D.OverlapCircle(worldPoint, probeRadius, _obstacleMask) == null;
     }
 
-    public bool TryGetBiome(Vector2 worldPoint, out BiomeAffinity biome)
+    public bool TryGetBiome(Vector2 worldPoint, out ItemBiomeAffinity biome)
     {
-        biome = BiomeAffinity.None;
+        biome = ItemBiomeAffinity.None;
         if (_groundTilemap == null || _worldData == null)
         {
             return false;
@@ -37,24 +37,24 @@ public sealed class TilemapSpawnWorldQuery : ISpawnWorldQuery
 
         var worldTile = _worldData.GetTile(data.x, data.y);
         biome = MapBiome(worldTile.Biome);
-        return biome != BiomeAffinity.None;
+        return biome != ItemBiomeAffinity.None;
     }
 
-    private static BiomeAffinity MapBiome(BiomeType biomeType)
+    private static ItemBiomeAffinity MapBiome(BiomeType biomeType)
     {
         switch (biomeType)
         {
             case BiomeType.Grassland:
-                return BiomeAffinity.Grassland;
+                return ItemBiomeAffinity.Grassland;
             case BiomeType.IceTundra:
-                return BiomeAffinity.IceTundra;
+                return ItemBiomeAffinity.IceTundra;
             case BiomeType.Desert:
-                return BiomeAffinity.Desert;
+                return ItemBiomeAffinity.Desert;
             case BiomeType.AmethystRift:
-                return BiomeAffinity.AmethystRift;
+                return ItemBiomeAffinity.AmethystRift;
             case BiomeType.None:
             default:
-                return BiomeAffinity.None;
+                return ItemBiomeAffinity.None;
         }
     }
 }

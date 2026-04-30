@@ -5,7 +5,7 @@ public sealed class EntityDeathRewards : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private EntityCore _entityCore;
-    [SerializeField] private ItemDropSpawner _dropSpawner;
+    [SerializeField] private WorldItemSpawner _dropSpawner;
     [SerializeField] private Transform _dropAnchor;
 
     [Header("Tuning")]
@@ -20,7 +20,7 @@ public sealed class EntityDeathRewards : MonoBehaviour
 
         if (_dropSpawner == null)
         {
-            var spawners = FindObjectsByType<ItemDropSpawner>(FindObjectsSortMode.None);
+            var spawners = FindObjectsByType<WorldItemSpawner>(FindObjectsSortMode.None);
             if (spawners != null && spawners.Length > 0)
                 _dropSpawner = spawners[0];
         }

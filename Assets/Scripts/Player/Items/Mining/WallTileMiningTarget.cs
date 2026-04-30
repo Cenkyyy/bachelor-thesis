@@ -28,7 +28,7 @@ public sealed class WallTileMiningTarget : IMineableTarget
         _wallGenerator?.NotifyMiningStarted(_tile);
     }
 
-    public void ApplyMiningDamage(float basePower, Player miner, ItemDropSpawner dropSpawner)
+    public void ApplyMiningDamage(float basePower, Player miner, WorldItemSpawner dropSpawner)
     {
         _wallGenerator?.ApplyMiningDamage(_tile, basePower, miner, dropSpawner);
     }

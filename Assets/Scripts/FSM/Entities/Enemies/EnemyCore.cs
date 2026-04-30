@@ -46,7 +46,7 @@ public class EnemyCore : EntityCore
     public EnemySpecies Species => _data != null ? _data.Species : EnemySpecies.Troll;
     public EnemyArchetype Archetype => _data != null ? _data.Archetype : EnemyArchetype.Bruiser;
     public EnemyRoleTag RoleTags => _data != null ? _data.RoleTags : EnemyRoleTag.None;
-    public BiomeAffinity HomeBiome => _data != null ? _data.HomeBiome : BiomeAffinity.None;
+    public ItemBiomeAffinity HomeBiome => _data != null ? _data.HomeBiome : ItemBiomeAffinity.None;
     public Vector2 HomePoint => _homePoint;
 
     public float LeashRadius => _data != null ? _data.LeashRadius : 0f;
