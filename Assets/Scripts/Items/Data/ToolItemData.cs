@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Tool Item")]
 public class ToolItemData : ItemData, IMiningTool
 {
+    [field: Header("Tool Settings")]
     [field: SerializeField] public int MaxDurability { get; private set; } = 25;
     [field: SerializeField] public ToolType ToolType { get; private set; } = ToolType.None;
     [field: SerializeField] public ToolTier Tier { get; private set; } = ToolTier.Wooden;

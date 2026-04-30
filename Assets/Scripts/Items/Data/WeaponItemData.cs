@@ -3,10 +3,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Weapon Item")]
 public class WeaponItemData : ItemData
 {
+    [field: Header("Weapon Settings")]
     [field: SerializeField] public WeaponType Archetype { get; private set; } = WeaponType.Wand;
     [field: SerializeField] public ToolTier ProgressionTier { get; private set; } = ToolTier.Wooden;
 
-    [field: Header("Combat Baseline")]
+    [field: Header("Combat Settings")]
     [field: SerializeField] public int Damage { get; private set; } = 5;
     [field: SerializeField] public float Range { get; private set; } = 4f;
     [field: SerializeField] public float AttackSpeed { get; private set; } = 1f;

@@ -1,17 +1,21 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Controls the runtime lifecycle of a spawned <see cref="WorldItem"/>.
+/// This includes pickup of the item, world lifetime expiry, and stack merge behavior of the same items near each other.
+/// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(WorldItem))]
-public sealed class WorldItemSpawnController : MonoBehaviour
+public sealed class WorldItemRuntimeController : MonoBehaviour
 {
-    [Header("Pickup")]
+    [Header("Pickup Settings")]
     [SerializeField] private float _pickupDelay = 0.5f; // seconds before it can be picked up (avoid instant re-pickup)
 
-    [Header("Lifetime")]
+    [Header("Lifetime Settings")]
     [SerializeField] private float _lifetimeSeconds = 300f;
 
-    [Header("Merge Animation")]
+    [Header("Merge Settings")]
     [SerializeField] private float _mergeDuration = 0.18f;
     [SerializeField] private float _mergeShrink = 0.8f;
     [SerializeField] private float _leftoverItemNudgeImpulse = 0.7f;
@@ -35,7 +39,7 @@ public sealed class WorldItemSpawnController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.TryGetComponent<WorldItemSpawnController>(out var otherController) || otherController == null)
+        if (!other.TryGetComponent<WorldItemRuntimeController>(out var otherController))
             return;
 
         TryStartVisualMerge(otherController);
@@ -64,7 +68,7 @@ public sealed class WorldItemSpawnController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void TryStartVisualMerge(WorldItemSpawnController other)
+    private void TryStartVisualMerge(WorldItemRuntimeController other)
     {
         if (_isMerging || other._isMerging)
             return;
@@ -84,7 +88,7 @@ public sealed class WorldItemSpawnController : MonoBehaviour
         incomingController.StartCoroutine(incomingController.AnimateMergeInto(receivingController));
     }
 
-    private IEnumerator AnimateMergeInto(WorldItemSpawnController receiver)
+    private IEnumerator AnimateMergeInto(WorldItemRuntimeController receiver)
     {
         _isMerging = true;
 

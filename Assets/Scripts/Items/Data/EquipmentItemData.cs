@@ -4,9 +4,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewEquipmentItem", menuName = "Items/Equipment Item")]
 public sealed class EquipmentItemData : ItemData
 {
+    [field: Header("Equipment Settings")]
     [field: SerializeField] public EquipmentType Slot { get; private set; }
     [field: SerializeField] public ToolTier ProgressionTier { get; private set; } = ToolTier.Copper;
 
+    [field: Header("Status Effects")]
     [SerializeField] private List<ItemStatusEffect> _statusEffects = new();
 
     public IReadOnlyList<ItemStatusEffect> StatusEffect => _statusEffects;

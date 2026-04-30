@@ -1,8 +1,13 @@
 using UnityEngine;
 
+/// <summary>
+/// Defines the shared base data for every item type in the game.
+/// It centralizes identity, classification, rarity, biome affinity,
+/// and stack behavior so all concrete item assets follow one consistent contract.
+/// </summary>
 public abstract class ItemData : ScriptableObject
 {
-    [field: Header("Basic Info")]
+    [field: Header("Identification")]
     [field: SerializeField] public string ItemName { get; private set; }
     [field: SerializeField] public Sprite Icon { get; private set; }
 

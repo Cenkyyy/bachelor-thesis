@@ -11,20 +11,16 @@ public class ConsumableItemData : ItemData, ICooldownItem
     [field: SerializeField] public int RestoreMana { get; private set; }
     [field: SerializeField] public int RestoreHunger { get; private set; }
 
-    [field: Header("Usage")]
+
+    [field: Header("Cooldown Settings")]
     [field: SerializeField, Min(0f)] public float CooldownSeconds { get; private set; }
     [SerializeField] private List<ItemData> _cooldownBlockedItems = new();
     public IReadOnlyList<ItemData> CooldownBlockedItems => _cooldownBlockedItems;
 
-    [field: Header("Optional Timed Status Effects")]
+    [field: Header("Status Effect Settings")]
     [field: SerializeField] public float EffectDurationSeconds { get; private set; }
     [SerializeField] private List<ItemStatusEffect> _timedStatusEffects = new();
     public IReadOnlyList<ItemStatusEffect> StatusEffects => _timedStatusEffects;
-
-    public ConsumableItemData()
-    {
-        Category = ItemType.Consumable;
-    }
 
     protected override ItemType? ExpectedCategory => ItemType.Consumable;
 
@@ -48,8 +44,5 @@ public class ConsumableItemData : ItemData, ICooldownItem
             CooldownSeconds = 0f;
     }
 
-    public float GetCooldownSeconds()
-    {
-        return Kind == ConsumableType.Potion ? CooldownSeconds : 0f;
-    }
+    public float GetCooldownSeconds() => Kind == ConsumableType.Potion ? CooldownSeconds : 0f;
 }

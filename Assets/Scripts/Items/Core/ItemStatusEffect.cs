@@ -4,6 +4,7 @@ using UnityEngine;
 [Serializable]
 public struct ItemStatusEffect
 {
+    [field: Header("Effect Settings")]
     [field: SerializeField] public ItemStatusEffectType StatusEffectType { get; private set; }
     [field: SerializeField] public float Value { get; private set; }
 

@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// Spawns runtime <see cref="WorldItem"/> instances into the scene from inventory stack item data, see <see cref="InventoryItem"/>.
+/// Handles prefab validation, spawn placement, and initial scatter impulse so dropped items feel natural.
+/// </summary>
 public sealed class WorldItemSpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]

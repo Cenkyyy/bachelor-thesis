@@ -1,9 +1,15 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Represents a runtime inventory stack item.
+/// Contains a reference to <see cref="ItemData"/> and keeps track
+/// of the current amount of the item in the stack.
+/// </summary>
 [Serializable]
 public struct InventoryItem
 {
+    [field: Header("Item stack data")]
     [field: SerializeField] public ItemData Item { get; private set; }
     [field: SerializeField] public int Amount { get; private set; }
 
@@ -19,8 +25,5 @@ public struct InventoryItem
         Amount = Mathf.Max(0, amount);
     }
 
-    public InventoryItem WithAmount(int newAmount)
-    {
-        return newAmount <= 0 ? Empty : new InventoryItem(Item, newAmount);
-    }
+    public InventoryItem WithAmount(int newAmount) => newAmount <= 0 ? Empty : new InventoryItem(Item, newAmount);
 }
