@@ -12,8 +12,8 @@ public sealed class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject _settingsPanel;
 
     [Header("Audio")]
-    [SerializeField, Min(0f)] private float _menuMusicStartDelaySeconds = 3f;
-    [SerializeField, Min(0f)] private float _menuMusicFadeInDuration = 6f;
+    [SerializeField, Min(0f)] private float _menuMusicStartDelaySeconds = 1.5f;
+    [SerializeField, Min(0f)] private float _menuMusicFadeInDuration = 8.5f;
 
     private bool _isSettingsOpen;
 
