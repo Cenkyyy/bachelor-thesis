@@ -15,6 +15,12 @@ MonoBehaviour:
   <WallId>k__BackingField: StoneWall
   <RuleTile>k__BackingField: {fileID: 11400000, guid: f066bbd9ae960df479f1e79527e5cb76, type: 2}
   <MineableData>k__BackingField: {fileID: 11400000, guid: 07c04f9c8f16ee041a8bf72d9dfa537c, type: 2}
+  <MinimapInnerColor>k__BackingField:
+    serializedVersion: 2
+    rgba: 4280492835
+  <MinimapBorderColor>k__BackingField:
+    serializedVersion: 2
+    rgba: 4285624689
   _oreDecorations:
   - {fileID: 11400000, guid: 18d083b28e0061b4f9797ae6b8eb8f72, type: 2}
   - {fileID: 11400000, guid: 56336166d003248449776b7d42cf0ae2, type: 2}

@@ -15,6 +15,12 @@ MonoBehaviour:
   <WallId>k__BackingField: RiftstoneWall
   <RuleTile>k__BackingField: {fileID: 11400000, guid: 5c5d4d796d9b9de4ab735632dae42a3b, type: 2}
   <MineableData>k__BackingField: {fileID: 11400000, guid: b521dbf1f8f2abf4ab15b46fb7ebdc71, type: 2}
+  <MinimapInnerColor>k__BackingField:
+    serializedVersion: 2
+    rgba: 4280492835
+  <MinimapBorderColor>k__BackingField:
+    serializedVersion: 2
+    rgba: 4287833997
   _oreDecorations:
   - {fileID: 11400000, guid: ea5eee8adfee5e94e9cf1195739c0b4e, type: 2}
   - {fileID: 11400000, guid: 48fbec5af3c5eaa4089c7193bb470f66, type: 2}

@@ -4729,10 +4729,14 @@ MonoBehaviour:
   _markerPrefab: {fileID: 1117304301412245839, guid: b201a6a1f78541c4787e1054605a840f, type: 3}
   _groundTilemap: {fileID: 188757767}
   _playerTransform: {fileID: 2010244813}
+  _wallChunkGenerator: {fileID: 1097722633}
   _minimapHalfSizeTiles: 18
   _revealRadiusTiles: 8
-  _rowsProcessedPerFrameDuringInitialization: 24
-  _maxInitializationMillisecondsPerFrame: 4
+  _chunkSizeTiles: 32
+  _maxChunkUpdatesPerFrame: 2
+  _unexploredColor:
+    serializedVersion: 2
+    rgba: 0
   _tileColors:
   - TileType: 0
     Color:

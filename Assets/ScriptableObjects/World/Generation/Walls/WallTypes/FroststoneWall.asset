@@ -15,6 +15,12 @@ MonoBehaviour:
   <WallId>k__BackingField: FroststoneWall
   <RuleTile>k__BackingField: {fileID: 11400000, guid: dd27e1917a7c84146bf5b1354f729c8e, type: 2}
   <MineableData>k__BackingField: {fileID: 11400000, guid: 2a30e4ede2aa0b648808a3302f4b65ea, type: 2}
+  <MinimapInnerColor>k__BackingField:
+    serializedVersion: 2
+    rgba: 4280492835
+  <MinimapBorderColor>k__BackingField:
+    serializedVersion: 2
+    rgba: 4288317500
   _oreDecorations:
   - {fileID: 11400000, guid: 73a378bc852410b41a8c73c346943450, type: 2}
   - {fileID: 11400000, guid: a750c380afdb82a4588c2d1890ef2e81, type: 2}

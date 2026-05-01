@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -72,6 +73,8 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     private readonly List<Vector3Int> _tileWriteCellsBuffer = new();
     private readonly List<TileBase> _tileWriteAssetsBuffer = new();
     private readonly GameObjectInstancePool _orePool = new();
+
+    public event Action<Vector2Int> OnWallTileChanged;
 
     protected override bool EnableChunkUnloading => _enableChunkUnloading;
 
@@ -189,6 +192,16 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         return _runtimeByTile.ContainsKey(dataTile);
     }
 
+    public bool TryGetWallDataAtDataTile(Vector2Int dataTile, out WallData wallData)
+    {
+        wallData = null;
+        if (!_runtimeByTile.TryGetValue(dataTile, out var runtimeData))
+            return false;
+
+        wallData = runtimeData.WallData;
+        return wallData != null;
+    }
+
     public bool IsChunkLoadedAt(Vector2Int chunkCoord)
     {
         return _spawnedChunkTiles.ContainsKey(chunkCoord);
@@ -241,6 +254,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         _tilesAwaitingReplenishTick.Remove(dataTile);
         _modificationState.MarkRemoved(dataTile);
         DestroyMiningBarForTile(dataTile);
+        OnWallTileChanged?.Invoke(dataTile);
 
         if (miner != null && runtimeData.WallData.MineableData != null)
             MiningDropResolver.ResolveDrops(runtimeData.WallData.MineableData.Drops, miner, dropSpawner, GetTileCenterWorld(dataTile));
@@ -412,6 +426,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             _tileWriteAssetsBuffer.Add(planned.WallData.RuleTile);
             _runtimeByTile[planned.DataTile] = new WallTileRuntimeData(planned.DataTile, planned.WallData);
             chunkTiles.Add(planned.DataTile);
+            OnWallTileChanged?.Invoke(planned.DataTile);
 
             operationCount++;
             if (yieldEveryOperations > 0 && operationCount >= yieldEveryOperations)
