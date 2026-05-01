@@ -19,4 +19,4 @@ MonoBehaviour:
   <BiomeAffinity>k__BackingField: 0
   <MaxStackSize>k__BackingField: 1
   <Prefab>k__BackingField: {fileID: 1143963826679536962, guid: b92248b1a6281594ebe5ace7394ad5a5, type: 3}
-  <PlacementCheckSize>k__BackingField: {x: 0.95, y: 0.95}
+  <PlacementCheckSize>k__BackingField: {x: 0.95, y: 0.85}
