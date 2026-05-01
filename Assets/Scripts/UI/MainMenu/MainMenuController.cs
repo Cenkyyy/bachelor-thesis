@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public sealed class MainMenuController : MonoBehaviour
@@ -11,7 +12,8 @@ public sealed class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject _settingsPanel;
 
     [Header("Audio")]
-    [SerializeField, Min(0f)] private float _menuMusicFadeInDuration = 1.5f;
+    [SerializeField, Min(0f)] private float _menuMusicStartDelaySeconds = 3f;
+    [SerializeField, Min(0f)] private float _menuMusicFadeInDuration = 6f;
 
     private bool _isSettingsOpen;
 
@@ -30,8 +32,7 @@ public sealed class MainMenuController : MonoBehaviour
         if (AudioManager.Instance == null)
             return;
 
-        AudioManager.Instance.PlayMenuMusic();
-        AudioManager.Instance.FadeInAllAudio(_menuMusicFadeInDuration);
+        StartCoroutine(PlayMenuMusicWithDelayCoroutine());
     }
 
     public void StartGame()
@@ -75,6 +76,14 @@ public sealed class MainMenuController : MonoBehaviour
     {
         if (SceneLoader.Instance != null)
             SceneLoader.Instance.QuitGame();
+    }
+
+    private IEnumerator PlayMenuMusicWithDelayCoroutine()
+    {
+        if (_menuMusicStartDelaySeconds > 0f)
+            yield return new WaitForSecondsRealtime(_menuMusicStartDelaySeconds);
+
+        AudioManager.Instance?.PlayMenuMusic(shouldFadeIn: true, shouldFadeOut: false, fadeDuration: _menuMusicFadeInDuration, shouldLoop: true);
     }
 
     private void SetSettingsPanelActive(bool isActive)

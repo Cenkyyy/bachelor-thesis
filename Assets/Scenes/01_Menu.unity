@@ -775,7 +775,8 @@ MonoBehaviour:
   _settingsButtonVisual: {fileID: 1265314518}
   _exitGameButtonVisual: {fileID: 1057671497}
   _settingsPanel: {fileID: 1676980479}
-  _menuMusicFadeInDuration: 1.5
+  _menuMusicStartDelaySeconds: 3
+  _menuMusicFadeInDuration: 6
 --- !u!1 &418342832
 GameObject:
   m_ObjectHideFlags: 0

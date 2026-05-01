@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public sealed class MenuButtonVisual : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public sealed class MenuButtonVisual : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [Header("Refs")]
     [SerializeField] private Image _targetImage;
@@ -33,6 +33,9 @@ public sealed class MenuButtonVisual : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayUiHoverSfx();
+
         _isHovered = true;
         ApplyVisual();
     }
@@ -41,6 +44,15 @@ public sealed class MenuButtonVisual : MonoBehaviour, IPointerEnterHandler, IPoi
     {
         _isHovered = false;
         ApplyVisual();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayUiClickSfx();
     }
 
     private void ApplyVisual()

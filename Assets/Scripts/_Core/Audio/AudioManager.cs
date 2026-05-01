@@ -12,6 +12,11 @@ public sealed class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _musicSource;
     [SerializeField] private AudioClip _menuMusicClip;
 
+    [Header("UI SFX")]
+    [SerializeField] private AudioSource _uiSfxSource;
+    [SerializeField] private AudioClip _defaultUiHoverClip;
+    [SerializeField] private AudioClip _defaultUiClickClip;
+
     [field: SerializeField, Range(0f, 1f)] public float MasterVolume { get; private set; } = 1f;
 
     private float _musicSourceDefaultVolume = 1f;
@@ -42,9 +47,28 @@ public sealed class AudioManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void PlayMenuMusic()
+    public void PlayMenuMusic(bool shouldFadeIn, bool shouldFadeOut, float fadeDuration, bool shouldLoop = true)
     {
-        PlayMusic(_menuMusicClip, true);
+        if (shouldFadeOut)
+        {
+            FadeOutAllAudio(fadeDuration);
+            return;
+        }
+
+        PlayMusic(_menuMusicClip, shouldLoop, shouldFadeIn);
+
+        if (shouldFadeIn)
+            FadeInAllAudio(fadeDuration);
+    }
+
+    public void PlayUiHoverSfx()
+    {
+        PlayUiSfx(_defaultUiHoverClip);
+    }
+
+    public void PlayUiClickSfx()
+    {
+        PlayUiSfx(_defaultUiClickClip);
     }
 
     public void StopMusic()
@@ -67,7 +91,7 @@ public sealed class AudioManager : MonoBehaviour
         FadeAllAudio(_musicSourceDefaultVolume, fadeDuration, false);
     }
 
-    private void PlayMusic(AudioClip clip, bool shouldLoop)
+    private void PlayMusic(AudioClip clip, bool shouldLoop, bool startSilent)
     {
         if (clip == null)
         {
@@ -80,8 +104,18 @@ public sealed class AudioManager : MonoBehaviour
 
         _musicSource.clip = clip;
         _musicSource.loop = shouldLoop;
-        _musicSource.volume = _musicSourceDefaultVolume;
+        _musicSource.volume = startSilent ? 0f : _musicSourceDefaultVolume;
         _musicSource.Play();
+    }
+
+    private void PlayUiSfx(AudioClip clip)
+    {
+        if (_uiSfxSource == null || clip == null)
+            return;
+
+        _uiSfxSource.Stop();
+        _uiSfxSource.clip = clip;
+        _uiSfxSource.Play();
     }
 
     private void FadeAllAudio(float targetVolume, float fadeDuration, bool stopMusicOnComplete)
