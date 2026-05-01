@@ -14,12 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DecorationId>k__BackingField: Grassland_Tree_Small_1
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 840b9e7fdc96bfb46ae06e9ac9563ccd, type: 3}
-  <NodeData>k__BackingField: {fileID: 11400000, guid: 3b6e3714f84fd6e47b9975fe07bdcf0e, type: 2}
-  <Category>k__BackingField: 0
-  <Size>k__BackingField: 0
   _allowedBiomes: 01000000
-  <SpawnWeight>k__BackingField: 6
-  <MinimumSpacingTiles>k__BackingField: 1.85
+  <SpawnWeight>k__BackingField: 4
+  <MinimumSpacingTiles>k__BackingField: 1.5
   <AllowCluster>k__BackingField: 1
   <MinClusterCount>k__BackingField: 1
   <MaxClusterCount>k__BackingField: 5

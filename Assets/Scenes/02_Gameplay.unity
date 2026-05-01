@@ -655,7 +655,7 @@ MonoBehaviour:
     <SpawnIntervalSeconds>k__BackingField: 3
     <NightSpawnAccelerationMultiplier>k__BackingField: 0.9
     <AttemptsPerCycle>k__BackingField: 3
-    <MaxAliveEntities>k__BackingField: 6
+    <MaxAliveEntities>k__BackingField: 3
     <NightMaxAliveEntitiesMultiplier>k__BackingField: 1.25
     <SpawnRadius>k__BackingField: 20
     <MinSpawnDistance>k__BackingField: 9
@@ -5496,7 +5496,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 29921857
-  m_SortingLayer: 4
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -10076,8 +10076,8 @@ MonoBehaviour:
   _wallChunkGenerator: {fileID: 1097722633}
   _decorationsListData: {fileID: 11400000, guid: 4dcbe27d436906443b34cdd482169e10, type: 2}
   _spawnedDecorationsRoot: {fileID: 568387668}
-  _baseSpawnAttemptsPerChunk: 48
-  _maxPlacementsPerChunk: 28
+  _baseSpawnAttemptsPerChunk: 32
+  _maxPlacementsPerChunk: 22
   _tileCenterJitter: 0.35
   _defaultSpawnExclusionRadiusTiles: 3
   _wallClearanceTiles: 1
@@ -15936,7 +15936,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 29921857
-  m_SortingLayer: 4
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

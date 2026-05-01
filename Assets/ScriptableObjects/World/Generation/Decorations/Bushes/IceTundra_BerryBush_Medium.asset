@@ -14,11 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DecorationId>k__BackingField: IceTundra_BerryBush_Medium
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 9b8a0df6a28cd3342a11ab4df5303019, type: 3}
-  <NodeData>k__BackingField: {fileID: 11400000, guid: 459ad8c304603ad4bb476736123204d4, type: 2}
-  <Category>k__BackingField: 2
-  <Size>k__BackingField: 1
   _allowedBiomes: 02000000
-  <SpawnWeight>k__BackingField: 1
+  <SpawnWeight>k__BackingField: 5.5
   <MinimumSpacingTiles>k__BackingField: 1.2
   <AllowCluster>k__BackingField: 1
   <MinClusterCount>k__BackingField: 1

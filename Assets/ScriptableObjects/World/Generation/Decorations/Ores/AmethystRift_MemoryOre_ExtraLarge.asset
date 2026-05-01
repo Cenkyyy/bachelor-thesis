@@ -14,12 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DecorationId>k__BackingField: AmethystRift_MemoryOre_ExtraLarge
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 48e195236f4736a4d8b5ecc8bb393721, type: 3}
-  <NodeData>k__BackingField: {fileID: 11400000, guid: 5a07907038bc8a8498fa7be8ddd60048, type: 2}
-  <Category>k__BackingField: 1
-  <Size>k__BackingField: 2
   _allowedBiomes: 04000000
-  <SpawnWeight>k__BackingField: 2.4
-  <MinimumSpacingTiles>k__BackingField: 3
+  <SpawnWeight>k__BackingField: 0.2
+  <MinimumSpacingTiles>k__BackingField: 2
   <AllowCluster>k__BackingField: 0
   <MinClusterCount>k__BackingField: 1
   <MaxClusterCount>k__BackingField: 1

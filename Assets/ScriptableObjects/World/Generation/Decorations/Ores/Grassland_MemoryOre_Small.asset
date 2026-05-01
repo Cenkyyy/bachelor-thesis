@@ -14,12 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DecorationId>k__BackingField: Grassland_MemoryOre_Small
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: d46c2a4ea4f31324e888ce0c9938b07b, type: 3}
-  <NodeData>k__BackingField: {fileID: 11400000, guid: e3bc7821b0f057345bd282dce54b7476, type: 2}
-  <Category>k__BackingField: 1
-  <Size>k__BackingField: 0
   _allowedBiomes: 01000000
-  <SpawnWeight>k__BackingField: 0.4
-  <MinimumSpacingTiles>k__BackingField: 0.6
+  <SpawnWeight>k__BackingField: 0.3
+  <MinimumSpacingTiles>k__BackingField: 0.3
   <AllowCluster>k__BackingField: 1
   <MinClusterCount>k__BackingField: 2
   <MaxClusterCount>k__BackingField: 3

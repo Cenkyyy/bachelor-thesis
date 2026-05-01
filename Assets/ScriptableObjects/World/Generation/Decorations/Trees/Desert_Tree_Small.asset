@@ -14,12 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DecorationId>k__BackingField: Desert_Tree_Small
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: e9e4fd26cc6b855499d1a1c19a40e195, type: 3}
-  <NodeData>k__BackingField: {fileID: 11400000, guid: 222f4b9660c2e5c41a60d6ce7beb2a9d, type: 2}
-  <Category>k__BackingField: 0
-  <Size>k__BackingField: 0
   _allowedBiomes: 03000000
-  <SpawnWeight>k__BackingField: 6
-  <MinimumSpacingTiles>k__BackingField: 1.85
+  <SpawnWeight>k__BackingField: 4
+  <MinimumSpacingTiles>k__BackingField: 1.5
   <AllowCluster>k__BackingField: 0
   <MinClusterCount>k__BackingField: 1
   <MaxClusterCount>k__BackingField: 1

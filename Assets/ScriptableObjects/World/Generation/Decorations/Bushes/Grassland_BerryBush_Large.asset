@@ -14,11 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DecorationId>k__BackingField: Grassland_BerryBush_Large
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: e6d9ea6cef0cd31488a9d56dd9104cd2, type: 3}
-  <NodeData>k__BackingField: {fileID: 11400000, guid: 5dc383e372f0bb2479d10fd1b645d783, type: 2}
-  <Category>k__BackingField: 2
-  <Size>k__BackingField: 2
   _allowedBiomes: 01000000
-  <SpawnWeight>k__BackingField: 1
+  <SpawnWeight>k__BackingField: 5.5
   <MinimumSpacingTiles>k__BackingField: 2
   <AllowCluster>k__BackingField: 0
   <MinClusterCount>k__BackingField: 1

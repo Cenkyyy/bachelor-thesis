@@ -14,11 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DecorationId>k__BackingField: IceTundra_Bush_Small
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 07569c701a9e23846804b6e87e160eb2, type: 3}
-  <NodeData>k__BackingField: {fileID: 11400000, guid: 064b12c3bb4b46946a3c6b9c788aa515, type: 2}
-  <Category>k__BackingField: 2
-  <Size>k__BackingField: 0
   _allowedBiomes: 02000000
-  <SpawnWeight>k__BackingField: 1
+  <SpawnWeight>k__BackingField: 5.5
   <MinimumSpacingTiles>k__BackingField: 0.8
   <AllowCluster>k__BackingField: 1
   <MinClusterCount>k__BackingField: 2

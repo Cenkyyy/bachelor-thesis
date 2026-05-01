@@ -14,12 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DecorationId>k__BackingField: Desert_Ore_ExtraLarge
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 5269b6a57ce625b4f9bd41a31f767a1d, type: 3}
-  <NodeData>k__BackingField: {fileID: 11400000, guid: 8ac3d6b03ac82464baab86f4c9502572, type: 2}
-  <Category>k__BackingField: 1
-  <Size>k__BackingField: 2
   _allowedBiomes: 03000000
-  <SpawnWeight>k__BackingField: 1
-  <MinimumSpacingTiles>k__BackingField: 3
+  <SpawnWeight>k__BackingField: 0.2
+  <MinimumSpacingTiles>k__BackingField: 2
   <AllowCluster>k__BackingField: 0
   <MinClusterCount>k__BackingField: 1
   <MaxClusterCount>k__BackingField: 1

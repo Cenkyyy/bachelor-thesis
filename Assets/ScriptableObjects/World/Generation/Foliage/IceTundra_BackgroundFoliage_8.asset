@@ -16,7 +16,7 @@ MonoBehaviour:
   <Prefab>k__BackingField: {fileID: 5020825633136035351, guid: 64416d20eef3b67459389788624a4655, type: 3}
   _allowedBiomes: 02000000
   <SpawnWeight>k__BackingField: 4
-  <MinimumSpacingTiles>k__BackingField: 0.6
+  <MinimumSpacingTiles>k__BackingField: 0.3
   <AllowCluster>k__BackingField: 1
   <MinClusterCount>k__BackingField: 1
   <MaxClusterCount>k__BackingField: 5

@@ -14,12 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DecorationId>k__BackingField: IceTundra_Tree_Medium
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 5e619d7ee36795e43b722b9ec136b3dc, type: 3}
-  <NodeData>k__BackingField: {fileID: 11400000, guid: b0fbc50e6fe03a34b9982b7b9d40c674, type: 2}
-  <Category>k__BackingField: 0
-  <Size>k__BackingField: 1
   _allowedBiomes: 02000000
-  <SpawnWeight>k__BackingField: 6
-  <MinimumSpacingTiles>k__BackingField: 1.85
+  <SpawnWeight>k__BackingField: 4
+  <MinimumSpacingTiles>k__BackingField: 1.5
   <AllowCluster>k__BackingField: 1
   <MinClusterCount>k__BackingField: 1
   <MaxClusterCount>k__BackingField: 5

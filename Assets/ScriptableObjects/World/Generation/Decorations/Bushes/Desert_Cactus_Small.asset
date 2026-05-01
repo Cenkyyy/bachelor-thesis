@@ -14,13 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DecorationId>k__BackingField: Desert_Cactus_Small
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: dfeab36b88204b649985eb182bb3632c, type: 3}
-  <NodeData>k__BackingField: {fileID: 11400000, guid: 7853c44b4174eee4b99a1a9361a1401e, type: 2}
-  <Category>k__BackingField: 2
-  <Size>k__BackingField: 0
   _allowedBiomes: 03000000
-  <SpawnWeight>k__BackingField: 0.3
+  <SpawnWeight>k__BackingField: 1.2
   <MinimumSpacingTiles>k__BackingField: 3
-  <AllowCluster>k__BackingField: 0
+  <AllowCluster>k__BackingField: 1
   <MinClusterCount>k__BackingField: 1
-  <MaxClusterCount>k__BackingField: 1
-  <ClusterRadiusTiles>k__BackingField: 1
+  <MaxClusterCount>k__BackingField: 3
+  <ClusterRadiusTiles>k__BackingField: 2

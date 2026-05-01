@@ -14,11 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DecorationId>k__BackingField: IceTundra_Ore_Large
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 240fc5d656d40724fadc27573311f278, type: 3}
-  <NodeData>k__BackingField: {fileID: 11400000, guid: ddd8788a4992f8a43acc382bf9ecb1bf, type: 2}
-  <Category>k__BackingField: 1
-  <Size>k__BackingField: 2
   _allowedBiomes: 02000000
-  <SpawnWeight>k__BackingField: 1
+  <SpawnWeight>k__BackingField: 0.3
   <MinimumSpacingTiles>k__BackingField: 2
   <AllowCluster>k__BackingField: 0
   <MinClusterCount>k__BackingField: 1
