@@ -23,6 +23,7 @@ public sealed class WorldItemRuntimeController : MonoBehaviour
     private WorldItem _worldItem;
     private float _spawnTime;
     private bool _isMerging;
+    private bool _isPendingPickupDestroy;
 
     private bool CanBePickedUp => Time.time >= _spawnTime + _pickupDelay;
 
@@ -170,9 +171,13 @@ public sealed class WorldItemRuntimeController : MonoBehaviour
 
     private void TryPickupInto(PlayerInventory inventory)
     {
+        if (_isPendingPickupDestroy)
+            return;
+
         var currentItem = _worldItem.Item;
         if (currentItem.IsEmpty)
         {
+            _isPendingPickupDestroy = true;
             Destroy(gameObject);
             return;
         }
@@ -181,7 +186,12 @@ public sealed class WorldItemRuntimeController : MonoBehaviour
         ItemPickupFeedReporter.ReportAddedToInventory(currentItem, leftoverItem);
 
         if (leftoverItem.IsEmpty)
+        {
+            _isPendingPickupDestroy = true;
+            if (_worldItem.Collider != null)
+                _worldItem.Collider.enabled = false;
             Destroy(gameObject);
+        }
         else
             _worldItem.SetItem(leftoverItem);
     }
