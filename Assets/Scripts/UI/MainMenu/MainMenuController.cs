@@ -41,26 +41,6 @@ public sealed class MainMenuController : MonoBehaviour
             SceneLoader.Instance.LoadGameplayWithTransition();
     }
 
-    public void OpenSettings()
-    {
-        if (_isSettingsOpen)
-            return;
-
-        _isSettingsOpen = true;
-        SetSettingsPanelActive(true);
-        ApplyButtonSelection();
-    }
-
-    public void CloseSettings()
-    {
-        if (!_isSettingsOpen)
-            return;
-
-        _isSettingsOpen = false;
-        SetSettingsPanelActive(false);
-        ApplyButtonSelection();
-    }
-
     public void ToggleSettings()
     {
         if (_isSettingsOpen)
@@ -78,6 +58,13 @@ public sealed class MainMenuController : MonoBehaviour
             SceneLoader.Instance.QuitGame();
     }
 
+    private void ApplyButtonSelection()
+    {
+        _startGameButtonVisual?.SetSelected(false);
+        _settingsButtonVisual?.SetSelected(_isSettingsOpen);
+        _exitGameButtonVisual?.SetSelected(false);
+    }
+
     private IEnumerator PlayMenuMusicWithDelayCoroutine()
     {
         if (_menuMusicStartDelaySeconds > 0f)
@@ -86,16 +73,29 @@ public sealed class MainMenuController : MonoBehaviour
         AudioManager.Instance?.PlayMenuMusic(shouldFadeIn: true, shouldFadeOut: false, fadeDuration: _menuMusicFadeInDuration, shouldLoop: true);
     }
 
+    private void OpenSettings()
+    {
+        if (_isSettingsOpen)
+            return;
+
+        _isSettingsOpen = true;
+        SetSettingsPanelActive(true);
+        ApplyButtonSelection();
+    }
+
+    private void CloseSettings()
+    {
+        if (!_isSettingsOpen)
+            return;
+
+        _isSettingsOpen = false;
+        SetSettingsPanelActive(false);
+        ApplyButtonSelection();
+    }
+
     private void SetSettingsPanelActive(bool isActive)
     {
         if (_settingsPanel != null)
             _settingsPanel.SetActive(isActive);
-    }
-
-    private void ApplyButtonSelection()
-    {
-        _startGameButtonVisual?.SetSelected(false);
-        _settingsButtonVisual?.SetSelected(_isSettingsOpen);
-        _exitGameButtonVisual?.SetSelected(false);
     }
 }

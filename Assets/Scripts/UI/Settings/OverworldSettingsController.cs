@@ -8,21 +8,21 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
     [SerializeField] private GameObject _settingsPanel;
 
     [Header("Main Buttons")]
-    [SerializeField] private Button _resumeButton;
-    [SerializeField] private Button _returnToMenuButton;
-    [SerializeField] private Button _exitGameButton;
+    [SerializeField] private MenuButtonVisual _resumeButton;
+    [SerializeField] private MenuButtonVisual _returnToMenuButton;
+    [SerializeField] private MenuButtonVisual _exitGameButton;
 
     [Header("Runtime Settings")]
     [SerializeField] private Slider _audioSlider;
     [SerializeField] private Slider _cursorColorSlider;
     [SerializeField] private Image _cursorColorReferenceImage;
-    [SerializeField] private CustomCursorController _cursorController;
     [SerializeField, Range(0f, 1f)] private float _fallbackSaturation = 1f;
     [SerializeField, Range(0f, 1f)] private float _fallbackValue = 1f;
 
     [Header("Scene Switch Optimization")]
     [SerializeField, Min(1)] private int _colliderDisableOperationsPerFrame = 200;
 
+    private CustomCursorController _cursorController;
     private bool _isReturningToMenu;
 
     public PanelId Id => PanelId.Settings;
@@ -32,10 +32,6 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
 
     private void Awake()
     {
-        _resumeButton.onClick.AddListener(Resume);
-        _returnToMenuButton.onClick.AddListener(ReturnToMenu);
-        _exitGameButton.onClick.AddListener(ExitGame);
-
         _settingsPanel.SetActive(false);
     }
 
@@ -74,6 +70,27 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
     public void Close()
     {
         _settingsPanel.SetActive(false);
+    }
+
+    public void Resume()
+    {
+        PanelManager.Instance.CloseCurrentMajorPanel();
+    }
+
+    public void ReturnToMenu()
+    {
+        if (_isReturningToMenu)
+            return;
+
+        StartCoroutine(ReturnToMenuCoroutine());
+    }
+
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
     }
 
     private void SyncFromRuntimeState()
@@ -128,25 +145,16 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
         return _cursorController;
     }
 
-    private void Resume()
-    {
-        PanelManager.Instance.CloseCurrentMajorPanel();
-    }
-
-    private void ReturnToMenu()
-    {
-        if (_isReturningToMenu)
-            return;
-
-        StartCoroutine(ReturnToMenuCoroutine());
-    }
-
     private IEnumerator ReturnToMenuCoroutine()
     {
         _isReturningToMenu = true;
 
         if (_returnToMenuButton != null)
-            _returnToMenuButton.interactable = false;
+        {
+            var returnToMenuButtonComponent = _returnToMenuButton.GetComponent<Button>();
+            returnToMenuButtonComponent.interactable = false;
+        }
+            
 
         yield return DisableActiveSceneCollidersCoroutine();
 
@@ -156,7 +164,10 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
         _isReturningToMenu = false;
 
         if (_returnToMenuButton != null)
-            _returnToMenuButton.interactable = true;
+        {
+            var returnToMenuButtonComponent = _returnToMenuButton.GetComponent<Button>();
+            returnToMenuButtonComponent.interactable = true;
+        }
     }
 
     private IEnumerator DisableActiveSceneCollidersCoroutine()
@@ -178,13 +189,5 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
                 yield return null;
             }
         }
-    }
-
-    private void ExitGame()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
-        Application.Quit();
     }
 }
