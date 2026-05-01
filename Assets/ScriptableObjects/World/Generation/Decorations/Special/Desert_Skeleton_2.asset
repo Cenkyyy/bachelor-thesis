@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 039d510696f80ab418f87728092b422c, type: 3}
-  m_Name: Desert_SkeletonFoliage_2
+  m_Script: {fileID: 11500000, guid: ab734327975393b42af766d151fd89da, type: 3}
+  m_Name: Desert_Skeleton_2
   m_EditorClassIdentifier: 
-  <FoliageId>k__BackingField: Desert_SkeletonFoliage_2
-  <Prefab>k__BackingField: {fileID: 5020825633136035351, guid: e5dcd56f833447445af5810d6d426600, type: 3}
+  <DecorationId>k__BackingField: Desert_Skeleton_2
+  <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 0c8ae1f8074731648b3994a5ebb836d6, type: 3}
   _allowedBiomes: 03000000
-  <SpawnWeight>k__BackingField: 0.5
-  <MinimumSpacingTiles>k__BackingField: 1
+  <SpawnWeight>k__BackingField: 1
+  <MinimumSpacingTiles>k__BackingField: 2
   <AllowCluster>k__BackingField: 0
   <MinClusterCount>k__BackingField: 1
   <MaxClusterCount>k__BackingField: 1
