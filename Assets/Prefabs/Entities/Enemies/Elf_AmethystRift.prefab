@@ -223,9 +223,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Mass: 6
+  m_LinearDamping: 12
+  m_AngularDamping: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -253,11 +253,6 @@ MonoBehaviour:
   initialState: {fileID: 6824101350984700763}
   moveSpeed: 2.5
   arrivalEps: 0.12
-  entityPushMultiplier: 0
-  entityPushCastExtraDistance: 0
-  entityPushTargetMask:
-    serializedVersion: 2
-    m_Bits: 640
   visionRadius: 6
   obstacleMask:
     serializedVersion: 2

@@ -8,11 +8,6 @@ public abstract class EntityCore : StateMachineCore
     [SerializeField] protected float moveSpeed = 2.5f;
     [SerializeField] protected float arrivalEps = 0.12f;
 
-    [Header("Push Resistance")]
-    [SerializeField, Range(0f, 1f)] protected float entityPushMultiplier = 0.2f;
-    [SerializeField] protected float entityPushCastExtraDistance = 0.02f;
-    [SerializeField] protected LayerMask entityPushTargetMask;
-
     [Header("Vision")]
     [SerializeField] protected float visionRadius = 6f;
     [SerializeField] protected LayerMask obstacleMask;
@@ -20,7 +15,6 @@ public abstract class EntityCore : StateMachineCore
     protected Rigidbody2D body;
     protected Transform target;
 
-    private readonly RaycastHit2D[] _movementCastHits = MovementPushResistanceUtils.CreateCastBuffer();
     private readonly RaycastHit2D[] _visionObstacleHits = new RaycastHit2D[16];
     private ContactFilter2D _visionObstacleFilter = new();
     private readonly List<Vector2> _currentPath = new();
@@ -103,8 +97,7 @@ public abstract class EntityCore : StateMachineCore
         }
 
         var direction = d.normalized;
-        var speedMultiplier = ShouldReduceEntityPush(direction, d.magnitude) ? entityPushMultiplier : 1f;
-        body.linearVelocity = direction * (moveSpeed * Mathf.Clamp01(speedMultiplier));
+        body.linearVelocity = direction * moveSpeed;
     }
 
     public bool ArrivedAt(Vector2 worldTarget) => Vector2.Distance(transform.position, worldTarget) <= arrivalEps;
@@ -167,17 +160,6 @@ public abstract class EntityCore : StateMachineCore
 
     protected virtual void HandleMovementDirection(Vector2 desiredDirection)
     {
-    }
-
-    private bool ShouldReduceEntityPush(Vector2 direction, float distanceToTarget)
-    {
-        if (entityPushMultiplier >= 0.999f || body == null)
-        {
-            return false;
-        }
-
-        var castDistance = Mathf.Max(0f, Mathf.Min(distanceToTarget, moveSpeed * Time.fixedDeltaTime) + entityPushCastExtraDistance);
-        return MovementPushResistanceUtils.ShouldReducePush(body, direction, castDistance, _movementCastHits, entityPushTargetMask);
     }
 
     private void RebuildPath(Vector2 worldTarget, float pathProbeRadius, float repathIntervalSeconds, float pathNodeStep, int maxPathIterations, LayerMask dynamicObstacleMask)
