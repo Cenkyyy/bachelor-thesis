@@ -10,6 +10,9 @@ public sealed class MainMenuController : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private GameObject _settingsPanel;
 
+    [Header("Audio")]
+    [SerializeField, Min(0f)] private float _menuMusicFadeInDuration = 1.5f;
+
     private bool _isSettingsOpen;
 
     private void Awake()
@@ -17,19 +20,24 @@ public sealed class MainMenuController : MonoBehaviour
         _isSettingsOpen = false;
 
         if (_settingsPanel != null)
-        {
             _settingsPanel.SetActive(false);
-        }
 
         ApplyButtonSelection();
+    }
+
+    private void Start()
+    {
+        if (AudioManager.Instance == null)
+            return;
+
+        AudioManager.Instance.PlayMenuMusic();
+        AudioManager.Instance.FadeInAllAudio(_menuMusicFadeInDuration);
     }
 
     public void StartGame()
     {
         if (SceneLoader.Instance != null)
-        {
             SceneLoader.Instance.LoadGameplayWithTransition();
-        }
     }
 
     public void OpenSettings()
@@ -66,17 +74,13 @@ public sealed class MainMenuController : MonoBehaviour
     public void QuitGame()
     {
         if (SceneLoader.Instance != null)
-        {
             SceneLoader.Instance.QuitGame();
-        }
     }
 
     private void SetSettingsPanelActive(bool isActive)
     {
         if (_settingsPanel != null)
-        {
             _settingsPanel.SetActive(isActive);
-        }
     }
 
     private void ApplyButtonSelection()

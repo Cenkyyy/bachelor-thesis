@@ -24,14 +24,12 @@ public sealed class MainMenuSettingsPanelController : MonoBehaviour
     {
         if (_audioSlider != null)
         {
-            _audioSlider.SetValueWithoutNotify(AudioListener.volume);
+            _audioSlider.SetValueWithoutNotify(AudioManager.Instance != null ? AudioManager.Instance.MasterVolume : AudioListener.volume);
             _audioSlider.onValueChanged.AddListener(OnAudioChanged);
         }
 
         if (_cursorColorSlider != null)
-        {
             _cursorColorSlider.onValueChanged.AddListener(OnCursorColorChanged);
-        }
 
         BindWorldSeedInput();
         SyncCursorSliderFromCurrentColor();
@@ -40,14 +38,10 @@ public sealed class MainMenuSettingsPanelController : MonoBehaviour
     private void OnDisable()
     {
         if (_audioSlider != null)
-        {
             _audioSlider.onValueChanged.RemoveListener(OnAudioChanged);
-        }
 
         if (_cursorColorSlider != null)
-        {
             _cursorColorSlider.onValueChanged.RemoveListener(OnCursorColorChanged);
-        }
 
         if (_worldSeedInputField != null)
         {
@@ -80,6 +74,12 @@ public sealed class MainMenuSettingsPanelController : MonoBehaviour
 
     private void OnAudioChanged(float volume)
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SetMasterVolume(volume);
+            return;
+        }
+
         AudioListener.volume = Mathf.Clamp01(volume);
     }
 

@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
@@ -82,7 +80,7 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
     {
         if (_audioSlider != null)
         {
-            _audioSlider.SetValueWithoutNotify(AudioListener.volume);
+            _audioSlider.SetValueWithoutNotify(AudioManager.Instance != null ? AudioManager.Instance.MasterVolume : AudioListener.volume);
         }
 
         if (_cursorColorSlider == null)
@@ -102,6 +100,12 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
 
     private void OnAudioChanged(float value)
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SetMasterVolume(value);
+            return;
+        }
+
         AudioListener.volume = Mathf.Clamp01(value);
     }
 

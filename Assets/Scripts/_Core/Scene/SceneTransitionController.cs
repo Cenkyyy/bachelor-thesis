@@ -23,6 +23,7 @@ public sealed class SceneTransitionController : MonoBehaviour
     [SerializeField, Min(0f)] private float _fadeInDuration = 0.75f;
     [SerializeField, Min(0f)] private float _fadeOutDuration = 0.75f;
     [SerializeField, Min(0.001f)] private float _maxTransitionDeltaTime = 0.05f;
+    [SerializeField, Min(0f)] private float _audioFadeOutDuration = 0.85f;
 
     [Header("Loading Text")]
     [SerializeField] private string _loadingBaseText = "Loading";
@@ -109,6 +110,9 @@ public sealed class SceneTransitionController : MonoBehaviour
         _isTransitionActive = true;
         _isMiddleCompleted = false;
         _activeTargetSceneName = sceneName;
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.FadeOutAllAudio(_audioFadeOutDuration);
 
         // Show the transition root, pause the game, assign the overlay image and hide the loading text until the fade in is done
         SetTransitionRootVisible(true);
