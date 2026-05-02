@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Provides utility methods for placing placeable items in the world, such as snapping to grid and checking for collisions.
+/// </summary>
 public static class PlaceablePlacementUtility
 {
     private static readonly Collider2D[] _overlapResults = new Collider2D[8];
@@ -19,7 +22,7 @@ public static class PlaceablePlacementUtility
 
     public static bool IsAreaFree(Vector2 center, Vector2 footprint, LayerMask blockingMask)
     {
-        var normalizedCheckSize = new Vector2(Mathf.Max(0.01f, footprint.x), Mathf.Max(0.01f, footprint.y));
+        var normalizedCheckSize = new Vector2(footprint.x, footprint.y);
         var filter = new ContactFilter2D
         {
             useLayerMask = true,

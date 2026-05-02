@@ -3497,7 +3497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 325433512}
   m_Layer: 0
-  m_Name: BedrollsContainer
+  m_Name: PlaceablesContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4734,6 +4734,8 @@ MonoBehaviour:
   _revealRadiusTiles: 8
   _chunkSizeTiles: 32
   _maxChunkUpdatesPerFrame: 2
+  _initializationRowsPerFrame: 32
+  _maxInitializationMillisecondsPerFrame: 2
   _unexploredColor:
     serializedVersion: 2
     rgba: 0

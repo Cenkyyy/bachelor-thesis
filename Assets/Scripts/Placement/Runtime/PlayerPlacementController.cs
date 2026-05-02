@@ -5,9 +5,13 @@ using UnityEngine.EventSystems;
 using UnityEditor;
 #endif
 
-public sealed class PlayerBedrollPlacementController : MonoBehaviour
+/// <summary>
+/// Handles player-driven item placement flow for placeable hotbar items,
+/// including placeable preview mode, placement validation, and inventory consumption.
+/// </summary>
+public sealed class PlayerPlacementController : MonoBehaviour
 {
-    [Header("Refs")]
+    [Header("Dependencies")]
     [SerializeField] private Player _player;
     [SerializeField] private Camera _camera;
     [SerializeField] private Grid _worldGrid;
@@ -15,7 +19,7 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
     [Header("Input")]
     [SerializeField] private GameplayInputBindingsData _inputBindings;
 
-    [Header("Placement")]
+    [Header("Placement Rules")]
     [SerializeField] private LayerMask _blockingLayerMask = ~0;
     [SerializeField, Min(0f)] private float _safePlacementRadius = 0.4f;
     [SerializeField, Min(0f)] private float _placementRadius = 1f;
@@ -26,44 +30,35 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
     [SerializeField] private Color _validPlacementPreviewColor = Color.blue;
     [SerializeField] private Color _invalidPlacementPreviewColor = Color.red;
 
-    private readonly IPlacementStrategy[] _placementStrategies = new IPlacementStrategy[1];
+    private readonly IPlacementStrategy[] _placementStrategies = { new PrefabPlacementStrategy() };
     private GameObject _previewInstance;
     private GameObject _previewSourcePrefab;
     private SpriteRenderer _previewRenderer;
 
-    private void Awake()
-    {
-        _placementStrategies[0] = new PrefabPlacementStrategy();
-
-        if (_player == null)
-            _player = GetComponent<Player>() ?? GetComponentInParent<Player>();
-
-        if (_camera == null)
-            _camera = Camera.main;
-
-        if (_worldGrid == null)
-        {
-            var grids = FindObjectsByType<Grid>(FindObjectsSortMode.None);
-            if (grids != null && grids.Length > 0)
-                _worldGrid = grids[0];
-        }
-    }
-
     private void Update()
     {
         var hasSelectedPlaceable = TryGetSelectedPlaceable(out var placeableItem, out var slotIndex, out var slotItem);
-        UpdatePlacementPreview(hasSelectedPlaceable ? placeableItem : null);
+        if (!hasSelectedPlaceable)
+        {
+            DestroyPreview();
+            return;
+        }
+
+        if (!TryResolvePlacementStrategy(placeableItem, out var placementStrategy))
+        {
+            DestroyPreview();
+            return;
+        }
+
+        UpdatePlacementPreview(placeableItem, placementStrategy);
 
         if (!CanProcessPlacementInput())
-            return;
-
-        if (!hasSelectedPlaceable)
             return;
 
         if (!TryResolvePlacementPosition(placeableItem, out var targetPosition))
             return;
 
-        PlaceAndConsume(placeableItem, targetPosition, slotIndex, slotItem);
+        PlaceAndConsume(placeableItem, placementStrategy, targetPosition, slotIndex, slotItem);
     }
 
     private void OnDisable()
@@ -76,26 +71,17 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
         DestroyPreview();
     }
 
-    private bool CanProcessPlacementInput()
-    {
-        if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
-            return false;
-
-        if (!Input.GetKeyDown(_inputBindings.PlacementKey))
-            return false;
-
-        if (_player == null || _player.Inventory == null || GameStateManager.IsGamePaused)
-            return false;
-
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-            return false;
-
-        return true;
-    }
-
     private bool TryGetSelectedPlaceable(out IPlaceableItem placeableItem, out int slotIndex, out InventoryItem slotItem)
     {
         placeableItem = null;
+
+        if (_player.Inventory == null)
+        {
+            slotIndex = -1;
+            slotItem = InventoryItem.Empty;
+            return false;
+        }
+
         slotIndex = _player.Inventory.SelectedHotbarIndex;
         slotItem = _player.Inventory.GetItemAt(slotIndex);
 
@@ -106,12 +92,71 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
         return placeableItem != null;
     }
 
+    private bool TryResolvePlacementStrategy(IPlaceableItem placeableItem, out IPlacementStrategy placementStrategy)
+    {
+        for (var i = 0; i < _placementStrategies.Length; i++)
+        {
+            var strategy = _placementStrategies[i];
+            if (!strategy.CanPlace(placeableItem))
+                continue;
+
+            placementStrategy = strategy;
+            return true;
+        }
+
+        placementStrategy = null;
+        return false;
+    }
+
+    private void UpdatePlacementPreview(IPlaceableItem placeableItem, IPlacementStrategy placementStrategy)
+    {
+        if (!placementStrategy.CanPreview(placeableItem))
+        {
+            DestroyPreview();
+            return;
+        }
+
+        if (!TryGetPlacementTarget(placeableItem.PlacementCheckSize, out var targetPosition, out var canPlaceAtTarget))
+        {
+            if (_previewInstance != null)
+                _previewInstance.SetActive(false);
+
+            return;
+        }
+
+        placementStrategy.UpdatePreview(
+            placeableItem,
+            targetPosition,
+            canPlaceAtTarget,
+            _placementParent,
+            ref _previewInstance,
+            ref _previewSourcePrefab,
+            ref _previewRenderer,
+            _previewAlpha,
+            _validPlacementPreviewColor,
+            _invalidPlacementPreviewColor);
+    }
+
+    private bool CanProcessPlacementInput()
+    {
+        if (!Input.GetKeyDown(_inputBindings.PlacementKey))
+            return false;
+
+        if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
+            return false;
+
+        if (_player.Inventory == null || GameStateManager.IsGamePaused)
+            return false;
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            return false;
+
+        return true;
+    }
+
     private bool TryResolvePlacementPosition(IPlaceableItem placeableItem, out Vector3 targetPosition)
     {
         targetPosition = default;
-
-        if (placeableItem == null || placeableItem.Prefab == null)
-            return false;
 
         if (!TryGetPlacementTarget(placeableItem.PlacementCheckSize, out targetPosition, out var canPlaceAtTarget))
             return false;
@@ -121,7 +166,7 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
 
     private bool TryGetPlacementTarget(Vector2 placementCheckSize, out Vector3 targetPosition, out bool canPlaceAtTarget)
     {
-        var mouseWorld = _camera != null ? _camera.ScreenToWorldPoint(Input.mousePosition) : transform.position;
+        var mouseWorld = _camera.ScreenToWorldPoint(Input.mousePosition);
 
         var constrainedTarget = GetPlacementTargetWithinAllowedRange(mouseWorld);
         targetPosition = PlaceablePlacementUtility.GetSnappedTileCenter(constrainedTarget, _worldGrid);
@@ -131,9 +176,6 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
 
     private Vector3 GetPlacementTargetWithinAllowedRange(Vector3 desiredTarget)
     {
-        if (_player == null)
-            return desiredTarget;
-
         var playerPosition = (Vector2)_player.transform.position;
         var desiredOffset = (Vector2)desiredTarget - playerPosition;
         var desiredDistance = desiredOffset.magnitude;
@@ -159,9 +201,6 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
 
     private bool IsWithinPlacementRange(Vector2 targetPosition)
     {
-        if (_player == null)
-            return false;
-
         var playerPosition = (Vector2)_player.transform.position;
         var distanceSqr = (targetPosition - playerPosition).sqrMagnitude;
 
@@ -185,75 +224,10 @@ public sealed class PlayerBedrollPlacementController : MonoBehaviour
         return distanceSqrToClosestTilePoint <= maxDistanceSqr;
     }
 
-    private void UpdatePlacementPreview(IPlaceableItem placeableItem)
+    private void PlaceAndConsume(IPlaceableItem placeableItem, IPlacementStrategy placementStrategy, Vector3 targetPosition, int slotIndex, InventoryItem slotItem)
     {
-        if (!TryEnsurePreviewInstance(placeableItem))
-        {
-            DestroyPreview();
-            return;
-        }
-
-        if (!TryGetPlacementTarget(placeableItem.PlacementCheckSize, out var targetPosition, out var canPlaceAtTarget))
-        {
-            _previewInstance.SetActive(false);
-            return;
-        }
-
-        _previewInstance.SetActive(true);
-        _previewInstance.transform.position = targetPosition;
-
-        var previewColor = canPlaceAtTarget ? _validPlacementPreviewColor : _invalidPlacementPreviewColor;
-        previewColor.a = _previewAlpha;
-        _previewRenderer.color = previewColor;
-    }
-
-    private bool TryEnsurePreviewInstance(IPlaceableItem placeableItem)
-    {
-        if (placeableItem == null || placeableItem.Prefab == null)
-            return false;
-
-        if (_previewInstance != null && _previewSourcePrefab == placeableItem.Prefab)
-            return true;
-
-        DestroyPreview();
-
-        _previewInstance = Instantiate(placeableItem.Prefab, Vector3.zero, Quaternion.identity, _placementParent);
-        _previewInstance.name = $"{placeableItem.Prefab.name}_Preview";
-        _previewSourcePrefab = placeableItem.Prefab;
-        _previewRenderer = _previewInstance.GetComponentInChildren<SpriteRenderer>(true);
-
-        var colliders = _previewInstance.GetComponentsInChildren<Collider2D>(true);
-        for (var i = 0; i < colliders.Length; i++)
-            colliders[i].enabled = false;
-
-        var behaviours = _previewInstance.GetComponentsInChildren<MonoBehaviour>(true);
-        for (var i = 0; i < behaviours.Length; i++)
-            behaviours[i].enabled = false;
-
-        return true;
-    }
-
-    private void PlaceAndConsume(IPlaceableItem placeableItem, Vector3 targetPosition, int slotIndex, InventoryItem slotItem)
-    {
-        if (!TryPlace(placeableItem, targetPosition))
-            return;
-
+        placementStrategy.Place(placeableItem, targetPosition, _placementParent);
         ConsumeOneItem(slotIndex, slotItem);
-    }
-
-    private bool TryPlace(IPlaceableItem placeableItem, Vector3 targetPosition)
-    {
-        for (var i = 0; i < _placementStrategies.Length; i++)
-        {
-            var strategy = _placementStrategies[i];
-            if (strategy == null || !strategy.CanHandle(placeableItem))
-                continue;
-
-            strategy.Place(placeableItem, targetPosition, _placementParent);
-            return true;
-        }
-
-        return false;
     }
 
     private void ConsumeOneItem(int slotIndex, InventoryItem slotItem)

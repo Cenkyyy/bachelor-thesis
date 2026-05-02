@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Items/Material/Placeable Material Item")]
-public sealed class PlaceableMaterialItemData : MaterialItemData, IPlaceableItem
+[CreateAssetMenu(menuName = "Items/Material/Prefab Placeable Material Item")]
+public sealed class PrefabPlaceableMaterialItemData : MaterialItemData, IPrefabPlaceableItem
 {
     [field: Header("Placement Settings")]
     [field: SerializeField] public GameObject Prefab { get; private set; }

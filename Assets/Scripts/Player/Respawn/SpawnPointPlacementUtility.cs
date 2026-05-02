@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Resolves a free spawn point near a desired position by probing neighboring tiles.
+/// </summary>
 public static class SpawnPointPlacementUtility
 {
     public static Vector3 ResolveNearestFreePosition(Vector3 desiredPosition, LayerMask obstacleMask, float probeRadius, int maxSearchRadius)
