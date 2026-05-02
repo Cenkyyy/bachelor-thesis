@@ -10,9 +10,7 @@ public interface IPlacementStrategy
         Vector3 targetPosition,
         bool canPlaceAtTarget,
         Transform previewParent,
-        ref GameObject previewInstance,
-        ref GameObject previewSource,
-        ref SpriteRenderer previewRenderer,
+        PlacementPreviewState previewState,
         float previewAlpha,
         Color validColor,
         Color invalidColor);

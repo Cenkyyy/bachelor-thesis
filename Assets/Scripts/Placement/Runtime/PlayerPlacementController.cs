@@ -31,9 +31,7 @@ public sealed class PlayerPlacementController : MonoBehaviour
     [SerializeField] private Color _invalidPlacementPreviewColor = Color.red;
 
     private readonly IPlacementStrategy[] _placementStrategies = { new PrefabPlacementStrategy() };
-    private GameObject _previewInstance;
-    private GameObject _previewSourcePrefab;
-    private SpriteRenderer _previewRenderer;
+    private readonly PlacementPreviewState _previewState = new();
 
     private void Update()
     {
@@ -118,8 +116,8 @@ public sealed class PlayerPlacementController : MonoBehaviour
 
         if (!TryGetPlacementTarget(placeableItem.PlacementCheckSize, out var targetPosition, out var canPlaceAtTarget))
         {
-            if (_previewInstance != null)
-                _previewInstance.SetActive(false);
+            if (_previewState.Instance != null)
+                _previewState.Instance.SetActive(false);
 
             return;
         }
@@ -129,9 +127,7 @@ public sealed class PlayerPlacementController : MonoBehaviour
             targetPosition,
             canPlaceAtTarget,
             _placementParent,
-            ref _previewInstance,
-            ref _previewSourcePrefab,
-            ref _previewRenderer,
+            _previewState,
             _previewAlpha,
             _validPlacementPreviewColor,
             _invalidPlacementPreviewColor);
@@ -214,7 +210,8 @@ public sealed class PlayerPlacementController : MonoBehaviour
         if (_placementRadius <= 0f)
             return true;
 
-        var tileHalfExtents = new Vector2(Mathf.Abs(_worldGrid.cellSize.x) * 0.5f, Mathf.Abs(_worldGrid.cellSize.y) * 0.5f);
+        var cellSize = _worldGrid != null ? _worldGrid.cellSize : Vector3.one;
+        var tileHalfExtents = new Vector2(Mathf.Abs(cellSize.x) * 0.5f, Mathf.Abs(cellSize.y) * 0.5f);
         var closestPointOnTile = new Vector2(
             Mathf.Clamp(playerPosition.x, targetPosition.x - tileHalfExtents.x, targetPosition.x + tileHalfExtents.x),
             Mathf.Clamp(playerPosition.y, targetPosition.y - tileHalfExtents.y, targetPosition.y + tileHalfExtents.y));
@@ -241,12 +238,10 @@ public sealed class PlayerPlacementController : MonoBehaviour
 
     private void DestroyPreview()
     {
-        if (_previewInstance != null)
-            Destroy(_previewInstance);
+        if (_previewState.Instance != null)
+            Destroy(_previewState.Instance);
 
-        _previewInstance = null;
-        _previewSourcePrefab = null;
-        _previewRenderer = null;
+        _previewState.Clear();
     }
 
 #if UNITY_EDITOR

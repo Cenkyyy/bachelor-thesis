@@ -28,9 +28,7 @@ public sealed class PrefabPlacementStrategy : IPlacementStrategy
         Vector3 targetPosition,
         bool canPlaceAtTarget,
         Transform previewParent,
-        ref GameObject previewInstance,
-        ref GameObject previewSource,
-        ref SpriteRenderer previewRenderer,
+        PlacementPreviewState previewState,
         float previewAlpha,
         Color validColor,
         Color invalidColor)
@@ -38,43 +36,42 @@ public sealed class PrefabPlacementStrategy : IPlacementStrategy
         if (placeableItem is not IPrefabPlaceableItem prefabPlaceableItem)
             return;
 
-        if (previewInstance == null || previewSource != prefabPlaceableItem.Prefab)
+        if (previewState.Instance == null || previewState.Source != prefabPlaceableItem.Prefab)
         {
-            DestroyPreview(ref previewInstance, ref previewSource, ref previewRenderer);
+            DestroyPreview(previewState);
 
-            previewInstance = Object.Instantiate(prefabPlaceableItem.Prefab, Vector3.zero, Quaternion.identity, previewParent);
-            previewInstance.name = $"{prefabPlaceableItem.Prefab.name}_Preview";
-            previewSource = prefabPlaceableItem.Prefab;
-            previewRenderer = previewInstance.GetComponentInChildren<SpriteRenderer>(true);
+            previewState.Instance = Object.Instantiate(prefabPlaceableItem.Prefab, Vector3.zero, Quaternion.identity, previewParent);
+            previewState.Instance.name = $"{prefabPlaceableItem.Prefab.name}_Preview";
+            previewState.Source = prefabPlaceableItem.Prefab;
+            previewState.Renderer = previewState.Instance.GetComponentInChildren<SpriteRenderer>(true);
 
-            var colliders = previewInstance.GetComponentsInChildren<Collider2D>(true);
+            var colliders = previewState.Instance.GetComponentsInChildren<Collider2D>(true);
             for (var i = 0; i < colliders.Length; i++)
             {
                 colliders[i].enabled = false;
             }
 
-            var behaviours = previewInstance.GetComponentsInChildren<MonoBehaviour>(true);
+            var behaviours = previewState.Instance.GetComponentsInChildren<MonoBehaviour>(true);
             for (var i = 0; i < behaviours.Length; i++)
             {
                 behaviours[i].enabled = false;
             }
         }
 
-        previewInstance.SetActive(true);
-        previewInstance.transform.position = targetPosition;
+        previewState.Instance.SetActive(true);
+        previewState.Instance.transform.position = targetPosition;
 
         var previewColor = canPlaceAtTarget ? validColor : invalidColor;
         previewColor.a = previewAlpha;
-        previewRenderer.color = previewColor;
+        if (previewState.Renderer != null)
+            previewState.Renderer.color = previewColor;
     }
 
-    private static void DestroyPreview(ref GameObject previewInstance, ref GameObject previewSource, ref SpriteRenderer previewRenderer)
+    private static void DestroyPreview(PlacementPreviewState previewState)
     {
-        if (previewInstance != null)
-            Object.Destroy(previewInstance);
+        if (previewState.Instance != null)
+            Object.Destroy(previewState.Instance);
 
-        previewInstance = null;
-        previewSource = null;
-        previewRenderer = null;
+        previewState.Clear();
     }
 }
