@@ -17,11 +17,11 @@ public sealed class PrefabMiningTargetStrategy : IMiningTargetStrategy
         if (hit == null)
             return false;
 
-        var node = hit.GetComponent<MineableNode>() ?? hit.GetComponentInParent<MineableNode>();
+        var node = hit.GetComponent<PrefabMineableRuntimeData>() ?? hit.GetComponentInParent<PrefabMineableRuntimeData>();
         if (node == null)
             return false;
 
-        target = new MineableNodeMiningTarget(node);
+        target = node;
         return true;
     }
 }

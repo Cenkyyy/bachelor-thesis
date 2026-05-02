@@ -424,7 +424,7 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
 
             instance.name = $"{placement.Entry.DecorationId}_{placement.Tile.x}_{placement.Tile.y}";
 
-            var node = instance.GetComponent<MineableNode>();
+            var node = instance.GetComponent<PrefabMineableRuntimeData>();
             if (node != null)
             {
                 node.ResetRuntimeState();

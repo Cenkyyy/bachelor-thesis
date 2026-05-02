@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(MineableNode))]
+[RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(PrefabMineableRuntimeData))]
 public sealed class BedrollInteractable : InteractableBase
 {
     [Header("Spawn Point")]

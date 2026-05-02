@@ -4,7 +4,7 @@ using UnityEngine;
 public sealed class MiningProgressBar : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private MineableNode _node;
+    [SerializeField] private PrefabMineableRuntimeData _data;
     [SerializeField] private SpriteRenderer _backgroundRenderer;
     [SerializeField] private SpriteRenderer _fillRenderer;
     [SerializeField] private Transform _fillTransform;
@@ -20,20 +20,20 @@ public sealed class MiningProgressBar : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_node == null)
+        if (_data == null)
             return;
 
-        _node.OnMiningProgressChanged += HandleProgressChanged;
-        _node.OnMiningStopped += HandleMiningStopped;
+        _data.OnMiningProgressChanged += HandleProgressChanged;
+        _data.OnMiningStopped += HandleMiningStopped;
     }
 
     private void OnDisable()
     {
-        if (_node == null)
+        if (_data == null)
             return;
 
-        _node.OnMiningProgressChanged -= HandleProgressChanged;
-        _node.OnMiningStopped -= HandleMiningStopped;
+        _data.OnMiningProgressChanged -= HandleProgressChanged;
+        _data.OnMiningStopped -= HandleMiningStopped;
     }
 
     private void HandleProgressChanged(float progress)

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
-public sealed class WallTileRuntimeData
+public sealed class WallTileMineableRuntimeData : IMineableTarget
 {
-    public Vector2Int Tile { get; }
     public WallData WallData { get; }
+    public Vector2Int Tile { get; }
+    public Vector3 WorldPosition => _owner != null ? _owner.GetTileCenterWorld(Tile) : Vector3.zero;
 
     public float CurrentDurability { get; private set; }
     public float MaxDurability => WallData != null && WallData.MineableData != null ? Mathf.Max(0f, WallData.MineableData.MaxDurability) : 0f;
@@ -13,15 +14,17 @@ public sealed class WallTileRuntimeData
 
     private bool _isBeingMined;
     private float _replenishTimer;
+    private readonly WallChunkGenerator _owner;
 
-    public WallTileRuntimeData(Vector2Int tile, WallData wallData)
+    public WallTileMineableRuntimeData(WallChunkGenerator owner, Vector2Int tile, WallData wallData)
     {
+        _owner = owner;
         Tile = tile;
         WallData = wallData;
         CurrentDurability = MaxDurability;
     }
 
-    public bool CanBeMinedWith(MiningToolContext tool)
+    public bool CanBeMinedWith(MiningToolState tool)
     {
         if (WallData.MineableData == null)
             return false;
@@ -57,7 +60,12 @@ public sealed class WallTileRuntimeData
         _replenishTimer = 0f;
     }
 
-    public bool NotifyMiningStopped()
+    public void NotifyMiningStopped()
+    {
+        StopMiningAndScheduleReplenish();
+    }
+
+    public bool StopMiningAndScheduleReplenish() 
     {
         _isBeingMined = false;
         if (!HasDamage)
@@ -72,6 +80,25 @@ public sealed class WallTileRuntimeData
 
         _replenishTimer = replenishDuration;
         return false;
+    }
+
+    public void ShowHigherToolRequiredFeedback()
+    {
+        _owner?.ShowHigherToolRequiredFeedback(Tile);
+    }
+
+    public void ApplyMiningDamage(float basePower, Player miner, WorldItemSpawner dropSpawner)
+    {
+        _owner?.ApplyMiningDamage(Tile, basePower, miner, dropSpawner);
+    }
+
+    public bool IsSameTarget(IMineableTarget other)
+    {
+        var tileTarget = other as WallTileMineableRuntimeData;
+        if (tileTarget == null)
+            return false;
+
+        return tileTarget._owner == _owner && tileTarget.Tile == Tile;
     }
 
     public bool TickReplenish(float deltaTime)

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public static class MiningDropResolver
+public static class MiningDropUtility
 {
     public static void ResolveDrops(IReadOnlyList<MiningDropEntry> drops, Player player, WorldItemSpawner dropSpawner, Vector3 dropPosition)
     {

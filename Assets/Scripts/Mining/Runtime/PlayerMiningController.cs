@@ -112,7 +112,7 @@ public sealed class PlayerMiningController : MonoBehaviour
         if (target == null)
             return false;
 
-        return !target.CanBeMinedWith(MiningToolContext.Hand(HandMiningPower));
+        return !target.CanBeMinedWith(MiningToolState.Hand(HandMiningPower));
     }
 
     private void ResetMining()
@@ -152,13 +152,13 @@ public sealed class PlayerMiningController : MonoBehaviour
         return distance <= _miningRange;
     }
 
-    private bool TryResolveTool(IMineableTarget target, out MiningToolContext toolContext)
+    private bool TryResolveTool(IMineableTarget target, out MiningToolState toolContext)
     {
         toolContext = default;
 
         if (target != null && _allowHandMining)
         {
-            var handContext = MiningToolContext.Hand(HandMiningPower);
+            var handContext = MiningToolState.Hand(HandMiningPower);
             if (target.CanBeMinedWith(handContext))
             {
                 toolContext = handContext;
@@ -178,7 +178,7 @@ public sealed class PlayerMiningController : MonoBehaviour
         if (_toolDurability != null && _toolDurability.TryGetToolState(slotIndex, out _, out var currentDurability, out _) && currentDurability <= 0f)
             return false;
 
-        toolContext = MiningToolContext.Tool(slotIndex, tool);
+        toolContext = MiningToolState.Tool(slotIndex, tool);
         return true;
     }
 }

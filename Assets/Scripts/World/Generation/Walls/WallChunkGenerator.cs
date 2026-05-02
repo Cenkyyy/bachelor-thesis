@@ -62,7 +62,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     private readonly Dictionary<BiomeType, BiomeWallsListData> _wallsByBiome = new();
     private readonly Dictionary<Vector2Int, List<Vector2Int>> _spawnedChunkTiles = new();
     private readonly Dictionary<Vector2Int, List<GameObject>> _spawnedChunkOres = new();
-    private readonly Dictionary<Vector2Int, WallTileRuntimeData> _runtimeByTile = new();
+    private readonly Dictionary<Vector2Int, WallTileMineableRuntimeData> _runtimeByTile = new();
     private readonly WallTileModificationState _modificationState = new();
     private readonly Dictionary<Vector2Int, MiningProgressBar> _miningBarsByTile = new();
     private readonly Dictionary<Vector2Int, float> _inactiveMiningBarHiddenAtByTile = new();
@@ -180,10 +180,10 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         var cell = _wallTilemap.WorldToCell(worldPosition);
         var dataTile = worldGenerator.CurrentWorldData.CellToData(cell);
 
-        if (!_runtimeByTile.ContainsKey(dataTile))
+        if (!_runtimeByTile.TryGetValue(dataTile, out var runtimeData))
             return false;
 
-        target = new WallTileMiningTarget(this, dataTile);
+        target = runtimeData;
         return true;
     }
 
@@ -216,7 +216,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         return _wallTilemap.GetCellCenterWorld(cell);
     }
 
-    public bool CanMineTile(Vector2Int dataTile, MiningToolContext tool)
+    public bool CanMineTile(Vector2Int dataTile, MiningToolState tool)
     {
         return _runtimeByTile.TryGetValue(dataTile, out var runtimeData) && runtimeData.CanBeMinedWith(tool);
     }
@@ -257,7 +257,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         OnWallTileChanged?.Invoke(dataTile);
 
         if (miner != null && runtimeData.WallData.MineableData != null)
-            MiningDropResolver.ResolveDrops(runtimeData.WallData.MineableData.Drops, miner, dropSpawner, GetTileCenterWorld(dataTile));
+            MiningDropUtility.ResolveDrops(runtimeData.WallData.MineableData.Drops, miner, dropSpawner, GetTileCenterWorld(dataTile));
     }
 
     public void NotifyMiningStarted(Vector2Int dataTile)
@@ -279,11 +279,11 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         {
             _tilesAwaitingReplenishTick.Remove(dataTile);
             HideMiningBarForTile(dataTile);
-            runtimeData.NotifyMiningStopped();
+            runtimeData.StopMiningAndScheduleReplenish();
             return;
         }
 
-        if (runtimeData.NotifyMiningStopped())
+        if (runtimeData.StopMiningAndScheduleReplenish())
         {
             _tilesAwaitingReplenishTick.Remove(dataTile);
             HandleTileReplenished(dataTile);
@@ -424,7 +424,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
             _tileWriteCellsBuffer.Add(data.DataToCell(planned.DataTile.x, planned.DataTile.y));
             _tileWriteAssetsBuffer.Add(planned.WallData.RuleTile);
-            _runtimeByTile[planned.DataTile] = new WallTileRuntimeData(planned.DataTile, planned.WallData);
+            _runtimeByTile[planned.DataTile] = new WallTileMineableRuntimeData(this, planned.DataTile, planned.WallData);
             chunkTiles.Add(planned.DataTile);
             OnWallTileChanged?.Invoke(planned.DataTile);
 

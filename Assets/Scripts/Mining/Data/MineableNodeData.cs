@@ -11,7 +11,7 @@ public sealed class MineableNodeData : ScriptableObject
     [field: SerializeField] public bool AllowHandMining { get; private set; } = true;
 
     [field: Header("Durability")]
-    [field: SerializeField] public float MaxDurability { get; private set; } = 10f;
+    [field: SerializeField] public float MaxDurability { get; private set; } = 2f;
     [field: SerializeField] public float ToolPowerMultiplier { get; private set; } = 1f;
     [field: SerializeField, Min(0f)] public float ReplenishDurationSeconds { get; private set; } = 4f;
 

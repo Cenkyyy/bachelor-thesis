@@ -4,9 +4,9 @@ public sealed class DecorationInstanceTracker : MonoBehaviour
 {
     private string _instanceId;
     private DecorationChunkGenerator _owner;
-    private MineableNode _node;
+    private PrefabMineableRuntimeData _node;
 
-    public void Initialize(string instanceId, DecorationChunkGenerator owner, MineableNode node)
+    public void Initialize(string instanceId, DecorationChunkGenerator owner, PrefabMineableRuntimeData node)
     {
         if (_node != null)
             _node.OnDepleted -= HandleNodeDepleted;
@@ -25,7 +25,7 @@ public sealed class DecorationInstanceTracker : MonoBehaviour
             _node.OnDepleted -= HandleNodeDepleted;
     }
 
-    private void HandleNodeDepleted(MineableNode node)
+    private void HandleNodeDepleted(PrefabMineableRuntimeData node)
     {
         if (_owner == null)
             return;

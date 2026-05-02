@@ -1,4 +1,4 @@
-public readonly struct MiningToolContext
+public readonly struct MiningToolState
 {
     public bool IsHand { get; }
     public ToolType ToolType { get; }
@@ -9,7 +9,7 @@ public readonly struct MiningToolContext
 
     public bool ConsumesDurability => !IsHand && DurabilityLossPerSecond > 0f;
 
-    private MiningToolContext(bool isHand, ToolType toolType, ToolTier tier, float power, float durabilityLossPerSecond, int slotIndex)
+    private MiningToolState(bool isHand, ToolType toolType, ToolTier tier, float power, float durabilityLossPerSecond, int slotIndex)
     {
         IsHand = isHand;
         ToolType = toolType;
@@ -19,13 +19,13 @@ public readonly struct MiningToolContext
         SlotIndex = slotIndex;
     }
 
-    public static MiningToolContext Hand(float power)
+    public static MiningToolState Hand(float power)
     {
-        return new MiningToolContext(true, ToolType.None, ToolTier.None, power, 0f, -1);
+        return new MiningToolState(true, ToolType.None, ToolTier.None, power, 0f, -1);
     }
 
-    public static MiningToolContext Tool(int slotIndex, IMiningTool tool)
+    public static MiningToolState Tool(int slotIndex, IMiningTool tool)
     {
-        return new MiningToolContext(false, tool.ToolType, tool.Tier, tool.MiningPower, tool.DurabilityLossPerSecond, slotIndex);
+        return new MiningToolState(false, tool.ToolType, tool.Tier, tool.MiningPower, tool.DurabilityLossPerSecond, slotIndex);
     }
 }
