@@ -4,8 +4,7 @@ using UnityEngine;
 public class MaterialItemData : ItemData
 {
     [field: Header("Material Settings")]
-    [field: SerializeField] public MaterialType Kind { get; private set; } = MaterialType.Generic;
-    [field: SerializeField] public ToolTier TierTag { get; private set; } = ToolTier.None;
+    [field: SerializeField] public MaterialType Kind { get; private set; } = MaterialType.CraftingItem;
 
     protected override ItemType? ExpectedCategory => ItemType.Material;
 

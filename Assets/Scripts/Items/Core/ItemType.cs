@@ -5,6 +5,5 @@ public enum ItemType
     Tool,
     Material,
     Consumable,
-    Accessory,
-    Special
+    Accessory
 }

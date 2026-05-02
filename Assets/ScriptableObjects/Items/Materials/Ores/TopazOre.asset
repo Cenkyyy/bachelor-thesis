@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb46976bd70d81242b125b463234bffe, type: 3}
-  m_Name: AmethystOre
+  m_Name: TopazOre
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Amethyst Ore
-  <Icon>k__BackingField: {fileID: 6505026738284537468, guid: 67ba7e2613fc7664b996fde98ffb0fe7, type: 3}
-  <Description>k__BackingField: 
+  <ItemName>k__BackingField: Topaz Ore
+  <Icon>k__BackingField: {fileID: 8982652330240798638, guid: f2fa09e03f355b147bf701e27485c63c, type: 3}
   <Category>k__BackingField: 3
-  <Rarity>k__BackingField: 3
-  <BiomeAffinity>k__BackingField: 4
+  <Rarity>k__BackingField: 2
+  <BiomeAffinity>k__BackingField: 3
   <MaxStackSize>k__BackingField: 9999
-  <Kind>k__BackingField: 2
-  <TierTag>k__BackingField: 5
+  <Kind>k__BackingField: 1
+  <TierTag>k__BackingField: 0

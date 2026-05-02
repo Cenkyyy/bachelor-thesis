@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb46976bd70d81242b125b463234bffe, type: 3}
-  m_Name: Riftstone
+  m_Name: CelestineOre
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Riftstone
-  <Icon>k__BackingField: {fileID: -15911263, guid: 2e091dc3f4e0d0f4db479764ce74866a, type: 3}
+  <ItemName>k__BackingField: Celestine Ore
+  <Icon>k__BackingField: {fileID: 1009049853055315898, guid: 1c4380b4144981144bfecf5df811fc1c, type: 3}
   <Category>k__BackingField: 3
-  <Rarity>k__BackingField: 0
-  <BiomeAffinity>k__BackingField: 4
+  <Rarity>k__BackingField: 2
+  <BiomeAffinity>k__BackingField: 2
   <MaxStackSize>k__BackingField: 9999
   <Kind>k__BackingField: 1
-  <TierTag>k__BackingField: 0
+  <TierTag>k__BackingField: 3

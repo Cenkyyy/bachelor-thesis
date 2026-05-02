@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Items/Special/Placeable Item")]
-public sealed class PlaceableItemData : ItemData, IPlaceableItem
+[CreateAssetMenu(menuName = "Items/Material/Placeable Material Item")]
+public sealed class PlaceableMaterialItemData : MaterialItemData, IPlaceableItem
 {
     [field: Header("Placement Settings")]
     [field: SerializeField] public GameObject Prefab { get; private set; }
 
     [field: Tooltip("Placement size used for placement collision checks is in world units (for PPU 32 and 32px tiles, 1 = one tile).")]
     [field: SerializeField] public Vector2 PlacementCheckSize { get; private set; } = Vector2.one; 
-
-    protected override ItemType? ExpectedCategory => ItemType.Special;
 
     protected override void OnValidate()
     {

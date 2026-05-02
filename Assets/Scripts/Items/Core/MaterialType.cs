@@ -1,9 +1,8 @@
 public enum MaterialType
 {
-    Generic = 0,
-    HostBlock = 1,
-    Ore = 2,
-    Catalyst = 3,
-    EnemyDrop = 4,
-    CraftingComponent = 5
+    Wall = 0,
+    Ore = 1,
+    EntityDrop = 2,
+    CraftingItem = 3,
+    CraftableItem = 4
 }
