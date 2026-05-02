@@ -165,7 +165,7 @@ public sealed class PlayerPlacementController : MonoBehaviour
         var mouseWorld = _camera.ScreenToWorldPoint(Input.mousePosition);
 
         var constrainedTarget = GetPlacementTargetWithinAllowedRange(mouseWorld);
-        targetPosition = PlaceablePlacementUtility.GetSnappedTileCenter(constrainedTarget, _worldGrid);
+        targetPosition = PlaceableUtility.GetSnappedTileCenter(constrainedTarget, _worldGrid);
         canPlaceAtTarget = CanPlaceAt(targetPosition, placementCheckSize);
         return true;
     }
@@ -192,7 +192,7 @@ public sealed class PlayerPlacementController : MonoBehaviour
         if (!IsWithinPlacementRange(targetPosition))
             return false;
 
-        return PlaceablePlacementUtility.IsAreaFree(targetPosition, placementCheckSize, _blockingLayerMask);
+        return PlaceableUtility.IsAreaFree(targetPosition, placementCheckSize, _blockingLayerMask);
     }
 
     private bool IsWithinPlacementRange(Vector2 targetPosition)

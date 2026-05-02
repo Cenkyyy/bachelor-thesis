@@ -811,7 +811,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AmuletSlo
+      name: AmuletSlot
       rect:
         serializedVersion: 2
         x: 580
@@ -1286,7 +1286,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AmuletSlo: -1087614287073443477
+      AmuletSlot: -1087614287073443477
       AudioSlider: 6542293239424750880
       AudioSliderEdge: 4310072150773806040
       AudioSliderFilling: 3760210124697040761

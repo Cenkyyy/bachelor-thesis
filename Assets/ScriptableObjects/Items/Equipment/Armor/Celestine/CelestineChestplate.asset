@@ -18,6 +18,6 @@ MonoBehaviour:
   <Rarity>k__BackingField: 2
   <BiomeAffinity>k__BackingField: 2
   <MaxStackSize>k__BackingField: 1
-  <Slot>k__BackingField: 1
+  <Slot>k__BackingField: 2
   <ProgressionTier>k__BackingField: 3
   _statusEffects: []

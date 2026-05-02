@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Copper Helmet
   <Icon>k__BackingField: {fileID: 2214101062971801023, guid: 0bbceb06760663a409587298001ad43c, type: 3}
-  <Description>k__BackingField: 
   <Category>k__BackingField: 0
   <Rarity>k__BackingField: 1
   <BiomeAffinity>k__BackingField: 1
   <MaxStackSize>k__BackingField: 1
-  <Slot>k__BackingField: 0
+  <Slot>k__BackingField: 1
   <ProgressionTier>k__BackingField: 2
   _statusEffects: []

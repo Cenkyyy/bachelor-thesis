@@ -3,7 +3,7 @@
 /// <summary>
 /// Provides utility methods for placing placeable items in the world, such as snapping to grid and checking for collisions.
 /// </summary>
-public static class PlaceablePlacementUtility
+public static class PlaceableUtility
 {
     private static readonly Collider2D[] _overlapResults = new Collider2D[8];
 
