@@ -12,7 +12,7 @@ public sealed class WallTileMineableRuntimeData : IMineableTarget
     public float CurrentDurability { get; private set; }
     public float MiningProgressNormalized => Mathf.Clamp01(1f - (CurrentDurability / WallData.MineableData.MaxDurability));
     public bool IsDepleted { get; private set; }
-    public bool IsAwaitingReplenishTick => !_isBeingMined && HasDamage && _replenishTimer > 0f;
+    public bool IsBeingMined => _isBeingMined;
     public bool HasDamage
     {
         get
@@ -100,7 +100,7 @@ public sealed class WallTileMineableRuntimeData : IMineableTarget
         _replenishTimer = WallData.MineableData.ReplenishDurationSeconds;
     }
 
-    public void ShowHigherToolRequiredFeedback() => _feedbackPopupEmitter?.ShowMessage(_higherToolRequiredMessage);
+    public void ShowHigherToolRequiredFeedback() => _feedbackPopupEmitter?.ShowMessageAtWorldPosition(_higherToolRequiredMessage, WorldPosition);
 
     public bool IsSameTarget(IMineableTarget other)
     {
