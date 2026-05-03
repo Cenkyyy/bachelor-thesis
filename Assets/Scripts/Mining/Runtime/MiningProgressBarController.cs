@@ -4,11 +4,17 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public sealed class MiningProgressBarController : MonoBehaviour
 {
+    private sealed class MiningBarRuntimeHandle
+    {
+        public MiningProgressBar MiningProgressBar;
+        public bool IsOwnedInstance;
+    }
+
     [Header("Refs")]
     [SerializeField] private MiningProgressBar _miningBarPrefab;
     [SerializeField] private Transform _barsContainer;
 
-    private readonly Dictionary<IMineableTarget, MiningProgressBar> _barsByTarget = new();
+    private readonly Dictionary<IMineableTarget, MiningBarRuntimeHandle> _barsByTarget = new();
     private readonly List<IMineableTarget> _targetsToRemoveBuffer = new();
 
     private void Update()
@@ -64,8 +70,13 @@ public sealed class MiningProgressBarController : MonoBehaviour
     {
         foreach (var pair in _barsByTarget)
         {
-            if (pair.Value != null)
-                Destroy(pair.Value.gameObject);
+            if (pair.Value == null || pair.Value.MiningProgressBar == null)
+                continue;
+
+            if (pair.Value.IsOwnedInstance)
+                Destroy(pair.Value.MiningProgressBar.gameObject);
+            else
+                pair.Value.MiningProgressBar.SetIdle();
         }
 
         _barsByTarget.Clear();
@@ -74,8 +85,18 @@ public sealed class MiningProgressBarController : MonoBehaviour
 
     private MiningProgressBar EnsureBar(IMineableTarget target)
     {
-        if (_barsByTarget.TryGetValue(target, out var existingBar) && existingBar != null)
-            return existingBar;
+        if (_barsByTarget.TryGetValue(target, out var existingHandle) && existingHandle?.MiningProgressBar != null)
+            return existingHandle.MiningProgressBar;
+
+        if (TryFindChildBar(target, out var childBar))
+        {
+            _barsByTarget[target] = new MiningBarRuntimeHandle
+            {
+                MiningProgressBar = childBar,
+                IsOwnedInstance = false
+            };
+            return childBar;
+        }
 
         if (_miningBarPrefab == null)
             return null;
@@ -83,17 +104,46 @@ public sealed class MiningProgressBarController : MonoBehaviour
         var parent = _barsContainer != null ? _barsContainer : transform;
         var bar = Instantiate(_miningBarPrefab, parent);
         bar.SetIdle();
-        _barsByTarget[target] = bar;
+        _barsByTarget[target] = new MiningBarRuntimeHandle
+        {
+            MiningProgressBar = bar,
+            IsOwnedInstance = true
+        };
         return bar;
+    }
+
+    private bool TryFindChildBar(IMineableTarget target, out MiningProgressBar miningProgressBar)
+    {
+        miningProgressBar = null;
+
+        if (target is not Component targetComponent)
+            return false;
+
+        miningProgressBar = targetComponent.GetComponent<MiningProgressBar>();
+        if (miningProgressBar != null)
+            return true;
+
+        miningProgressBar = targetComponent.GetComponentInChildren<MiningProgressBar>(true);
+        if (miningProgressBar != null)
+            return true;
+
+        miningProgressBar = targetComponent.GetComponentInParent<MiningProgressBar>(true);
+        return miningProgressBar != null;
     }
 
     private void RemoveBar(IMineableTarget target)
     {
-        if (!_barsByTarget.TryGetValue(target, out var bar))
+        if (!_barsByTarget.TryGetValue(target, out var barRuntimeHandle) || barRuntimeHandle == null)
             return;
 
+        var bar = barRuntimeHandle.MiningProgressBar;
         if (bar != null)
-            Destroy(bar.gameObject);
+        {
+            if (barRuntimeHandle.IsOwnedInstance)
+                Destroy(bar.gameObject);
+            else
+                bar.SetIdle();
+        }
 
         _barsByTarget.Remove(target);
     }
