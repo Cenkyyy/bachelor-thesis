@@ -265,7 +265,6 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         if (!_runtimeByTile.TryGetValue(dataTile, out var runtimeData))
             return;
 
-        runtimeData.NotifyMiningStarted();
         var miningBar = EnsureMiningBar(dataTile);
         miningBar?.SetProgressValue(runtimeData.MiningProgressNormalized);
     }

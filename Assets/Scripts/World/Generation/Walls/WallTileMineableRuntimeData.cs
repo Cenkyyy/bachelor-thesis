@@ -58,11 +58,12 @@ public sealed class WallTileMineableRuntimeData : IMineableTarget
     {
         _isBeingMined = true;
         _replenishTimer = 0f;
+        _owner?.NotifyMiningStarted(Tile);
     }
 
     public void NotifyMiningStopped()
     {
-        StopMiningAndScheduleReplenish();
+        _owner?.NotifyMiningStopped(Tile);
     }
 
     public bool StopMiningAndScheduleReplenish() 

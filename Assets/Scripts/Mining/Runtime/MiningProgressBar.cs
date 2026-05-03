@@ -11,11 +11,12 @@ public sealed class MiningProgressBar : MonoBehaviour
 
     [Header("Visuals")]
     [SerializeField] private float _minFillScale = 0.02f;
-    [SerializeField] private bool _hideWhenIdle = true;
+
+    private float _lastProgress;
 
     private void Awake()
     {
-        SetVisible(!_hideWhenIdle);
+        SetVisible(false);
     }
 
     private void OnEnable()
@@ -38,26 +39,30 @@ public sealed class MiningProgressBar : MonoBehaviour
 
     private void HandleProgressChanged(float progress)
     {
+        _lastProgress = Mathf.Clamp01(progress);
         SetProgressValue(progress);
     }
 
     private void HandleMiningStopped()
     {
+        if (_lastProgress > Mathf.Epsilon)
+        {
+            SetProgressValue(_lastProgress);
+            return;
+        }
+
         SetIdle();
     }
 
     public void SetProgressValue(float progress)
     {
-        if (_hideWhenIdle)
-            SetVisible(true);
-
+        SetVisible(true);
         SetFill(progress);
     }
 
     public void SetIdle()
     {
-        if (_hideWhenIdle)
-            SetVisible(false);
+        SetVisible(false);
     }
 
     private void SetFill(float progress)

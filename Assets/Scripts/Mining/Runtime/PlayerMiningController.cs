@@ -17,9 +17,6 @@ public sealed class PlayerMiningController : MonoBehaviour
     [SerializeField] private float _miningRange = 1.5f;
     [SerializeField, Min(0.1f)] private float _miningTickIntervalSeconds = 1f;
 
-    [Header("Hand Mining")]
-    [SerializeField] private bool _allowHandMining = true;
-
     private readonly IMiningTargetStrategy[] _targetStrategies = new IMiningTargetStrategy[2];
     private IMineableTarget _currentTarget;
     private int _currentToolSlot = -1;
@@ -54,7 +51,7 @@ public sealed class PlayerMiningController : MonoBehaviour
             return;
         }
 
-        if (!TryResolveTool(target, out var toolContext))
+        if (!TryResolveTool(target, out var toolState))
         {
             if (ShouldShowToolRequirementFeedback(target))
                 target.ShowHigherToolRequiredFeedback();
@@ -63,7 +60,7 @@ public sealed class PlayerMiningController : MonoBehaviour
             return;
         }
 
-        if (!target.CanBeMinedWith(toolContext))
+        if (!target.CanBeMinedWith(toolState))
         {
             target.ShowHigherToolRequiredFeedback();
             ResetMining();
@@ -77,12 +74,12 @@ public sealed class PlayerMiningController : MonoBehaviour
             _miningTickAccumulator = 0f;
         }
 
-        bool toolChanged = _currentToolSlot != toolContext.SlotIndex;
+        bool toolChanged = _currentToolSlot != toolState.SlotIndex;
         if (toolChanged)
             _miningTickAccumulator = 0f;
 
         _currentTarget = target;
-        _currentToolSlot = toolContext.SlotIndex;
+        _currentToolSlot = toolState.SlotIndex;
 
         if (targetChanged || toolChanged)
             _currentTarget.NotifyMiningStarted();
@@ -93,11 +90,11 @@ public sealed class PlayerMiningController : MonoBehaviour
         while (_miningTickAccumulator >= tickInterval)
         {
             _miningTickAccumulator -= tickInterval;
-            target.ApplyMiningDamage(toolContext.Power * tickInterval, _player, _itemDropSpawner);
+            target.ApplyMiningDamage(toolState.Power * tickInterval, _player, _itemDropSpawner);
 
-            if (toolContext.ConsumesDurability && _toolDurability != null)
+            if (toolState.ConsumesDurability && _toolDurability != null)
             {
-                _toolDurability.TryConsumeDurability(toolContext.SlotIndex, toolContext.DurabilityLossPerSecond * tickInterval, out _, out var broke);
+                _toolDurability.TryConsumeDurability(toolState.SlotIndex, toolState.DurabilityLossPerSecond * tickInterval, out _, out var broke);
                 if (broke)
                 {
                     ResetMining();
@@ -105,14 +102,6 @@ public sealed class PlayerMiningController : MonoBehaviour
                 }
             }
         }
-    }
-
-    private bool ShouldShowToolRequirementFeedback(IMineableTarget target)
-    {
-        if (target == null)
-            return false;
-
-        return !target.CanBeMinedWith(MiningToolState.Hand(HandMiningPower));
     }
 
     private void ResetMining()
@@ -127,7 +116,7 @@ public sealed class PlayerMiningController : MonoBehaviour
     {
         target = null;
 
-        var mouseWorld = _camera ? _camera.ScreenToWorldPoint(Input.mousePosition) : transform.position;
+        var mouseWorld = _camera.ScreenToWorldPoint(Input.mousePosition);
         mouseWorld.z = 0f;
 
         for (var i = 0; i < _targetStrategies.Length; i++)
@@ -146,22 +135,16 @@ public sealed class PlayerMiningController : MonoBehaviour
         return false;
     }
 
-    private bool IsWithinMiningRange(Vector3 targetPosition)
+    private bool TryResolveTool(IMineableTarget target, out MiningToolState toolState)
     {
-        var distance = Vector2.Distance(transform.position, targetPosition);
-        return distance <= _miningRange;
-    }
+        toolState = default;
 
-    private bool TryResolveTool(IMineableTarget target, out MiningToolState toolContext)
-    {
-        toolContext = default;
-
-        if (target != null && _allowHandMining)
+        if (target != null)
         {
-            var handContext = MiningToolState.Hand(HandMiningPower);
-            if (target.CanBeMinedWith(handContext))
+            var handState = MiningToolState.Hand(HandMiningPower);
+            if (target.CanBeMinedWith(handState))
             {
-                toolContext = handContext;
+                toolState = handState;
                 return true;
             }
         }
@@ -178,7 +161,21 @@ public sealed class PlayerMiningController : MonoBehaviour
         if (_toolDurability != null && _toolDurability.TryGetToolState(slotIndex, out _, out var currentDurability, out _) && currentDurability <= 0f)
             return false;
 
-        toolContext = MiningToolState.Tool(slotIndex, tool);
+        toolState = MiningToolState.Tool(slotIndex, tool);
         return true;
+    }
+
+    private bool ShouldShowToolRequirementFeedback(IMineableTarget target)
+    {
+        if (target == null)
+            return false;
+
+        return !target.CanBeMinedWith(MiningToolState.Hand(HandMiningPower));
+    }
+
+    private bool IsWithinMiningRange(Vector3 targetPosition)
+    {
+        var distance = Vector2.Distance(transform.position, targetPosition);
+        return distance <= _miningRange;
     }
 }
