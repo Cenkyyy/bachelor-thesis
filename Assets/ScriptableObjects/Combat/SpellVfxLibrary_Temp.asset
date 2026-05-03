@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a015de4907bc674fbe86a016fd29c87, type: 3}
   m_Name: SpellVfxLibrary_Temp
   m_EditorClassIdentifier: 
-  <BaseSpellPrefab>k__BackingField: {fileID: 2466419868598153168, guid: 2568ace020054b74ba8c2b842e09a9c0, type: 3}
+  <BaseSpellPrefab>k__BackingField: {fileID: 6381046162596957270, guid: 8f0c0c4ac4b1a19459ee11396bd388a6, type: 3}
   _shardLifetime: 0.35
   _beamLifetime: 0.9
   _waveLifetime: 0.45

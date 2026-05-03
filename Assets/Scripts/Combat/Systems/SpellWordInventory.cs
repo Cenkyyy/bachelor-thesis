@@ -23,6 +23,11 @@ public class SpellWordInventory : MonoBehaviour
         SortUnlockedWords();
     }
 
+    private void OnEnable()
+    {
+        SortUnlockedWords();
+    }
+
     public void SetUnlockedWords(IReadOnlyList<ModifierWord> modifiers, IReadOnlyList<ElementWord> elements, IReadOnlyList<FormWord> forms)
     {
         _unlockedModifiers.Clear();

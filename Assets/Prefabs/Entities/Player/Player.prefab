@@ -393,9 +393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dba99d36fc15f3f45adb9de35e4c79fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _miningBarPrefab: {fileID: 0}
+  _miningBarPrefab: {fileID: 169936977825393500, guid: 2192519b60bece042b027bd588a9ef33, type: 3}
   _barsContainer: {fileID: 0}
-  _maxInactiveBars: 32
 --- !u!114 &4403078374656698331
 MonoBehaviour:
   m_ObjectHideFlags: 0

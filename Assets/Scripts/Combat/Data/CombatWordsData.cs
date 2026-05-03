@@ -23,6 +23,16 @@ public sealed class CombatWordsData : ScriptableObject
 
     private void OnValidate()
     {
+        BuildWordLookups();
+    }
+
+    private void OnEnable()
+    {
+        BuildWordLookups();
+    }
+
+    private void BuildWordLookups()
+    {
         _modifiersByType = BuildLookup(_allModifiers, data => data.Modifier);
         _elementsByType = BuildLookup(_allElements, data => data.Element);
         _formsByType = BuildLookup(_allForms, data => data.Form);
