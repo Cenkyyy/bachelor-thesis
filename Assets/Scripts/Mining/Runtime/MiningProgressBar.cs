@@ -4,7 +4,6 @@ using UnityEngine;
 public sealed class MiningProgressBar : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private PrefabMineableRuntimeData _data;
     [SerializeField] private SpriteRenderer _backgroundRenderer;
     [SerializeField] private SpriteRenderer _fillRenderer;
     [SerializeField] private Transform _fillTransform;
@@ -12,46 +11,9 @@ public sealed class MiningProgressBar : MonoBehaviour
     [Header("Visuals")]
     [SerializeField] private float _minFillScale = 0.02f;
 
-    private float _lastProgress;
-
     private void Awake()
     {
         SetVisible(false);
-    }
-
-    private void OnEnable()
-    {
-        if (_data == null)
-            return;
-
-        _data.OnMiningProgressChanged += HandleProgressChanged;
-        _data.OnMiningStopped += HandleMiningStopped;
-    }
-
-    private void OnDisable()
-    {
-        if (_data == null)
-            return;
-
-        _data.OnMiningProgressChanged -= HandleProgressChanged;
-        _data.OnMiningStopped -= HandleMiningStopped;
-    }
-
-    private void HandleProgressChanged(float progress)
-    {
-        _lastProgress = Mathf.Clamp01(progress);
-        SetProgressValue(progress);
-    }
-
-    private void HandleMiningStopped()
-    {
-        if (_lastProgress > Mathf.Epsilon)
-        {
-            SetProgressValue(_lastProgress);
-            return;
-        }
-
-        SetIdle();
     }
 
     public void SetProgressValue(float progress)
@@ -60,10 +22,8 @@ public sealed class MiningProgressBar : MonoBehaviour
         SetFill(progress);
     }
 
-    public void SetIdle()
-    {
-        SetVisible(false);
-    }
+    public void SetIdle() => SetVisible(false);
+    public void SetWorldPosition(Vector3 worldPosition) => transform.position = worldPosition;
 
     private void SetFill(float progress)
     {

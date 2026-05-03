@@ -10,6 +10,7 @@ public sealed class WallTileMineableRuntimeData : IMineableTarget
     public float MaxDurability => WallData != null && WallData.MineableData != null ? Mathf.Max(0f, WallData.MineableData.MaxDurability) : 0f;
     public float MiningProgressNormalized => MaxDurability <= 0f ? 0f : Mathf.Clamp01(1f - (CurrentDurability / MaxDurability));
     public bool HasDamage => CurrentDurability < MaxDurability;
+    public bool IsDepleted { get; private set; }
     public bool IsAwaitingReplenishTick => !_isBeingMined && HasDamage && _replenishTimer > 0f;
 
     private bool _isBeingMined;
@@ -58,7 +59,6 @@ public sealed class WallTileMineableRuntimeData : IMineableTarget
     {
         _isBeingMined = true;
         _replenishTimer = 0f;
-        _owner?.NotifyMiningStarted(Tile);
     }
 
     public void NotifyMiningStopped()
@@ -91,6 +91,11 @@ public sealed class WallTileMineableRuntimeData : IMineableTarget
     public void ApplyMiningDamage(float basePower, Player miner, WorldItemSpawner dropSpawner)
     {
         _owner?.ApplyMiningDamage(Tile, basePower, miner, dropSpawner);
+    }
+
+    public void MarkDepleted()
+    {
+        IsDepleted = true;
     }
 
     public bool IsSameTarget(IMineableTarget other)

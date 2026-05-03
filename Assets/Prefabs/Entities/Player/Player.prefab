@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 5402159747806690286}
   - component: {fileID: 3255990485141274289}
   - component: {fileID: 3428453546330940767}
-  - component: {fileID: 2137776146905810697}
+  - component: {fileID: 9105410004459439549}
   - component: {fileID: 4403078374656698331}
   - component: {fileID: 6731827953367733980}
   - component: {fileID: 4319894653538523301}
@@ -374,14 +374,14 @@ MonoBehaviour:
   _itemDropSpawner: {fileID: 0}
   _camera: {fileID: 0}
   _wallChunkGenerator: {fileID: 0}
-  _progressPresenter: {fileID: 2137776146905810697}
+  _miningProgressBarController: {fileID: 9105410004459439549}
   _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
   _mineableMask:
     serializedVersion: 2
     m_Bits: 1024
   _miningRange: 1.5
   _miningTickIntervalSeconds: 1
---- !u!114 &2137776146905810697
+--- !u!114 &9105410004459439549
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -390,11 +390,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2259951683026114348}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b9105d7f6d4ab46aa2bf07550e6c98, type: 3}
+  m_Script: {fileID: 11500000, guid: dba99d36fc15f3f45adb9de35e4c79fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _progressBar: {fileID: 0}
-  _worldOffset: {x: 0, y: 0.5, z: 0}
+  _miningBarPrefab: {fileID: 0}
+  _barsContainer: {fileID: 0}
+  _maxInactiveBars: 32
 --- !u!114 &4403078374656698331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,7 +445,7 @@ MonoBehaviour:
   _targetMask:
     serializedVersion: 2
     m_Bits: 128
-  _combatWordsData: {fileID: 0}
+  _combatWordsData: {fileID: 11400000, guid: 3001151ae3897c7428306d4f9be649e3, type: 2}
   _wordEffectivenessData: {fileID: 11400000, guid: 3a8b4fc74c636fe499555877dc976ff7, type: 2}
   _damageWordTextPopupSettings:
     _effectiveColor: {r: 0.1, g: 1, b: 0.85, a: 1}
@@ -544,7 +545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spellCombatController: {fileID: 4319894653538523301}
   _playerHeldItemVisual: {fileID: 758897473396495506}
-  _combatWordsData: {fileID: 0}
+  _combatWordsData: {fileID: 11400000, guid: 3001151ae3897c7428306d4f9be649e3, type: 2}
   _vfxData: {fileID: 11400000, guid: d596ae22048838d4ba36735254e29ae2, type: 2}
   _barrageInterval: 0.08
 --- !u!114 &2737436318412507732

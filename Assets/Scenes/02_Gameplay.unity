@@ -10173,11 +10173,8 @@ MonoBehaviour:
   unloadOperationsPerFrame: 48
   _terrainChunkGenerator: {fileID: 1097722632}
   _wallTilemap: {fileID: 626142998}
-  _wallMiningBarsContainer: {fileID: 1486129156}
   _wallsListData: {fileID: 11400000, guid: 69b05b6e8b8de1346804b5160c377cba, type: 2}
   _spawnedWallOresRoot: {fileID: 1087975137}
-  _miningBarPrefab: {fileID: 169936977825393500, guid: 2192519b60bece042b027bd588a9ef33, type: 3}
-  _maxInactiveMiningBars: 24
   _feedbackPopupEmitter: {fileID: 1541602683}
   _higherToolRequiredMessage: Higher tool is required
   _enableChunkUnloading: 1
@@ -18238,6 +18235,14 @@ PrefabInstance:
       propertyPath: _placementParent
       value: 
       objectReference: {fileID: 325433512}
+    - target: {fileID: 9105410004459439549, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _barsContainer
+      value: 
+      objectReference: {fileID: 1486129156}
+    - target: {fileID: 9105410004459439549, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _miningBarPrefab
+      value: 
+      objectReference: {fileID: 169936977825393500, guid: 2192519b60bece042b027bd588a9ef33, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

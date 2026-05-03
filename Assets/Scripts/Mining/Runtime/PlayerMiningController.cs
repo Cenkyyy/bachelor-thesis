@@ -10,6 +10,7 @@ public sealed class PlayerMiningController : MonoBehaviour
     [SerializeField] private WorldItemSpawner _itemDropSpawner;
     [SerializeField] private Camera _camera;
     [SerializeField] private WallChunkGenerator _wallChunkGenerator;
+    [SerializeField] private MiningProgressBarController _miningProgressBarController;
 
     [Header("Mining Input")]
     [SerializeField] private GameplayInputBindingsData _inputBindings;
@@ -70,6 +71,7 @@ public sealed class PlayerMiningController : MonoBehaviour
         bool targetChanged = _currentTarget == null || !_currentTarget.IsSameTarget(target);
         if (_currentTarget != null && targetChanged)
         {
+            _miningProgressBarController?.HandleMiningStopped(_currentTarget);
             _currentTarget.NotifyMiningStopped();
             _miningTickAccumulator = 0f;
         }
@@ -81,8 +83,13 @@ public sealed class PlayerMiningController : MonoBehaviour
         _currentTarget = target;
         _currentToolSlot = toolState.SlotIndex;
 
-        if (targetChanged || toolChanged)
+        if (targetChanged || toolChanged) 
+        {
             _currentTarget.NotifyMiningStarted();
+            _miningProgressBarController?.ShowProgress(_currentTarget);
+        }
+
+        _miningProgressBarController?.ShowProgress(_currentTarget);
 
         _miningTickAccumulator += Time.deltaTime;
 
@@ -91,6 +98,13 @@ public sealed class PlayerMiningController : MonoBehaviour
         {
             _miningTickAccumulator -= tickInterval;
             target.ApplyMiningDamage(toolState.Power * tickInterval, _player, _itemDropSpawner);
+            _miningProgressBarController?.ShowProgress(target);
+            if (target.IsDepleted)
+            {
+                _miningProgressBarController?.HandleMiningStopped(target);
+                ResetMining();
+                return;
+            }
 
             if (toolState.ConsumesDurability && _toolDurability != null)
             {
@@ -106,6 +120,7 @@ public sealed class PlayerMiningController : MonoBehaviour
 
     private void ResetMining()
     {
+        _miningProgressBarController?.HandleMiningStopped(_currentTarget);
         _currentTarget?.NotifyMiningStopped();
         _currentTarget = null;
         _currentToolSlot = -1;

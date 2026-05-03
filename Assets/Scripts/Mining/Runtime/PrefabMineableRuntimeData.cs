@@ -20,6 +20,7 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
     public float MaxDurability => _data != null ? Mathf.Max(0f, _data.MaxDurability) : 0f;
     public float MiningProgressNormalized => MaxDurability <= 0f ? 0f : Mathf.Clamp01(1f - (_currentDurability / MaxDurability));
     public bool HasDamage => _currentDurability < MaxDurability;
+    public bool IsDepleted { get; private set; }
 
     public event Action<float> OnMiningProgressChanged;
     public event Action OnMiningStopped;
@@ -58,6 +59,7 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
         _currentDurability = MaxDurability;
         _isBeingMined = false;
         _replenishTimer = 0f;
+        IsDepleted = false;
     }
 
     public bool CanBeMinedWith(MiningToolState tool)
@@ -150,6 +152,7 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
 
         OnDepleted?.Invoke(this);
         OnMiningStopped?.Invoke();
+        IsDepleted = true;
         Destroy(gameObject);
     }
 
