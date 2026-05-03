@@ -46,11 +46,12 @@ public sealed class BedrollInteractable : InteractableBase
         if (!CanInteract())
             return;
 
-        UpdatePlayerSpawnPoint();
+        var hasEnemiesNearby = HasEnemiesNearby();
+        UpdatePlayerSpawnPoint(hasEnemiesNearby);
 
-        if (!CanOpenWordShop())
+        if (!CanOpenWordShop(hasEnemiesNearby))
         {
-            if (HasEnemiesNearby())
+            if (hasEnemiesNearby)
                 _feedbackPopup.ShowMessage(_cannotSleepMessage);
 
             return;
@@ -71,9 +72,9 @@ public sealed class BedrollInteractable : InteractableBase
             _playerInRange = null;
     }
 
-    private void UpdatePlayerSpawnPoint()
+    private void UpdatePlayerSpawnPoint(bool hasEnemiesNearby)
     {
-        if (_playerInRange == null)
+        if (_playerInRange == null || hasEnemiesNearby)
             return;
 
         var spawnPosition = SpawnPointPlacementUtility.ResolveNearestFreePosition(transform.position, _spawnObstacleMask, _spawnProbeRadius, _spawnSearchRadius);
@@ -81,11 +82,11 @@ public sealed class BedrollInteractable : InteractableBase
         _feedbackPopup.ShowMessage(_spawnPointSetMessage);
     }
 
-    private bool CanOpenWordShop()
+    private bool CanOpenWordShop(bool hasEnemiesNearby)
     {
         if (_requireNight && !_allowDaytimeTesting && (DayNightSystem.Instance == null || !DayNightSystem.Instance.IsNight))
             return false;
-        if (HasEnemiesNearby())
+        if (hasEnemiesNearby)
             return false;
 
         return true;
