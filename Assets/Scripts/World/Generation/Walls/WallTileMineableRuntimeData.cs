@@ -1,27 +1,48 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public sealed class WallTileMineableRuntimeData : IMineableTarget
 {
     public WallData WallData { get; }
     public Vector2Int Tile { get; }
-    public Vector3 WorldPosition => _owner != null ? _owner.GetTileCenterWorld(Tile) : Vector3.zero;
+    public Vector3 WorldPosition => _worldPositionProvider != null ? _worldPositionProvider(Tile) : Vector3.zero;
 
     public float CurrentDurability { get; private set; }
     public float MaxDurability => WallData != null && WallData.MineableData != null ? Mathf.Max(0f, WallData.MineableData.MaxDurability) : 0f;
     public float MiningProgressNormalized => MaxDurability <= 0f ? 0f : Mathf.Clamp01(1f - (CurrentDurability / MaxDurability));
-    public bool HasDamage => CurrentDurability < MaxDurability;
     public bool IsDepleted { get; private set; }
     public bool IsAwaitingReplenishTick => !_isBeingMined && HasDamage && _replenishTimer > 0f;
+    public bool HasDamage
+    {
+        get
+        {
+            RefreshReplenishState();
+            return CurrentDurability < MaxDurability;
+        }
+    }
+
 
     private bool _isBeingMined;
     private float _replenishTimer;
-    private readonly WallChunkGenerator _owner;
+    private readonly Func<Vector2Int, Vector3> _worldPositionProvider;
+    private readonly Action<WallTileMineableRuntimeData, Player, WorldItemSpawner> _depletedHandler;
+    private readonly WorldTextPopupEmitter _feedbackPopupEmitter;
+    private readonly string _higherToolRequiredMessage;
 
-    public WallTileMineableRuntimeData(WallChunkGenerator owner, Vector2Int tile, WallData wallData)
+    public WallTileMineableRuntimeData(
+        Vector2Int tile,
+        WallData wallData,
+        Func<Vector2Int, Vector3> worldPositionProvider,
+        Action<WallTileMineableRuntimeData, Player, WorldItemSpawner> depletedHandler,
+        WorldTextPopupEmitter feedbackPopupEmitter,
+        string higherToolRequiredMessage)
     {
-        _owner = owner;
         Tile = tile;
         WallData = wallData;
+        _worldPositionProvider = worldPositionProvider;
+        _depletedHandler = depletedHandler;
+        _feedbackPopupEmitter = feedbackPopupEmitter;
+        _higherToolRequiredMessage = higherToolRequiredMessage;
         CurrentDurability = MaxDurability;
     }
 
@@ -63,7 +84,15 @@ public sealed class WallTileMineableRuntimeData : IMineableTarget
 
     public void NotifyMiningStopped()
     {
-        _owner?.NotifyMiningStopped(Tile);
+        RefreshReplenishState();
+
+        if (!HasDamage)
+        {
+            StopMiningAndScheduleReplenish();
+            return;
+        }
+
+        StopMiningAndScheduleReplenish();
     }
 
     public bool StopMiningAndScheduleReplenish() 
@@ -85,12 +114,29 @@ public sealed class WallTileMineableRuntimeData : IMineableTarget
 
     public void ShowHigherToolRequiredFeedback()
     {
-        _owner?.ShowHigherToolRequiredFeedback(Tile);
+        RefreshReplenishState();
+
+        if (!HasDamage)
+        {
+            StopMiningAndScheduleReplenish();
+            return;
+        }
+
+        StopMiningAndScheduleReplenish();
     }
 
     public void ApplyMiningDamage(float basePower, Player miner, WorldItemSpawner dropSpawner)
     {
-        _owner?.ApplyMiningDamage(Tile, basePower, miner, dropSpawner);
+        if (IsDepleted)
+            return;
+
+        RefreshReplenishState();
+        bool depleted = ApplyDamage(basePower);
+        if (!depleted)
+            return;
+
+        MarkDepleted();
+        _depletedHandler?.Invoke(this, miner, dropSpawner);
     }
 
     public void MarkDepleted()
@@ -104,20 +150,19 @@ public sealed class WallTileMineableRuntimeData : IMineableTarget
         if (tileTarget == null)
             return false;
 
-        return tileTarget._owner == _owner && tileTarget.Tile == Tile;
+        return tileTarget.Tile == Tile;
     }
 
-    public bool TickReplenish(float deltaTime)
+    private void RefreshReplenishState()
     {
-        if (_isBeingMined || !HasDamage || _replenishTimer <= 0f)
-            return false;
+        if (_isBeingMined || _replenishTimer <= 0f || CurrentDurability >= MaxDurability)
+            return;
 
-        _replenishTimer -= deltaTime;
+        _replenishTimer = Mathf.Max(0f, _replenishTimer - Time.deltaTime);
         if (_replenishTimer > 0f)
-            return false;
+            return;
 
         ResetDurability();
-        return true;
     }
 
     private void ResetDurability()
