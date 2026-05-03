@@ -249,12 +249,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5539167635963541343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50e1353a0848f9647b90e3fed2e3fe95, type: 3}
+  m_Script: {fileID: 11500000, guid: 4007afd87c840704781b1633888ac5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data: {fileID: 0}
   _backgroundRenderer: {fileID: 3520159342279998964}
   _fillRenderer: {fileID: 4882645137709880324}
   _fillTransform: {fileID: 685022714761616140}
   _minFillScale: 0.02
-  _hideWhenIdle: 1

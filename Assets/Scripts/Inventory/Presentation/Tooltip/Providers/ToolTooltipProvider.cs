@@ -2,11 +2,11 @@
 
 public sealed class ToolTooltipProvider : IItemTooltipProvider
 {
-    private readonly PlayerToolDurability _playerToolDurability;
+    private readonly PlayerToolDurabilityRuntimeState _playerToolDurability;
 
     public int Order => 40;
 
-    public ToolTooltipProvider(PlayerToolDurability playerToolDurability)
+    public ToolTooltipProvider(PlayerToolDurabilityRuntimeState playerToolDurability)
     {
         _playerToolDurability = playerToolDurability;
     }

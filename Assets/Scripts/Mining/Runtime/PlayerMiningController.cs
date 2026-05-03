@@ -1,12 +1,15 @@
 using UnityEngine;
 
+/// <summary>
+/// Controls player mining interactions, including target selection, mining progress, and tool usage within the game world.
+/// </summary>
 public sealed class PlayerMiningController : MonoBehaviour
 {
     private const float HandMiningPower = 1f;
 
-    [Header("Refs")]
+    [Header("Component References")]
     [SerializeField] private Player _player;
-    [SerializeField] private PlayerToolDurability _toolDurability;
+    [SerializeField] private PlayerToolDurabilityRuntimeState _toolDurability;
     [SerializeField] private WorldItemSpawner _itemDropSpawner;
     [SerializeField] private Camera _camera;
     [SerializeField] private WallChunkGenerator _wallChunkGenerator;
@@ -26,7 +29,7 @@ public sealed class PlayerMiningController : MonoBehaviour
     private void Awake()
     {
         _targetStrategies[0] = new PrefabMiningTargetStrategy(_mineableMask);
-        _targetStrategies[1] = new TileMiningTargetStrategy(_wallChunkGenerator);
+        _targetStrategies[1] = new WallTileMiningTargetStrategy(_wallChunkGenerator);
     }
 
     private void Update()
@@ -46,28 +49,43 @@ public sealed class PlayerMiningController : MonoBehaviour
             return;
         }
 
-        if (!TryResolveTarget(out var target))
+        if (!TryGetMiningContext(out var target, out var toolState))
+            return;
+
+        BeginOrContinueMining(target, toolState);
+        ProcessMiningTicks(target, toolState);
+    }
+
+    private bool TryGetMiningContext(out IMineableTarget target, out MiningToolState toolState)
+    {
+        target = null;
+        toolState = default;
+
+        if (!TryResolveTarget(out target))
         {
             ResetMining();
-            return;
+            return false;
         }
 
-        if (!TryResolveTool(target, out var toolState))
+        if (!TryResolveTool(target, out toolState))
         {
             if (ShouldShowToolRequirementFeedback(target))
                 target.ShowHigherToolRequiredFeedback();
 
             ResetMining();
-            return;
+            return false;
         }
 
-        if (!target.CanBeMinedWith(toolState))
-        {
-            target.ShowHigherToolRequiredFeedback();
-            ResetMining();
-            return;
-        }
+        if (target.CanBeMinedWith(toolState))
+            return true;
 
+        target.ShowHigherToolRequiredFeedback();
+        ResetMining();
+        return false;
+    }
+
+    private void BeginOrContinueMining(IMineableTarget target, MiningToolState toolState)
+    {
         bool targetChanged = _currentTarget == null || !_currentTarget.IsSameTarget(target);
         if (_currentTarget != null && targetChanged)
         {
@@ -76,29 +94,29 @@ public sealed class PlayerMiningController : MonoBehaviour
             _miningTickAccumulator = 0f;
         }
 
-        bool toolChanged = _currentToolSlot != toolState.SlotIndex;
+        var toolChanged = _currentToolSlot != toolState.SlotIndex;
         if (toolChanged)
             _miningTickAccumulator = 0f;
 
         _currentTarget = target;
         _currentToolSlot = toolState.SlotIndex;
 
-        if (targetChanged || toolChanged) 
-        {
+        if (targetChanged || toolChanged)
             _currentTarget.NotifyMiningStarted();
-            _miningProgressBarController?.ShowProgress(_currentTarget);
-        }
 
         _miningProgressBarController?.ShowProgress(_currentTarget);
 
         _miningTickAccumulator += Time.deltaTime;
+    }
 
-        var tickInterval = Mathf.Max(0.1f, _miningTickIntervalSeconds);
-        while (_miningTickAccumulator >= tickInterval)
+    private void ProcessMiningTicks(IMineableTarget target, MiningToolState toolState)
+    {
+        while (_miningTickAccumulator >= _miningTickIntervalSeconds)
         {
-            _miningTickAccumulator -= tickInterval;
-            target.ApplyMiningDamage(toolState.Power * tickInterval, _player, _itemDropSpawner);
+            _miningTickAccumulator -= _miningTickIntervalSeconds;
+            target.ApplyMiningDamage(toolState.Power * _miningTickIntervalSeconds, _player, _itemDropSpawner);
             _miningProgressBarController?.ShowProgress(target);
+
             if (target.IsDepleted)
             {
                 _miningProgressBarController?.HandleMiningStopped(target);
@@ -106,15 +124,15 @@ public sealed class PlayerMiningController : MonoBehaviour
                 return;
             }
 
-            if (toolState.ConsumesDurability && _toolDurability != null)
-            {
-                _toolDurability.TryConsumeDurability(toolState.SlotIndex, toolState.DurabilityLossPerSecond * tickInterval, out _, out var broke);
-                if (broke)
-                {
-                    ResetMining();
-                    return;
-                }
-            }
+            if (!toolState.ConsumesDurability || _toolDurability == null)
+                return;
+
+            _toolDurability.TryConsumeDurability(toolState.SlotIndex, toolState.DurabilityLossPerSecond * _miningTickIntervalSeconds, out _, out var broke);
+            if (!broke)
+                continue;
+
+            ResetMining();
+            return;
         }
     }
 

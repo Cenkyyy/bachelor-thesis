@@ -18,7 +18,7 @@ public sealed class CraftingRecipeDetailsView : MonoBehaviour
     [SerializeField] private Button _craftButton;
 
     [Header("Runtime Dependencies")]
-    [SerializeField] private PlayerToolDurability _playerToolDurability;
+    [SerializeField] private PlayerToolDurabilityRuntimeState _playerToolDurability;
 
     private readonly List<CraftingIngredientRow> _rows = new();
     private readonly List<IItemTooltipProvider> _tooltipProviders = new();
@@ -28,7 +28,7 @@ public sealed class CraftingRecipeDetailsView : MonoBehaviour
     private void Awake()
     {
         if (_playerToolDurability == null)
-            _playerToolDurability = FindFirstObjectByType<PlayerToolDurability>();
+            _playerToolDurability = FindFirstObjectByType<PlayerToolDurabilityRuntimeState>();
 
         _tooltipProviders.Clear();
         _tooltipProviders.AddRange(ItemTooltipProviderFactory.CreateDefault(_playerToolDurability));

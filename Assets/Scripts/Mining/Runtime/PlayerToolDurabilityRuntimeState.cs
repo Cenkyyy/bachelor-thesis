@@ -2,24 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class PlayerToolDurability : MonoBehaviour
+/// <summary>
+/// Manages the runtime durability state of tools equipped by the player, tracking current and maximum durability for
+/// each inventory slot and handling durability consumption and breakage.
+/// </summary>
+public sealed class PlayerToolDurabilityRuntimeState : MonoBehaviour
 {
-    [Header("Refs")]
+    [Header("Dependencies")]
     [SerializeField] private Player _player;
 
-    private readonly Dictionary<int, ToolDurabilityState> _durabilityBySlot = new Dictionary<int, ToolDurabilityState>();
+    private readonly Dictionary<int, ToolDurabilityState> _durabilityBySlot = new();
 
     private struct ToolDurabilityState
     {
-        public ItemData ToolDefinition;
+        public ItemData ToolData;
         public float Current;
         public float Max;
-    }
-
-    private void Awake()
-    {
-        if (_player == null)
-            _player = GetComponent<Player>() ?? GetComponentInParent<Player>();
     }
 
     private void Start()
@@ -56,9 +54,9 @@ public sealed class PlayerToolDurability : MonoBehaviour
 
         RefreshSlot(slotIndex);
 
-        if (_durabilityBySlot.TryGetValue(slotIndex, out var state) && state.ToolDefinition != null)
+        if (_durabilityBySlot.TryGetValue(slotIndex, out var state) && state.ToolData != null)
         {
-            toolDefinition = state.ToolDefinition;
+            toolDefinition = state.ToolData;
             current = state.Current;
             max = state.Max;
             return true;
@@ -119,7 +117,7 @@ public sealed class PlayerToolDurability : MonoBehaviour
         var item = _player.Inventory.GetItemAt(index);
         if (item.Item is IMiningTool miningTool && item.Item != null)
         {
-            if (_durabilityBySlot.TryGetValue(index, out var state) && state.ToolDefinition == item.Item)
+            if (_durabilityBySlot.TryGetValue(index, out var state) && state.ToolData == item.Item)
             {
                 if (!Mathf.Approximately(state.Max, miningTool.MaxDurability))
                 {
@@ -132,7 +130,7 @@ public sealed class PlayerToolDurability : MonoBehaviour
             {
                 _durabilityBySlot[index] = new ToolDurabilityState
                 {
-                    ToolDefinition = item.Item,
+                    ToolData = item.Item,
                     Max = miningTool.MaxDurability,
                     Current = miningTool.MaxDurability
                 };

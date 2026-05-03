@@ -1,14 +1,17 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Runtime mineable target implementation for prefab-based nodes.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
 {
-    [Header("Definition")]
+    [Header("Mineable Definition")]
     [SerializeField] private MineableNodeData _data;
     [SerializeField] private Transform _dropAnchor;
 
-    [Header("Feedback")]
+    [Header("Feedback Settings")]
     [SerializeField] private WorldTextPopupEmitter _feedbackPopup;
     [SerializeField] private string _higherToolRequiredMessage = "Higher tool is required";
 
@@ -17,9 +20,8 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
     private float _replenishTimer;
 
     public Vector3 WorldPosition => transform.position;
-    public float MaxDurability => _data != null ? Mathf.Max(0f, _data.MaxDurability) : 0f;
-    public float MiningProgressNormalized => MaxDurability <= 0f ? 0f : Mathf.Clamp01(1f - (_currentDurability / MaxDurability));
-    public bool HasDamage => _currentDurability < MaxDurability;
+    public float MiningProgressNormalized => Mathf.Clamp01(1f - (_currentDurability / _data.MaxDurability));
+    public bool HasDamage => _currentDurability < _data.MaxDurability;
     public bool IsDepleted { get; private set; }
 
     public event Action<float> OnMiningProgressChanged;
@@ -29,20 +31,11 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
     private void Awake()
     {
         ResetRuntimeState();
-
-        if (_feedbackPopup == null)
-            _feedbackPopup = GetComponent<WorldTextPopupEmitter>();
-
-        if (_feedbackPopup == null)
-            _feedbackPopup = gameObject.AddComponent<WorldTextPopupEmitter>();
     }
 
     private void Update()
     {
         if (_isBeingMined || !HasDamage || _replenishTimer <= 0f)
-            return;
-
-        if (_replenishTimer <= 0f)
             return;
 
         _replenishTimer -= Time.deltaTime;
@@ -56,7 +49,7 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
 
     public void ResetRuntimeState()
     {
-        _currentDurability = MaxDurability;
+        _currentDurability = _data.MaxDurability;
         _isBeingMined = false;
         _replenishTimer = 0f;
         IsDepleted = false;
@@ -64,9 +57,6 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
 
     public bool CanBeMinedWith(MiningToolState tool)
     {
-        if (_data == null)
-            return false;
-
         if (tool.IsHand)
             return _data.AllowHandMining;
 
@@ -76,10 +66,7 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
         return tool.Tier >= _data.MinimumTier;
     }
 
-    public void ShowHigherToolRequiredFeedback()
-    {
-        _feedbackPopup.ShowMessage(_higherToolRequiredMessage);
-    }
+    public void ShowHigherToolRequiredFeedback() => _feedbackPopup.ShowMessage(_higherToolRequiredMessage);
 
     public void NotifyMiningStarted()
     {
@@ -92,12 +79,11 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
     {
         NotifyMiningStarted();
 
-        var powerMultiplier = _data != null ? Mathf.Max(0f, _data.ToolPowerMultiplier) : 0f;
-        var power = Mathf.Max(0f, basePower * powerMultiplier);
-        if (power <= 0f)
+        var finalPower = basePower * _data.ToolPowerMultiplier;
+        if (finalPower <= 0f)
             return;
 
-        _currentDurability = Mathf.Max(0f, _currentDurability - power);
+        _currentDurability = Mathf.Max(0f, _currentDurability - finalPower);
         RaiseProgressChanged();
 
         if (_currentDurability > 0f)
@@ -108,7 +94,6 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
 
     public void NotifyMiningStopped()
     {
-        bool wasBeingMined = _isBeingMined;
         _isBeingMined = false;
         if (!HasDamage)
         {
@@ -116,8 +101,7 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
             return;
         }
 
-        var replenishDuration = _data != null ? Mathf.Max(0f, _data.ReplenishDurationSeconds) : 0f;
-        if (replenishDuration <= 0f)
+        if (_data.ReplenishDurationSeconds <= 0f)
         {
             ResetDurability();
             RaiseProgressChanged();
@@ -125,7 +109,7 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
             return;
         }
 
-        _replenishTimer = replenishDuration;
+        _replenishTimer = _data.ReplenishDurationSeconds;
         OnMiningStopped?.Invoke();
     }
 
@@ -138,16 +122,14 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
         return prefabTarget == this;
     }
 
-    private void RaiseProgressChanged()
-    {
-        OnMiningProgressChanged?.Invoke(MiningProgressNormalized);
-    }
+    private void RaiseProgressChanged() => OnMiningProgressChanged?.Invoke(MiningProgressNormalized);
 
     private void HandleBreak(Player player, WorldItemSpawner dropSpawner)
     {
-        if (player != null && _data != null && _data.GrantsMemoryXP)
+        if (player != null && _data.GrantsMemoryXP)
             player.Data.GainMemoryXP(_data.MemoryXpAmount);
-        else if (player != null && _data != null)
+
+        else if (player != null)
             TryDropLoot(player, dropSpawner);
 
         OnDepleted?.Invoke(this);
@@ -164,7 +146,7 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
 
     private void ResetDurability()
     {
-        _currentDurability = MaxDurability;
+        _currentDurability = _data.MaxDurability;
         _replenishTimer = 0f;
     }
 }

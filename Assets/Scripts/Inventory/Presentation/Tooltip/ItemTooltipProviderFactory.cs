@@ -2,7 +2,7 @@
 
 public static class ItemTooltipProviderFactory
 {
-    public static List<IItemTooltipProvider> CreateDefault(PlayerToolDurability playerToolDurability)
+    public static List<IItemTooltipProvider> CreateDefault(PlayerToolDurabilityRuntimeState playerToolDurability)
     {
         var providers = new List<IItemTooltipProvider>
         {

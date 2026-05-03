@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Coordinates and manages mining progress bar views for active mineable targets.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class MiningProgressBarController : MonoBehaviour
 {
     private sealed class MiningBarRuntimeHandle
     {
-        public MiningProgressBar MiningProgressBar;
+        public MiningProgressBarView MiningProgressBar;
         public bool IsOwnedInstance;
     }
 
-    [Header("Refs")]
-    [SerializeField] private MiningProgressBar _miningBarPrefab;
+    [Header("View References")]
+    [SerializeField] private MiningProgressBarView _miningBarPrefab;
     [SerializeField] private Transform _barsContainer;
 
     private readonly Dictionary<IMineableTarget, MiningBarRuntimeHandle> _barsByTarget = new();
@@ -83,7 +86,7 @@ public sealed class MiningProgressBarController : MonoBehaviour
         _targetsToRemoveBuffer.Clear();
     }
 
-    private MiningProgressBar EnsureBar(IMineableTarget target)
+    private MiningProgressBarView EnsureBar(IMineableTarget target)
     {
         if (_barsByTarget.TryGetValue(target, out var existingHandle) && existingHandle?.MiningProgressBar != null)
             return existingHandle.MiningProgressBar;
@@ -112,22 +115,22 @@ public sealed class MiningProgressBarController : MonoBehaviour
         return bar;
     }
 
-    private bool TryFindChildBar(IMineableTarget target, out MiningProgressBar miningProgressBar)
+    private bool TryFindChildBar(IMineableTarget target, out MiningProgressBarView miningProgressBar)
     {
         miningProgressBar = null;
 
         if (target is not Component targetComponent)
             return false;
 
-        miningProgressBar = targetComponent.GetComponent<MiningProgressBar>();
+        miningProgressBar = targetComponent.GetComponent<MiningProgressBarView>();
         if (miningProgressBar != null)
             return true;
 
-        miningProgressBar = targetComponent.GetComponentInChildren<MiningProgressBar>(true);
+        miningProgressBar = targetComponent.GetComponentInChildren<MiningProgressBarView>(true);
         if (miningProgressBar != null)
             return true;
 
-        miningProgressBar = targetComponent.GetComponentInParent<MiningProgressBar>(true);
+        miningProgressBar = targetComponent.GetComponentInParent<MiningProgressBarView>(true);
         return miningProgressBar != null;
     }
 

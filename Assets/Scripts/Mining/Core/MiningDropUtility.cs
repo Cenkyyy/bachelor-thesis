@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Provides utility method for resolving and handling mining drop entries, like adding items to a player's
+/// inventory and spawning leftover items in the world as needed.
+/// </summary>
 public static class MiningDropUtility
 {
     public static void ResolveDrops(IReadOnlyList<MiningDropEntry> drops, Player player, WorldItemSpawner dropSpawner, Vector3 dropPosition)

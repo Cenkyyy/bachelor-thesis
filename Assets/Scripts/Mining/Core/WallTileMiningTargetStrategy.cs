@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public sealed class TileMiningTargetStrategy : IMiningTargetStrategy
+public sealed class WallTileMiningTargetStrategy : IMiningTargetStrategy
 {
     private readonly WallChunkGenerator _wallChunkGenerator;
 
-    public TileMiningTargetStrategy(WallChunkGenerator wallChunkGenerator)
+    public WallTileMiningTargetStrategy(WallChunkGenerator wallChunkGenerator)
     {
         _wallChunkGenerator = wallChunkGenerator;
     }

@@ -20,7 +20,7 @@ public sealed class ItemTooltipController : MonoBehaviour
     [SerializeField, Range(0.1f, 3f)] private float _hoverDelaySeconds = 0.75f;
 
     [Header("Runtime Dependencies")]
-    [SerializeField] private PlayerToolDurability _playerToolDurability;
+    [SerializeField] private PlayerToolDurabilityRuntimeState _playerToolDurability;
 
     private readonly List<IItemTooltipProvider> _providers = new List<IItemTooltipProvider>();
 
