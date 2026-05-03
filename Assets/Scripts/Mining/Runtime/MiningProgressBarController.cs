@@ -29,7 +29,7 @@ public sealed class MiningProgressBarController : MonoBehaviour
         foreach (var pair in _barsByTarget)
         {
             var target = pair.Key;
-            if (target == null || target.IsDepleted || !target.HasDamage)
+            if (target == null || target.IsDepleted || (!target.IsBeingMined && !target.HasDamage))
                 _targetsToRemoveBuffer.Add(target);
         }
 

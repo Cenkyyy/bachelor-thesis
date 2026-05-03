@@ -15,18 +15,19 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
     [SerializeField] private WorldTextPopupEmitter _feedbackPopup;
     [SerializeField] private string _higherToolRequiredMessage = "Higher tool is required";
 
-    private float _currentDurability;
-    private bool _isBeingMined;
-    private float _replenishTimer;
-
     public Vector3 WorldPosition => transform.position;
     public float MiningProgressNormalized => Mathf.Clamp01(1f - (_currentDurability / _data.MaxDurability));
     public bool HasDamage => _currentDurability < _data.MaxDurability;
     public bool IsDepleted { get; private set; }
+    public bool IsBeingMined => _isBeingMined;
 
     public event Action<float> OnMiningProgressChanged;
     public event Action OnMiningStopped;
     public event Action<PrefabMineableRuntimeData> OnDepleted;
+
+    private float _currentDurability;
+    private bool _isBeingMined;
+    private float _replenishTimer;
 
     private void Awake()
     {
