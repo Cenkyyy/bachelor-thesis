@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1364325f81d7b9447adafb4c3e82c7f8, type: 3}
+  m_Name: BarrageFormWord
+  m_EditorClassIdentifier: 
+  <DisplayName>k__BackingField: Barrage
+  <MemoryCost>k__BackingField: 0
+  <Form>k__BackingField: 3
+  <ManaCost>k__BackingField: 0
+  <ProjectilePrefab>k__BackingField: {fileID: 6381046162596957270, guid: 8f0c0c4ac4b1a19459ee11396bd388a6, type: 3}

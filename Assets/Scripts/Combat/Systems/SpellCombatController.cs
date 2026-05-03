@@ -18,6 +18,9 @@ public class SpellCombatController : MonoBehaviour
     [Header("Targeting")]
     [SerializeField] private LayerMask _targetMask;
 
+    [Header("Word Definitions")]
+    [SerializeField] private CombatWordsData _combatWordsData;
+
     [Header("Word Effectiveness")]
     [SerializeField] private SpellWordEffectivenessData _wordEffectivenessData;
     [SerializeField] private DamageWordTextPopupSettings _damageWordTextPopupSettings = new();
@@ -100,10 +103,10 @@ public class SpellCombatController : MonoBehaviour
         var formSettings = _settings.GetFormSettings(phrase.Form.Value);
         var modifierSettings = _settings.GetModifierSettings(phrase.Modifier.Value);
 
-        var manaCost = formSettings.ManaCost + modifierSettings.AdditionalManaCost;
+        var manaCost = GetManaCost(phrase.Form.Value) + GetAdditionalManaCost(phrase.Modifier.Value);
         var cooldown = formSettings.CooldownSeconds + modifierSettings.AdditionalCooldownSeconds;
 
-        if (_player == null || _player.Data == null)
+        if (_player == null || _player.Data == null || _combatWordsData == null)
             return;
 
         if (_player.Data.CurrentMana < manaCost)
@@ -123,6 +126,24 @@ public class SpellCombatController : MonoBehaviour
             GetDamageAfterItemBonuses(formSettings.BaseDamage),
             _settings.MaxReclaimsPerCast);
         StartCoroutine(ExecuteCast(castState));
+    }
+
+    private int GetManaCost(FormWord form)
+    {
+        var formData = _combatWordsData.GetForm(form);
+        if (formData != null)
+            return Mathf.Max(0, formData.ManaCost);
+
+        return Mathf.Max(0, _settings.GetFormSettings(form).ManaCost);
+    }
+
+    private int GetAdditionalManaCost(ModifierWord modifier)
+    {
+        var modifierData = _combatWordsData.GetModifier(modifier);
+        if (modifierData != null)
+            return Mathf.Max(0, modifierData.AdditionalManaCost);
+
+        return Mathf.Max(0, _settings.GetModifierSettings(modifier).AdditionalManaCost);
     }
 
     private float GetDamageAfterItemBonuses(float baseDamage)

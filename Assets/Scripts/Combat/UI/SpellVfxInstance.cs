@@ -7,18 +7,17 @@ public class SpellVfxInstance : MonoBehaviour
     private float _lifetime;
     private float _elapsed;
 
-    public void Initialize(Vector2 direction, float speed, float lifetime, Color tint, Vector3 scale)
+    public void Initialize(Vector2 direction, float speed, float lifetime, Material elementMaterial)
     {
         _direction = direction.normalized;
         _speed = Mathf.Max(0f, speed);
         _lifetime = Mathf.Max(0.01f, lifetime);
 
-        transform.localScale = scale;
         transform.right = _direction;
 
-        var renderer = GetComponentInChildren<SpriteRenderer>();
-        if (renderer != null)
-            renderer.color = tint;
+        var renderer = GetComponent<SpriteRenderer>();
+        if (renderer != null && elementMaterial != null)
+            renderer.material = elementMaterial;
     }
 
     private void Update()

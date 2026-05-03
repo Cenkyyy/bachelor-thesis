@@ -14,9 +14,9 @@ public sealed class WordShopWordEntry
     {
         return _category switch
         {
-            WordCategory.Modifier => CombatWordDefinitions.GetLabel((ModifierWord)_wordValue),
-            WordCategory.Element => CombatWordDefinitions.GetLabel((ElementWord)_wordValue),
-            WordCategory.Form => CombatWordDefinitions.GetLabel((FormWord)_wordValue),
+            WordCategory.Modifier => ((ModifierWord)_wordValue).ToString(),
+            WordCategory.Element => ((ElementWord)_wordValue).ToString(),
+            WordCategory.Form => ((FormWord)_wordValue).ToString(),
             _ => string.Empty
         };
     }

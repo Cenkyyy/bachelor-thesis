@@ -94,9 +94,9 @@ public sealed class StarterWordSelectionController : MonoBehaviour
 
         ApplyBackground(backgroundSprite, backgroundColor);
 
-        _modifierPanel.BuildButtonOptions("modifier", data.ModifierRule.RequiredCount, data.ModifierRule.FixedWords, data.ModifierRule.ChoiceWords, CombatWordDefinitions.GetLabel);
-        _elementPanel.BuildButtonOptions("element", data.ElementRule.RequiredCount, data.ElementRule.FixedWords, data.ElementRule.ChoiceWords, CombatWordDefinitions.GetLabel);
-        _formPanel.BuildButtonOptions("form", data.FormRule.RequiredCount, data.FormRule.FixedWords, data.FormRule.ChoiceWords, CombatWordDefinitions.GetLabel);
+        _modifierPanel.BuildButtonOptions("modifier", data.ModifierRule.RequiredCount, data.ModifierRule.FixedWords, data.ModifierRule.ChoiceWords, word => word.ToString());
+        _elementPanel.BuildButtonOptions("element", data.ElementRule.RequiredCount, data.ElementRule.FixedWords, data.ElementRule.ChoiceWords, word => word.ToString());
+        _formPanel.BuildButtonOptions("form", data.FormRule.RequiredCount, data.FormRule.FixedWords, data.FormRule.ChoiceWords, word => word.ToString());
 
         RefreshContinueInteractable();
         SetVisible(true);

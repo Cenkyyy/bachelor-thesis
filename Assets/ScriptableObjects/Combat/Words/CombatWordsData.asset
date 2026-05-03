@@ -12,6 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be9fccb53a939a45baf5d0a550c96d8, type: 3}
   m_Name: CombatWordsData
   m_EditorClassIdentifier: 
-  _allModifiers: 0000000001000000020000000300000004000000
-  _allElements: 0000000001000000020000000300000004000000
-  _allForms: 00000000010000000200000003000000
+  _allModifiers:
+  - {fileID: 11400000, guid: c82436ca7a6439040bf897435f02338d, type: 2}
+  - {fileID: 11400000, guid: 2a89775dddf0ed14b9eb62f398212827, type: 2}
+  - {fileID: 11400000, guid: 4c5c812d39f5a354e8de87cdde29e55b, type: 2}
+  - {fileID: 11400000, guid: 784a2a4f45615fe4bab83f21e32a7b55, type: 2}
+  - {fileID: 11400000, guid: 3f529838fa12a1c4db699b80f7ac4be5, type: 2}
+  _allElements:
+  - {fileID: 11400000, guid: 307dc4ac8933c1f4dab673f7eb51d9e0, type: 2}
+  - {fileID: 11400000, guid: 6b104e1148df4674cb19f8e8394e2402, type: 2}
+  - {fileID: 11400000, guid: 1f3898d8107eae045a0a66db6c1b9717, type: 2}
+  - {fileID: 11400000, guid: 80e82d5c7a97f4d4ba568611502edf04, type: 2}
+  - {fileID: 11400000, guid: 0107badaf4e2b0b47a8665fc7adf71f4, type: 2}
+  _allForms:
+  - {fileID: 11400000, guid: b5873f3d7a812b74ea13b4a5565e0f17, type: 2}
+  - {fileID: 11400000, guid: a00180b722c639440b1349b614c49343, type: 2}
+  - {fileID: 11400000, guid: 45dca3e19434d584d88100ba3b9c9acd, type: 2}
+  - {fileID: 11400000, guid: 4b4320f675128084596115c7c01ce5dd, type: 2}

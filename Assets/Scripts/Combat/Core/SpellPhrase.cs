@@ -30,9 +30,9 @@ public struct SpellPhrase
 
     public override string ToString()
     {
-        var modifierLabel = Modifier.HasValue ? CombatWordDefinitions.GetLabel(Modifier.Value) : "--";
-        var elementLabel = Element.HasValue ? CombatWordDefinitions.GetLabel(Element.Value) : "--";
-        var formLabel = Form.HasValue ? CombatWordDefinitions.GetLabel(Form.Value) : "--";
+        var modifierLabel = Modifier.HasValue ? Modifier.Value.ToString() : "--";
+        var elementLabel = Element.HasValue ? Element.Value.ToString() : "--";
+        var formLabel = Form.HasValue ? Form.Value.ToString() : "--";
 
         return $"{modifierLabel} - {elementLabel} - {formLabel}";
     }

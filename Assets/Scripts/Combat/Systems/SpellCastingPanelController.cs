@@ -139,9 +139,9 @@ public class SpellCastingPanelController : MonoBehaviour
 
     private void RefreshPanels()
     {
-        _modifierPanel.Bind(_wordInventory.UnlockedModifiers, CombatWordDefinitions.GetLabel);
-        _elementPanel.Bind(_wordInventory.UnlockedElements, CombatWordDefinitions.GetLabel);
-        _formPanel.Bind(_wordInventory.UnlockedForms, CombatWordDefinitions.GetLabel);
+        _modifierPanel.Bind(_wordInventory.UnlockedModifiers, word => word.ToString());
+        _elementPanel.Bind(_wordInventory.UnlockedElements, word => word.ToString());
+        _formPanel.Bind(_wordInventory.UnlockedForms, word => word.ToString());
         RefreshInteractionAvailability();
         ApplyStageVisuals();
     }

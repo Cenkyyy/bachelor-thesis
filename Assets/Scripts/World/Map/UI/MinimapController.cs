@@ -25,8 +25,8 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     [SerializeField, Min(1)] private int _revealRadiusTiles = 8;
     [SerializeField, Min(1)] private int _chunkSizeTiles = 32;
     [SerializeField, Min(1)] private int _maxChunkUpdatesPerFrame = 2;
-    [SerializeField, Min(1)] private int _initializationRowsPerFrame = 32;
-    [SerializeField, Min(0.1f)] private float _maxInitializationMillisecondsPerFrame = 2f;
+    [SerializeField, Min(1)] private int _initializationRowsPerFrame = 128;
+    [SerializeField, Min(0.1f)] private float _maxInitializationMillisecondsPerFrame = 6f;
     [SerializeField] private Color32 _unexploredColor = new(0, 0, 0, 0);
     [SerializeField] private TileColor[] _tileColors;
 
