@@ -27,6 +27,9 @@ public sealed class PlayerConsumableController : MonoBehaviour
         if (_player == null || GameStateManager.IsGamePaused)
             return;
 
+        if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
+            return;
+
         if (!Input.GetKeyDown(_inputBindings.ConsumeKey))
             return;
 
