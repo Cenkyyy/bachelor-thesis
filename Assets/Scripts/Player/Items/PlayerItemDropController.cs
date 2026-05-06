@@ -109,7 +109,7 @@ public sealed class PlayerItemDropController : MonoBehaviour
     /// <summary>
     /// Raycasts UI under the mouse using the assigned GraphicRaycaster and returns the first Slot.
     /// </summary>
-    private Slot RaycastSlotUnderMouse()
+    private InventorySlotView RaycastSlotUnderMouse()
     {
         if (_uiRaycaster == null || EventSystem.current == null)
             return null;
@@ -127,7 +127,7 @@ public sealed class PlayerItemDropController : MonoBehaviour
             if (_raycastResults[i].gameObject == null) 
                 continue;
 
-            var slot = _raycastResults[i].gameObject.GetComponentInParent<Slot>();
+            var slot = _raycastResults[i].gameObject.GetComponentInParent<InventorySlotView>();
             if (slot != null)
                 return slot;
         }

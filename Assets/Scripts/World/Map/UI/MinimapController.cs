@@ -91,7 +91,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
         _enableMaskCoroutine = null;
     }
 
-    public IEnumerator InitializeAsync(WorldRuntimeData worldData)
+    public IEnumerator InitializeCoroutine(WorldRuntimeData worldData)
     {
         WorldData = worldData;
         IsInitialized = false;
@@ -99,7 +99,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
         BuildColorLookup();
         _chunksX = Mathf.CeilToInt(WorldData.Width / (float)_chunkSizeTiles);
         _chunksY = Mathf.CeilToInt(WorldData.Height / (float)_chunkSizeTiles);
-        yield return BuildRuntimeDataAsync();
+        yield return BuildRuntimeDataCoroutine();
         BuildTexture();
 
         _exploration = new ExplorationData(WorldData.Width, WorldData.Height);
@@ -178,7 +178,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
         }
     }
 
-    private IEnumerator BuildRuntimeDataAsync()
+    private IEnumerator BuildRuntimeDataCoroutine()
     {
         int chunkCount = _chunksX * _chunksY;
         _runtimeData = new MapRuntimeData(WorldData.Width, WorldData.Height, chunkCount, _unexploredColor);

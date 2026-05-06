@@ -19,7 +19,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
     [SerializeField] private CraftingRecipeBookData _craftingBook;
 
     [Header("Category Tabs")]
-    [SerializeField] private Button _toolsAndEquipmentTab;
+    [SerializeField] private Button _armsAndArmorTab;
     [SerializeField] private Button _foodTab;
     [SerializeField] private Button _potionsTab;
     [SerializeField] private Button _otherTab;
@@ -37,7 +37,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
     public bool PausesGame => false;
     public bool BlocksGameplayInput => true;
 
-    private CraftingRecipeCategory _currentCategory = CraftingRecipeCategory.ToolsAndEquipment;
+    private CraftingRecipeCategory _currentCategory = CraftingRecipeCategory.ArmsAndArmor;
     private readonly List<CraftingRecipeSlotView> _slots = new();
     private CraftingRecipeData _selectedRecipe;
 
@@ -46,8 +46,8 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
         if (_root != null)
             _root.SetActive(false);
 
-        if (_toolsAndEquipmentTab != null)
-            _toolsAndEquipmentTab.onClick.AddListener(() => SelectCategory(CraftingRecipeCategory.ToolsAndEquipment));
+        if (_armsAndArmorTab != null)
+            _armsAndArmorTab.onClick.AddListener(() => SelectCategory(CraftingRecipeCategory.ArmsAndArmor));
         if (_foodTab != null)
             _foodTab.onClick.AddListener(() => SelectCategory(CraftingRecipeCategory.Food));
         if (_potionsTab != null)

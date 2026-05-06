@@ -61,13 +61,13 @@ public sealed class CraftingRecipeSlotView : MonoBehaviour, IPointerEnterHandler
     public void SetCraftable(bool craftable)
     {
         if (_button != null)
-            _button.interactable = craftable;
+            _button.interactable = _recipe != null;
 
         if (_canvasGroup != null)
             _canvasGroup.alpha = craftable ? 1f : 0.70f;
     }
 
-    public bool TryGetTooltipData(out Slot slotContext, out InventoryItem inventoryItem)
+    public bool TryGetTooltipData(out InventorySlotView slotContext, out InventoryItem inventoryItem)
     {
         slotContext = null;
         inventoryItem = InventoryItem.Empty;

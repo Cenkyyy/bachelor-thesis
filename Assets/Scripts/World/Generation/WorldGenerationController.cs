@@ -168,9 +168,7 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
         PositionPlayer(data);
 
         if (_minimap != null)
-        {
-            yield return _minimap.InitializeAsync(data);
-        }
+            yield return _minimap.InitializeCoroutine(data);
         
         IsReadyForSceneReveal = true;
         _generationCoroutine = null;

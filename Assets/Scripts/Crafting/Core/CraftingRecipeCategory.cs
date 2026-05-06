@@ -3,7 +3,7 @@
 /// </summary>
 public enum CraftingRecipeCategory
 {
-    ToolsAndEquipment,
+    ArmsAndArmor,
     Food,
     Potions,
     Other

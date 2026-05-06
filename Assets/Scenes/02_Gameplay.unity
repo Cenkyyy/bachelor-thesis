@@ -3288,7 +3288,7 @@ MonoBehaviour:
   _player: {fileID: 2010244819}
   _playerCraftingController: {fileID: 317918005633736361}
   _craftingBook: {fileID: 11400000, guid: 22bd7860a5831af449559b6b7baf19ff, type: 2}
-  _toolsAndEquipmentTab: {fileID: 918546952}
+  _armsAndArmorTab: {fileID: 918546952}
   _foodTab: {fileID: 1999943867}
   _potionsTab: {fileID: 705994455}
   _otherTab: {fileID: 1540793182}
@@ -8130,7 +8130,7 @@ GameObject:
   - component: {fileID: 918546953}
   - component: {fileID: 918546952}
   m_Layer: 5
-  m_Name: TabToolsAndEquipmentButton
+  m_Name: TabArmsAndArmorButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11603,7 +11603,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1394616546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb7f7391a25741f479f034b5ba24e7ba, type: 3}
+  m_Script: {fileID: 11500000, guid: ebb8c62ee3ac2174294cc4bff3763a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _canvas: {fileID: 1695784271}
