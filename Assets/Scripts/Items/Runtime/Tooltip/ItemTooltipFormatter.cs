@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Globalization;
 
+/// <summary>
+/// Formats item values into short readable text for tooltips.
+/// </summary>
 public static class ItemTooltipFormatter
 {
     public static string FormatRarity(ItemRarity rarity)

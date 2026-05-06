@@ -13,6 +13,9 @@ public sealed class CraftingRecipeSlotView : MonoBehaviour, IPointerEnterHandler
     [SerializeField] private Button _button;
     [SerializeField] private CanvasGroup _canvasGroup;
 
+    [Header("Tooltip")]
+    [SerializeField] private ItemTooltipController _tooltipController;
+
     private CraftingRecipeData _recipe;
 
     public CraftingRecipeData Recipe => _recipe;
@@ -34,17 +37,17 @@ public sealed class CraftingRecipeSlotView : MonoBehaviour, IPointerEnterHandler
 
     private void OnDisable()
     {
-        ItemTooltipController.Instance?.OnTooltipSourcePointerExit(this);
+        _tooltipController?.OnTooltipSourcePointerExit(this);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ItemTooltipController.Instance?.OnTooltipSourcePointerEnter(this);
+        _tooltipController?.OnTooltipSourcePointerEnter(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        ItemTooltipController.Instance?.OnTooltipSourcePointerExit(this);
+        _tooltipController?.OnTooltipSourcePointerExit(this);
     }
 
     public void Bind(CraftingRecipeData recipe, bool craftable)

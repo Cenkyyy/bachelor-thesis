@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
+/// <summary>
+/// Builds the multiline body text shown inside an item tooltip.
+/// </summary>
 public static class ItemTooltipBodyBuilder
 {
     public static string BuildBody(List<ItemTooltipLineRuntimeData> lines)

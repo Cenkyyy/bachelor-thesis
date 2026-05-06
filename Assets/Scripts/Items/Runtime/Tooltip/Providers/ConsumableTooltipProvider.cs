@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 
+/// <summary>
+/// Adds consumable restore and cooldown lines to item tooltips.
+/// </summary>
 public sealed class ConsumableTooltipProvider : IItemTooltipProvider
 {
     public int Order => 20;

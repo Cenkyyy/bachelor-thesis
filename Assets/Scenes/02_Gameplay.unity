@@ -4795,6 +4795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slotPrefab: {fileID: 3672516636108083546, guid: 965491b462a816446850da639c6b3fef, type: 3}
   _slotParent: {fileID: 527170256}
+  _itemInteractionController: {fileID: 1394616548}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -5230,6 +5231,7 @@ MonoBehaviour:
   slotParent: {fileID: 203007079}
   player: {fileID: 2010244819}
   _itemCooldownTrackController: {fileID: 317918005633736358}
+  _itemInteractionController: {fileID: 1394616548}
   slotBuildBatchSize: 4
 --- !u!1 &612149431
 GameObject:
@@ -7666,6 +7668,7 @@ MonoBehaviour:
   - {fileID: 375147444}
   _slotsParent: {fileID: 719520325}
   _player: {fileID: 2010244819}
+  _itemInteractionController: {fileID: 1394616548}
 --- !u!1 &855455272
 GameObject:
   m_ObjectHideFlags: 0
@@ -8447,6 +8450,7 @@ RectTransform:
   - {fileID: 1643230813}
   - {fileID: 279221438}
   - {fileID: 784491453}
+  - {fileID: 1394616547}
   m_Father: {fileID: 1695784272}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -11370,9 +11374,9 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 32, y: 32}
-  m_Spacing: {x: 10, y: 10}
+  m_Spacing: {x: 6, y: 10}
   m_Constraint: 1
-  m_ConstraintCount: 7
+  m_ConstraintCount: 8
 --- !u!114 &1362542297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11572,6 +11576,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1394616547}
   - component: {fileID: 1394616548}
+  - component: {fileID: 1394616549}
   m_Layer: 0
   m_Name: ItemInteractionPresenter
   m_TagString: Untagged
@@ -11588,11 +11593,11 @@ Transform:
   m_GameObject: {fileID: 1394616546}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -320, y: -180, z: 0}
+  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 945189449}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1394616548
 MonoBehaviour:
@@ -11606,13 +11611,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebb8c62ee3ac2174294cc4bff3763a88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 1695784271}
-  _heldItemContainer: {fileID: 1436572155}
-  _heldItemIcon: {fileID: 156252286}
-  _heldItemAmountText: {fileID: 1224626021}
+  _heldItemController: {fileID: 1394616549}
   _backpackPanel: {fileID: 570862299}
   _backpackPanelRect: {fileID: 203007079}
-  _hotbarPanel: {fileID: 1611478417}
   _hotbarPanelRect: {fileID: 121172469}
   _deathChestPanel: {fileID: 517984392}
   _deathChestPanelRect: {fileID: 527170256}
@@ -11621,9 +11622,26 @@ MonoBehaviour:
   _craftingPanel: {fileID: 279221440}
   _craftingPanelRect: {fileID: 2139804741}
   _player: {fileID: 2010244819}
+  _doubleClickDelay: 0.2
+--- !u!114 &1394616549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394616546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d813c8e4eeb4df4b9a5f0db1a10e0f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvas: {fileID: 1695784271}
+  _heldItemContainer: {fileID: 1436572155}
+  _heldItemIcon: {fileID: 156252286}
+  _heldItemAmountText: {fileID: 1224626021}
+  _player: {fileID: 2010244819}
   _worldItemSpawner: {fileID: 2031400805}
   _dropSpawnDistance: 0.6
-  _doubleClickDelay: 0.2
 --- !u!1 &1426833341
 GameObject:
   m_ObjectHideFlags: 0
@@ -13286,6 +13304,7 @@ MonoBehaviour:
   slotParent: {fileID: 121172469}
   player: {fileID: 2010244819}
   _itemCooldownTrackController: {fileID: 317918005633736358}
+  _itemInteractionController: {fileID: 1394616548}
   slotBuildBatchSize: 4
 --- !u!1001 &1613794738
 PrefabInstance:
@@ -15846,6 +15865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _panelKeybinds: {fileID: 11400000, guid: a590f4fae19e2ea4c8d8936378ed7432, type: 2}
   _spellCastingPanel: {fileID: 192015840}
+  _inventoryItemInteractionController: {fileID: 1394616548}
   _backpackPanel: {fileID: 570862299}
   _deathChestPanel: {fileID: 517984392}
   _mapPanel: {fileID: 185817031}
@@ -18276,4 +18296,3 @@ SceneRoots:
   - {fileID: 612149432}
   - {fileID: 1592801024}
   - {fileID: 1905795851}
-  - {fileID: 1394616547}

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// UI slot for an equipment position. Inherits all visuals from Slot, adds a typed slot indicator.
+/// Inventory slot view for a specific equipment type.
 /// </summary>
 public sealed class EquipmentSlotView : InventorySlotView
 {

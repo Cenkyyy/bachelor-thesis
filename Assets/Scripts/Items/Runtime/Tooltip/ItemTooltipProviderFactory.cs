@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 
+/// <summary>
+/// Creates the default tooltip providers used by item tooltip UI.
+/// </summary>
 public static class ItemTooltipProviderFactory
 {
     public static List<IItemTooltipProvider> CreateDefault(PlayerToolDurabilityRuntimeState playerToolDurability)

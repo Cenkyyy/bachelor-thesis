@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Inventory slot view with an additional selected-state background for the hotbar.
+/// </summary>
 public sealed class HotbarSlotView : InventorySlotView
 {
     [Header("Hotbar Highlight")]
@@ -11,9 +14,7 @@ public sealed class HotbarSlotView : InventorySlotView
     public void HighlightSelected()
     {
         if (backgroundImage != null && _highlightedBackgroundSprite != null)
-        {
             backgroundImage.sprite = _highlightedBackgroundSprite;
-        }
     }
 
     /// <summary>
@@ -22,8 +23,6 @@ public sealed class HotbarSlotView : InventorySlotView
     public void SetToDefault()
     { 
         if (backgroundImage != null && backgroundSprite != null)
-        {
             backgroundImage.sprite = backgroundSprite;
-        }
     }
 }

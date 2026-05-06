@@ -1,26 +1,26 @@
 ﻿using System.Collections.Generic;
 
-public sealed class StatModifiersTooltipProvider : IItemTooltipProvider
+/// <summary>
+/// Adds equipment tier and equipment-specific stat lines to item tooltips.
+/// </summary>
+public sealed class EquipmentTooltipProvider : IItemTooltipProvider
 {
-    public int Order => 10;
+    public int Order => 15;
 
     public bool CanHandle(ItemData itemData)
     {
-        return itemData is EquipmentItemData || itemData is ConsumableItemData;
+        return itemData is EquipmentItemData;
     }
 
     public void AppendLines(InventorySlotView slot, InventoryItem inventoryItem, List<ItemTooltipLineRuntimeData> lines)
     {
-        if (inventoryItem.Item is EquipmentItemData equipment)
-        {
-            AppendStatusEffects(equipment.StatusEffect, lines);
+        if (inventoryItem.Item is not EquipmentItemData equipment)
             return;
-        }
 
-        if (inventoryItem.Item is ConsumableItemData consumable)
-        {
-            AppendStatusEffects(consumable.StatusEffects, lines);
-        }
+        if (equipment.HasProgressionTier)
+            lines.Add(new ItemTooltipLineRuntimeData("Tier", ItemTooltipFormatter.FormatEnumValue(equipment.ProgressionTier)));
+
+        AppendStatusEffects(equipment.StatusEffect, lines);
     }
 
     private static void AppendStatusEffects(IReadOnlyList<ItemStatusEffect> statusEffects, List<ItemTooltipLineRuntimeData> lines)

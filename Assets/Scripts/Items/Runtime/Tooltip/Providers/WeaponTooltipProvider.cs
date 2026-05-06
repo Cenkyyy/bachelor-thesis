@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 
+/// <summary>
+/// Adds weapon combat stat lines to item tooltips.
+/// </summary>
 public sealed class WeaponTooltipProvider : IItemTooltipProvider
 {
     public int Order => 30;

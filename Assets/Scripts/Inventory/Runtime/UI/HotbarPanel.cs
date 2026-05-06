@@ -1,6 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Inventory panel that displays the player's hotbar and handles hotbar selection UI.
+/// </summary>
 public class HotbarPanel : InventoryPanelBase<HotbarSlotView>
 {
     protected override int SlotCount => player.Inventory.HotbarSize;

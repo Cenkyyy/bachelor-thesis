@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Shared UI controller that shows item tooltips for inventory slots, crafting entries, and other item sources.
+/// </summary>
 public sealed class ItemTooltipController : MonoBehaviour
 {
-    public static ItemTooltipController Instance { get; private set; }
-
     [Header("View")]
     [SerializeField] private Canvas _canvas;
     [SerializeField] private RectTransform _panelRoot;
@@ -32,16 +32,6 @@ public sealed class ItemTooltipController : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         Hide();
     }
 
@@ -50,22 +40,25 @@ public sealed class ItemTooltipController : MonoBehaviour
         ClearHoverState();
     }
 
-    private void OnDestroy()
-    {
-        if (Instance == this)
-            Instance = null;
-    }
-
-    public void OnSlotPointerEnter(InventorySlotView slot, PointerEventData eventData)
+    /// <summary>
+    /// Starts the tooltip hover flow for an inventory slot.
+    /// </summary>
+    public void OnSlotPointerEnter(InventorySlotView slot)
     {
         OnTooltipSourcePointerEnter(slot);
     }
 
-    public void OnSlotPointerExit(InventorySlotView slot, PointerEventData eventData)
+    /// <summary>
+    /// Stops the tooltip hover flow for an inventory slot.
+    /// </summary>
+    public void OnSlotPointerExit(InventorySlotView slot)
     {
         OnTooltipSourcePointerExit(slot);
     }
 
+    /// <summary>
+    /// Starts the tooltip hover flow for an item that is not backed by an inventory slot.
+    /// </summary>
     public void OnStandaloneItemPointerEnter(RectTransform hoverTarget, InventoryItem inventoryItem)
     {
         if (hoverTarget == null || inventoryItem.IsEmpty || inventoryItem.Item == null)
@@ -97,6 +90,9 @@ public sealed class ItemTooltipController : MonoBehaviour
         ClearHoverState();
     }
 
+    /// <summary>
+    /// Starts the tooltip hover flow for any object that can provide item tooltip data.
+    /// </summary>
     public void OnTooltipSourcePointerEnter(IItemTooltipSource source)
     {
         if (!TryResolveTooltipData(source, out var slotContext, out var inventoryItem))
@@ -112,6 +108,9 @@ public sealed class ItemTooltipController : MonoBehaviour
         RestartHoverCountdown(source, _currentHoveredAnchor);
     }
 
+    /// <summary>
+    /// Stops the tooltip hover flow when the pointer leaves the current tooltip source.
+    /// </summary>
     public void OnTooltipSourcePointerExit(IItemTooltipSource source)
     {
         if (!ReferenceEquals(_currentHoveredSource, source))

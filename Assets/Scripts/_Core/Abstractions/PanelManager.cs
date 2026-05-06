@@ -10,6 +10,7 @@ public sealed class PanelManager : MonoBehaviour
 
     [Header("Input Handlers")]
     [SerializeField] private SpellCastingPanelController _spellCastingPanel;
+    [SerializeField] private InventoryItemInteractionController _inventoryItemInteractionController;
 
     [Header("Panels - Major")]
     [SerializeField] private BackpackPanel _backpackPanel;
@@ -119,7 +120,7 @@ public sealed class PanelManager : MonoBehaviour
         if (SceneLoader.Instance != null && SceneLoader.Instance.IsTransitionActive)
             return;
 
-        InventoryItemInteractionController.Instance?.ResolveHeldItemToInventoryOrDrop();
+        _inventoryItemInteractionController?.ResolveHeldItemToInventoryOrDrop();
 
         if (_currentPanelId.HasValue)
             CloseGroup(GetGroup(_currentPanelId.Value));
@@ -152,7 +153,7 @@ public sealed class PanelManager : MonoBehaviour
         var closingPanelId = _currentPanelId.Value;
         var closingDeathChestInventory = closingPanelId == PanelId.DeathChest ? _currentDeathChestInventory : null;
 
-        InventoryItemInteractionController.Instance?.ResolveHeldItemToInventoryOrDrop();
+        _inventoryItemInteractionController?.ResolveHeldItemToInventoryOrDrop();
 
         CloseGroup(GetGroup(closingPanelId));
 
@@ -170,7 +171,7 @@ public sealed class PanelManager : MonoBehaviour
         if (SceneLoader.Instance != null && SceneLoader.Instance.IsTransitionActive)
             return;
 
-        InventoryItemInteractionController.Instance?.ResolveHeldItemToInventoryOrDrop();
+        _inventoryItemInteractionController?.ResolveHeldItemToInventoryOrDrop();
 
         if (_currentPanelId.HasValue)
             CloseGroup(GetGroup(_currentPanelId.Value));

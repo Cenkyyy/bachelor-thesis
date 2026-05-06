@@ -1,11 +1,20 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Displays a bound death chest inventory and forwards slot interactions to shared inventory UI systems.
+/// </summary>
 public sealed class DeathChestPanel : MonoBehaviour, IMajorPanel
 {
     [Header("View")]
     [SerializeField] private InventorySlotView _slotPrefab;
     [SerializeField] private Transform _slotParent;
+
+    [Header("Input")]
+    [SerializeField] private InventoryItemInteractionController _itemInteractionController;
+
+    [Header("Tooltip")]
+    [SerializeField] private ItemTooltipController _tooltipController;
 
     public IInventory Inventory { get; private set; }
     public bool IsOpen => _slotParent.gameObject.activeSelf;
@@ -14,6 +23,14 @@ public sealed class DeathChestPanel : MonoBehaviour, IMajorPanel
     public bool BlocksGameplayInput => true;
 
     private InventorySlotView[] _slots;
+
+    private void OnDestroy()
+    {
+        if (Inventory != null)
+            Inventory.OnItemChanged -= RefreshSlot;
+
+        ClearSlots();
+    }
 
     public void Bind(IInventory inventory)
     {
@@ -83,31 +100,25 @@ public sealed class DeathChestPanel : MonoBehaviour, IMajorPanel
         _slots = null;
     }
 
-    private void OnDestroy()
+    private void HandleSlotClicked(InventorySlotView slot, PointerEventData evt)
     {
-        if (Inventory != null)
-            Inventory.OnItemChanged -= RefreshSlot;
-        
-        ClearSlots();
+        _itemInteractionController?.OnSlotPointerClicked(slot, evt);
     }
 
-    private void HandleSlotClicked(InventorySlotView slot, PointerEventData evt) =>
-        InventoryItemInteractionController.Instance?.OnSlotPointerClicked(slot, evt);
-
-    private void HandleSlotEnter(InventorySlotView slot, PointerEventData evt)
+    private void HandleSlotEnter(InventorySlotView slot, PointerEventData _)
     {
-        InventoryItemInteractionController.Instance?.OnSlotPointerEnter(slot, evt);
-        ItemTooltipController.Instance?.OnSlotPointerEnter(slot, evt);
+        _itemInteractionController?.OnSlotPointerEnter(slot);
+        _tooltipController?.OnSlotPointerEnter(slot);
     }
 
-    private void HandleSlotExit(InventorySlotView slot, PointerEventData evt)
+    private void HandleSlotExit(InventorySlotView slot, PointerEventData _)
     {
-        ItemTooltipController.Instance?.OnSlotPointerExit(slot, evt);
+        _tooltipController?.OnSlotPointerExit(slot);
     }
 
     private void HandleSlotDisabled(InventorySlotView slot)
     {
-        ItemTooltipController.Instance?.OnSlotDisabled(slot);
+        _tooltipController?.OnSlotDisabled(slot);
     }
 
     public void RefreshSlot(int index)

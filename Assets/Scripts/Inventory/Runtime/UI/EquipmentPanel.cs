@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Shows the player's equipped items and forwards equipment slot interactions.
+/// </summary>
 public sealed class EquipmentPanel : MonoBehaviour, IPanel
 {
     [Header("View")]
@@ -10,6 +13,12 @@ public sealed class EquipmentPanel : MonoBehaviour, IPanel
 
     [Header("Model")]
     [SerializeField] private Player _player;
+
+    [Header("Input")]
+    [SerializeField] private InventoryItemInteractionController _itemInteractionController;
+
+    [Header("Tooltip")]
+    [SerializeField] private ItemTooltipController _tooltipController;
 
     public bool IsOpen => _slotsParent != null && _slotsParent.gameObject.activeSelf;
 
@@ -104,22 +113,24 @@ public sealed class EquipmentPanel : MonoBehaviour, IPanel
         }
     }
 
-    private void HandleSlotClicked(InventorySlotView slot, PointerEventData evt) =>
-        InventoryItemInteractionController.Instance?.OnSlotPointerClicked(slot, evt);
-
-    private void HandleSlotEnter(InventorySlotView slot, PointerEventData evt)
+    private void HandleSlotClicked(InventorySlotView slot, PointerEventData evt) 
     {
-        InventoryItemInteractionController.Instance?.OnSlotPointerEnter(slot, evt);
-        ItemTooltipController.Instance?.OnSlotPointerEnter(slot, evt);
+        _itemInteractionController?.OnSlotPointerClicked(slot, evt);
     }
 
-    private void HandleSlotExit(InventorySlotView slot, PointerEventData evt)
+    private void HandleSlotEnter(InventorySlotView slot, PointerEventData _)
     {
-        ItemTooltipController.Instance?.OnSlotPointerExit(slot, evt);
+        _itemInteractionController?.OnSlotPointerEnter(slot);
+        _tooltipController?.OnSlotPointerEnter(slot);
+    }
+
+    private void HandleSlotExit(InventorySlotView slot, PointerEventData _)
+    {
+        _tooltipController?.OnSlotPointerExit(slot);
     }
 
     private void HandleSlotDisabled(InventorySlotView slot)
     {
-        ItemTooltipController.Instance?.OnSlotDisabled(slot);
+        _tooltipController?.OnSlotDisabled(slot);
     }
 }

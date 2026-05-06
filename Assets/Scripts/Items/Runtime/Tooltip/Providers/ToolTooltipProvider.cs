@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 
+/// <summary>
+/// Adds mining tool stats and durability lines to item tooltips.
+/// </summary>
 public sealed class ToolTooltipProvider : IItemTooltipProvider
 {
     private readonly PlayerToolDurabilityRuntimeState _playerToolDurability;

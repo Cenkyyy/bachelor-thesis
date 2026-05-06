@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Strictly-typed equipment storage for the player. Capacity is fixed to the number of equipment slots.
-/// Uses per-slot acceptance rules (e.g., only helmet goes into Helmet slot).
+/// Equipment storage for the player. Capacity is fixed to the number of equipment slots.
+/// Uses per-slot acceptance rules (e.g. only helmet goes into Helmet slot).
 /// </summary>
 [Serializable]
 public sealed class EquipmentInventory : IInventory
@@ -41,7 +41,9 @@ public sealed class EquipmentInventory : IInventory
 
     public InventoryItem GetItemAt(int index)
     {
-        if (!IsValidIndex(index)) return InventoryItem.Empty;
+        if (!IsValidIndex(index))
+            return InventoryItem.Empty;
+        
         return _items[index];
     }
 
@@ -49,7 +51,8 @@ public sealed class EquipmentInventory : IInventory
     {
         for (int i = 0; i < _slotLayout.Length; i++)
         {
-            if (_slotLayout[i] != slotType) continue;
+            if (_slotLayout[i] != slotType)
+                continue;
 
             index = i;
             return true;
@@ -64,12 +67,11 @@ public sealed class EquipmentInventory : IInventory
     /// </summary>
     public void SetItemAt(int index, InventoryItem item)
     {
-        if (!IsValidIndex(index)) return;
+        if (!IsValidIndex(index))
+            return;
 
         if (!item.IsEmpty && !IsItemAllowedAtIndex(item, index))
-        {
             return;
-        }
 
         _items[index] = item;
         OnItemChanged?.Invoke(index);
@@ -77,8 +79,11 @@ public sealed class EquipmentInventory : IInventory
 
     public void ClearItemAt(int index)
     {
-        if (!IsValidIndex(index)) return;
-        if (_items[index].IsEmpty) return;
+        if (!IsValidIndex(index))
+            return;
+        
+        if (_items[index].IsEmpty)
+            return;
 
         _items[index] = InventoryItem.Empty;
         OnItemChanged?.Invoke(index);
@@ -91,15 +96,23 @@ public sealed class EquipmentInventory : IInventory
     public bool TryAddItemToRange(InventoryItem item, SlotRange range, out InventoryItem leftoverItem)
     {
         leftoverItem = item;
-        if (item.IsEmpty) return true;
+        if (!IsValidRange(range))
+            return false;
 
-        if (!IsEquipment(item.Item, out var equip)) return false;
+        if (item.IsEmpty)
+            return true;
+
+        if (!IsEquipment(item.Item, out _))
+            return false;
 
         // find first compatible empty slot in [start, end)
         for (int i = range.StartInclusive; i < range.EndExclusive && i < Capacity; i++)
         {
-            if (!IsItemAllowedAtIndex(item, i)) continue;
-            if (!_items[i].IsEmpty) continue;
+            if (!IsItemAllowedAtIndex(item, i))
+                continue;
+            
+            if (!_items[i].IsEmpty)
+                continue;
 
             _items[i] = new InventoryItem(item.Item, 1);
             OnItemChanged?.Invoke(i);
@@ -116,11 +129,17 @@ public sealed class EquipmentInventory : IInventory
     public bool TryRemoveFromRange(InventoryItem item, SlotRange range, out InventoryItem removedItem)
     {
         removedItem = InventoryItem.Empty;
-        if (item.IsEmpty) return true;
+        if (!IsValidRange(range))
+            return false;
+
+        if (item.IsEmpty)
+            return true;
 
         for (int i = range.StartInclusive; i < range.EndExclusive && i < Capacity; i++)
         {
-            if (_items[i].IsEmpty) continue;
+            if (_items[i].IsEmpty)
+                continue;
+            
             if (_items[i].Item == item.Item)
             {
                 removedItem = _items[i];
@@ -139,11 +158,17 @@ public sealed class EquipmentInventory : IInventory
     public bool TryMergeInto(InventoryItem item, int toIndex, out InventoryItem leftoverItem)
     {
         leftoverItem = item;
-        if (item.IsEmpty) return true;
-        if (!IsValidIndex(toIndex)) return false;
-        if (!_items[toIndex].IsEmpty) return false;
+        if (item.IsEmpty)
+            return true;
+        
+        if (!IsValidIndex(toIndex))
+            return false;
+        
+        if (!_items[toIndex].IsEmpty)
+            return false;
 
-        if (!IsItemAllowedAtIndex(item, toIndex)) return false;
+        if (!IsItemAllowedAtIndex(item, toIndex))
+            return false;
 
         _items[toIndex] = new InventoryItem(item.Item, 1);
         OnItemChanged?.Invoke(toIndex);
@@ -153,25 +178,24 @@ public sealed class EquipmentInventory : IInventory
 
     private bool IsValidIndex(int i) => i >= 0 && i < Capacity;
 
-    private static bool IsEquipment(ItemData item, out EquipmentItemData eq)
+    private bool IsValidRange(SlotRange range) => range.StartInclusive >= 0 && range.EndExclusive <= Capacity;
+
+    private static bool IsEquipment(ItemData item, out EquipmentItemData equipmentItemData)
     {
-        eq = item as EquipmentItemData;
-        return eq != null;
+        equipmentItemData = item as EquipmentItemData;
+        return equipmentItemData != null;
     }
 
     private bool IsItemAllowedAtIndex(InventoryItem item, int index)
     {
-        if (!IsEquipment(item.Item, out var equip)) return false;
+        if (!IsEquipment(item.Item, out var equip))
+            return false;
+        
         var slotType = _slotLayout[index];
 
         if (equip.Slot == EquipmentType.RingLeft || equip.Slot == EquipmentType.RingRight)
-        {
-            // Rings are mutually compatible: a "ring" scriptable object can target either left or right.
             return slotType == EquipmentType.RingLeft || slotType == EquipmentType.RingRight;
-        }
 
-        // If the SO declares generic "RingLeft/Right" we also accept the generic ring check above.
-        // Otherwise, it must match exactly.
         return equip.Slot == slotType;
     }
 }

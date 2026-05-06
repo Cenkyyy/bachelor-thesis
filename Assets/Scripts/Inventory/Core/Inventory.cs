@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Stores inventory items in a fixed-size array and provides basic stack operations from the IInventory interface.
+/// </summary>
 [Serializable]
 public class Inventory : IInventory
 {
-    [SerializeField] private int _capacity = 24;
     private readonly InventoryItem[] _items;
 
     public int Capacity => _items.Length;
@@ -12,8 +14,8 @@ public class Inventory : IInventory
 
     public Inventory(int capacity)
     {
-        _capacity = Mathf.Max(1, capacity);
-        _items = new InventoryItem[_capacity];
+        var clampedCapacity = Mathf.Max(1, capacity);
+        _items = new InventoryItem[clampedCapacity];
 
         for (int i = 0; i < _items.Length; i++)
         {
@@ -24,18 +26,16 @@ public class Inventory : IInventory
     public InventoryItem GetItemAt(int index)
     {
         if (index < 0 || index >= _items.Length)
-        {
             return InventoryItem.Empty;
-        }
+
         return _items[index];
     }
 
     public void SetItemAt(int index, InventoryItem item)
     {
         if (index < 0 || index >= _items.Length)
-        {
             return;
-        }
+
         if (_items[index].Item != item.Item || _items[index].Amount != item.Amount)
         {
             _items[index] = item;
@@ -46,9 +46,8 @@ public class Inventory : IInventory
     public void ClearItemAt(int index)
     {
         if (index < 0 || index >= _items.Length)
-        {
             return;
-        }
+
         if (!_items[index].IsEmpty)
         {
             _items[index] = InventoryItem.Empty;
@@ -58,6 +57,12 @@ public class Inventory : IInventory
 
     public bool TryAddItemToRange(InventoryItem item, SlotRange range, out InventoryItem leftoverItem)
     {
+        if (!IsValidRange(range))
+        {
+            leftoverItem = item;
+            return false;
+        }
+
         if (item.IsEmpty)
         {
             leftoverItem = InventoryItem.Empty;
@@ -115,6 +120,9 @@ public class Inventory : IInventory
     {
         removedItem = InventoryItem.Empty;
         
+        if (!IsValidRange(range))
+            return false;
+
         if (item.IsEmpty || item.Item == null || item.Amount <= 0)
             return false;
 
@@ -154,7 +162,7 @@ public class Inventory : IInventory
         // validation
         if (item.IsEmpty)
             return false;
-        if (toIndex >= _items.Length)
+        if (toIndex < 0 || toIndex >= _items.Length)
             return false;
         if (_items[toIndex].IsEmpty || !_items[toIndex].Item.IsStackable) 
             return false;
@@ -177,4 +185,6 @@ public class Inventory : IInventory
         leftoverItem = item.WithAmount(item.Amount - toMove);
         return toMove > 0;
     }
+
+    private bool IsValidRange(SlotRange range) => range.StartInclusive >= 0 && range.EndExclusive <= _items.Length;
 }

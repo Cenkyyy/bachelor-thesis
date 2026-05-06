@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 
+/// <summary>
+/// Runtime text data prepared for rendering an item tooltip.
+/// </summary>
 public sealed class ItemTooltipRuntimeData
 {
     public string Title { get; set; }
@@ -7,6 +10,9 @@ public sealed class ItemTooltipRuntimeData
     public List<ItemTooltipLineRuntimeData> Lines { get; } = new List<ItemTooltipLineRuntimeData>();
 }
 
+/// <summary>
+/// Represents one row in an item tooltip.
+/// </summary>
 public readonly struct ItemTooltipLineRuntimeData
 {
     public string Label { get; }

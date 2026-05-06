@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Visual UI slot that displays one inventory item and exposes pointer events to panel controllers.
+/// </summary>
 [DisallowMultipleComponent]
 public class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IItemTooltipSource
 {
@@ -27,9 +30,7 @@ public class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPointerEn
     private void Awake()
     {
         if (backgroundImage != null && backgroundSprite != null)
-        {
             backgroundImage.sprite = backgroundSprite;
-        }
 
         Clear();
     }
@@ -56,9 +57,7 @@ public class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPointerEn
 
         // show item icon
         if (itemIconImage != null)
-        {
             ImageIconUtility.SetIcon(itemIconImage, item.Item.Icon);
-        }
 
         if (item.Item.IsStackable && item.Amount > 1)
         {
@@ -83,9 +82,8 @@ public class InventorySlotView : MonoBehaviour, IPointerClickHandler, IPointerEn
     public virtual void Clear()
     {
         if (itemIconImage != null)
-        {
             ImageIconUtility.SetIcon(itemIconImage, null);
-        }
+        
         if (itemAmountText != null)
         {
             itemAmountText.text = string.Empty;

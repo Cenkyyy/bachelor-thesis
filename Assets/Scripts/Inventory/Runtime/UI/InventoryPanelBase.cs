@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Base class for inventory panels that display player inventory slots and forward slot UI events.
+/// </summary>
 public abstract class InventoryPanelBase<T> : MonoBehaviour where T : InventorySlotView
 {
     [Header("View")]
@@ -10,6 +13,12 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : InventoryS
     [Header("Model")]
     [SerializeField] protected Player player;
     [SerializeField] private ItemCooldownTrackController _itemCooldownTrackController;
+
+    [Header("Input")]
+    [SerializeField] private InventoryItemInteractionController _itemInteractionController;
+
+    [Header("Tooltip")]
+    [SerializeField] private ItemTooltipController _tooltipController;
 
     [Header("Initialization")]
     [SerializeField, Min(1)] protected int slotBuildBatchSize = 4;
@@ -22,9 +31,7 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : InventoryS
     protected virtual void Start()
     {
         if (player.Inventory != null)
-        {
             player.Inventory.OnItemChanged += HandleItemChanged;
-        }
     }
 
     protected virtual void Update()
@@ -38,9 +45,7 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : InventoryS
     protected virtual void OnDestroy()
     {
         if (player.Inventory != null)
-        {
             player.Inventory.OnItemChanged -= HandleItemChanged;
-        }
 
         if (slots != null)
         {
@@ -61,22 +66,25 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : InventoryS
 
     protected virtual void HandleItemChanged(int index) => RefreshSlot(index);
 
-    protected virtual void HandleSlotClicked(InventorySlotView slot, PointerEventData eventData) => InventoryItemInteractionController.Instance?.OnSlotPointerClicked(slot, eventData);
-
-    protected virtual void HandleSlotEnter(InventorySlotView slot, PointerEventData eventData)
+    protected virtual void HandleSlotClicked(InventorySlotView slot, PointerEventData eventData)
     {
-        InventoryItemInteractionController.Instance?.OnSlotPointerEnter(slot, eventData);
-        ItemTooltipController.Instance?.OnSlotPointerEnter(slot, eventData);
+        _itemInteractionController?.OnSlotPointerClicked(slot, eventData);
     }
 
-    protected virtual void HandleSlotExit(InventorySlotView slot, PointerEventData eventData)
+    protected virtual void HandleSlotEnter(InventorySlotView slot, PointerEventData _)
     {
-        ItemTooltipController.Instance?.OnSlotPointerExit(slot, eventData);
+        _itemInteractionController?.OnSlotPointerEnter(slot);
+        _tooltipController?.OnSlotPointerEnter(slot);
+    }
+
+    protected virtual void HandleSlotExit(InventorySlotView slot, PointerEventData _)
+    {
+        _tooltipController?.OnSlotPointerExit(slot);
     }
 
     protected virtual void HandleSlotDisabled(InventorySlotView slot)
     {
-        ItemTooltipController.Instance?.OnSlotDisabled(slot);
+        _tooltipController?.OnSlotDisabled(slot);
     }
 
     protected void RefreshCooldownOverlayForPanelSlot(int panelSlotIndex)

@@ -1,5 +1,8 @@
 using System.Collections;
 
+/// <summary>
+/// Inventory panel that displays and controls the player's backpack slots.
+/// </summary>
 public class BackpackPanel : InventoryPanelBase<InventorySlotView>, IMajorPanel
 {
     protected override int SlotCount => player.Inventory.BackpackSize;

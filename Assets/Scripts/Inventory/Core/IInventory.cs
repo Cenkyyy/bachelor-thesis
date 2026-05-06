@@ -1,3 +1,6 @@
+/// <summary>
+/// Mutable inventory contract for adding, removing, and modifying items.
+/// </summary>
 public interface IInventory : IReadOnlyInventory
 {
     void SetItemAt(int index, InventoryItem item);

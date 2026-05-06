@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Player-owned inventory that is split into hotbar and backpack.
+/// </summary>
 [System.Serializable]
 public sealed class PlayerInventory : IInventory
 {
@@ -55,18 +58,13 @@ public sealed class PlayerInventory : IInventory
     public void SelectHotbar(int index)
     {
         if (index < 0 || index >= HotbarSize || index == SelectedHotbarIndex)
-        {
             return;
-        }
+        
         SelectedHotbarIndex = index;
         OnHotbarSelectionChanged?.Invoke(index);
     }
 
-    public SlotRange GetBackpackSlotRange()
-    {
-        return new SlotRange(HotbarSize, HotbarSize + BackpackSize);
-    }
-
+    public SlotRange GetBackpackSlotRange() => new SlotRange(HotbarSize, HotbarSize + BackpackSize);
     public InventoryItem GetItemAt(int index) => _inventory.GetItemAt(index);
     public void SetItemAt(int index, InventoryItem item) => _inventory.SetItemAt(index, item);
     public void ClearItemAt(int index) => _inventory.ClearItemAt(index);
