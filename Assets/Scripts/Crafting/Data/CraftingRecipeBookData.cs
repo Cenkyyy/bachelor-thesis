@@ -1,14 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a collection of crafting recipes that can be used within the crafting system.
+/// </summary>
 [CreateAssetMenu(menuName = "Crafting/Book", fileName = "CraftingBook")]
-public class CraftingBookData : ScriptableObject
+public class CraftingRecipeBookData : ScriptableObject
 {
+    [Header("Recipes")]
     [SerializeField] private List<CraftingRecipeData> _recipes = new();
 
     public IReadOnlyList<CraftingRecipeData> Recipes => _recipes;
 
-    public List<CraftingRecipeData> GetRecipesByCategory(CraftingCategory category)
+    /// <summary>
+    /// Returns every recipe assigned to the requested crafting category.
+    /// </summary>
+    public List<CraftingRecipeData> GetRecipesByCategory(CraftingRecipeCategory category)
     {
         var result = new List<CraftingRecipeData>();
         foreach (var recipe in _recipes)

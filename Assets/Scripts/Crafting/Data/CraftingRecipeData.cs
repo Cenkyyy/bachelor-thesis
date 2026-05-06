@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Authored recipe data describing crafted output, presentation category, and required ingredients.
+/// </summary>
 [CreateAssetMenu(menuName = "Crafting/Recipe", fileName = "NewCraftingRecipe")]
 public class CraftingRecipeData : ScriptableObject
 {
@@ -9,11 +12,11 @@ public class CraftingRecipeData : ScriptableObject
     [field: SerializeField] public int OutputAmount { get; private set; } = 1;
 
     [field: Header("Presentation")]
-    [field: SerializeField] public CraftingCategory Category { get; private set; } = CraftingCategory.Other;
+    [field: SerializeField] public CraftingRecipeCategory Category { get; private set; } = CraftingRecipeCategory.Other;
+    [SerializeField] private string _displayName;
 
     [Header("Requirements")]
     [SerializeField] private List<CraftingIngredient> _ingredients = new();
-    [SerializeField] private string _displayName;
 
     public string DisplayName => string.IsNullOrWhiteSpace(_displayName) && OutputItem != null ? OutputItem.ItemName : _displayName;
     public IReadOnlyList<CraftingIngredient> Ingredients => _ingredients;
@@ -21,9 +24,7 @@ public class CraftingRecipeData : ScriptableObject
     public InventoryItem GetOutputStack()
     {
         if (OutputItem == null)
-        {
             return InventoryItem.Empty;
-        }
 
         return new InventoryItem(OutputItem, OutputAmount);
     }

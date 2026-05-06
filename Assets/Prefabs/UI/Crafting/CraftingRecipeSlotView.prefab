@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 8917457155714441510}
   - component: {fileID: 6074451611533191323}
   m_Layer: 5
-  m_Name: CraftingRecipeSlot
+  m_Name: CraftingRecipeSlotView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

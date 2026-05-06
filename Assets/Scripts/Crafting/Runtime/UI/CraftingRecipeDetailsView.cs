@@ -3,27 +3,29 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Displays a part of the crafting book, specifically the selected crafting recipe output,
+/// generated item stats, ingredient requirements, and craft button.
+/// </summary>
 public sealed class CraftingRecipeDetailsView : MonoBehaviour
 {
-    [Header("Core")]
+    [Header("Recipe Output")]
     [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _title;
     [SerializeField] private TMP_Text _description;
 
-    [Header("Ingredients")]
+    [Header("Ingredient List")]
     [SerializeField] private Transform _ingredientRoot;
-    [SerializeField] private CraftingIngredientRow _ingredientRowPrefab;
+    [SerializeField] private CraftingIngredientRowView _ingredientRowPrefab;
 
-    [Header("Crafting")]
-    [SerializeField] private Button _craftButton;
+    [field: Header("Craft Action")]
+    [field: SerializeField] public Button CraftButton { get; private set; }
 
-    [Header("Runtime Dependencies")]
+    [Header("Tooltip Dependencies")]
     [SerializeField] private PlayerToolDurabilityRuntimeState _playerToolDurability;
 
-    private readonly List<CraftingIngredientRow> _rows = new();
+    private readonly List<CraftingIngredientRowView> _rows = new();
     private readonly List<IItemTooltipProvider> _tooltipProviders = new();
-
-    public Button CraftButton => _craftButton;
 
     private void Awake()
     {
@@ -43,24 +45,18 @@ public sealed class CraftingRecipeDetailsView : MonoBehaviour
         }
 
         if (_title != null)
-        {
             _title.text = recipe != null ? recipe.DisplayName : string.Empty;
-        }
 
         if (_description != null)
-        {
             _description.text = BuildOutputStats(recipe);
-        }
 
         RebuildIngredients(recipe, inventory);
     }
 
     public void SetCraftButtonEnabled(bool enabled)
     {
-        if (_craftButton != null)
-        {
-            _craftButton.interactable = enabled;
-        }
+        if (CraftButton != null)
+            CraftButton.interactable = enabled;
     }
 
     public void Clear()

@@ -3245,7 +3245,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 279221438}
-  - component: {fileID: 279221439}
   - component: {fileID: 279221440}
   m_Layer: 5
   m_Name: CraftingController
@@ -3273,20 +3272,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &279221439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 279221437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c98fa7345251e246b696398a604d7e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _player: {fileID: 2010244819}
-  _itemDropSpawner: {fileID: 2031400805}
 --- !u!114 &279221440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3301,8 +3286,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _root: {fileID: 2139804738}
   _player: {fileID: 2010244819}
+  _playerCraftingController: {fileID: 317918005633736361}
   _craftingBook: {fileID: 11400000, guid: 22bd7860a5831af449559b6b7baf19ff, type: 2}
-  _craftingController: {fileID: 279221439}
   _toolsAndEquipmentTab: {fileID: 918546952}
   _foodTab: {fileID: 1999943867}
   _potionsTab: {fileID: 705994455}
@@ -4738,8 +4723,8 @@ MonoBehaviour:
   _revealRadiusTiles: 8
   _chunkSizeTiles: 32
   _maxChunkUpdatesPerFrame: 2
-  _initializationRowsPerFrame: 128
-  _maxInitializationMillisecondsPerFrame: 6
+  _initializationRowsPerFrame: 200
+  _maxInitializationMillisecondsPerFrame: 7
   _unexploredColor:
     serializedVersion: 2
     rgba: 0
@@ -7972,7 +7957,7 @@ MonoBehaviour:
   _description: {fileID: 1049011157}
   _ingredientRoot: {fileID: 1523085437}
   _ingredientRowPrefab: {fileID: 3245438253663934633, guid: 460a22ec80934864593c9f636e3b5f54, type: 3}
-  _craftButton: {fileID: 1438872758}
+  <CraftButton>k__BackingField: {fileID: 1438872758}
   _playerToolDurability: {fileID: 317918005633736359}
 --- !u!114 &901008921
 MonoBehaviour:
@@ -18223,6 +18208,10 @@ PrefabInstance:
       propertyPath: _placementParent
       value: 
       objectReference: {fileID: 325433512}
+    - target: {fileID: 6370876422950385033, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _itemDropSpawner
+      value: 
+      objectReference: {fileID: 2031400805}
     - target: {fileID: 9105410004459439549, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _barsContainer
       value: 
@@ -18263,6 +18252,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6883eac39f5c3a1469a0c2bf1fdc7bd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &317918005633736361 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6370876422950385033, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+  m_PrefabInstance: {fileID: 317918005633736356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c98fa7345251e246b696398a604d7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807

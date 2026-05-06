@@ -3,32 +3,48 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public sealed class CraftingRecipeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IItemTooltipSource
+/// <summary>
+/// Selectable recipe grid entry that displays the crafted item icon and exposes tooltip data.
+/// </summary>
+public sealed class CraftingRecipeSlotView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IItemTooltipSource
 {
+    [Header("View References")]
     [SerializeField] private Image _icon;
     [SerializeField] private Button _button;
     [SerializeField] private CanvasGroup _canvasGroup;
 
-    public event Action<CraftingRecipeData> OnSelected;
-
     private CraftingRecipeData _recipe;
 
     public CraftingRecipeData Recipe => _recipe;
+    public RectTransform TooltipAnchor => transform as RectTransform;
+    
+    public event Action<CraftingRecipeData> OnSelected;
 
     private void Awake()
     {
         if (_button != null)
-        {
             _button.onClick.AddListener(HandleClick);
-        }
     }
 
     private void OnDestroy()
     {
         if (_button != null)
-        {
             _button.onClick.RemoveListener(HandleClick);
-        }
+    }
+
+    private void OnDisable()
+    {
+        ItemTooltipController.Instance?.OnTooltipSourcePointerExit(this);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        ItemTooltipController.Instance?.OnTooltipSourcePointerEnter(this);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ItemTooltipController.Instance?.OnTooltipSourcePointerExit(this);
     }
 
     public void Bind(CraftingRecipeData recipe, bool craftable)
@@ -45,40 +61,11 @@ public sealed class CraftingRecipeSlot : MonoBehaviour, IPointerEnterHandler, IP
     public void SetCraftable(bool craftable)
     {
         if (_button != null)
-        {
             _button.interactable = craftable;
-        }
 
         if (_canvasGroup != null)
-        {
             _canvasGroup.alpha = craftable ? 1f : 0.70f;
-        }
     }
-
-    private void HandleClick()
-    {
-        if (_recipe == null)
-            return;
-
-        OnSelected?.Invoke(_recipe);
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        ItemTooltipController.Instance?.OnTooltipSourcePointerEnter(this);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        ItemTooltipController.Instance?.OnTooltipSourcePointerExit(this);
-    }
-
-    private void OnDisable()
-    {
-        ItemTooltipController.Instance?.OnTooltipSourcePointerExit(this);
-    }
-
-    public RectTransform TooltipAnchor => transform as RectTransform;
 
     public bool TryGetTooltipData(out Slot slotContext, out InventoryItem inventoryItem)
     {
@@ -91,5 +78,13 @@ public sealed class CraftingRecipeSlot : MonoBehaviour, IPointerEnterHandler, IP
         var outputAmount = Mathf.Max(1, _recipe.OutputAmount);
         inventoryItem = new InventoryItem(_recipe.OutputItem, outputAmount);
         return true;
+    }
+
+    private void HandleClick()
+    {
+        if (_recipe == null)
+            return;
+
+        OnSelected?.Invoke(_recipe);
     }
 }

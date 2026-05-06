@@ -2,8 +2,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class CraftingIngredientRow : MonoBehaviour
+/// <summary>
+/// Displays one ingredient requirement with icon, item name, owned amount, and availability state.
+/// </summary>
+public sealed class CraftingIngredientRowView : MonoBehaviour
 {
+    [Header("View References")]
     [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _label;
     [SerializeField] private TMP_Text _amount;
