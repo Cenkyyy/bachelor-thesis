@@ -35,7 +35,10 @@ public sealed class PlayerMiningController : MonoBehaviour
     private void Update()
     {
         if (GameStateManager.IsGamePaused)
+        {
+            ResetMining();
             return;
+        }
 
         if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
         {
