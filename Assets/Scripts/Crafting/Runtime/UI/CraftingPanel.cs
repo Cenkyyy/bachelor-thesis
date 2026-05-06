@@ -32,6 +32,9 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
     [Header("Recipe Details")]
     [SerializeField] private CraftingRecipeDetailsView _detailsView;
 
+    [Header("Tooltip")]
+    [SerializeField] private ItemTooltipController _tooltipController;
+
     public PanelId Id => PanelId.Crafting;
     public bool IsOpen => _root != null && _root.activeSelf;
     public bool PausesGame => false;
@@ -121,6 +124,7 @@ public sealed class CraftingPanel : MonoBehaviour, IMajorPanel
 
             var slot = Instantiate(_recipeSlotPrefab, _recipeGridRoot);
             var craftable = IsRecipeCraftable(recipe);
+            slot.SetTooltip(_tooltipController);
             slot.Bind(recipe, craftable);
             slot.OnSelected += HandleRecipeSelected;
             _slots.Add(slot);

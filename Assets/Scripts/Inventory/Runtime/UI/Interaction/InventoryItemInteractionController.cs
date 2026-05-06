@@ -187,7 +187,7 @@ public class InventoryItemInteractionController : MonoBehaviour
         if (HeldItem.IsEmpty)
         {
             if (slotItem.IsEmpty) return; // do nothing on empty equipment slot
-            InventoryTransferUtility.TransferEquipmentSlotToPlayerInventory(equipment, index, _player.Inventory);
+            InventoryTransferUtility.TransferStackToPlayerInventoryPreferred(equipment, index, _player.Inventory);
             return;
         }
 
@@ -302,7 +302,7 @@ public class InventoryItemInteractionController : MonoBehaviour
 
         if (ReferenceEquals(sourceInventory, _player.Equipment))
         {
-            InventoryTransferUtility.TransferEquipmentSlotToPlayerInventory(_player.Equipment, slot.SlotIndex, _player.Inventory);
+            InventoryTransferUtility.TransferStackToPlayerInventoryPreferred(sourceInventory, slot.SlotIndex, _player.Inventory);
             return;
         }
 
@@ -310,7 +310,7 @@ public class InventoryItemInteractionController : MonoBehaviour
         {
             if (ReferenceEquals(sourceInventory, _deathChestPanel.Inventory))
             {
-                InventoryTransferUtility.TransferDeathChestStackToPlayerInventory(sourceInventory, slot.SlotIndex, _player.Inventory);
+                InventoryTransferUtility.TransferStackToPlayerInventoryPreferred(sourceInventory, slot.SlotIndex, _player.Inventory);
             }
             else
             {

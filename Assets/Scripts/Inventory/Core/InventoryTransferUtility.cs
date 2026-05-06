@@ -33,7 +33,7 @@ public static class InventoryTransferUtility
     }
 
     /// <summary>
-    /// Quick transfers a player inventory item into the equipment invenotry if the source item is compatible
+    /// Quick transfers a player inventory item into the equipment inventory if the source item is compatible
     /// and the equipment slot is empty; otherwise the stack moves between hotbar and backpack ranges.
     /// </summary>
     public static void QuickTransferPlayerInventorySlot(PlayerInventory playerInventory, EquipmentInventory equipmentInventory, int sourceIndex)
@@ -49,19 +49,22 @@ public static class InventoryTransferUtility
     }
 
     /// <summary>
-    /// Moves a death chest stack into player inventory, preferring hotbar space before backpack space.
+    /// Moves a stack from any inventory into the player inventory, preferring hotbar space before backpack space.
     /// </summary>
-    public static void TransferDeathChestStackToPlayerInventory(IInventory deathChestInventory, int sourceIndex, PlayerInventory playerInventory)
+    public static void TransferStackToPlayerInventoryPreferred(IInventory sourceInventory, int sourceIndex, PlayerInventory playerInventory)
     {
-        TransferStackToPlayerInventoryPreferred(deathChestInventory, sourceIndex, playerInventory);
-    }
+        if (sourceInventory == null || playerInventory == null)
+            return;
 
-    /// <summary>
-    /// Unequips one equipment slot into player inventory, preferring hotbar space before backpack space.
-    /// </summary>
-    public static void TransferEquipmentSlotToPlayerInventory(EquipmentInventory equipmentInventory, int sourceIndex, PlayerInventory playerInventory)
-    {
-        TransferStackToPlayerInventoryPreferred(equipmentInventory, sourceIndex, playerInventory);
+        var item = sourceInventory.GetItemAt(sourceIndex);
+        if (item.IsEmpty)
+            return;
+
+        playerInventory.TryAddItemToRange(item, new SlotRange(0, playerInventory.HotbarSize), out var leftoverAfterHotbar);
+        if (!leftoverAfterHotbar.IsEmpty)
+            playerInventory.TryAddItemToRange(leftoverAfterHotbar, new SlotRange(playerInventory.HotbarSize, playerInventory.Capacity), out leftoverAfterHotbar);
+
+        ApplyLeftoverToSource(sourceInventory, sourceIndex, leftoverAfterHotbar);
     }
 
     private static bool TryEquipFromInventorySlot(IInventory sourceInventory, int sourceIndex, EquipmentInventory equipmentInventory)
@@ -78,22 +81,6 @@ public static class InventoryTransferUtility
 
         ApplyLeftoverToSource(sourceInventory, sourceIndex, leftover);
         return true;
-    }
-
-    private static void TransferStackToPlayerInventoryPreferred(IInventory sourceInventory, int sourceIndex, PlayerInventory playerInventory)
-    {
-        if (sourceInventory == null || playerInventory == null)
-            return;
-
-        var item = sourceInventory.GetItemAt(sourceIndex);
-        if (item.IsEmpty)
-            return;
-
-        playerInventory.TryAddItemToRange(item, new SlotRange(0, playerInventory.HotbarSize), out var leftoverAfterHotbar);
-        if (!leftoverAfterHotbar.IsEmpty)
-            playerInventory.TryAddItemToRange(leftoverAfterHotbar, new SlotRange(playerInventory.HotbarSize, playerInventory.Capacity), out leftoverAfterHotbar);
-
-        ApplyLeftoverToSource(sourceInventory, sourceIndex, leftoverAfterHotbar);
     }
 
     private static SlotRange GetOppositePlayerInventoryRange(PlayerInventory playerInventory, int sourceIndex)

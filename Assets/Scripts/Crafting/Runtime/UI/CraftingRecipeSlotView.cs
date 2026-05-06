@@ -13,9 +13,7 @@ public sealed class CraftingRecipeSlotView : MonoBehaviour, IPointerEnterHandler
     [SerializeField] private Button _button;
     [SerializeField] private CanvasGroup _canvasGroup;
 
-    [Header("Tooltip")]
-    [SerializeField] private ItemTooltipController _tooltipController;
-
+    private ItemTooltipController _tooltipController;
     private CraftingRecipeData _recipe;
 
     public CraftingRecipeData Recipe => _recipe;
@@ -59,6 +57,11 @@ public sealed class CraftingRecipeSlotView : MonoBehaviour, IPointerEnterHandler
             ImageIconUtility.SetIcon(_icon, iconSprite);
         }
         SetCraftable(craftable);
+    }
+
+    public void SetTooltip(ItemTooltipController tooltipController)
+    {
+        _tooltipController = tooltipController;
     }
 
     public void SetCraftable(bool craftable)

@@ -3296,6 +3296,7 @@ MonoBehaviour:
   _recipeSlotPrefab: {fileID: 8917457155714441510, guid: 36854ec8c323cca4da929de8d0983031, type: 3}
   _recipeScrollRect: {fileID: 2029832390}
   _detailsView: {fileID: 901008920}
+  _tooltipController: {fileID: 665431213}
 --- !u!1 &288753443
 GameObject:
   m_ObjectHideFlags: 0
@@ -4796,6 +4797,7 @@ MonoBehaviour:
   _slotPrefab: {fileID: 3672516636108083546, guid: 965491b462a816446850da639c6b3fef, type: 3}
   _slotParent: {fileID: 527170256}
   _itemInteractionController: {fileID: 1394616548}
+  _tooltipController: {fileID: 665431213}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -5232,6 +5234,7 @@ MonoBehaviour:
   player: {fileID: 2010244819}
   _itemCooldownTrackController: {fileID: 317918005633736358}
   _itemInteractionController: {fileID: 1394616548}
+  _tooltipController: {fileID: 665431213}
   slotBuildBatchSize: 4
 --- !u!1 &612149431
 GameObject:
@@ -5830,7 +5833,7 @@ MonoBehaviour:
   _titleText: {fileID: 1659589271}
   _rarityText: {fileID: 365918650}
   _bodyText: {fileID: 1638908783}
-  _hoverDelaySeconds: 0.5
+  _hoverDelaySeconds: 0.3
   _playerToolDurability: {fileID: 317918005633736359}
 --- !u!1 &669887592
 GameObject:
@@ -7669,6 +7672,7 @@ MonoBehaviour:
   _slotsParent: {fileID: 719520325}
   _player: {fileID: 2010244819}
   _itemInteractionController: {fileID: 1394616548}
+  _tooltipController: {fileID: 665431213}
 --- !u!1 &855455272
 GameObject:
   m_ObjectHideFlags: 0
@@ -13305,6 +13309,7 @@ MonoBehaviour:
   player: {fileID: 2010244819}
   _itemCooldownTrackController: {fileID: 317918005633736358}
   _itemInteractionController: {fileID: 1394616548}
+  _tooltipController: {fileID: 665431213}
   slotBuildBatchSize: 4
 --- !u!1001 &1613794738
 PrefabInstance:
