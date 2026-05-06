@@ -130,7 +130,7 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
         if (player != null && _data.GrantsMemoryXP)
             player.Data.GainMemoryXP(_data.MemoryXpAmount);
 
-        else if (player != null)
+        if (player != null)
             TryDropLoot(player, dropSpawner);
 
         OnDepleted?.Invoke(this);
