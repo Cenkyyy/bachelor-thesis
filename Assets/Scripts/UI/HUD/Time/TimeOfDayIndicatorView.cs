@@ -2,13 +2,13 @@
 using UnityEngine;
 
 /// <summary>
-/// Moves the HUD time of the day indicator arrow along the horizontal bar based on the current time of day from the DayNightSystem.
-/// The left edge of the bar represents 06:00 time, the middle is the 18:00 tme and the right edge is just before the 06:00 time.
-/// After the indicator is moved to the right edge at 05:59, it will jump back to the left edge at 06:00.
+/// Moves the HUD time indicator across a bar that starts at 06:00 and wraps back after 05:59.
 /// </summary>
 [DisallowMultipleComponent]
-public sealed class TimeOfDayIndicatorController : MonoBehaviour
+public sealed class TimeOfDayIndicatorView : MonoBehaviour
 {
+    private const float DayStartTime01 = 6f / 24f;
+
     [Header("References")]
     [SerializeField] private DayNightSystem _time;
     [SerializeField] private RectTransform _progressIndicatorImage;
@@ -53,8 +53,13 @@ public sealed class TimeOfDayIndicatorController : MonoBehaviour
             return;
 
         _currentTime = _time.GetTimeString();
-        _timeProgress = _time.GetHudTimeBarPosition01();
+        _timeProgress = GetIndicatorPosition01(_time.Time01);
         UpdateIndicatorPosition(_timeProgress);
+    }
+
+    private static float GetIndicatorPosition01(float time01)
+    {
+        return Mathf.Repeat(time01 - DayStartTime01, 1f);
     }
 
     private void UpdateIndicatorPosition(float progress01)

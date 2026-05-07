@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Renders and updates the custom UI cursor.
+/// </summary>
 public sealed class CustomCursorController : MonoBehaviour
 {
     public static CustomCursorController Instance { get; private set; }
@@ -40,14 +43,10 @@ public sealed class CustomCursorController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
 
         if (_fillImage != null)
-        {
             _fillImage.raycastTarget = false;
-        }
 
         if (_outlineImage != null)
-        {
             _outlineImage.raycastTarget = false;
-        }
 
         ApplyCurrent();
         UpdatePosition();
@@ -61,9 +60,7 @@ public sealed class CustomCursorController : MonoBehaviour
     private void OnDestroy()
     {
         if (Instance == this)
-        {
             Instance = null;
-        }
     }
 
     private void Update()
@@ -82,14 +79,10 @@ public sealed class CustomCursorController : MonoBehaviour
     private void ApplyCurrent()
     {
         if (_fillImage != null)
-        {
             _fillImage.color = _currentFillColor;
-        }
 
         if (_cursorRoot != null)
-        {
             _cursorRoot.localScale = Vector3.one * _currentScale;
-        }
     }
 
     private void UpdatePosition()

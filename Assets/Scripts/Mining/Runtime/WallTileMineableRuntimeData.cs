@@ -26,7 +26,7 @@ public sealed class WallTileMineableRuntimeData : IMineableTarget
     private float _replenishTimer;
     private readonly Func<Vector2Int, Vector3> _worldPositionProvider;
     private readonly Action<WallTileMineableRuntimeData, Player, WorldItemSpawner> _depletedHandler;
-    private readonly WorldTextPopupEmitter _feedbackPopupEmitter;
+    private readonly WorldTextPopupController _feedbackPopup;
     private readonly string _higherToolRequiredMessage;
 
     public WallTileMineableRuntimeData(
@@ -34,14 +34,14 @@ public sealed class WallTileMineableRuntimeData : IMineableTarget
         WallData wallData,
         Func<Vector2Int, Vector3> worldPositionProvider,
         Action<WallTileMineableRuntimeData, Player, WorldItemSpawner> depletedHandler,
-        WorldTextPopupEmitter feedbackPopupEmitter,
+        WorldTextPopupController feedbackPopup,
         string higherToolRequiredMessage)
     {
         Tile = tile;
         WallData = wallData;
         _worldPositionProvider = worldPositionProvider;
         _depletedHandler = depletedHandler;
-        _feedbackPopupEmitter = feedbackPopupEmitter;
+        _feedbackPopup = feedbackPopup;
         _higherToolRequiredMessage = higherToolRequiredMessage;
         CurrentDurability = WallData.MineableData.MaxDurability;
     }
@@ -100,7 +100,7 @@ public sealed class WallTileMineableRuntimeData : IMineableTarget
         _replenishTimer = WallData.MineableData.ReplenishDurationSeconds;
     }
 
-    public void ShowHigherToolRequiredFeedback() => _feedbackPopupEmitter?.ShowMessageAtWorldPosition(_higherToolRequiredMessage, WorldPosition);
+    public void ShowHigherToolRequiredFeedback() => _feedbackPopup?.ShowMessageAtWorldPosition(_higherToolRequiredMessage, WorldPosition);
 
     public bool IsSameTarget(IMineableTarget other)
     {

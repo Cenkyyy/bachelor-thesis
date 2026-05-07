@@ -44,7 +44,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     [SerializeField] private Transform _spawnedWallOresRoot;
 
     [Header("Feedback")]
-    [SerializeField] private WorldTextPopupEmitter _feedbackPopupEmitter;
+    [SerializeField] private WorldTextPopupController _feedbackPopup;
     [SerializeField] private string _higherToolRequiredMessage = "Higher tool is required";
 
     [Header("Wall Cluster Tuning")]
@@ -207,7 +207,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
             _tileWriteCellsBuffer.Add(data.DataToCell(planned.DataTile.x, planned.DataTile.y));
             _tileWriteAssetsBuffer.Add(planned.WallData.RuleTile);
-            _runtimeByTile[planned.DataTile] = new WallTileMineableRuntimeData(planned.DataTile, planned.WallData, GetTileCenterWorld, HandleRuntimeTileDepleted, _feedbackPopupEmitter, _higherToolRequiredMessage);
+            _runtimeByTile[planned.DataTile] = new WallTileMineableRuntimeData(planned.DataTile, planned.WallData, GetTileCenterWorld, HandleRuntimeTileDepleted, _feedbackPopup, _higherToolRequiredMessage);
             chunkTiles.Add(planned.DataTile);
             OnWallTileChanged?.Invoke(planned.DataTile);
 

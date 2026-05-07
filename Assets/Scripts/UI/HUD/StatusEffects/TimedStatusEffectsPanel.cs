@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Displays active timed item status effects in the HUD.
+/// </summary>
 [DisallowMultipleComponent]
-public sealed class TimedStatusEffectsPanelController : MonoBehaviour
+public sealed class TimedStatusEffectsPanel : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerItemStatusEffectsController _itemStatController;
@@ -17,7 +21,7 @@ public sealed class TimedStatusEffectsPanelController : MonoBehaviour
     private readonly Dictionary<ItemStatusEffectType, ItemStatusEffectEntryView> _entryByStat = new();
     private readonly Dictionary<ItemStatusEffectType, TimedBuffVisualState> _newestActiveStatusEffectByStat = new();
     private readonly HashSet<ItemStatusEffectType> _visibleStats = new();
-    private float _nextRefreshTime;
+    private Coroutine _refreshCoroutine;
 
     private readonly struct TimedBuffVisualState
     {
@@ -27,7 +31,7 @@ public sealed class TimedStatusEffectsPanelController : MonoBehaviour
         public TimedBuffVisualState(float remainingSeconds, float durationSeconds)
         {
             RemainingSeconds = remainingSeconds;
-            RemainingNormalized = Mathf.Clamp01(RemainingSeconds / durationSeconds);
+            RemainingNormalized = Mathf.Clamp01(RemainingSeconds / Mathf.Max(0.0001f, durationSeconds));
         }
     }
 
@@ -39,13 +43,62 @@ public sealed class TimedStatusEffectsPanelController : MonoBehaviour
         RebuildStatusEffectDataLookup();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Time.unscaledTime < _nextRefreshTime)
+        if (_itemStatController != null)
+            _itemStatController.TimedStatusEffectsChanged += HandleTimedStatusEffectsChanged;
+
+        RefreshActiveStatusEffectsView();
+        UpdateRefreshRoutineState();
+    }
+
+    private void OnDisable()
+    {
+        if (_itemStatController != null)
+            _itemStatController.TimedStatusEffectsChanged -= HandleTimedStatusEffectsChanged;
+
+        StopRefreshRoutine();
+    }
+
+    private void HandleTimedStatusEffectsChanged()
+    {
+        RefreshActiveStatusEffectsView();
+        UpdateRefreshRoutineState();
+    }
+
+    private IEnumerator RefreshWhileActiveCoroutine()
+    {
+        var wait = new WaitForSeconds(_refreshIntervalSeconds);
+
+        while (_newestActiveStatusEffectByStat.Count > 0)
+        {
+            RefreshActiveStatusEffectsView();
+            yield return wait;
+        }
+
+        _refreshCoroutine = null;
+    }
+
+    private void UpdateRefreshRoutineState()
+    {
+        if (_newestActiveStatusEffectByStat.Count > 0)
+        {
+            if (_refreshCoroutine == null)
+                _refreshCoroutine = StartCoroutine(RefreshWhileActiveCoroutine());
+
+            return;
+        }
+
+        StopRefreshRoutine();
+    }
+
+    private void StopRefreshRoutine()
+    {
+        if (_refreshCoroutine == null)
             return;
 
-        _nextRefreshTime = Time.unscaledTime + _refreshIntervalSeconds;
-        RefreshActiveStatusEffectsView();
+        StopCoroutine(_refreshCoroutine);
+        _refreshCoroutine = null;
     }
 
     private void RebuildStatusEffectDataLookup()
@@ -110,6 +163,9 @@ public sealed class TimedStatusEffectsPanelController : MonoBehaviour
     private void RebuildNewestActiveStatusEffectByStat()
     {
         _newestActiveStatusEffectByStat.Clear();
+
+        if (_itemStatController == null)
+            return;
 
         var activeTimedStats = _itemStatController.ActiveTimedStatusEffects;
         if (activeTimedStats == null)

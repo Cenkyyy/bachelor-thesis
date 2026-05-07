@@ -17,6 +17,7 @@ public sealed class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _defaultUiHoverClip;
     [SerializeField] private AudioClip _defaultUiClickClip;
 
+    [field: Header("Volume")]
     [field: SerializeField, Range(0f, 1f)] public float MasterVolume { get; private set; } = 1f;
 
     private float _musicSourceDefaultVolume = 1f;

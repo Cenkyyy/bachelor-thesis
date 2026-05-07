@@ -16,7 +16,7 @@ public sealed class BedrollInteractable : InteractableBase
     [SerializeField] private float _enemyCheckRadius = 5f;
 
     [Header("Feedback")]
-    [SerializeField] private WorldTextPopupEmitter _feedbackPopup;
+    [SerializeField] private WorldTextPopupController _feedbackPopup;
     [SerializeField] private string _spawnPointSetMessage = "New spawn point has been set";
     [SerializeField] private string _cannotSleepMessage = "Cannot sleep, enemies nearby";
 
@@ -25,10 +25,10 @@ public sealed class BedrollInteractable : InteractableBase
     private void Awake()
     {
         if (_feedbackPopup == null)
-            _feedbackPopup = GetComponent<WorldTextPopupEmitter>();
+            _feedbackPopup = GetComponent<WorldTextPopupController>();
 
         if (_feedbackPopup == null)
-            _feedbackPopup = gameObject.AddComponent<WorldTextPopupEmitter>();
+            _feedbackPopup = gameObject.AddComponent<WorldTextPopupController>();
     }
 
     public override bool CanInteract()

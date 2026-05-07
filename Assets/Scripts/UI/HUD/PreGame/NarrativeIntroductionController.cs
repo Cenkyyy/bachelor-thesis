@@ -10,7 +10,7 @@ public sealed class NarrativeIntroductionController : MonoBehaviour
     [SerializeField] private bool _enableNarrativeIntro = true;
 
     [Header("Data")]
-    [SerializeField] private DialogueData _introDialogueData;
+    [SerializeField] private NarrativeIntroductionData _introDialogueData;
 
     [Header("References")]
     [SerializeField] private GameObject _introRoot;

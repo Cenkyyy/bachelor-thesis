@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class StatBarBase : MonoBehaviour, IStatBar
+public abstract class StatBarViewBase : MonoBehaviour, IStatBar
 {
     protected PlayerRuntimeData Data { get; private set; }
 

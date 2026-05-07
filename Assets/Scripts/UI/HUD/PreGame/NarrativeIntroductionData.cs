@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Dialogue/Dialogue Data", fileName = "DialogueData")]
-public sealed class DialogueData : ScriptableObject
+public sealed class NarrativeIntroductionData : ScriptableObject
 {
     [field: SerializeField, TextArea(2, 6)] public List<string> Lines { get; private set; } = new();
 
@@ -22,6 +22,6 @@ public sealed class DialogueData : ScriptableObject
     private void OnValidate()
     {
         if (Lines.Count == 0)
-            Debug.LogWarning($"[{nameof(DialogueData)}] '{name}' has no dialogue lines assigned.", this);
+            Debug.LogWarning($"[{nameof(NarrativeIntroductionData)}] '{name}' has no dialogue lines assigned.", this);
     }
 }

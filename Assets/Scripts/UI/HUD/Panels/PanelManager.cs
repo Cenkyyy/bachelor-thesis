@@ -16,7 +16,7 @@ public sealed class PanelManager : MonoBehaviour
     [SerializeField] private BackpackPanel _backpackPanel;
     [SerializeField] private DeathChestPanel _deathChestPanel;
     [SerializeField] private WorldMapPanelController _mapPanel;
-    [SerializeField] private OverworldSettingsController _settingsPanel;
+    [SerializeField] private OverworldSettingsPanel _settingsPanel;
     [SerializeField] private CraftingPanel _craftingPanel;
     [SerializeField] private WordShopPanelController _wordShopPanel;
 
@@ -35,7 +35,7 @@ public sealed class PanelManager : MonoBehaviour
 
     public event Action<IInventory> OnDeathChestClosed;
 
-    public bool BlocksGameplayInput => _currentPanelId.HasValue && GetMajorPanel(_currentPanelId.Value).BlocksGameplayInput;
+    public bool BlocksGameplayInput => _currentPanelId.HasValue && GetMajorPanel(_currentPanelId.Value)?.BlocksGameplayInput == true;
 
     private void Awake()
     {
@@ -120,10 +120,10 @@ public sealed class PanelManager : MonoBehaviour
         if (SceneLoader.Instance != null && SceneLoader.Instance.IsTransitionActive)
             return;
 
-        _inventoryItemInteractionController?.ResolveHeldItemToInventoryOrDrop();
-
         if (_currentPanelId.HasValue)
-            CloseGroup(GetGroup(_currentPanelId.Value));
+            CloseCurrentMajorPanel(force: true, resolveHeldItem: true);
+        else
+            _inventoryItemInteractionController?.ResolveHeldItemToInventoryOrDrop();
 
         _currentDeathChestInventory = null;
         _currentPanelId = id;
@@ -144,6 +144,11 @@ public sealed class PanelManager : MonoBehaviour
 
     public void CloseCurrentMajorPanel(bool force)
     {
+        CloseCurrentMajorPanel(force, resolveHeldItem: true);
+    }
+
+    private void CloseCurrentMajorPanel(bool force, bool resolveHeldItem)
+    {
         if (!_currentPanelId.HasValue)
             return;
 
@@ -153,7 +158,8 @@ public sealed class PanelManager : MonoBehaviour
         var closingPanelId = _currentPanelId.Value;
         var closingDeathChestInventory = closingPanelId == PanelId.DeathChest ? _currentDeathChestInventory : null;
 
-        _inventoryItemInteractionController?.ResolveHeldItemToInventoryOrDrop();
+        if (resolveHeldItem)
+            _inventoryItemInteractionController?.ResolveHeldItemToInventoryOrDrop();
 
         CloseGroup(GetGroup(closingPanelId));
 
@@ -171,10 +177,10 @@ public sealed class PanelManager : MonoBehaviour
         if (SceneLoader.Instance != null && SceneLoader.Instance.IsTransitionActive)
             return;
 
-        _inventoryItemInteractionController?.ResolveHeldItemToInventoryOrDrop();
-
         if (_currentPanelId.HasValue)
-            CloseGroup(GetGroup(_currentPanelId.Value));
+            CloseCurrentMajorPanel(force: true, resolveHeldItem: true);
+        else
+            _inventoryItemInteractionController?.ResolveHeldItemToInventoryOrDrop();
 
         _currentDeathChestInventory = inventory;
         _deathChestPanel.Bind(inventory);

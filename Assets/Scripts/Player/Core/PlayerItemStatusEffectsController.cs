@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Applies item-based player stat changes from equipment and timed consumables.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class PlayerItemStatusEffectsController : MonoBehaviour
 {
@@ -13,8 +17,10 @@ public sealed class PlayerItemStatusEffectsController : MonoBehaviour
 
     public IReadOnlyList<ActiveTimedItemStatusEffects> ActiveTimedStatusEffects => _activeTimedStatusEffects;
 
+    public event Action TimedStatusEffectsChanged;
+
     public sealed class ActiveTimedItemStatusEffects
-    { 
+    {
         public IReadOnlyList<ItemStatusEffect> StatusEffects;
         public float DurationSeconds;
         public float ExpiresAt;
@@ -75,6 +81,7 @@ public sealed class PlayerItemStatusEffectsController : MonoBehaviour
             return;
 
         RecalculateAndApply();
+        TimedStatusEffectsChanged?.Invoke();
     }
 
     public void ApplyTimedConsumableStatusEffect(ConsumableItemData consumable)
@@ -97,6 +104,7 @@ public sealed class PlayerItemStatusEffectsController : MonoBehaviour
         });
 
         RecalculateAndApply();
+        TimedStatusEffectsChanged?.Invoke();
     }
 
     private bool RemoveExpiredTimedStatusEffects()

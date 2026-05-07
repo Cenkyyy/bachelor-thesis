@@ -146,8 +146,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3937243045369575744}
+  - component: {fileID: 2609302444714068833}
   - component: {fileID: 1678381687087822710}
-  - component: {fileID: 3009544400437840814}
   - component: {fileID: 1922174310905766718}
   - component: {fileID: 919779241198902293}
   m_Layer: 5
@@ -177,15 +177,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 130, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1678381687087822710
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5000539337035373659}
-  m_CullTransparentMesh: 1
---- !u!114 &3009544400437840814
+--- !u!114 &2609302444714068833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,13 +186,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5000539337035373659}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04a32456fb318474baf0d905ed36ec8f, type: 3}
+  m_Script: {fileID: 11500000, guid: 623cafa6a10f2954a90c1bd4202dc578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _targetImage: {fileID: 1922174310905766718}
   _normalSprite: {fileID: -9024126528354515892, guid: 658d4c5b4c4862f42abe97527f85a458, type: 3}
   _highlightSprite: {fileID: 3190390861762735925, guid: 658d4c5b4c4862f42abe97527f85a458, type: 3}
   _allowHighlightSprite: 1
+--- !u!222 &1678381687087822710
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5000539337035373659}
+  m_CullTransparentMesh: 1
 --- !u!114 &1922174310905766718
 MonoBehaviour:
   m_ObjectHideFlags: 0

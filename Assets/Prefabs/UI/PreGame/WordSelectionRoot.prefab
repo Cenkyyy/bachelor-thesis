@@ -1151,6 +1151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableWordSelection: 1
+  _starterWordSelectionData: {fileID: 11400000, guid: 658d940d466eb43488aa173258c309dc, type: 2}
   _root: {fileID: 2932644134659557064}
   _backgroundImage: {fileID: 4683400334905842910}
   _modifierPanel: {fileID: 1053817316534225020}

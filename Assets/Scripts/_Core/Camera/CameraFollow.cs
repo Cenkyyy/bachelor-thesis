@@ -1,12 +1,19 @@
 using UnityEngine;
 
+/// <summary>
+/// Smoothly follows the assigned target while preserving the camera z position.
+/// </summary>
+[DisallowMultipleComponent]
 public class CameraFollow : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Transform _target;
+
+    [Header("Follow")]
     [SerializeField] private float _followSpeed = 10f;
 
     [Header("Pause Settings")]
-    [SerializeField] private bool _useUnscaledTimeWhenPaused = true; // when true, camera follow uses unscaled time while the game is paused, allowing it to follow the target even during transitions/pre-game states
+    [SerializeField] private bool _useUnscaledTimeWhenPaused = true;
 
     private void LateUpdate()
     {

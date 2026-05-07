@@ -2,8 +2,11 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Applies shared button hover, selection, and click feedback.
+/// </summary>
 [RequireComponent(typeof(Image), typeof(Button))]
-public sealed class MenuButtonVisual : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public sealed class ButtonVisual : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [Header("Refs")]
     [SerializeField] private Image _targetImage;

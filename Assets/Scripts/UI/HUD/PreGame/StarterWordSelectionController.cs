@@ -18,6 +18,9 @@ public sealed class StarterWordSelectionController : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private bool _enableWordSelection = true;
 
+    [Header("Data")]
+    [SerializeField] private StarterWordSelectionData _starterWordSelectionData;
+
     [Header("Root")]
     [SerializeField] private GameObject _root;
     [SerializeField] private Image _backgroundImage;
@@ -66,18 +69,16 @@ public sealed class StarterWordSelectionController : MonoBehaviour
             _formPanel.SelectionChanged -= RefreshContinueInteractable;
     }
 
-    public IEnumerator RunSelectionCoroutine(StarterWordSelectionData data, Player player, Sprite backgroundSprite, Color backgroundColor)
+    public IEnumerator RunSelectionCoroutine(Sprite backgroundSprite, Color backgroundColor)
     {
-        if (!IsEnabled || data == null)
+        if (!IsEnabled || _starterWordSelectionData == null)
             yield break;
 
-        if (player == null)
-            player = FindFirstObjectByType<Player>();
-
+        var player = FindFirstObjectByType<Player>();
         if (player == null || player.SpellWords == null)
             yield break;
 
-        Show(data, backgroundSprite, backgroundColor);
+        Show(backgroundSprite, backgroundColor);
 
         while (!WasConfirmed)
             yield return null;
@@ -87,16 +88,16 @@ public sealed class StarterWordSelectionController : MonoBehaviour
         Hide();
     }
 
-    public void Show(StarterWordSelectionData data, Sprite backgroundSprite, Color backgroundColor)
+    public void Show(Sprite backgroundSprite, Color backgroundColor)
     {
         WasConfirmed = false;
         Result = null;
 
         ApplyBackground(backgroundSprite, backgroundColor);
 
-        _modifierPanel.BuildButtonOptions("modifier", data.ModifierRule.RequiredCount, data.ModifierRule.FixedWords, data.ModifierRule.ChoiceWords, word => word.ToString());
-        _elementPanel.BuildButtonOptions("element", data.ElementRule.RequiredCount, data.ElementRule.FixedWords, data.ElementRule.ChoiceWords, word => word.ToString());
-        _formPanel.BuildButtonOptions("form", data.FormRule.RequiredCount, data.FormRule.FixedWords, data.FormRule.ChoiceWords, word => word.ToString());
+        _modifierPanel.BuildButtonOptions("modifier", _starterWordSelectionData.ModifierRule.RequiredCount, _starterWordSelectionData.ModifierRule.FixedWords, _starterWordSelectionData.ModifierRule.ChoiceWords, word => word.ToString());
+        _elementPanel.BuildButtonOptions("element", _starterWordSelectionData.ElementRule.RequiredCount, _starterWordSelectionData.ElementRule.FixedWords, _starterWordSelectionData.ElementRule.ChoiceWords, word => word.ToString());
+        _formPanel.BuildButtonOptions("form", _starterWordSelectionData.FormRule.RequiredCount, _starterWordSelectionData.FormRule.FixedWords, _starterWordSelectionData.FormRule.ChoiceWords, word => word.ToString());
 
         RefreshContinueInteractable();
         SetVisible(true);

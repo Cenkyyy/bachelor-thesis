@@ -4,12 +4,12 @@ using UnityEngine;
 public sealed class MainMenuController : MonoBehaviour
 {
     [Header("Buttons")]
-    [SerializeField] private MenuButtonVisual _startGameButtonVisual;
-    [SerializeField] private MenuButtonVisual _settingsButtonVisual;
-    [SerializeField] private MenuButtonVisual _exitGameButtonVisual;
+    [SerializeField] private ButtonVisual _startGameButtonVisual;
+    [SerializeField] private ButtonVisual _settingsButtonVisual;
+    [SerializeField] private ButtonVisual _exitGameButtonVisual;
 
     [Header("Panels")]
-    [SerializeField] private GameObject _settingsPanel;
+    [SerializeField] private GameObject _settingsPanelRoot;
 
     [Header("Audio")]
     [SerializeField, Min(0f)] private float _menuMusicStartDelaySeconds = 1.5f;
@@ -21,8 +21,8 @@ public sealed class MainMenuController : MonoBehaviour
     {
         _isSettingsOpen = false;
 
-        if (_settingsPanel != null)
-            _settingsPanel.SetActive(false);
+        if (_settingsPanelRoot != null)
+            _settingsPanelRoot.SetActive(false);
 
         ApplyButtonSelection();
     }
@@ -95,7 +95,7 @@ public sealed class MainMenuController : MonoBehaviour
 
     private void SetSettingsPanelActive(bool isActive)
     {
-        if (_settingsPanel != null)
-            _settingsPanel.SetActive(isActive);
+        if (_settingsPanelRoot != null)
+            _settingsPanelRoot.SetActive(isActive);
     }
 }

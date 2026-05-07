@@ -3,10 +3,9 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Visual layer that darkens the screen based on brightness coming from DayNightSystem.
-/// Works with either a full-screen UI Image or a SpriteRenderer.
 /// </summary>
 [DisallowMultipleComponent]
-public sealed class DarknessOverlay : MonoBehaviour
+public sealed class DayNightDarknessOverlay : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] private DayNightSystem _time;

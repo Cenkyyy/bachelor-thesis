@@ -29,6 +29,12 @@ public sealed class ItemPickupFeed : MonoBehaviour
         Instance = this;
     }
 
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
+
     public void ShowPickup(ItemData itemDefinition, int pickedAmount)
     {
         if (_entriesRoot == null || _entryPrefab == null)

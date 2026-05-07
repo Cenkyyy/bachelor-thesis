@@ -15,9 +15,9 @@ public static class DamageWordTextPopupUtility
         if (owner == null || settings == null || damage <= 0)
             return;
 
-        var popupEmitter = owner.GetComponent<WorldTextPopupEmitter>();
+        var popupEmitter = owner.GetComponent<WorldTextPopupController>();
         if (popupEmitter == null)
-            popupEmitter = owner.AddComponent<WorldTextPopupEmitter>();
+            popupEmitter = owner.AddComponent<WorldTextPopupController>();
 
         popupEmitter.ShowMessage(settings.BuildMessage(damage, multiplier), settings.ResolveColor(multiplier), settings.CooldownSeconds);
     }

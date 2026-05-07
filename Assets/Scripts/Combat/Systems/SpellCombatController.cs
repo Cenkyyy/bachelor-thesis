@@ -9,7 +9,7 @@ public class SpellCombatController : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private PlayerHeldItemVisual _playerHeldItemVisual;
     [SerializeField] private SpellCastingPanelController _castingPanel;
-    [SerializeField] private WorldTextPopupEmitter _feedbackPopup;
+    [SerializeField] private WorldTextPopupController _feedbackPopup;
 
     [Header("Feedback")]
     [SerializeField] private string _castOnCooldownMessage = "Spell is recharging";

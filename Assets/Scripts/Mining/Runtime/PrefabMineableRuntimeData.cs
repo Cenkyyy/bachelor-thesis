@@ -12,7 +12,7 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
     [SerializeField] private Transform _dropAnchor;
 
     [Header("Feedback Settings")]
-    [SerializeField] private WorldTextPopupEmitter _feedbackPopup;
+    [SerializeField] private WorldTextPopupController _feedbackPopup;
     [SerializeField] private string _higherToolRequiredMessage = "Higher tool is required";
 
     public Vector3 WorldPosition => transform.position;

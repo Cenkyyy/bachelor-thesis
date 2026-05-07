@@ -2,15 +2,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
+public sealed class OverworldSettingsPanel : MonoBehaviour, IMajorPanel
 {
     [Header("Root")]
     [SerializeField] private GameObject _settingsPanel;
 
     [Header("Main Buttons")]
-    [SerializeField] private MenuButtonVisual _resumeButton;
-    [SerializeField] private MenuButtonVisual _returnToMenuButton;
-    [SerializeField] private MenuButtonVisual _exitGameButton;
+    [SerializeField] private ButtonVisual _resumeButton;
+    [SerializeField] private ButtonVisual _returnToMenuButton;
+    [SerializeField] private ButtonVisual _exitGameButton;
 
     [Header("Runtime Settings")]
     [SerializeField] private Slider _audioSlider;
@@ -109,7 +109,7 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
         if (cursor != null)
         {
             Color currentColor = cursor.GetCurrentFillColor();
-            sliderValue = CursorColorSliderMapping.EstimateSliderValue(currentColor, _cursorColorReferenceImage);
+            sliderValue = CursorColorSliderMappingUtility.EstimateSliderValue(currentColor, _cursorColorReferenceImage);
         }
 
         _cursorColorSlider.SetValueWithoutNotify(sliderValue);
@@ -132,7 +132,7 @@ public sealed class OverworldSettingsController : MonoBehaviour, IMajorPanel
         if (cursor == null)
             return;
 
-        Color color = CursorColorSliderMapping.GetColor(value, _cursorColorReferenceImage, _fallbackSaturation, _fallbackValue);
+        Color color = CursorColorSliderMappingUtility.GetColor(value, _cursorColorReferenceImage, _fallbackSaturation, _fallbackValue);
         cursor.ApplyFillColor(color);
     }
 

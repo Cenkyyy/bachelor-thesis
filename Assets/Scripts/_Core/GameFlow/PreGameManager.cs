@@ -4,7 +4,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class PreGameManager : MonoBehaviour
 {
-    public static PreGameManager Instance;
+    public static PreGameManager Instance { get; private set; }
 
     public enum PreGameState
     {
@@ -25,13 +25,8 @@ public class PreGameManager : MonoBehaviour
     [SerializeField] private NarrativeIntroductionController _narrativeIntroductionController;
     [SerializeField] private StarterWordSelectionController _starterWordSelectionController;
 
-    [Header("Word Selection")]
-    [SerializeField] private StarterWordSelectionData _starterWordSelectionData;
-
     public PreGameState CurrentState { get; private set; } = PreGameState.Idle;
-    public bool IsPreGameEnabled => _enablePreGame;
 
-    private Player _player;
     private string _expectedGameplaySceneName;
     private Coroutine _preGameCoroutine;
 
@@ -45,8 +40,6 @@ public class PreGameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        _player = FindFirstObjectByType<Player>();
 
         if (_sceneTransitionController == null)
             _sceneTransitionController = GetComponent<SceneTransitionController>();
@@ -83,6 +76,12 @@ public class PreGameManager : MonoBehaviour
             _starterWordSelectionController.Hide();
 
         SetState(PreGameState.Idle);
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 
     public bool TryStartNewGame(string gameplaySceneName)
@@ -135,7 +134,7 @@ public class PreGameManager : MonoBehaviour
         if (_starterWordSelectionController != null && _starterWordSelectionController.IsEnabled)
         {
             SetState(PreGameState.WordSelection);
-            yield return _starterWordSelectionController.RunSelectionCoroutine(_starterWordSelectionData, _player, _narrativeIntroductionController?.BackgroundSprite, _narrativeIntroductionController?.FallbackBackgroundColor ?? Color.black);
+            yield return _starterWordSelectionController.RunSelectionCoroutine(_narrativeIntroductionController?.BackgroundSprite, _narrativeIntroductionController?.FallbackBackgroundColor ?? Color.black);
         }
 
         SetState(PreGameState.EnteringGameplay);

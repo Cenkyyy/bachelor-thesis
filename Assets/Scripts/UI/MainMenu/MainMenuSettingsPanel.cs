@@ -2,13 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// This class was created using ChatGPT, mainly for reading colors from an cursor color reference image 
-/// and applying them to the cursor, as well as syncing the slider value with the current cursor color on enable.
-/// </summary>
-public sealed class MainMenuSettingsPanelController : MonoBehaviour
+public sealed class MainMenuSettingsPanel : MonoBehaviour
 {
-    [Header("World Seed)")]
+    [Header("World Seed")]
     [SerializeField] private TMP_InputField _worldSeedInputField;
 
     [Header("Audio")]
@@ -89,7 +85,7 @@ public sealed class MainMenuSettingsPanelController : MonoBehaviour
         if (cursor == null)
             return;
 
-        cursor.ApplyFillColor(CursorColorSliderMapping.GetColor(value, _cursorColorReferenceImage, _fallbackSaturation, _fallbackValue));
+        cursor.ApplyFillColor(CursorColorSliderMappingUtility.GetColor(value, _cursorColorReferenceImage, _fallbackSaturation, _fallbackValue));
     }
 
     private void SyncCursorSliderFromCurrentColor()
@@ -103,7 +99,7 @@ public sealed class MainMenuSettingsPanelController : MonoBehaviour
         if (cursor != null)
         {
             Color currentColor = cursor.GetCurrentFillColor();
-            sliderValue = CursorColorSliderMapping.EstimateSliderValue(currentColor, _cursorColorReferenceImage);
+            sliderValue = CursorColorSliderMappingUtility.EstimateSliderValue(currentColor, _cursorColorReferenceImage);
         }
 
         _cursorColorSlider.SetValueWithoutNotify(sliderValue);

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Shows short floating text feedback above world objects or fixed local anchors.
+/// </summary>
 [DisallowMultipleComponent]
-public sealed class WorldTextPopupEmitter : MonoBehaviour
+public sealed class WorldTextPopupController : MonoBehaviour
 {
     [Header("Visuals")]
     [SerializeField] private Vector3 _localOffset = new(0f, 0.5f, 0f);
@@ -26,7 +29,7 @@ public sealed class WorldTextPopupEmitter : MonoBehaviour
     [SerializeField, Min(1)] private int _maxActivePopups = 2;
 
     private float _nextAllowedShowTime;
-    private readonly List<WordTextPopupRuntimeData> _activePopups = new();
+    private readonly List<WorldTextPopupRuntimeData> _activePopups = new();
 
     public bool HasActivePopup => _activePopups.Count > 0;
 
@@ -56,7 +59,7 @@ public sealed class WorldTextPopupEmitter : MonoBehaviour
         ShowMessageInternal(message, colorOverride, cooldownOverrideSeconds, null, transform);
     }
 
-    private void ShowMessageInternal(string message, Color? colorOverride, float? cooldownOverrideSeconds, Vector3? worldPosition, Transform parent) 
+    private void ShowMessageInternal(string message, Color? colorOverride, float? cooldownOverrideSeconds, Vector3? worldPosition, Transform parent)
     {
         if (string.IsNullOrWhiteSpace(message))
             return;
@@ -70,7 +73,6 @@ public sealed class WorldTextPopupEmitter : MonoBehaviour
         if (_activePopups.Count >= _maxActivePopups)
             RemoveOldestPopupImmediately();
 
-        // create an object to display the message at
         var textRoot = new GameObject("WorldPopupText");
         textRoot.layer = gameObject.layer;
 
@@ -80,7 +82,6 @@ public sealed class WorldTextPopupEmitter : MonoBehaviour
         if (worldPosition.HasValue)
             textRoot.transform.position = worldPosition.Value + _localOffset;
 
-        // add the text component with basic settings
         var text = textRoot.AddComponent<TextMeshPro>();
         text.text = message;
         text.color = colorOverride ?? _textColor;
@@ -95,7 +96,7 @@ public sealed class WorldTextPopupEmitter : MonoBehaviour
 
         ApplySorting(text);
 
-        var popup = new WordTextPopupRuntimeData(textRoot, text)
+        var popup = new WorldTextPopupRuntimeData(textRoot, text)
         {
             IsWorldSpace = worldPosition.HasValue
         };
@@ -105,7 +106,7 @@ public sealed class WorldTextPopupEmitter : MonoBehaviour
         popup.Routine = StartCoroutine(ShowMessageRoutine(popup));
     }
 
-    private IEnumerator ShowMessageRoutine(WordTextPopupRuntimeData popup)
+    private IEnumerator ShowMessageRoutine(WorldTextPopupRuntimeData popup)
     {
         var elapsed = 0f;
         var start = popup.StartLocalPosition;
@@ -141,7 +142,6 @@ public sealed class WorldTextPopupEmitter : MonoBehaviour
         if (_activePopups.Count == 0)
             return;
 
-        // stop the first's popup coroutine and then remove it from the active popups
         var popup = _activePopups[0];
         if (popup.Routine != null)
             StopCoroutine(popup.Routine);
@@ -149,7 +149,7 @@ public sealed class WorldTextPopupEmitter : MonoBehaviour
         RemovePopup(popup);
     }
 
-    private void RemovePopup(WordTextPopupRuntimeData popup)
+    private void RemovePopup(WorldTextPopupRuntimeData popup)
     {
         if (popup.Root != null)
             Destroy(popup.Root);
@@ -160,14 +160,13 @@ public sealed class WorldTextPopupEmitter : MonoBehaviour
 
     private void RefreshStackLayout()
     {
-        // based on the active popups, refresh each's popup local position
         for (var i = 0; i < _activePopups.Count; i++)
         {
             var popup = _activePopups[i];
             if (popup.Root == null)
                 continue;
 
-                        if (popup.IsWorldSpace)
+            if (popup.IsWorldSpace)
             {
                 popup.StartLocalPosition = popup.Root.transform.position + Vector3.up * (i * _stackSpacing);
                 popup.Root.transform.position = popup.StartLocalPosition;
@@ -194,7 +193,7 @@ public sealed class WorldTextPopupEmitter : MonoBehaviour
         text.sortingOrder = _sortingOrder;
     }
 
-    private sealed class WordTextPopupRuntimeData
+    private sealed class WorldTextPopupRuntimeData
     {
         public GameObject Root { get; }
         public TextMeshPro Text { get; }
@@ -202,7 +201,7 @@ public sealed class WorldTextPopupEmitter : MonoBehaviour
         public Vector3 StartLocalPosition { get; set; }
         public bool IsWorldSpace { get; set; }
 
-        public WordTextPopupRuntimeData(GameObject root, TextMeshPro text)
+        public WorldTextPopupRuntimeData(GameObject root, TextMeshPro text)
         {
             Root = root;
             Text = text;

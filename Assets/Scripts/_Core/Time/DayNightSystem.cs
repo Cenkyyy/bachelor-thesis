@@ -14,21 +14,19 @@ public sealed class DayNightSystem : MonoBehaviour
     private const int MinutesPerHour = 60;
     private const int HoursPerDay = 24;
     private const int MinutesPerDay = HoursPerDay * MinutesPerHour;
+    private const float DayStartTime01 = 6f / HoursPerDay;
+    private const float NightStartTime01 = 18f / HoursPerDay;
+    private const float SunriseTime01 = 0.25f; // ~06:00
+    private const float SunsetTime01 = 0.75f; // ~18:00
 
     [Header("Time")]
     [SerializeField, Min(1f)] private float _secondsPerGameDay = 600f; // 10 min per day
     [SerializeField, Range(0f, 1f)] private float _initialTime01 = 0.25f; // ~06:00
     [SerializeField, Min(1)] private int _startDay = 1;
 
-    [Header("Day / Night Window")]
-    [SerializeField, Range(0f, 1f)] private readonly float _dayStartTime01 = 6f / HoursPerDay;
-    [SerializeField, Range(0f, 1f)] private readonly float _nightStartTime01 = 18f / HoursPerDay;
-
     [Header("Brightness (for visuals)")]
     [SerializeField, Range(0f, 1f)] private float _minBrightnessAtMidnight = 0.15f;
     [SerializeField, Range(0f, 1f)] private float _twilightBoost = 0.08f;
-    [SerializeField, Range(0f, 1f)] private readonly float _sunrise01 = 0.25f; // ~06:00
-    [SerializeField, Range(0f, 1f)] private readonly float _sunset01 = 0.75f;  // ~18:00
 
     public float Time01 { get; private set; }
     public int CurrentDay { get; private set; }
@@ -98,6 +96,8 @@ public sealed class DayNightSystem : MonoBehaviour
         RecomputeBrightness(forceInvoke: false);
     }
 
+    public string GetTimeString() => $"{Hour:00}:{Minute:00}";
+
     private void RecomputeHhMm()
     {
         float totalMinutesF = Time01 * MinutesPerDay;
@@ -121,7 +121,7 @@ public sealed class DayNightSystem : MonoBehaviour
 
     private void RecomputeNightFlag()
     {
-        IsNight = Time01 >= _nightStartTime01 || Time01 < _dayStartTime01;
+        IsNight = Time01 >= NightStartTime01 || Time01 < DayStartTime01;
     }
 
     private void RecomputeBrightness(bool forceInvoke)
@@ -133,8 +133,8 @@ public sealed class DayNightSystem : MonoBehaviour
 
         // Gentle twilight lift around sunrise/sunset to avoid harsh transitions.
         float twilight = 0f;
-        twilight += Gaussian01(Time01, _sunrise01, 0.03f);
-        twilight += Gaussian01(Time01, _sunset01, 0.03f);
+        twilight += Gaussian01(Time01, SunriseTime01, 0.03f);
+        twilight += Gaussian01(Time01, SunsetTime01, 0.03f);
         float brightness = Mathf.Clamp01(baseBrightness + _twilightBoost * twilight);
 
         Brightness = brightness;
@@ -163,9 +163,4 @@ public sealed class DayNightSystem : MonoBehaviour
         _isRuntimeInitialized = true;
         OnBrightnessChanged?.Invoke(Brightness);
     }
-
-    public float GetHudTimeBarPosition01() => GetHudTimeBarPosition01(Time01);
-    public float GetHudTimeBarPosition01(float time01) => Mathf.Repeat(time01 - _dayStartTime01, 1f);
-
-    public string GetTimeString() => $"{Hour:00}:{Minute:00}";
 }

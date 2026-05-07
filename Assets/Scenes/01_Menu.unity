@@ -315,17 +315,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3937243045369575744, guid: e98b4760f65509b42b436f11a8d9583f, type: 3}
   m_PrefabInstance: {fileID: 8153295760699576307}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &322865567 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3009544400437840814, guid: e98b4760f65509b42b436f11a8d9583f, type: 3}
-  m_PrefabInstance: {fileID: 8153295760699576307}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04a32456fb318474baf0d905ed36ec8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &403471233
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,10 +489,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ef64f9b51b803478708ac899a4d7e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startGameButtonVisual: {fileID: 322865567}
+  _startGameButtonVisual: {fileID: 8153295760699576308}
   _settingsButtonVisual: {fileID: 878519059}
   _exitGameButtonVisual: {fileID: 1288412727}
-  _settingsPanel: {fileID: 1676980479}
+  _settingsPanelRoot: {fileID: 1676980479}
   _menuMusicStartDelaySeconds: 1.5
   _menuMusicFadeInDuration: 8.5
 --- !u!1 &514659060
@@ -762,13 +751,13 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &878519059 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3009544400437840814, guid: e98b4760f65509b42b436f11a8d9583f, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2609302444714068833, guid: e98b4760f65509b42b436f11a8d9583f, type: 3}
   m_PrefabInstance: {fileID: 878519057}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04a32456fb318474baf0d905ed36ec8f, type: 3}
+  m_Script: {fileID: 11500000, guid: 623cafa6a10f2954a90c1bd4202dc578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &996746176
@@ -1316,13 +1305,13 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1288412727 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3009544400437840814, guid: e98b4760f65509b42b436f11a8d9583f, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2609302444714068833, guid: e98b4760f65509b42b436f11a8d9583f, type: 3}
   m_PrefabInstance: {fileID: 1288412725}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04a32456fb318474baf0d905ed36ec8f, type: 3}
+  m_Script: {fileID: 11500000, guid: 623cafa6a10f2954a90c1bd4202dc578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1328208525
@@ -1815,6 +1804,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e98b4760f65509b42b436f11a8d9583f, type: 3}
+--- !u!114 &8153295760699576308 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2609302444714068833, guid: e98b4760f65509b42b436f11a8d9583f, type: 3}
+  m_PrefabInstance: {fileID: 8153295760699576307}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 623cafa6a10f2954a90c1bd4202dc578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

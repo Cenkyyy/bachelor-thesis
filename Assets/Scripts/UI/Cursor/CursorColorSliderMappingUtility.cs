@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public static class CursorColorSliderMapping
+public static class CursorColorSliderMappingUtility
 {
     public static Color GetColor(float normalizedValue, Image referenceImage, float fallbackSaturation, float fallbackValue)
     {
