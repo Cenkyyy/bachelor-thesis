@@ -339,6 +339,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NarrativeIntroductionRoot
       objectReference: {fileID: 0}
+    - target: {fileID: 1227746745906381441, guid: 5c1f867b7a5642043ae6c2a63088386b, type: 3}
+      propertyPath: _enableNarrativeIntro
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5584879340862840598, guid: 5c1f867b7a5642043ae6c2a63088386b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
