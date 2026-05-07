@@ -1,5 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 
+/// <summary>
+/// Drains hunger from player travel, applies exhaustion slow, and handles starvation damage.
+/// </summary>
+[DisallowMultipleComponent]
 public sealed class PlayerHungerController : MonoBehaviour
 {
     [Header("References")]
@@ -26,41 +30,28 @@ public sealed class PlayerHungerController : MonoBehaviour
 
     private float DistancePerHungerPoint => _tilesPerHungerPoint * _worldUnitsPerTile;
 
-    private void Awake()
-    {
-        if (_player == null)
-            _player = GetComponent<Player>();
-
-        if (_movement == null)
-            _movement = GetComponent<PlayerMovement>();
-    }
-
     private void OnEnable()
     {
         _lastPosition = transform.position;
         _distanceBuffer = 0f;
         _starvationTickTimer = 0f;
 
-        if (_player != null)
+        if (_player.Data != null)
             _player.Data.OnHungerChanged += HandleHungerChanged;
-
+        
         ApplyExhaustionSlow();
     }
 
     private void OnDisable()
     {
-        if (_player != null)
+        if (_player.Data != null)
             _player.Data.OnHungerChanged -= HandleHungerChanged;
-
-        if (_movement != null)
-            _movement.SetExternalSpeedMultiplier(1f);
+        
+        _movement.SetExternalSpeedMultiplier(1f);
     }
 
     private void Update()
     {
-        if (_player == null)
-            return;
-
         TickTravelDrain();
         TickStarvationDamage();
     }
@@ -78,12 +69,11 @@ public sealed class PlayerHungerController : MonoBehaviour
             return;
 
         _distanceBuffer += traveled;
-        var hungerStepDistance = Mathf.Max(0.01f, DistancePerHungerPoint);
-        var hungerToConsume = Mathf.FloorToInt(_distanceBuffer / hungerStepDistance);
+        var hungerToConsume = Mathf.FloorToInt(_distanceBuffer / DistancePerHungerPoint);
         if (hungerToConsume <= 0)
             return;
 
-        _distanceBuffer -= hungerToConsume * hungerStepDistance;
+        _distanceBuffer -= hungerToConsume * DistancePerHungerPoint;
         _player.Data.ConsumeHunger(hungerToConsume);
     }
 
@@ -118,9 +108,6 @@ public sealed class PlayerHungerController : MonoBehaviour
 
     private void ApplyExhaustionSlow()
     {
-        if (_movement == null || _player == null)
-            return;
-
         if (_player.Data.MaxHunger <= 0)
             return;
 

@@ -37,7 +37,7 @@ public sealed class EnemyProjectile : MonoBehaviour
         _damage = Mathf.Max(0, damage);
         transform.position = origin;
 
-        var finalDirection = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
+        var finalDirection = direction.sqrMagnitude > Mathf.Epsilon ? direction.normalized : Vector2.right;
         var finalSpeed = speed > 0f ? speed : _defaultSpeed;
         _expireAt = Time.time + (lifetimeSeconds > 0f ? lifetimeSeconds : _defaultLifetimeSeconds);
 

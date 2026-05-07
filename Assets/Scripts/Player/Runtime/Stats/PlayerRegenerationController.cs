@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 
+/// <summary>
+/// Regenerates player health and mana according to runtime stats and hunger rules.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class PlayerRegenerationController : MonoBehaviour
 {
@@ -17,15 +20,9 @@ public sealed class PlayerRegenerationController : MonoBehaviour
     private float _manaTickTimer;
     private int _lastKnownHealth = -1;
 
-    private void Awake()
-    {
-        if (_player == null)
-            _player = GetComponent<Player>();
-    }
-
     private void OnEnable()
     {
-        if (_player?.Data != null)
+        if (_player.Data != null)
         {
             _player.Data.OnHealthChanged += HandleHealthChanged;
             _lastKnownHealth = _player.Data.CurrentHealth;
@@ -34,24 +31,35 @@ public sealed class PlayerRegenerationController : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_player?.Data != null)
+        if (_player.Data != null)
+        {
             _player.Data.OnHealthChanged -= HandleHealthChanged;
-
-        _lastKnownHealth = -1;
+            _lastKnownHealth = -1;
+        }
     }
 
     private void Update()
     {
-        if (_player?.Data == null || GameStateManager.IsGamePaused)
+        if (GameStateManager.IsGamePaused)
             return;
 
         TickManaRegeneration();
         TickHealthRegeneration();
     }
 
+    public void ResetTimers()
+    {
+        _healthRemainder = 0f;
+        _manaRemainder = 0f;
+        _nextAllowedHealthRegenTime = 0f;
+        _healthTickTimer = 0f;
+        _manaTickTimer = 0f;
+        _lastKnownHealth = _player.Data.CurrentHealth;
+    }
+
     private void TickManaRegeneration()
     {
-        var regenPerSecond = Mathf.Max(0f, _player.Data.ManaRegeneration);
+        var regenPerSecond = _player.Data.ManaRegeneration;
         if (regenPerSecond <= 0f || _player.Data.CurrentMana >= _player.Data.MaxMana)
         {
             _manaTickTimer = 0f;
@@ -82,13 +90,11 @@ public sealed class PlayerRegenerationController : MonoBehaviour
 
         if (!CanRegenerateHealth())
         {
-            // Health regeneration is intentionally not banked while blocked (e.g. post-hit cooldown).
-            // Time still passes for timed buffs, but missed healing is not applied later.
             _healthTickTimer = 0f;
             return;
         }
 
-        var regenPerSecond = Mathf.Max(0f, _player.Data.HealthRegeneration);
+        var regenPerSecond = _player.Data.HealthRegeneration;
         if (regenPerSecond <= 0f)
             return;
 
@@ -129,7 +135,7 @@ public sealed class PlayerRegenerationController : MonoBehaviour
     private static int ConvertRegenPerSecondToWholeAmount(float regenPerSecond, ref float remainder)
     {
         remainder += regenPerSecond;
-        int wholeAmount = Mathf.FloorToInt(remainder);
+        var wholeAmount = Mathf.FloorToInt(remainder);
         if (wholeAmount <= 0)
             return 0;
 

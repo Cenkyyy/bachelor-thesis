@@ -207,6 +207,7 @@ GameObject:
   - component: {fileID: 6067396949842947324}
   - component: {fileID: 8120486794298343527}
   - component: {fileID: 4361287354850156806}
+  - component: {fileID: 3306367631584077544}
   - component: {fileID: 6858055649506359506}
   - component: {fileID: 5402159747806690286}
   - component: {fileID: 3255990485141274289}
@@ -310,6 +311,19 @@ MonoBehaviour:
   initialState: {fileID: 3277094677444135463}
   _movement: {fileID: 6858055649506359506}
   _animation: {fileID: 5402159747806690286}
+--- !u!114 &3306367631584077544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abc908a9e0813a6488eaf16da11208c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
 --- !u!114 &6858055649506359506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,10 +367,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
+  _inputController: {fileID: 3306367631584077544}
   _backpackPanel: {fileID: 0}
   _worldItemSpawner: {fileID: 0}
   _uiRaycaster: {fileID: 0}
-  _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
+  _worldCamera: {fileID: 0}
   _throwSpawnDistance: 0.6
 --- !u!114 &3428453546330940767
 MonoBehaviour:
@@ -562,7 +577,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
   _playerTransform: {fileID: 3689139185868277431}
+  _playerBody: {fileID: 6067396949842947324}
   _deathDropController: {fileID: 0}
+  _itemCooldownController: {fileID: 8033507651253804523}
+  _regenerationController: {fileID: 8857977768433231325}
+  _statusEffectController: {fileID: 3003602596391903937}
   _defaultSpawnPoint: {fileID: 3689139185868277431}
   _respawnObstacleMask:
     serializedVersion: 2
@@ -639,9 +658,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
-  _itemStatController: {fileID: 3003602596391903937}
-  _itemCooldownTrackController: {fileID: 8033507651253804523}
-  _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
+  _inputController: {fileID: 3306367631584077544}
+  _statusEffectController: {fileID: 3003602596391903937}
+  _cooldownController: {fileID: 8033507651253804523}
 --- !u!114 &4784472143194864754
 MonoBehaviour:
   m_ObjectHideFlags: 0

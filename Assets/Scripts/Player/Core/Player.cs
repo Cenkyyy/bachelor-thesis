@@ -4,7 +4,8 @@ using UnityEngine;
 /// <summary>
 /// Composes player data (stats), item storage (inventory), and combat words.
 /// </summary>
-public class Player : MonoBehaviour
+[DisallowMultipleComponent]
+public sealed class Player : MonoBehaviour
 {
     [Header("Data")]
     [SerializeField] private PlayerData _playerData;

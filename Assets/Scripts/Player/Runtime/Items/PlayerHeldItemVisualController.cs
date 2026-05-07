@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
-/// Renders the currently selected hotbar item in the player's hand.
-/// The held item is anchored per facing direction so it can match animations.
+/// Renders the selected hotbar item in the player's hand and anchors it to the current facing direction.
 /// </summary>
+[DisallowMultipleComponent]
 public sealed class PlayerHeldItemVisualController : MonoBehaviour
 {
-    [Header("Refs")]
+    [Header("References")]
     [SerializeField] private Player _player;
     [SerializeField] private PlayerAnimationController _playerAnimation;
     [SerializeField] private SpriteRenderer _heldItemRenderer;
@@ -30,15 +30,7 @@ public sealed class PlayerHeldItemVisualController : MonoBehaviour
 
     private void Awake()
     {
-        if (_player == null)
-            _player = GetComponent<Player>();
-
-        if (_playerAnimation == null)
-            _playerAnimation = GetComponent<PlayerAnimationController>();
-
-        if (_heldItemRenderer != null)
-            _heldItemRenderer.gameObject.SetActive(true);
-
+        _heldItemRenderer.gameObject.SetActive(true);
         CurrentHandAnchor = _downAnchor;
     }
 
@@ -59,16 +51,13 @@ public sealed class PlayerHeldItemVisualController : MonoBehaviour
 
     private void Update()
     {
-        // Player inventory is created in Player.Awake. Depending on Unity execution order,
-        // this component can run before that initialization is complete.
         if (!_isSubscribed)
             TryInitialize();
-
     }
 
     private void TryInitialize()
     {
-        if (_player?.Inventory == null)
+        if (_player.Inventory == null)
             return;
 
         Subscribe();
@@ -80,32 +69,20 @@ public sealed class PlayerHeldItemVisualController : MonoBehaviour
         if (_isSubscribed)
             return;
 
-        if (_player?.Inventory != null)
-        {
-            _player.Inventory.OnHotbarSelectionChanged += HandleHotbarSelectionChanged;
-            _player.Inventory.OnItemChanged += HandleInventoryItemChanged;
-        }
-
-        if (_playerAnimation != null)
-            _playerAnimation.OnFacingDirectionChanged += HandleFacingDirectionChanged;
-
+        _player.Inventory.OnHotbarSelectionChanged += HandleHotbarSelectionChanged;
+        _player.Inventory.OnItemChanged += HandleInventoryItemChanged;
+        _playerAnimation.OnFacingDirectionChanged += HandleFacingDirectionChanged;
         _isSubscribed = true;
     }
 
     private void Unsubscribe()
     {
-        if (!_isSubscribed)
+        if (!_isSubscribed || _player.Inventory == null)
             return;
 
-        if (_player?.Inventory != null)
-        {
-            _player.Inventory.OnHotbarSelectionChanged -= HandleHotbarSelectionChanged;
-            _player.Inventory.OnItemChanged -= HandleInventoryItemChanged;
-        }
-
-        if (_playerAnimation != null)
-            _playerAnimation.OnFacingDirectionChanged -= HandleFacingDirectionChanged;
-
+        _player.Inventory.OnHotbarSelectionChanged -= HandleHotbarSelectionChanged;
+        _player.Inventory.OnItemChanged -= HandleInventoryItemChanged;
+        _playerAnimation.OnFacingDirectionChanged -= HandleFacingDirectionChanged;
         _isSubscribed = false;
     }
 
@@ -116,9 +93,6 @@ public sealed class PlayerHeldItemVisualController : MonoBehaviour
 
     private void HandleInventoryItemChanged(int changedIndex)
     {
-        if (_player?.Inventory == null)
-            return;
-
         if (changedIndex != _player.Inventory.SelectedHotbarIndex)
             return;
 
@@ -132,11 +106,8 @@ public sealed class PlayerHeldItemVisualController : MonoBehaviour
 
     private void RefreshVisual()
     {
-        if (_player?.Inventory == null || _heldItemRenderer == null)
-            return;
-
         var selectedItem = _player.Inventory.GetItemAt(_player.Inventory.SelectedHotbarIndex);
-        if (selectedItem.IsEmpty || selectedItem.Item == null || selectedItem.Item.Icon == null)
+        if (selectedItem.IsEmpty || selectedItem.Item.Icon == null)
         {
             _heldItemRenderer.sprite = null;
             _heldItemRenderer.gameObject.SetActive(false);
@@ -146,18 +117,15 @@ public sealed class PlayerHeldItemVisualController : MonoBehaviour
         _heldItemRenderer.sprite = selectedItem.Item.Icon;
         _heldItemRenderer.gameObject.SetActive(true);
         _heldItemRenderer.transform.localScale = _itemLocalScale;
-
         ApplyFacingDirection(_playerAnimation.FacingDirection);
     }
 
     private void ApplyFacingDirection(PlayerFacingDirection direction)
     {
-        if (_heldItemRenderer == null)
-            return;
-
         var anchor = GetAnchorForFacingDirection(direction);
         CurrentHandAnchor = anchor;
-        if (anchor != null && _heldItemRenderer.transform.parent != anchor)
+
+        if (_heldItemRenderer.transform.parent != anchor)
         {
             _heldItemRenderer.transform.SetParent(anchor, false);
             _heldItemRenderer.transform.localPosition = Vector3.zero;

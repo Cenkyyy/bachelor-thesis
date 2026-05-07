@@ -42,7 +42,7 @@ public static class WorldSeedUtils
     /// </summary>
     public static float SampleSignedPerlinNoise(int x, int y, float scale, int seed)
     {
-        float safeScale = Mathf.Max(0.0001f, scale);
+        float safeScale = Mathf.Max(Mathf.Epsilon, scale);
         float sampleX = (x + 0.5f) * safeScale + PerlinBaseOffsetX + seed * PerlinSeedScaleX;
         float sampleY = (y + 0.5f) * safeScale + PerlinBaseOffsetY + seed * PerlinSeedScaleY;
 

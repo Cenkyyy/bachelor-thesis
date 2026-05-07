@@ -206,7 +206,7 @@ public abstract class EntityCore : StateMachineCore
     {
         var from = (Vector2)transform.position;
         var toTarget = worldTarget - from;
-        if (toTarget.sqrMagnitude <= 0.0001f)
+        if (toTarget.sqrMagnitude <= Mathf.Epsilon)
         {
             return false;
         }

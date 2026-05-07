@@ -1,39 +1,28 @@
-﻿using UnityEngine;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
-/// Consumes consumables from the selected hotbar slot and applies their instant effects.
+/// Consumes hotbar consumables and applies their instant and timed player effects.
 /// </summary>
+[DisallowMultipleComponent]
 public sealed class PlayerConsumableController : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Player _player;
-    [SerializeField] private PlayerStatusEffectController _itemStatController;
-    [SerializeField] private PlayerItemCooldownController _itemCooldownTrackController;
-    [SerializeField] private GameplayInputBindingsData _inputBindings;
+    [SerializeField] private PlayerInputController _inputController;
+    [SerializeField] private PlayerStatusEffectController _statusEffectController;
+    [SerializeField] private PlayerItemCooldownController _cooldownController;
 
-    private void Awake()
+    private void OnEnable()
     {
-        if (_player == null)
-            _player = GetComponent<Player>();
-
-        if (_itemStatController == null)
-            _itemStatController = GetComponent<PlayerStatusEffectController>();
-
-        if (_itemCooldownTrackController == null)
-            _itemCooldownTrackController = GetComponent<PlayerItemCooldownController>();
+        if (_inputController != null)
+            _inputController.ConsumePressed += TryConsumeSelectedHotbarItem;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if (_player == null || GameStateManager.IsGamePaused)
-            return;
-
-        if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
-            return;
-
-        if (!Input.GetKeyDown(_inputBindings.ConsumeKey))
-            return;
-
-        TryConsumeSelectedHotbarItem();
+        if (_inputController != null)
+            _inputController.ConsumePressed -= TryConsumeSelectedHotbarItem;
     }
 
     private void TryConsumeSelectedHotbarItem()
@@ -46,11 +35,11 @@ public sealed class PlayerConsumableController : MonoBehaviour
         if (slotItem.Item is not ConsumableItemData consumable)
             return;
 
-        if (_itemCooldownTrackController != null && _itemCooldownTrackController.IsOnCooldown(consumable))
+        if (_cooldownController.IsOnCooldown(consumable))
             return;
 
         ApplyConsumable(consumable);
-        _itemCooldownTrackController?.TryStartCooldown(consumable);
+        _cooldownController.TryStartCooldown(consumable);
         ConsumeOne(slotIndex, slotItem);
     }
 
@@ -59,8 +48,7 @@ public sealed class PlayerConsumableController : MonoBehaviour
         _player.Data.Heal(consumable.RestoreHealth);
         _player.Data.RecoverMana(consumable.RestoreMana);
         _player.Data.EatFood(consumable.RestoreHunger);
-
-        _itemStatController?.ApplyTimedConsumableStatusEffect(consumable);
+        _statusEffectController.ApplyTimedConsumableStatusEffect(consumable);
     }
 
     private void ConsumeOne(int slotIndex, InventoryItem slotItem)

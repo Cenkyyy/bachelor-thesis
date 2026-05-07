@@ -36,7 +36,7 @@ public sealed class WorldItemSpawner : MonoBehaviour
         if (worldItem.Rigidbody != null)
         {
             var dir = direction ?? Random.insideUnitCircle.normalized;
-            if (dir.sqrMagnitude < 0.0001f)
+            if (dir.sqrMagnitude < Mathf.Epsilon)
                 dir = Vector2.right;
 
             worldItem.Rigidbody.AddForce(dir * _scatterImpulse, ForceMode2D.Impulse);

@@ -3,133 +3,91 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Drops player inventory items from the selected hotbar slot or hovered backpack slot into the world.
+/// </summary>
+[DisallowMultipleComponent]
 public sealed class PlayerItemDropController : MonoBehaviour
 {
-    [Header("Refs")]
+    [Header("References")]
     [SerializeField] private Player _player;
+    [SerializeField] private PlayerInputController _inputController;
     [SerializeField] private BackpackPanel _backpackPanel;
     [SerializeField] private WorldItemSpawner _worldItemSpawner;
-    [SerializeField] private GraphicRaycaster _uiRaycaster; //  UI Canvas
-
-    [Header("Input")]
-    [SerializeField] private GameplayInputBindingsData _inputBindings;
+    [SerializeField] private GraphicRaycaster _uiRaycaster;
+    [SerializeField] private Camera _worldCamera;
 
     [Header("Throw")]
     [SerializeField] private float _throwSpawnDistance = 0.6f;
 
-    // cached list for UI raycasting
-    private readonly List<RaycastResult> _raycastResults = new List<RaycastResult>();
+    private readonly List<RaycastResult> _raycastResults = new();
 
-    private void Awake()
+    private void OnEnable()
     {
-        if (_player == null) 
-            _player = GetComponent<Player>() ?? GetComponentInParent<Player>();
-
-        if (_worldItemSpawner == null)
-        {
-            var arr = FindObjectsByType<WorldItemSpawner>(FindObjectsSortMode.None);
-            if (arr != null && arr.Length > 0)
-                _worldItemSpawner = arr[0];
-        }
-        if (_backpackPanel == null)
-        {
-            var arr = FindObjectsByType<BackpackPanel>(FindObjectsSortMode.None);
-            if (arr != null && arr.Length > 0)
-                _backpackPanel = arr[0];
-        }
-        if (_uiRaycaster == null)
-        {
-            var arr = FindObjectsByType<GraphicRaycaster>(FindObjectsSortMode.None);
-            if (arr != null && arr.Length > 0)
-                _uiRaycaster = arr[0];
-        }
+        if (_inputController != null)
+            _inputController.DropPressed += HandleDrop;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if (_player.Inventory == null) 
-            return;
-        if (GameStateManager.IsGamePaused) 
-            return;
-
-        if (Input.GetKeyDown(_inputBindings.DropKey))
-        {
-            var dropAll = Input.GetKey(_inputBindings.DropAllModifierKey);
-            HandleDrop(dropAll);
-        }
+        if (_inputController != null)
+            _inputController.DropPressed -= HandleDrop;
     }
 
     private void HandleDrop(bool dropAll)
     {
-        // determine source slot index (hotbar or backpack)
         var sourceIndex = ResolveSourceSlotIndex();
-        if (sourceIndex < 0) 
+        if (sourceIndex < 0)
             return;
 
-        // get item from inventory
         var item = _player.Inventory.GetItemAt(sourceIndex);
-        if (item.IsEmpty) 
+        if (item.IsEmpty)
             return;
 
-        // spawn the dropping item in the world
-        var toDrop = dropAll ? item.Amount : 1;
-        var droppingItem = new InventoryItem(item.Item, toDrop);
+        var amountToDrop = dropAll ? item.Amount : 1;
+        var droppingItem = new InventoryItem(item.Item, amountToDrop);
 
-        ResolveDropSpawn(out var direction, out var spawnPos);
+        ResolveDropSpawn(out var direction, out var spawnPosition);
+        _worldItemSpawner.Spawn(droppingItem, spawnPosition, direction);
 
-        // spawn the item in the world
-        _worldItemSpawner.Spawn(droppingItem, spawnPos, direction);
-
-        // reduce or clear the source stack in inventory
-        var remaining = item.Amount - toDrop;
-        if (remaining <= 0)
+        var remainingAmount = item.Amount - amountToDrop;
+        if (remainingAmount <= 0)
             _player.Inventory.ClearItemAt(sourceIndex);
         else
-            _player.Inventory.SetItemAt(sourceIndex, item.WithAmount(remaining));
+            _player.Inventory.SetItemAt(sourceIndex, item.WithAmount(remainingAmount));
     }
 
     private void ResolveDropSpawn(out Vector2 direction, out Vector3 spawnPosition)
     {
         var originPosition = _player.transform.position;
-        var worldCamera = Camera.main;
-        var mouseWorldPosition = worldCamera != null ? worldCamera.ScreenToWorldPoint(Input.mousePosition) : originPosition + Vector3.down;
-
+        var mouseWorldPosition = _worldCamera.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPosition.z = 0f;
-        direction = (mouseWorldPosition - originPosition).normalized;
 
+        direction = (mouseWorldPosition - originPosition).normalized;
         if (direction.sqrMagnitude < Mathf.Epsilon)
             direction = Vector2.down;
 
         spawnPosition = originPosition + (Vector3)(direction * _throwSpawnDistance);
     }
 
-    /// <summary>
-    /// If backpack UI is open, use the hovered Slot (hotbar or backpack).
-    /// Otherwise use currently selected hotbar index.
-    /// </summary>
     private int ResolveSourceSlotIndex()
     {
-        // inventory open, then return on hovered slot index
-        if (_backpackPanel != null && _backpackPanel.IsOpen)
+        if (_backpackPanel.IsOpen)
         {
             var hovered = RaycastSlotUnderMouse();
             return hovered != null ? hovered.SlotIndex : -1;
         }
 
-        // inventory closed, then return selected hotbar slot index
         return _player.Inventory.SelectedHotbarIndex;
     }
 
-    /// <summary>
-    /// Raycasts UI under the mouse using the assigned GraphicRaycaster and returns the first Slot.
-    /// </summary>
     private InventorySlotView RaycastSlotUnderMouse()
     {
-        if (_uiRaycaster == null || EventSystem.current == null)
+        if (EventSystem.current == null)
             return null;
 
-        var data = new PointerEventData(EventSystem.current) 
-        { 
+        var data = new PointerEventData(EventSystem.current)
+        {
             position = Input.mousePosition
         };
 
@@ -138,13 +96,14 @@ public sealed class PlayerItemDropController : MonoBehaviour
 
         for (int i = 0; i < _raycastResults.Count; i++)
         {
-            if (_raycastResults[i].gameObject == null) 
+            if (_raycastResults[i].gameObject == null)
                 continue;
 
             var slot = _raycastResults[i].gameObject.GetComponentInParent<InventorySlotView>();
             if (slot != null)
                 return slot;
         }
+
         return null;
     }
 }

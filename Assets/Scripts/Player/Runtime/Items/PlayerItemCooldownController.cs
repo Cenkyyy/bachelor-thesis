@@ -1,9 +1,18 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Tracks item cooldown end times for player-used items and linked blocked items.
+/// </summary>
+[DisallowMultipleComponent]
 public sealed class PlayerItemCooldownController : MonoBehaviour
 {
     private readonly Dictionary<ItemData, float> _itemCooldownEndTimes = new();
+
+    public void ClearAllCooldowns()
+    {
+        _itemCooldownEndTimes.Clear();
+    }
 
     public bool IsOnCooldown(ItemData item)
     {

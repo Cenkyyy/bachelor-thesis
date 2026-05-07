@@ -92,14 +92,14 @@ public sealed class WorldMapPanelZoomController : MonoBehaviour
     private void HandleZoom(Camera cam)
     {
         float scroll = Input.mouseScrollDelta.y;
-        if (Mathf.Abs(scroll) < 0.001f)
+        if (Mathf.Abs(scroll) < Mathf.Epsilon)
             return;
 
         float oldZoom = _content.localScale.x;
         float targetZoom = oldZoom * (1f + scroll * _zoomSpeed);
         float newZoom = Mathf.Clamp(targetZoom, _minZoomRuntime, _maxZoomRuntime);
 
-        if (Mathf.Abs(newZoom - oldZoom) < 0.0001f)
+        if (Mathf.Abs(newZoom - oldZoom) < Mathf.Epsilon)
             return;
 
         float ratio = newZoom / oldZoom;
@@ -136,7 +136,7 @@ public sealed class WorldMapPanelZoomController : MonoBehaviour
 
         Vector2 mouseDelta = mouseLocal - _dragStartMouse;
 
-        float zoom = Mathf.Max(_content.localScale.x, 0.0001f);
+        float zoom = Mathf.Max(_content.localScale.x, Mathf.Epsilon);
         float panMultiplier = _panScalesWithZoom ? 1f / zoom : 1f;
         _content.anchoredPosition = _dragStartContentPos + mouseDelta * (_panSpeed * panMultiplier);
 

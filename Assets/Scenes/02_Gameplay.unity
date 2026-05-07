@@ -655,7 +655,7 @@ MonoBehaviour:
     <SpawnIntervalSeconds>k__BackingField: 3
     <NightSpawnAccelerationMultiplier>k__BackingField: 0.9
     <AttemptsPerCycle>k__BackingField: 3
-    <MaxAliveEntities>k__BackingField: 3
+    <MaxAliveEntities>k__BackingField: 2
     <NightMaxAliveEntitiesMultiplier>k__BackingField: 1.25
     <SpawnRadius>k__BackingField: 20
     <MinSpawnDistance>k__BackingField: 9
@@ -5232,7 +5232,7 @@ MonoBehaviour:
   slotPrefab: {fileID: 3672516636108083546, guid: 965491b462a816446850da639c6b3fef, type: 3}
   slotParent: {fileID: 203007079}
   player: {fileID: 2010244819}
-  _itemCooldownTrackController: {fileID: 0}
+  _itemCooldownTrackController: {fileID: 317918005633736357}
   _itemInteractionController: {fileID: 1394616548}
   _tooltipController: {fileID: 665431213}
   slotBuildBatchSize: 4
@@ -12007,7 +12007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78931d02d13a8404cbd88ce8a8fda756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemStatController: {fileID: 0}
+  _itemStatController: {fileID: 317918005633736358}
   _entryParent: {fileID: 1980172131}
   _entryPrefab: {fileID: 8373780032529007090, guid: 49c8afd76e85987499b843098c9bff32, type: 3}
   _buffData:
@@ -13307,7 +13307,7 @@ MonoBehaviour:
   slotPrefab: {fileID: -2390514043304085740, guid: d259688275a8b9249ab8506420c439a3, type: 3}
   slotParent: {fileID: 121172469}
   player: {fileID: 2010244819}
-  _itemCooldownTrackController: {fileID: 0}
+  _itemCooldownTrackController: {fileID: 317918005633736357}
   _itemInteractionController: {fileID: 1394616548}
   _tooltipController: {fileID: 665431213}
   slotBuildBatchSize: 4
@@ -18154,6 +18154,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1695784269}
     - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _worldCamera
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _backpackPanel
       value: 
       objectReference: {fileID: 570862299}
@@ -18161,6 +18165,10 @@ PrefabInstance:
       propertyPath: _worldItemSpawner
       value: 
       objectReference: {fileID: 2031400805}
+    - target: {fileID: 3306367631584077544, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _backpackPanel
+      value: 
+      objectReference: {fileID: 570862299}
     - target: {fileID: 3428453546330940767, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _camera
       value: 
@@ -18246,6 +18254,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+--- !u!114 &317918005633736357 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8033507651253804523, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+  m_PrefabInstance: {fileID: 317918005633736356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d0ce1de022e0844a070b9eaa08baa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &317918005633736358 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3003602596391903937, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+  m_PrefabInstance: {fileID: 317918005633736356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b431457262c8de42841ccee2008c602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &317918005633736359 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4403078374656698331, guid: 7998bc0df66461f41b18e80565be354d, type: 3}

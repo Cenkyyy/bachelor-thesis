@@ -1,7 +1,12 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+/// <summary>
+/// Applies externally provided movement input to the player's Rigidbody2D.
+/// </summary>
+[DisallowMultipleComponent]
+public sealed class PlayerMovement : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Rigidbody2D _body;
 
     [Header("Movement")]
@@ -10,14 +15,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _itemSpeedMultiplier = 1f;
 
     private Vector2 _input;
-
-    private void Awake()
-    {
-        if (_body == null)
-        {
-            _body = GetComponent<Rigidbody2D>();
-        }
-    }
 
     private void FixedUpdate()
     {
@@ -29,28 +26,26 @@ public class PlayerMovement : MonoBehaviour
         _input = input;
     }
 
-    private void UpdatePosition()
-    {
-        if (_input.sqrMagnitude <= 0.0001f)
-        {
-            return;
-        }
-
-        // calculate delta - the distance to move the frame based on input and speed
-        var speed = _speed * Mathf.Max(0f, _externalSpeedMultiplier) * Mathf.Max(0f, _itemSpeedMultiplier);
-        var direction = _input.normalized;
-        var distance = speed * Time.fixedDeltaTime;
-        Vector2 delta = direction * distance;
-        _body.MovePosition(_body.position + delta);
-    }
-
     public void SetExternalSpeedMultiplier(float multiplier)
     {
-        _externalSpeedMultiplier = Mathf.Max(0f, multiplier);
+        _externalSpeedMultiplier = multiplier;
     }
 
     public void SetItemSpeedMultiplier(float multiplier)
     {
-        _itemSpeedMultiplier = Mathf.Max(0f, multiplier);
+        _itemSpeedMultiplier = multiplier;
+    }
+
+    private void UpdatePosition()
+    {
+        if (_input.sqrMagnitude <= Mathf.Epsilon)
+            return;
+
+        var speed = _speed * _externalSpeedMultiplier * _itemSpeedMultiplier;
+        var direction = _input.normalized;
+        var distance = speed * Time.fixedDeltaTime;
+        var delta = direction * distance;
+
+        _body.MovePosition(_body.position + delta);
     }
 }

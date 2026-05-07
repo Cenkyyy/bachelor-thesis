@@ -183,7 +183,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
         int chunkCount = _chunksX * _chunksY;
         _runtimeData = new MapRuntimeData(WorldData.Width, WorldData.Height, chunkCount, _unexploredColor);
         int rowBudget = Mathf.Max(1, _initializationRowsPerFrame);
-        float timeBudget = Mathf.Max(0.0001f, _maxInitializationMillisecondsPerFrame * 0.001f);
+        float timeBudget = Mathf.Max(Mathf.Epsilon, _maxInitializationMillisecondsPerFrame * 0.001f);
         int processedRows = 0;
         float frameStartTime = Time.realtimeSinceStartup;
 

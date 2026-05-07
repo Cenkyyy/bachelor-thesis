@@ -310,7 +310,7 @@ public class EnemyCore : EntityCore
         }
 
         var away = ((Vector2)transform.position - (Vector2)Target.position).normalized;
-        if (away.sqrMagnitude < 0.0001f)
+        if (away.sqrMagnitude < Mathf.Epsilon)
         {
             away = Random.insideUnitCircle.normalized;
         }
@@ -407,7 +407,7 @@ public class EnemyCore : EntityCore
 
     private Transform ResolveDirectionalProjectileSpawn(Vector2 facingDirection)
     {
-        if (facingDirection.sqrMagnitude < 0.0001f)
+        if (facingDirection.sqrMagnitude < Mathf.Epsilon)
         {
             return _projectileSpawnPoint != null ? _projectileSpawnPoint : transform;
         }

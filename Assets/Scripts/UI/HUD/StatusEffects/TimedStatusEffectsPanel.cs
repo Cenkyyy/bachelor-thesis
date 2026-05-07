@@ -31,7 +31,7 @@ public sealed class TimedStatusEffectsPanel : MonoBehaviour
         public TimedBuffVisualState(float remainingSeconds, float durationSeconds)
         {
             RemainingSeconds = remainingSeconds;
-            RemainingNormalized = Mathf.Clamp01(RemainingSeconds / Mathf.Max(0.0001f, durationSeconds));
+            RemainingNormalized = Mathf.Clamp01(RemainingSeconds / Mathf.Max(Mathf.Epsilon, durationSeconds));
         }
     }
 

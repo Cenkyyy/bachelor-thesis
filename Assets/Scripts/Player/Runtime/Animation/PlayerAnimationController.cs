@@ -1,7 +1,11 @@
 using System;
 using UnityEngine;
 
-public class PlayerAnimationController : MonoBehaviour
+/// <summary>
+/// Updates animator movement and facing parameters from player movement state and mouse aim.
+/// </summary>
+[DisallowMultipleComponent]
+public sealed class PlayerAnimationController : MonoBehaviour
 {
     private static readonly int IsWalkingHash = Animator.StringToHash("isWalking");
     private static readonly int InputXHash = Animator.StringToHash("InputX");
@@ -9,25 +13,17 @@ public class PlayerAnimationController : MonoBehaviour
     private static readonly int LastInputXHash = Animator.StringToHash("LastInputX");
     private static readonly int LastInputYHash = Animator.StringToHash("LastInputY");
 
+    [Header("References")]
     [SerializeField] private Animator _animator;
     [SerializeField] private Camera _worldCamera;
 
     private Vector2 _lastMouseAimedDirection = Vector2.down;
-    private bool _isWalking = false;
+    private bool _isWalking;
 
     public Vector2 LastMouseAimedDirection => _lastMouseAimedDirection;
     public PlayerFacingDirection FacingDirection { get; private set; } = PlayerFacingDirection.Down;
 
     public event Action<PlayerFacingDirection> OnFacingDirectionChanged;
-
-    private void Awake()
-    {
-        if (_animator == null)
-            _animator = GetComponent<Animator>();
-
-        if (_worldCamera == null)
-            _worldCamera = Camera.main;
-    }
 
     private void Update()
     {
@@ -41,13 +37,9 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void UpdateAnimator()
     {
-        if (_animator == null || _worldCamera == null)
-            return;
+        var aimDirection = GetMouseDirection();
 
-        Vector2 aimDirection = GetMouseDirection();
-
-        // update last aim direction only when mouse moves noticeably
-        if (aimDirection.magnitude > 0.01f)
+        if (aimDirection.sqrMagnitude > Mathf.Epsilon)
             _lastMouseAimedDirection = aimDirection;
 
         var facingDirection = PlayerFacingDirectionUtility.FromVector(_lastMouseAimedDirection);
@@ -58,21 +50,17 @@ public class PlayerAnimationController : MonoBehaviour
         }
 
         _animator.SetBool(IsWalkingHash, _isWalking);
-
-        // update animator parameters for aiming
         _animator.SetFloat(InputXHash, aimDirection.x);
         _animator.SetFloat(InputYHash, aimDirection.y);
-
-        // record the last direction for idle animations
         _animator.SetFloat(LastInputXHash, _lastMouseAimedDirection.x);
         _animator.SetFloat(LastInputYHash, _lastMouseAimedDirection.y);
     }
 
     private Vector2 GetMouseDirection()
     {
-        var mouseWorldPos = _worldCamera.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPos.z = 0f;
-        var direction = (mouseWorldPos - transform.position).normalized;
-        return direction;
+        var mouseWorldPosition = _worldCamera.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPosition.z = 0f;
+
+        return (mouseWorldPosition - transform.position).normalized;
     }
 }

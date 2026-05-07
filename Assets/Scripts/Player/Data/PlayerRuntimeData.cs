@@ -120,9 +120,9 @@ public class PlayerRuntimeData
         MaxHunger = defaultData.BaseMaxHunger;
         CurrentHunger = MaxHunger;
 
-        _baseDefence = Mathf.Max(0, defaultData.BaseDefence);
-        _baseHealthRegeneration = Mathf.Max(0f, defaultData.BaseHealthRegeneration);
-        _baseManaRegeneration = Mathf.Max(0f, defaultData.BaseManaRegeneration);
+        _baseDefence = defaultData.BaseDefence;
+        _baseHealthRegeneration = defaultData.BaseHealthRegeneration;
+        _baseManaRegeneration = defaultData.BaseManaRegeneration;
 
         Defence = _baseDefence;
         HealthRegeneration = _baseHealthRegeneration;
@@ -242,9 +242,9 @@ public class PlayerRuntimeData
     /// </summary>
     public void ApplyCombatItemModifiers(float defenceAdditive, float healthRegenAdditive, float manaRegenAdditive, float maxHealthAdditive, float maxManaAdditive, float spellDamageAdditive)
     {
-        Defence = Mathf.Max(0, Mathf.RoundToInt(_baseDefence + defenceAdditive));
-        HealthRegeneration = Mathf.Max(0f, _baseHealthRegeneration + healthRegenAdditive);
-        ManaRegeneration = Mathf.Max(0f, _baseManaRegeneration + manaRegenAdditive);
+        Defence = Mathf.RoundToInt(_baseDefence + defenceAdditive);
+        HealthRegeneration = _baseHealthRegeneration + healthRegenAdditive;
+        ManaRegeneration = _baseManaRegeneration + manaRegenAdditive;
         SpellDamageBonus = spellDamageAdditive;
 
         int targetHealthBonus = Mathf.RoundToInt(maxHealthAdditive);
@@ -276,6 +276,15 @@ public class PlayerRuntimeData
             return;
 
         CurrentHunger = Mathf.Min(MaxHunger, CurrentHunger + amount);
+        OnHungerChanged?.Invoke(CurrentHunger, MaxHunger);
+    }
+
+    /// <summary>
+    /// Restores hunger to its current maximum value and raises OnHungerChanged event.
+    /// </summary>
+    public void RestoreHunger()
+    {
+        CurrentHunger = MaxHunger;
         OnHungerChanged?.Invoke(CurrentHunger, MaxHunger);
     }
 

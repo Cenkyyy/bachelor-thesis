@@ -8,7 +8,7 @@ public sealed class AroundPlayerSpawnStrategy : ISpawnStrategy
         var outerRadius = _settings.SpawnRadius;
 
         var direction = Random.insideUnitCircle.normalized;
-        if (direction.sqrMagnitude < 0.0001f)
+        if (direction.sqrMagnitude < Mathf.Epsilon)
         {
             direction = Vector2.right;
         }

@@ -36,7 +36,7 @@ public class EnemyAnimationController : MonoBehaviour
 
     public void SetMoving(Vector2 moveDirection)
     {
-        var isMoving = moveDirection.sqrMagnitude > 0.0001f;
+        var isMoving = moveDirection.sqrMagnitude > Mathf.Epsilon;
         if (isMoving)
         {
             _lastMoveDirection = moveDirection.normalized;
@@ -55,7 +55,7 @@ public class EnemyAnimationController : MonoBehaviour
 
     public void SetFacingOverride(Vector2 direction)
     {
-        if (direction.sqrMagnitude < 0.0001f)
+        if (direction.sqrMagnitude < Mathf.Epsilon)
         {
             return;
         }

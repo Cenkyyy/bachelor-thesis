@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Applies item-based player stat changes from equipment and timed consumables.
+/// Aggregates equipment and timed consumable status effects, then applies the resulting player stat modifiers.
 /// </summary>
 [DisallowMultipleComponent]
 public sealed class PlayerStatusEffectController : MonoBehaviour
@@ -19,6 +19,9 @@ public sealed class PlayerStatusEffectController : MonoBehaviour
 
     public event Action TimedStatusEffectsChanged;
 
+    /// <summary>
+    /// Timed item status effects currently affecting the player.
+    /// </summary>
     public sealed class ActiveTimedItemStatusEffects
     {
         public IReadOnlyList<ItemStatusEffect> StatusEffects;
@@ -37,37 +40,27 @@ public sealed class PlayerStatusEffectController : MonoBehaviour
         public float SpellDamageAdditive;
     }
 
-    private void Awake()
-    {
-        if (_player == null)
-            _player = GetComponent<Player>();
-
-        if (_playerMovement == null)
-            _playerMovement = GetComponent<PlayerMovement>();
-    }
-
     private void OnEnable()
     {
-        if (_player?.Data != null)
+        if (_player.Data != null)
             _player.Data.OnInitialized += HandlePlayerDataInitialized;
-
+        
         EnsureEquipmentSubscription();
         RecalculateAndApply();
     }
 
     private void OnDisable()
     {
-        if (_player?.Data != null)
+        if (_player.Data != null)
             _player.Data.OnInitialized -= HandlePlayerDataInitialized;
 
-        if (_isEquipmentSubscribed && _player?.Equipment != null)
+        if (_isEquipmentSubscribed && _player.Equipment != null)
         {
             _player.Equipment.OnItemChanged -= HandleEquipmentChanged;
             _isEquipmentSubscribed = false;
         }
 
-        if (_playerMovement != null)
-            _playerMovement.SetItemSpeedMultiplier(1f);
+        _playerMovement.SetItemSpeedMultiplier(1f);
     }
 
     private void Update()
@@ -107,10 +100,20 @@ public sealed class PlayerStatusEffectController : MonoBehaviour
         TimedStatusEffectsChanged?.Invoke();
     }
 
+    public void ClearTimedStatusEffects()
+    {
+        if (_activeTimedStatusEffects.Count == 0)
+            return;
+
+        _activeTimedStatusEffects.Clear();
+        RecalculateAndApply();
+        TimedStatusEffectsChanged?.Invoke();
+    }
+
     private bool RemoveExpiredTimedStatusEffects()
     {
-        bool removedAny = false;
-        float now = Time.time;
+        var removedAny = false;
+        var now = Time.time;
 
         for (int i = _activeTimedStatusEffects.Count - 1; i >= 0; i--)
         {
@@ -128,8 +131,7 @@ public sealed class PlayerStatusEffectController : MonoBehaviour
     {
         if (_isEquipmentSubscribed)
             return;
-        if (_player == null)
-            return;
+
         if (_player.Equipment == null)
             return;
 
@@ -149,14 +151,18 @@ public sealed class PlayerStatusEffectController : MonoBehaviour
 
     private void RecalculateAndApply()
     {
-        if (_player == null || _player.Data == null)
-            return;
-
         var aggregation = new StatAggregation();
         AggregateEquippedStatusEffects(ref aggregation);
         AggregateTimedConsumableStatusEffects(ref aggregation);
 
-        _player.Data.ApplyCombatItemModifiers(aggregation.DefenceAdditive, aggregation.HealthRegenAdditive, aggregation.ManaRegenAdditive, aggregation.MaxHealthAdditive, aggregation.MaxManaAdditive, aggregation.SpellDamageAdditive);
+        _player.Data.ApplyCombatItemModifiers(
+            aggregation.DefenceAdditive,
+            aggregation.HealthRegenAdditive,
+            aggregation.ManaRegenAdditive,
+            aggregation.MaxHealthAdditive,
+            aggregation.MaxManaAdditive,
+            aggregation.SpellDamageAdditive);
+
         ApplyMoveSpeed(aggregation.MoveSpeedPercentAdditive);
     }
 
@@ -183,7 +189,13 @@ public sealed class PlayerStatusEffectController : MonoBehaviour
         }
     }
 
-    private void AggregateStatusEffectsList(IReadOnlyList<ItemStatusEffect> modifiers, ref StatAggregation aggregation)
+    private void ApplyMoveSpeed(float moveSpeedPercent)
+    {
+        var multiplier = 1f + moveSpeedPercent * 0.01f;
+        _playerMovement.SetItemSpeedMultiplier(multiplier);
+    }
+
+    private static void AggregateStatusEffectsList(IReadOnlyList<ItemStatusEffect> modifiers, ref StatAggregation aggregation)
     {
         if (modifiers == null || modifiers.Count == 0)
             return;
@@ -219,22 +231,11 @@ public sealed class PlayerStatusEffectController : MonoBehaviour
             case ItemStatusEffectType.SpellDamage:
                 ApplyValue(modifier, ref aggregation.SpellDamageAdditive);
                 break;
-            default:
-                break;
         }
     }
 
     private static void ApplyValue(ItemStatusEffect modifier, ref float additive)
     {
         additive += modifier.Value;
-    }
-
-    private void ApplyMoveSpeed(float moveSpeedPercent)
-    {
-        if (_playerMovement == null)
-            return;
-
-        float multiplier = 1f + moveSpeedPercent * 0.01f;
-        _playerMovement.SetItemSpeedMultiplier(Mathf.Max(0f, multiplier));
     }
 }
