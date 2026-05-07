@@ -45,8 +45,6 @@ public sealed class PlayerRegenerationController : MonoBehaviour
         if (_player?.Data == null || GameStateManager.IsGamePaused)
             return;
 
-        _manaTickTimer += Time.deltaTime;
-
         TickManaRegeneration();
         TickHealthRegeneration();
     }
@@ -55,7 +53,12 @@ public sealed class PlayerRegenerationController : MonoBehaviour
     {
         var regenPerSecond = Mathf.Max(0f, _player.Data.ManaRegeneration);
         if (regenPerSecond <= 0f || _player.Data.CurrentMana >= _player.Data.MaxMana)
+        {
+            _manaTickTimer = 0f;
             return;
+        }
+
+        _manaTickTimer += Time.deltaTime;
 
         while (_manaTickTimer >= 1f)
         {

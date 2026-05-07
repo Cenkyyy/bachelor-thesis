@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class ItemCooldownTrackController : MonoBehaviour
+public sealed class PlayerItemCooldownController : MonoBehaviour
 {
     private readonly Dictionary<ItemData, float> _itemCooldownEndTimes = new();
 

@@ -222,11 +222,11 @@ GameObject:
   - component: {fileID: 691936326778899438}
   - component: {fileID: 812989619648883834}
   - component: {fileID: 4784472143194864754}
-  - component: {fileID: 585030241615801583}
-  - component: {fileID: 8811410057483689384}
   - component: {fileID: 8857977768433231325}
-  - component: {fileID: 758897473396495506}
   - component: {fileID: 6370876422950385033}
+  - component: {fileID: 3003602596391903937}
+  - component: {fileID: 8033507651253804523}
+  - component: {fileID: 8949116740228414771}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
-  _playerHeldItemVisual: {fileID: 758897473396495506}
+  _playerHeldItemVisual: {fileID: 8949116740228414771}
   _castingPanel: {fileID: 0}
   _feedbackPopup: {fileID: 4686141728631495212}
   _castOnCooldownMessage: Spell is recharging
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spellCombatController: {fileID: 4319894653538523301}
-  _playerHeldItemVisual: {fileID: 758897473396495506}
+  _playerHeldItemVisual: {fileID: 8949116740228414771}
   _combatWordsData: {fileID: 11400000, guid: 3001151ae3897c7428306d4f9be649e3, type: 2}
   _vfxData: {fileID: 11400000, guid: d596ae22048838d4ba36735254e29ae2, type: 2}
   _barrageInterval: 0.08
@@ -639,8 +639,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
-  _itemStatController: {fileID: 8811410057483689384}
-  _itemCooldownTrackController: {fileID: 585030241615801583}
+  _itemStatController: {fileID: 3003602596391903937}
+  _itemCooldownTrackController: {fileID: 8033507651253804523}
   _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
 --- !u!114 &4784472143194864754
 MonoBehaviour:
@@ -664,32 +664,6 @@ MonoBehaviour:
   _starvationTickIntervalSeconds: 2
   _starvationDamagePerTick: 1
   _starvationMinHealthPercent: 0.25
---- !u!114 &585030241615801583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2259951683026114348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41c8d2e7789c6f44bb1c03566d2f60a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8811410057483689384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2259951683026114348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d19a0692c4b41d4cac55752a783adc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _player: {fileID: 8120486794298343527}
-  _playerMovement: {fileID: 6858055649506359506}
 --- !u!114 &8857977768433231325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -705,28 +679,6 @@ MonoBehaviour:
   _player: {fileID: 8120486794298343527}
   _minimumHungerPercentForHealthRegen: 0.5
   _healthRegenDelayAfterDamageSeconds: 4
---- !u!114 &758897473396495506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2259951683026114348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e6ea35787674a544a8247e6faa0db56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _player: {fileID: 8120486794298343527}
-  _playerAnimation: {fileID: 5402159747806690286}
-  _heldItemRenderer: {fileID: 4577767105393312266}
-  _downAnchor: {fileID: 6618701323601961713}
-  _upAnchor: {fileID: 7997464942132067181}
-  _leftAnchor: {fileID: 4511603196516569221}
-  _rightAnchor: {fileID: 6497527114572648334}
-  _abovePlayerOrder: 12
-  _belowPlayerOrder: 8
-  _itemLocalScale: {x: 0.3, y: 0.3, z: 1}
 --- !u!114 &6370876422950385033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,6 +693,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
   _itemDropSpawner: {fileID: 0}
+--- !u!114 &3003602596391903937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b431457262c8de42841ccee2008c602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 8120486794298343527}
+  _playerMovement: {fileID: 6858055649506359506}
+--- !u!114 &8033507651253804523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d0ce1de022e0844a070b9eaa08baa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8949116740228414771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259951683026114348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d64511c332937a4d955c0cf91d5973d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 8120486794298343527}
+  _playerAnimation: {fileID: 5402159747806690286}
+  _heldItemRenderer: {fileID: 4577767105393312266}
+  _downAnchor: {fileID: 6618701323601961713}
+  _upAnchor: {fileID: 7997464942132067181}
+  _leftAnchor: {fileID: 4511603196516569221}
+  _rightAnchor: {fileID: 6497527114572648334}
+  _abovePlayerOrder: 12
+  _belowPlayerOrder: 8
+  _itemLocalScale: {x: 0.3, y: 0.3, z: 1}
 --- !u!1 &3653677619089745102
 GameObject:
   m_ObjectHideFlags: 0

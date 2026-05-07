@@ -6,8 +6,8 @@
 public sealed class PlayerConsumableController : MonoBehaviour
 {
     [SerializeField] private Player _player;
-    [SerializeField] private PlayerItemStatusEffectsController _itemStatController;
-    [SerializeField] private ItemCooldownTrackController _itemCooldownTrackController;
+    [SerializeField] private PlayerStatusEffectController _itemStatController;
+    [SerializeField] private PlayerItemCooldownController _itemCooldownTrackController;
     [SerializeField] private GameplayInputBindingsData _inputBindings;
 
     private void Awake()
@@ -16,10 +16,10 @@ public sealed class PlayerConsumableController : MonoBehaviour
             _player = GetComponent<Player>();
 
         if (_itemStatController == null)
-            _itemStatController = GetComponent<PlayerItemStatusEffectsController>();
+            _itemStatController = GetComponent<PlayerStatusEffectController>();
 
         if (_itemCooldownTrackController == null)
-            _itemCooldownTrackController = GetComponent<ItemCooldownTrackController>();
+            _itemCooldownTrackController = GetComponent<PlayerItemCooldownController>();
     }
 
     private void Update()

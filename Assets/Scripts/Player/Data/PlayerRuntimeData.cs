@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Mutable runtime player stats that raise change events on updates.
 /// </summary>
-[System.Serializable]
+[Serializable]
 public class PlayerRuntimeData
 {
     // Properties

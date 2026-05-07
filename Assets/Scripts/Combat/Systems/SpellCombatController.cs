@@ -7,7 +7,7 @@ public class SpellCombatController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Player _player;
-    [SerializeField] private PlayerHeldItemVisual _playerHeldItemVisual;
+    [SerializeField] private PlayerHeldItemVisualController _playerHeldItemVisual;
     [SerializeField] private SpellCastingPanelController _castingPanel;
     [SerializeField] private WorldTextPopupController _feedbackPopup;
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -59,7 +60,7 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
     public WorldRuntimeState RuntimeState => _runtimeState;
     public bool IsReadyForSceneReveal { get; private set; }
 
-    [System.Serializable]
+    [Serializable]
     private struct RadialBiomeWeights
     {
         [Min(0f)] public float Grassland;

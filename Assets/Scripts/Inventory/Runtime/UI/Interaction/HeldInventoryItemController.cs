@@ -64,8 +64,7 @@ public sealed class HeldInventoryItemController : MonoBehaviour
         if (!HasHeldItem || _player == null)
             return;
 
-        // spawn the held item in the world
-        AimUtils.ComputeAim2D(_player.transform, _dropSpawnDistance, out var direction, out var spawnPosition);
+        ResolveDropSpawn(out var direction, out var spawnPosition);
         _worldItemSpawner?.Spawn(HeldItem, spawnPosition, direction);
 
         HeldItem = InventoryItem.Empty;
@@ -81,7 +80,7 @@ public sealed class HeldInventoryItemController : MonoBehaviour
 
         if (!leftover.IsEmpty && _player != null)
         {
-            AimUtils.ComputeAim2D(_player.transform, _dropSpawnDistance, out var direction, out var spawnPosition);
+            ResolveDropSpawn(out var direction, out var spawnPosition);
             _worldItemSpawner?.Spawn(leftover, spawnPosition, direction);
         }
 
@@ -98,6 +97,21 @@ public sealed class HeldInventoryItemController : MonoBehaviour
             HideHeldItem();
         else
             ShowHeldItem();
+    }
+
+    private void ResolveDropSpawn(out Vector2 direction, out Vector3 spawnPosition)
+    {
+        var originPosition = _player.transform.position;
+        var worldCamera = Camera.main;
+        var mouseWorldPosition = worldCamera != null ? worldCamera.ScreenToWorldPoint(Input.mousePosition) : originPosition + Vector3.down;
+
+        mouseWorldPosition.z = 0f;
+        direction = (mouseWorldPosition - originPosition).normalized;
+
+        if (direction.sqrMagnitude < Mathf.Epsilon)
+            direction = Vector2.down;
+
+        spawnPosition = originPosition + (Vector3)(direction * _dropSpawnDistance);
     }
 
     /// <summary>

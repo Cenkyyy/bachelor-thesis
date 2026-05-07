@@ -75,8 +75,7 @@ public sealed class PlayerItemDropController : MonoBehaviour
         var toDrop = dropAll ? item.Amount : 1;
         var droppingItem = new InventoryItem(item.Item, toDrop);
 
-        // compute spawn position and direction
-        AimUtils.ComputeAim2D(_player.transform, _throwSpawnDistance, out var direction, out var spawnPos);
+        ResolveDropSpawn(out var direction, out var spawnPos);
 
         // spawn the item in the world
         _worldItemSpawner.Spawn(droppingItem, spawnPos, direction);
@@ -87,6 +86,21 @@ public sealed class PlayerItemDropController : MonoBehaviour
             _player.Inventory.ClearItemAt(sourceIndex);
         else
             _player.Inventory.SetItemAt(sourceIndex, item.WithAmount(remaining));
+    }
+
+    private void ResolveDropSpawn(out Vector2 direction, out Vector3 spawnPosition)
+    {
+        var originPosition = _player.transform.position;
+        var worldCamera = Camera.main;
+        var mouseWorldPosition = worldCamera != null ? worldCamera.ScreenToWorldPoint(Input.mousePosition) : originPosition + Vector3.down;
+
+        mouseWorldPosition.z = 0f;
+        direction = (mouseWorldPosition - originPosition).normalized;
+
+        if (direction.sqrMagnitude < Mathf.Epsilon)
+            direction = Vector2.down;
+
+        spawnPosition = originPosition + (Vector3)(direction * _throwSpawnDistance);
     }
 
     /// <summary>

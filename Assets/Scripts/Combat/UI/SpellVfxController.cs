@@ -6,7 +6,7 @@ public class SpellVfxController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private SpellCombatController _spellCombatController;
-    [SerializeField] private PlayerHeldItemVisual _playerHeldItemVisual;
+    [SerializeField] private PlayerHeldItemVisualController _playerHeldItemVisual;
     [SerializeField] private CombatWordsData _combatWordsData;
     [SerializeField] private SpellVfxData _vfxData;
 
@@ -16,7 +16,7 @@ public class SpellVfxController : MonoBehaviour
     private void Awake()
     {
         if (_playerHeldItemVisual == null)
-            _playerHeldItemVisual = GetComponentInChildren<PlayerHeldItemVisual>();
+            _playerHeldItemVisual = GetComponentInChildren<PlayerHeldItemVisualController>();
     }
 
     private void OnEnable()

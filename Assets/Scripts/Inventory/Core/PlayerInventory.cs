@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Player-owned inventory that is split into hotbar and backpack.
 /// </summary>
-[System.Serializable]
+[Serializable]
 public sealed class PlayerInventory : IInventory
 {
     private const int MinHotbarSize = 2;

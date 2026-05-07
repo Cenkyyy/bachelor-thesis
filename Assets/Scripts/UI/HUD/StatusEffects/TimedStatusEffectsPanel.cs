@@ -9,7 +9,7 @@ using UnityEngine;
 public sealed class TimedStatusEffectsPanel : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private PlayerItemStatusEffectsController _itemStatController;
+    [SerializeField] private PlayerStatusEffectController _itemStatController;
     [SerializeField] private Transform _entryParent;
     [SerializeField] private ItemStatusEffectEntryView _entryPrefab;
 
@@ -38,7 +38,7 @@ public sealed class TimedStatusEffectsPanel : MonoBehaviour
     private void Awake()
     {
         if (_itemStatController == null)
-            _itemStatController = FindFirstObjectByType<PlayerItemStatusEffectsController>();
+            _itemStatController = FindFirstObjectByType<PlayerStatusEffectController>();
 
         RebuildStatusEffectDataLookup();
     }

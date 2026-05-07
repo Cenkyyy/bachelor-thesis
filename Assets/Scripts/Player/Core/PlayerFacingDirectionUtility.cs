@@ -1,13 +1,5 @@
 ﻿using UnityEngine;
 
-public enum PlayerFacingDirection
-{
-    Down,
-    Up,
-    Left,
-    Right
-}
-
 public static class PlayerFacingDirectionUtility
 {
     public static PlayerFacingDirection FromVector(Vector2 direction)
@@ -19,4 +11,12 @@ public static class PlayerFacingDirectionUtility
 
         return direction.y >= 0f ? PlayerFacingDirection.Up : PlayerFacingDirection.Down;
     }
+}
+
+public enum PlayerFacingDirection
+{
+    Down,
+    Up,
+    Left,
+    Right
 }

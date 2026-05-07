@@ -6,7 +6,7 @@ using UnityEngine;
 /// Applies item-based player stat changes from equipment and timed consumables.
 /// </summary>
 [DisallowMultipleComponent]
-public sealed class PlayerItemStatusEffectsController : MonoBehaviour
+public sealed class PlayerStatusEffectController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Player _player;

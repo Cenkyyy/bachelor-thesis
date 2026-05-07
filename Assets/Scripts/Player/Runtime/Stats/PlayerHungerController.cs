@@ -121,7 +121,11 @@ public sealed class PlayerHungerController : MonoBehaviour
         if (_movement == null || _player == null)
             return;
 
-        var speedMultiplier = _player.Data.CurrentHunger < _slowThresholdPercent ? _slowSpeedMultiplier : 1f;
+        if (_player.Data.MaxHunger <= 0)
+            return;
+
+        var hungerPercent = (float)_player.Data.CurrentHunger / _player.Data.MaxHunger;
+        var speedMultiplier = hungerPercent < _slowThresholdPercent ? _slowSpeedMultiplier : 1f;
         _movement.SetExternalSpeedMultiplier(speedMultiplier);
     }
 }

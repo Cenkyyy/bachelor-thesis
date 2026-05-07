@@ -3,7 +3,7 @@
 public class PlayerCore : StateMachineCore
 {
     [SerializeField] private PlayerMovement _movement;
-    [SerializeField] private PlayerAnimation _animation;
+    [SerializeField] private PlayerAnimationController _animation;
 
     private Vector2 _input;
 

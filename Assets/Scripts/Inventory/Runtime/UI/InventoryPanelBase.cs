@@ -12,7 +12,7 @@ public abstract class InventoryPanelBase<T> : MonoBehaviour where T : InventoryS
 
     [Header("Model")]
     [SerializeField] protected Player player;
-    [SerializeField] private ItemCooldownTrackController _itemCooldownTrackController;
+    [SerializeField] private PlayerItemCooldownController _itemCooldownTrackController;
 
     [Header("Input")]
     [SerializeField] private InventoryItemInteractionController _itemInteractionController;

@@ -4,11 +4,11 @@
 /// Renders the currently selected hotbar item in the player's hand.
 /// The held item is anchored per facing direction so it can match animations.
 /// </summary>
-public sealed class PlayerHeldItemVisual : MonoBehaviour
+public sealed class PlayerHeldItemVisualController : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] private Player _player;
-    [SerializeField] private PlayerAnimation _playerAnimation;
+    [SerializeField] private PlayerAnimationController _playerAnimation;
     [SerializeField] private SpriteRenderer _heldItemRenderer;
 
     [Header("Directional Hand Anchors")]
@@ -34,7 +34,7 @@ public sealed class PlayerHeldItemVisual : MonoBehaviour
             _player = GetComponent<Player>();
 
         if (_playerAnimation == null)
-            _playerAnimation = GetComponent<PlayerAnimation>();
+            _playerAnimation = GetComponent<PlayerAnimationController>();
 
         if (_heldItemRenderer != null)
             _heldItemRenderer.gameObject.SetActive(true);
