@@ -8,7 +8,7 @@ public sealed class PlayerHungerController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Player _player;
-    [SerializeField] private PlayerMovement _movement;
+    [SerializeField] private PlayerMovementController _movement;
 
     [Header("Travel Hunger Drain")]
     [SerializeField, Min(0.1f)] private float _tilesPerHungerPoint = 10f;

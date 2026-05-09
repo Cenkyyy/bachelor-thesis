@@ -18225,10 +18225,6 @@ PrefabInstance:
       propertyPath: _castingPanel
       value: 
       objectReference: {fileID: 192015840}
-    - target: {fileID: 4361287354850156806, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _initialState
-      value: 
-      objectReference: {fileID: 317918005633736360}
     - target: {fileID: 5402159747806690286, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _worldCamera
       value: 
@@ -18289,17 +18285,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6883eac39f5c3a1469a0c2bf1fdc7bd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &317918005633736360 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3277094677444135463, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-  m_PrefabInstance: {fileID: 317918005633736356}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d09897c3f821754aafc575876602ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &317918005633736361 stripped

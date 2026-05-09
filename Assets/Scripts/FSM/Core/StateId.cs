@@ -8,8 +8,5 @@ public enum StateId
     Patrol = 2,
     Chase = 3,
     Attack = 4,
-    Dead = 5,
-
-    PlayerIdle = 100,
-    PlayerMove = 101
+    Dead = 5
 }

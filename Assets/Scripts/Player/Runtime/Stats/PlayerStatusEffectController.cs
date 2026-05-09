@@ -10,7 +10,7 @@ public sealed class PlayerStatusEffectController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Player _player;
-    [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private PlayerMovementController _playerMovement;
 
     private readonly List<ActiveTimedItemStatusEffects> _activeTimedStatusEffects = new();
     private bool _isEquipmentSubscribed;

@@ -4,7 +4,7 @@ using UnityEngine;
 /// Applies externally provided movement input to the player's Rigidbody2D.
 /// </summary>
 [DisallowMultipleComponent]
-public sealed class PlayerMovement : MonoBehaviour
+public sealed class PlayerMovementController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D _body;

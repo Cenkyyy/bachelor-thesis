@@ -9,6 +9,8 @@ public sealed class PlayerInputController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private BackpackPanel _backpackPanel;
+    [SerializeField] private PlayerMovementController _movement;
+    [SerializeField] private PlayerAnimationController _animation;
 
     [Header("Input")]
     [SerializeField] private GameplayInputBindingsData _inputBindings;
@@ -23,6 +25,7 @@ public sealed class PlayerInputController : MonoBehaviour
         if (GameStateManager.IsGamePaused)
         {
             MoveInput = Vector2.zero;
+            ApplyMoveInput();
             return;
         }
 
@@ -41,6 +44,14 @@ public sealed class PlayerInputController : MonoBehaviour
 
         if (CanReadDropInput(gameplayInputBlocked) && Input.GetKeyDown(_inputBindings.DropKey))
             DropPressed?.Invoke(Input.GetKey(_inputBindings.DropAllModifierKey));
+
+        ApplyMoveInput();
+    }
+
+    private void OnDisable()
+    {
+        MoveInput = Vector2.zero;
+        ApplyMoveInput();
     }
 
     private bool IsGameplayInputBlocked()
@@ -60,5 +71,11 @@ public sealed class PlayerInputController : MonoBehaviour
         var input = new Vector2(x, y);
 
         return input.sqrMagnitude > 1f ? input.normalized : input;
+    }
+
+    private void ApplyMoveInput()
+    {
+        _movement.SetMovementInput(MoveInput);
+        _animation.SetWalkingState(MoveInput != Vector2.zero);
     }
 }
