@@ -1,57 +1,60 @@
 using UnityEngine;
 
+/// <summary>
+/// Base MonoBehaviour for a state in a finite state machine architecture.
+/// </summary>
 public abstract class State : MonoBehaviour, IState
 {
-    [field: SerializeField] public EntityStateId StateId { get; private set; } = EntityStateId.None;
+    [field: SerializeField] public StateId StateId { get; private set; } = StateId.None;
 
-    public bool IsComplete { get; protected set; } = false;
-
-    public float startTime { get; private set; }
-    public float time => Time.time - startTime;
-
-    public StateMachine machine;
-    public StateMachine parent;
+    public bool IsComplete { get; protected set; }
+    public float StartTime { get; private set; }
+    public float TimeInState => Time.time - StartTime;
 
     protected StateMachineCore core;
+    protected float time => TimeInState;
+
+    private readonly StateMachine _childStateMachine = new();
+    private StateMachine _parentStateMachine;
 
     public virtual void OnEnter() { }
     public virtual void Do() { }
     public virtual void FixedDo() { }
     public virtual void OnExit() { }
-    
-    protected void Set(State newState, bool forceReset = false)
+
+    internal void Bind(StateMachineCore ownerCore)
     {
-        parent.Set(newState, forceReset);
+        core = ownerCore;
     }
 
-    protected void Set(EntityStateId newStateId, bool forceReset = false)
+    internal void SetParent(StateMachine parentStateMachine)
     {
-        core.RequestState(newStateId, forceReset);
+        _parentStateMachine = parentStateMachine;
     }
-    public void SetCore(StateMachineCore core)
+
+    internal void InitializeState()
     {
-        this.core = core;
-        if (machine == null)
-        {
-            machine = new StateMachine();
-        }
+        IsComplete = false;
+        StartTime = Time.time;
     }
 
     public void DoBranch()
     {
         Do();
-        machine?.state?.DoBranch();
+        _childStateMachine.CurrentState?.DoBranch();
     }
 
     public void FixedDoBranch()
     {
         FixedDo();
-        machine?.state?.FixedDoBranch();
+        _childStateMachine.CurrentState?.FixedDoBranch();
     }
 
-    public void Initialize()
+    /// <summary>
+    /// Requests a transition on the owning root state machine by serialized state id.
+    /// </summary>
+    protected bool Set(StateId newStateId, bool forceReset = false)
     {
-        IsComplete = false;
-        startTime = Time.time;
+        return core != null && core.RequestState(newStateId, forceReset);
     }
 }

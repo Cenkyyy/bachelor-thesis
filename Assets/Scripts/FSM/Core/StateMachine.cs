@@ -1,16 +1,23 @@
+/// <summary>
+/// Runtime holder for one active state and the transition lifecycle around it.
+/// </summary>
 public sealed class StateMachine
 {
-    public State state { get; private set; }
+    public State CurrentState { get; private set; }
 
-    public void Set(State newState, bool forceReset = false)
+    public bool Set(State newState, bool forceReset = false)
     {
-        if (state != newState || forceReset)
-        {
-            state?.OnExit();
-            state = newState;
-            state.parent = this;
-            state.Initialize();
-            state.OnEnter();
-        }
+        if (newState == null)
+            return false;
+
+        if (CurrentState == newState && !forceReset)
+            return false;
+
+        CurrentState?.OnExit();
+        CurrentState = newState;
+        CurrentState.SetParent(this);
+        CurrentState.InitializeState();
+        CurrentState.OnEnter();
+        return true;
     }
 }

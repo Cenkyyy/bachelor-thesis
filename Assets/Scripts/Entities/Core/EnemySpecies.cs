@@ -1,17 +1,20 @@
 ﻿public enum EnemySpecies
 {
     // Grassland
-    Troll = 0,
-    WoodenGuardian = 1,
+    GrasslandTroll = 0,
+    GrasslandPredatorPlant = 1,
 
     // Ice tundra
     IceElf = 2,
     WildBoar = 3,
+    IceSlime = 4,
 
     // Desert
-    DesertRanged = 4,
+    DesertSlime = 5,
+    DesertPredatorPlant = 6,
 
     // Amethyst rift
-    RiftElf = 5,
-    CrystalTroll = 6
+    AmethystElf = 7,
+    AmethystTroll = 8,
+    AmethystPredatorPlant = 9
 }

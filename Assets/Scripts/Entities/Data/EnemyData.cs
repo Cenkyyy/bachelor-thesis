@@ -1,12 +1,33 @@
-﻿using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Game/Entities/Enemy Data")]
 public class EnemyData : EntityData
 {
     [field: Header("Identity")]
-    [field: SerializeField] public EnemySpecies Species { get; private set; } = EnemySpecies.Troll;
+    [field: SerializeField] public ItemBiomeAffinity HomeBiome { get; private set; } = ItemBiomeAffinity.Grassland;
+    [field: SerializeField] public EnemySpecies Species { get; private set; } = EnemySpecies.GrasslandTroll;
     [field: SerializeField] public EnemyArchetype Archetype { get; private set; } = EnemyArchetype.Bruiser;
     [field: SerializeField] public EnemyRoleTag RoleTags { get; private set; } = EnemyRoleTag.Bruiser;
+
+    [field: Header("Spawn")]
+    [field: SerializeField, Min(0f)] public float SpawnWeight { get; private set; } = 1f;
+
+    [field: Header("Rewards")]
+    [field: SerializeField] public int XpReward { get; private set; } = 15;
+
+    [Header("Loot")]
+    [SerializeField] private List<EntityLootDrop> _drops = new();
+    public IReadOnlyList<EntityLootDrop> Drops => _drops;
+
+    [field: Header("Movement")]
+    [field: SerializeField] public float MoveSpeed { get; private set; } = 2.2f;
+    [field: SerializeField] public float ArrivalEpsilon { get; private set; } = 0.12f;
+
+    [field: Header("Pathfinding")]
+    [field: SerializeField] public float RepathIntervalSeconds { get; private set; } = 0.6f;
+    [field: SerializeField] public float PathNodeStep { get; private set; } = 1f;
+    [field: SerializeField] public int MaxPathIterations { get; private set; } = 200;
 
     [field: Header("Perception")]
     [field: SerializeField] public float DetectionRadius { get; private set; } = 6f;
@@ -35,6 +56,27 @@ public class EnemyData : EntityData
     protected override void OnValidate()
     {
         base.OnValidate();
+
+        if (SpawnWeight < 0f)
+            SpawnWeight = 0f;
+
+        if (XpReward < 0)
+            XpReward = 0;
+
+        if (MoveSpeed < 0f)
+            MoveSpeed = 0f;
+
+        if (ArrivalEpsilon < 0.01f)
+            ArrivalEpsilon = 0.01f;
+
+        if (RepathIntervalSeconds < 0.05f)
+            RepathIntervalSeconds = 0.05f;
+
+        if (PathNodeStep < 0.1f)
+            PathNodeStep = 0.1f;
+
+        if (MaxPathIterations < 100)
+            MaxPathIterations = 100;
 
         if (DetectionRadius < 0f)
             DetectionRadius = 0f;

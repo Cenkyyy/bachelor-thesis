@@ -12,28 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d15ecb9e5791b945bea4f384da70a48, type: 3}
   m_Name: SlimeData_IceTundra
   m_EditorClassIdentifier: 
-  <HomeBiome>k__BackingField: 2
   <Prefab>k__BackingField: {fileID: 1670540943250230566, guid: eeb9ef08aeba99c4191964b48f2bb19d, type: 3}
-  <SpawnWeight>k__BackingField: 1
   <MaxHealth>k__BackingField: 100
+  <HomeBiome>k__BackingField: 2
+  <Species>k__BackingField: 4
+  <Archetype>k__BackingField: 2
+  <RoleTags>k__BackingField: 4
+  <SpawnWeight>k__BackingField: 1
   <XpReward>k__BackingField: 100
   _drops: []
   <MoveSpeed>k__BackingField: 2.2
   <ArrivalEpsilon>k__BackingField: 0.12
-  <RepathIntervalSeconds>k__BackingField: 0.25
-  <PathNodeStep>k__BackingField: 0.5
-  <MaxPathIterations>k__BackingField: 1200
-  <Species>k__BackingField: 0
-  <Archetype>k__BackingField: 2
-  <RoleTags>k__BackingField: 4
+  <RepathIntervalSeconds>k__BackingField: 0.7
+  <PathNodeStep>k__BackingField: 1
+  <MaxPathIterations>k__BackingField: 200
   <DetectionRadius>k__BackingField: 8
   <LeashRadius>k__BackingField: 10
   <LostSightGraceSeconds>k__BackingField: 1.2
   <HomeRadius>k__BackingField: 5
   <IdleDurationMin>k__BackingField: 0.8
   <IdleDurationMax>k__BackingField: 1.6
-  <AttackDamage>k__BackingField: 40
+  <AttackDamage>k__BackingField: 5
   <AttackRange>k__BackingField: 1.4
   <AttackWindupSeconds>k__BackingField: 0.4
   <AttackHitWindowSeconds>k__BackingField: 0.15
   <AttackRecoverySeconds>k__BackingField: 0.8
+  <PreferredRangedDistance>k__BackingField: 4.5
+  <RangedRetreatBuffer>k__BackingField: 1
+  <ProjectilePrefab>k__BackingField: {fileID: 0}
+  <ProjectileSpeed>k__BackingField: 8
+  <ProjectileLifetimeSeconds>k__BackingField: 3

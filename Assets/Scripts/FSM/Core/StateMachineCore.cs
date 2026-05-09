@@ -2,74 +2,72 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Hosts a finite state machine for a prefab by binding child State components and driving the active state each frame.
+/// </summary>
 public abstract class StateMachineCore : MonoBehaviour
 {
-    public StateMachine machine;
-    public State initialState;
+    [Header("State Machine")]
+    [SerializeField] private State _initialState;
 
-    private readonly Dictionary<EntityStateId, State> _stateByIdLookup = new();
+    private readonly Dictionary<StateId, State> _stateByIdLookup = new();
+    private StateMachine _stateMachine;
+
+    public State CurrentState => _stateMachine?.CurrentState;
 
     protected virtual void Start()
     {
         StartCoroutine(InitializeStateMachineCoroutine());
     }
 
-    private IEnumerator InitializeStateMachineCoroutine()
-    {
-        yield return null;
-        SetUpInstances();
-        machine.Set(initialState, forceReset: true);
-    }
-
     protected virtual void Update()
     {
-        machine?.state?.DoBranch();
+        CurrentState?.DoBranch();
     }
 
     protected virtual void FixedUpdate()
     {
-        machine?.state?.FixedDoBranch();
+        CurrentState?.FixedDoBranch();
     }
 
-    public void SetUpInstances()
+    /// <summary>
+    /// Requests a transition to a state registered on this state machine by its serialized state id.
+    /// </summary>
+    public bool RequestState(StateId stateId, bool forceReset = false)
     {
-        machine = new StateMachine();
+        if (_stateMachine == null)
+            return false;
+
+        return _stateByIdLookup.TryGetValue(stateId, out var state) &&
+               _stateMachine.Set(state, forceReset);
+    }
+
+    private IEnumerator InitializeStateMachineCoroutine()
+    {
+        yield return null;
+
+        SetUpStateInstances();
+        _stateMachine.Set(_initialState, forceReset: true);
+    }
+
+    private void SetUpStateInstances()
+    {
+        _stateMachine = new StateMachine();
         _stateByIdLookup.Clear();
 
-        var allChildStates = GetComponentsInChildren<State>(true);
-        foreach (var state in allChildStates)
+        var childStates = GetComponentsInChildren<State>(true);
+        for (var i = 0; i < childStates.Length; i++)
         {
-            state.SetCore(this);
-            if (state.machine == null)
-            {
-                state.machine = new StateMachine();
-            }
+            var state = childStates[i];
+            state.Bind(this);
 
-            if (state.StateId == EntityStateId.None)
-            {
+            if (state.StateId == StateId.None)
                 continue;
-            }
 
             if (_stateByIdLookup.ContainsKey(state.StateId))
-            {
-                // Duplicate state IDs are not allowed
                 continue;
-            }
 
             _stateByIdLookup.Add(state.StateId, state);
         }
-    }
-
-    public bool RequestState(EntityStateId stateId, bool forceReset = false)
-    {
-        if (machine == null)
-            return false;
-
-        if (_stateByIdLookup.TryGetValue(stateId, out var state))
-        {
-            machine.Set(state, forceReset);
-            return true;
-        }
-        return false;
     }
 }

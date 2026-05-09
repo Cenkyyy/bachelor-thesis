@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5aeeb9277becfe43804a178b49c36ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialState: {fileID: 6824101350984700763}
+  _initialState: {fileID: 6824101350984700763}
   moveSpeed: 2.5
   arrivalEps: 0.12
   visionRadius: 6

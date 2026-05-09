@@ -626,7 +626,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39805519}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cae0322a4be364c4ca63fa1d19989086, type: 3}
   m_Name: 
@@ -637,7 +637,7 @@ MonoBehaviour:
   _obstacleMask:
     serializedVersion: 2
     m_Bits: 1280
-  _spawnableEntities:
+  _spawnableEnemies:
   - {fileID: 11400000, guid: c1523698214b240419fd070c9878a6c5, type: 2}
   - {fileID: 11400000, guid: 4b2d4198c00a8f74a81be6c77b77d81f, type: 2}
   - {fileID: 11400000, guid: 108f928024f0ee44eb0e08dcb77dda3d, type: 2}
@@ -18225,6 +18225,10 @@ PrefabInstance:
       propertyPath: _castingPanel
       value: 
       objectReference: {fileID: 192015840}
+    - target: {fileID: 4361287354850156806, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _initialState
+      value: 
+      objectReference: {fileID: 317918005633736360}
     - target: {fileID: 5402159747806690286, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _worldCamera
       value: 
@@ -18285,6 +18289,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6883eac39f5c3a1469a0c2bf1fdc7bd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &317918005633736360 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3277094677444135463, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+  m_PrefabInstance: {fileID: 317918005633736356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d09897c3f821754aafc575876602ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &317918005633736361 stripped

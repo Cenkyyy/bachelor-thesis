@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13f70bce548d7e3448d7025cd949edad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialState: {fileID: 3277094677444135463}
+  _initialState: {fileID: 3277094677444135463}
   _movement: {fileID: 6858055649506359506}
   _animation: {fileID: 5402159747806690286}
 --- !u!114 &3306367631584077544
@@ -323,6 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abc908a9e0813a6488eaf16da11208c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _backpackPanel: {fileID: 0}
   _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
 --- !u!114 &6858055649506359506
 MonoBehaviour:
@@ -533,9 +534,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1971731234e694f4ab34acd03d85fe09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _localOffset: {x: 0, y: 0.5, z: 0}
-  _textColor: {r: 1, g: 1, b: 1, a: 1}
-  _fontSize: 2.5
+  _localOffset: {x: 0, y: 0.3, z: 0}
+  _textColor: {r: 0.8679245, g: 0.20060521, b: 0.20060521, a: 1}
+  _fontSize: 3.5
   _fontAsset: {fileID: 11400000, guid: b38523a5958474b49b379ba60931379c, type: 2}
   _inheritHostRendererSorting: 0
   _sortingOrderOffset: 10

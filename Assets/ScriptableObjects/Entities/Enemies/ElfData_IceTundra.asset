@@ -20,9 +20,9 @@ MonoBehaviour:
   _drops: []
   <MoveSpeed>k__BackingField: 2.2
   <ArrivalEpsilon>k__BackingField: 0.12
-  <RepathIntervalSeconds>k__BackingField: 0.25
-  <PathNodeStep>k__BackingField: 0.5
-  <MaxPathIterations>k__BackingField: 1200
+  <RepathIntervalSeconds>k__BackingField: 0.7
+  <PathNodeStep>k__BackingField: 1
+  <MaxPathIterations>k__BackingField: 200
   <Species>k__BackingField: 2
   <Archetype>k__BackingField: 1
   <RoleTags>k__BackingField: 2
@@ -32,7 +32,7 @@ MonoBehaviour:
   <HomeRadius>k__BackingField: 5
   <IdleDurationMin>k__BackingField: 0.8
   <IdleDurationMax>k__BackingField: 1.6
-  <AttackDamage>k__BackingField: 15
+  <AttackDamage>k__BackingField: 5
   <AttackRange>k__BackingField: 6
   <AttackWindupSeconds>k__BackingField: 0.6
   <AttackHitWindowSeconds>k__BackingField: 0.15

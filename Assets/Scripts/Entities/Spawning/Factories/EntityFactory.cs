@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public sealed class EntityFactory<TData, TEntity> : IEntityFactory<TData, TEntity>
     where TData : EntityData
@@ -18,8 +17,7 @@ public sealed class EntityFactory<TData, TEntity> : IEntityFactory<TData, TEntit
             return null;
         }
 
-        if (entity is EnemyCore enemyCore && data is EnemyData enemyData)
-            enemyCore.SetData(enemyData);
+        entity.Initialize(data);
 
         return entity;
     }
