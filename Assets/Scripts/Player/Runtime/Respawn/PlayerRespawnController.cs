@@ -139,6 +139,9 @@ public sealed class PlayerRespawnController : MonoBehaviour
 
     private void SetDeathFadeVisible(bool visible)
     {
+        if (_deathFadeRoot == null)
+            return;
+
         if (_deathFadeRoot.activeSelf == visible)
             return;
 

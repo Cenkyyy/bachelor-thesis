@@ -1,66 +1,78 @@
+using UnityEngine;
+
+/// <summary>
+/// Pursues the visible target until combat range or investigation rules take over.
+/// </summary>
 public class EnemyChaseState : EnemyStateBase
 {
+    public EnemyChaseState(EnemyCore enemyCore) : base(enemyCore)
+    {
+    }
+
+    public bool ShouldAttack { get; private set; }
+    public bool ShouldInvestigate { get; private set; }
+
     public override void OnEnter()
     {
         base.OnEnter();
         enemyCore.SetRunningAnimation(true);
-        enemyCore.ResetLostSightTimer();
     }
 
     public override void Do()
     {
+        ShouldAttack = false;
+        ShouldInvestigate = false;
+
+        if (enemyCore.IsRanged)
+        {
+            ShouldInvestigate = true;
+            return;
+        }
+
         enemyCore.TryDetectTarget();
 
         if (!enemyCore.HasTarget)
         {
-            Set(StateId.Patrol, forceReset: true);
+            ShouldInvestigate = true;
             return;
         }
 
-        if (enemyCore.IsRanged)
+        var canSee = enemyCore.CanSeeCurrentTarget();
+        if (!canSee)
         {
-            enemyCore.FaceTargetWhileKiting();
-        }
-
-        var canSee = enemyCore.CanSeeTarget(out _);
-        if (canSee)
-        {
-            enemyCore.ResetLostSightTimer();
-        }
-        else if (!enemyCore.IsTargetWithinDetectionRadius() && enemyCore.TickLostSight(UnityEngine.Time.deltaTime))
-        {
-            Set(StateId.Patrol, forceReset: true);
+            ShouldInvestigate = true;
             return;
         }
 
-        if (enemyCore.IsOutsideLeash() && !enemyCore.IsTargetWithinDetectionRadius())
-        {
-            Set(StateId.Patrol, forceReset: true);
-            return;
-        }
-
-        if (enemyCore.IsTargetInAttackRange())
-        {
-            Set(StateId.Attack, forceReset: true);
-            return;
-        }
+        if (enemyCore.CanAttackCurrentTarget())
+            ShouldAttack = true;
     }
 
     public override void FixedDo()
     {
         if (!enemyCore.HasTarget)
         {
-            enemyCore.StopMovement();
+            if (enemyCore.HasLastKnownTargetPosition)
+                enemyCore.MoveToUsingPath(enemyCore.LastKnownTargetPosition);
+            else
+                enemyCore.StopMovement();
+
             return;
         }
 
-        if (enemyCore.IsRanged && enemyCore.IsTargetTooCloseForRanged())
+        if (enemyCore.CanSeeCurrentTarget())
         {
-            enemyCore.MoveToUsingPath(enemyCore.GetRangedKitePosition());
+            enemyCore.MoveToUsingPath(enemyCore.Target.position);
             return;
         }
 
-        enemyCore.MoveToUsingPath(enemyCore.Target.position);
+        if (enemyCore.HasLastKnownTargetPosition)
+        {
+            enemyCore.MoveToUsingPath(enemyCore.LastKnownTargetPosition);
+            return;
+        }
+
+        enemyCore.StopMovement();
     }
 
     public override void OnExit()

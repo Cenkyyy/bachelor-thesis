@@ -9,11 +9,11 @@ public sealed class EntityFactory<TData, TEntity> : IEntityFactory<TData, TEntit
         if (data == null || data.Prefab == null)
             return null;
 
-        var spawnedEntity = Object.Instantiate(data.Prefab, spawnPoint, Quaternion.identity, parent);
+        var instance = Object.Instantiate(data.Prefab, spawnPoint, Quaternion.identity, parent);
         
-        if (spawnedEntity is not TEntity entity)
+        if (!instance.TryGetComponent(out TEntity entity))
         {
-            Object.Destroy(spawnedEntity.gameObject);
+            Object.Destroy(instance);
             return null;
         }
 

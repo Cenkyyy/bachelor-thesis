@@ -26,13 +26,17 @@ public class EnemyData : EntityData
 
     [field: Header("Pathfinding")]
     [field: SerializeField] public float RepathIntervalSeconds { get; private set; } = 0.6f;
-    [field: SerializeField] public float PathNodeStep { get; private set; } = 1f;
-    [field: SerializeField] public int MaxPathIterations { get; private set; } = 200;
+    [field: SerializeField] public float PathNodeStep { get; private set; } = 0.5f;
+    [field: SerializeField] public int MaxPathIterations { get; private set; } = 500;
 
     [field: Header("Perception")]
     [field: SerializeField] public float DetectionRadius { get; private set; } = 6f;
+    [field: SerializeField] public float RetargetIntervalSeconds { get; private set; } = 0.2f;
     [field: SerializeField] public float LeashRadius { get; private set; } = 10f;
-    [field: SerializeField] public float LostSightGraceSeconds { get; private set; } = 1.2f;
+
+    [field: Header("Investigation")]
+    [field: SerializeField] public float InvestigationDurationMin { get; private set; } = 2.5f;
+    [field: SerializeField] public float InvestigationDurationMax { get; private set; } = 4f;
 
     [field: Header("Patrol")]
     [field: SerializeField] public float HomeRadius { get; private set; } = 5f;
@@ -49,6 +53,8 @@ public class EnemyData : EntityData
     [field: Header("Ranged Combat")]
     [field: SerializeField] public float PreferredRangedDistance { get; private set; } = 4.5f;
     [field: SerializeField] public float RangedRetreatBuffer { get; private set; } = 1f;
+    [field: SerializeField] public float RangedRepositionDurationMin { get; private set; } = 0.6f;
+    [field: SerializeField] public float RangedRepositionDurationMax { get; private set; } = 1.1f;
     [field: SerializeField] public EnemyProjectile ProjectilePrefab { get; private set; }
     [field: SerializeField] public float ProjectileSpeed { get; private set; } = 8f;
     [field: SerializeField] public float ProjectileLifetimeSeconds { get; private set; } = 3f;
@@ -81,11 +87,17 @@ public class EnemyData : EntityData
         if (DetectionRadius < 0f)
             DetectionRadius = 0f;
 
+        if (RetargetIntervalSeconds < 0f)
+            RetargetIntervalSeconds = 0f;
+
         if (LeashRadius < 0f)
             LeashRadius = 0f;
 
-        if (LostSightGraceSeconds < 0f)
-            LostSightGraceSeconds = 0f;
+        if (InvestigationDurationMin < 0f)
+            InvestigationDurationMin = 0f;
+
+        if (InvestigationDurationMax < InvestigationDurationMin)
+            InvestigationDurationMax = InvestigationDurationMin;
 
         if (HomeRadius < 0f)
             HomeRadius = 0f;
@@ -116,6 +128,12 @@ public class EnemyData : EntityData
 
         if (RangedRetreatBuffer < 0f)
             RangedRetreatBuffer = 0f;
+
+        if (RangedRepositionDurationMin < 0f)
+            RangedRepositionDurationMin = 0f;
+
+        if (RangedRepositionDurationMax < RangedRepositionDurationMin)
+            RangedRepositionDurationMax = RangedRepositionDurationMin;
 
         if (ProjectileSpeed < 0f)
             ProjectileSpeed = 0f;

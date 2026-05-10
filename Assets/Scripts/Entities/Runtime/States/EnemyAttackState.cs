@@ -1,27 +1,43 @@
+/// <summary>
+/// Executes the enemy attack timing window and decides the post-attack transition.
+/// </summary>
 public class EnemyAttackState : EnemyStateBase
 {
     private bool _hasAppliedDamage;
+
+    public EnemyAttackState(EnemyCore enemyCore) : base(enemyCore)
+    {
+    }
+
+    public bool ShouldChase { get; private set; }
+    public bool ShouldInvestigate { get; private set; }
+    public bool ShouldReposition { get; private set; }
+    public bool ShouldRestartAttack { get; private set; }
 
     public override void OnEnter()
     {
         base.OnEnter();
         _hasAppliedDamage = false;
+        ShouldChase = false;
+        ShouldInvestigate = false;
+        ShouldReposition = false;
+        ShouldRestartAttack = false;
         enemyCore.StopMovement();
         enemyCore.TriggerAttackAnimation();
     }
 
     public override void Do()
     {
+        if (enemyCore.RuntimeData.IsDead)
+            return;
+
         if (enemyCore.IsRanged && enemyCore.HasTarget)
-        {
             enemyCore.FaceTargetWhileKiting();
-        }
 
         TryApplyAttackDamage();
 
-        var totalCommit = enemyCore.AttackWindupSeconds + enemyCore.AttackHitWindowSeconds + enemyCore.AttackRecoverySeconds;
-
-        if (time < totalCommit)
+        var totalCommit = enemyCore.Data.AttackWindupSeconds + enemyCore.Data.AttackHitWindowSeconds + enemyCore.Data.AttackRecoverySeconds;
+        if (TimeInState < totalCommit)
         {
             enemyCore.StopMovement();
             return;
@@ -29,46 +45,39 @@ public class EnemyAttackState : EnemyStateBase
 
         if (!enemyCore.HasTarget)
         {
-            Set(StateId.Patrol, forceReset: true);
+            ShouldInvestigate = true;
             return;
         }
 
-        if (enemyCore.IsOutsideLeash() && !enemyCore.IsTargetWithinDetectionRadius())
+        if (enemyCore.IsOutsideLeash() && !enemyCore.CanSeeCurrentTarget())
         {
-            Set(StateId.Patrol, forceReset: true);
+            ShouldInvestigate = true;
             return;
         }
 
-        if (enemyCore.IsTargetInAttackRange())
+        if (enemyCore.IsRanged)
         {
-            Set(StateId.Attack, forceReset: true);
+            ShouldReposition = enemyCore.IsTargetTooCloseForRanged() || enemyCore.CanAttackCurrentTarget();
+            ShouldInvestigate = !ShouldReposition;
             return;
         }
 
-        Set(StateId.Chase, forceReset: true);
+        if (enemyCore.CanAttackCurrentTarget())
+        {
+            ShouldRestartAttack = true;
+            return;
+        }
+
+        ShouldChase = enemyCore.CanSeeCurrentTarget();
+        ShouldInvestigate = !ShouldChase;
     }
 
     public override void FixedDo()
     {
-        if (!enemyCore.IsRanged || !enemyCore.HasTarget)
-        {
+        if (enemyCore.RuntimeData.IsDead)
             return;
-        }
 
-        var recoveryStart = enemyCore.AttackWindupSeconds + enemyCore.AttackHitWindowSeconds;
-        if (time < recoveryStart || time >= recoveryStart + enemyCore.AttackRecoverySeconds)
-        {
-            return;
-        }
-
-        if (enemyCore.IsTargetTooCloseForRanged())
-        {
-            enemyCore.MoveToUsingPath(enemyCore.GetRangedKitePosition());
-        }
-        else
-        {
-            enemyCore.StopMovement();
-        }
+        enemyCore.StopMovement();
     }
 
     public override void OnExit()
@@ -80,16 +89,15 @@ public class EnemyAttackState : EnemyStateBase
     private void TryApplyAttackDamage()
     {
         if (_hasAppliedDamage)
-        {
             return;
-        }
 
-        if (time < enemyCore.AttackWindupSeconds)
-        {
+        if (enemyCore.RuntimeData.IsDead)
             return;
-        }
 
-        if (time > enemyCore.AttackWindupSeconds + enemyCore.AttackHitWindowSeconds)
+        if (TimeInState < enemyCore.Data.AttackWindupSeconds)
+            return;
+
+        if (TimeInState > enemyCore.Data.AttackWindupSeconds + enemyCore.Data.AttackHitWindowSeconds)
         {
             _hasAppliedDamage = true;
             return;
@@ -97,6 +105,6 @@ public class EnemyAttackState : EnemyStateBase
 
         _hasAppliedDamage = enemyCore.IsRanged
             ? enemyCore.TryShootProjectileAtCurrentTarget()
-            : enemyCore.TryDealDamageToCurrentTarget(enemyCore.AttackDamage);
+            : enemyCore.TryDealDamageToCurrentTarget(enemyCore.Data.AttackDamage);
     }
 }

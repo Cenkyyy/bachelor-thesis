@@ -434,6 +434,7 @@ public sealed class DecorationChunkGenerator : ChunkWorldContentGeneratorBase
                 tracker.Initialize(placement.InstanceId, this, node);
             }
 
+            WorldNavigationObstacle.AttachTo(instance);
             instances.Add(instance);
             _spacingRadiusByInstance[instance] = Mathf.Max(0f, placement.SpacingRadius);
             operationCount++;

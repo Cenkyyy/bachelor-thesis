@@ -640,11 +640,11 @@ MonoBehaviour:
   _spawnableEnemies:
   - {fileID: 11400000, guid: c1523698214b240419fd070c9878a6c5, type: 2}
   - {fileID: 11400000, guid: 4b2d4198c00a8f74a81be6c77b77d81f, type: 2}
-  - {fileID: 11400000, guid: 108f928024f0ee44eb0e08dcb77dda3d, type: 2}
   - {fileID: 11400000, guid: ae968297b73e64d4fb319c407e633881, type: 2}
   - {fileID: 11400000, guid: 956bc99afe1861d4395f3daa0f27b432, type: 2}
   - {fileID: 11400000, guid: 01c95124a522212438cacc9eaf80fc06, type: 2}
   - {fileID: 11400000, guid: 874a188265eeb62429bf2f39a6dfe944, type: 2}
+  - {fileID: 11400000, guid: 108f928024f0ee44eb0e08dcb77dda3d, type: 2}
   - {fileID: 11400000, guid: 6753a1895fdd9f745acf9954387f91d8, type: 2}
   - {fileID: 11400000, guid: 914ce686352d5c543976a433064290b1, type: 2}
   - {fileID: 11400000, guid: a8bdc6f4d77bbab4facbacbbbd83a8c1, type: 2}
@@ -655,7 +655,7 @@ MonoBehaviour:
     <SpawnIntervalSeconds>k__BackingField: 3
     <NightSpawnAccelerationMultiplier>k__BackingField: 0.9
     <AttemptsPerCycle>k__BackingField: 3
-    <MaxAliveEntities>k__BackingField: 2
+    <MaxAliveEntities>k__BackingField: 8
     <NightMaxAliveEntitiesMultiplier>k__BackingField: 1.25
     <SpawnRadius>k__BackingField: 20
     <MinSpawnDistance>k__BackingField: 9
@@ -5430,7 +5430,7 @@ GameObject:
   - component: {fileID: 626142999}
   - component: {fileID: 626143000}
   - component: {fileID: 626143001}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: WallsTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11291,6 +11291,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1327090048}
+  - component: {fileID: 1327090049}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -11320,6 +11321,22 @@ Transform:
   - {fileID: 1087975137}
   m_Father: {fileID: 174293338}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1327090049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327090047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2761f07166e4494a993cbff18135c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _worldGenerator: {fileID: 1097722629}
+  _wallChunkGenerator: {fileID: 1097722633}
+  _cellSize: 0.25
+  _chunkSizeTiles: 16
 --- !u!1 &1362542294
 GameObject:
   m_ObjectHideFlags: 0
@@ -12026,7 +12043,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1486129156}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall_MiningBarsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12999,7 +13016,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1541602682}
   - component: {fileID: 1541602683}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Wall_FeedbackPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,5 +1,5 @@
 /// <summary>
-/// Represents the unique identifier for a state in the finite state machine. This is used to request transitions by id from states and the state machine core.
+/// Represents the unique identifier for a finite state machine state.
 /// </summary>
 public enum StateId
 {
@@ -8,5 +8,8 @@ public enum StateId
     Patrol = 2,
     Chase = 3,
     Attack = 4,
-    Dead = 5
+    Dead = 5,
+    Reposition = 6,
+    Investigate = 7,
+    ReturnHome = 8
 }

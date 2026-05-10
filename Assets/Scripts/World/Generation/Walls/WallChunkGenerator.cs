@@ -106,9 +106,13 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         if (_wallTilemap != null)
             _wallTilemap.ClearAllTiles();
 
+        var clearedTiles = new List<Vector2Int>(_runtimeByTile.Keys);
         _spawnedChunkTiles.Clear();
         _spawnedChunkOres.Clear();
         _runtimeByTile.Clear();
+        for (int i = 0; i < clearedTiles.Count; i++)
+            OnWallTileChanged?.Invoke(clearedTiles[i]);
+
         _orePool.Clear();
     }
 
@@ -142,6 +146,12 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     public bool HasWallAtDataTile(Vector2Int dataTile)
     {
         return _runtimeByTile.ContainsKey(dataTile);
+    }
+
+    public IEnumerable<Vector2Int> GetLoadedWallTiles()
+    {
+        foreach (var pair in _runtimeByTile)
+            yield return pair.Key;
     }
 
     public bool TryGetWallDataAtDataTile(Vector2Int dataTile, out WallData wallData)
@@ -243,6 +253,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
                 _tileWriteCellsBuffer.Add(worldData.DataToCell(tile.x, tile.y));
                 _tileWriteAssetsBuffer.Add(null);
                 _runtimeByTile.Remove(tile);
+                OnWallTileChanged?.Invoke(tile);
 
                 operationCount++;
                 if (yieldEveryOperations > 0 && operationCount >= yieldEveryOperations)
@@ -259,6 +270,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             {
                 var tile = tiles[i];
                 _runtimeByTile.Remove(tile);
+                OnWallTileChanged?.Invoke(tile);
             }
         }
 
@@ -508,8 +520,11 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
             var worldPos = WorldObjectPlacementUtility.TileToWorldPosition(data, worldGenerator.GroundTilemap, ore.AnchorTile.x, ore.AnchorTile.y, 0f, 0f);
             var instance = _orePool.Acquire(ore.Entry.Prefab, worldPos, Quaternion.identity, _spawnedWallOresRoot, out _);
-            if (instance != null)
-                spawned.Add(instance);
+            if (instance == null)
+                continue;
+
+            WorldNavigationObstacle.AttachTo(instance);
+            spawned.Add(instance);
         }
 
         _spawnedChunkOres[chunkCoord] = spawned;
@@ -524,6 +539,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             _wallTilemap.SetTile(worldGenerator.CurrentWorldData.DataToCell(dataTile.x, dataTile.y), null);
 
         _runtimeByTile.Remove(dataTile);
+        OnWallTileChanged?.Invoke(dataTile);
 
         var ownerChunk = WorldChunkUtility.GetChunkCoordFromTile(dataTile, chunkSize);
         if (_spawnedChunkTiles.TryGetValue(ownerChunk, out var chunkTiles))

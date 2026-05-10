@@ -50,8 +50,8 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget, ISpellWordEf
             return false;
         }
 
-        biome = _enemyCore.HomeBiome;
-        roleTags = _enemyCore.RoleTags;
+        biome = _enemyCore.Data.HomeBiome;
+        roleTags = _enemyCore.Data.RoleTags;
         return true;
     }
 

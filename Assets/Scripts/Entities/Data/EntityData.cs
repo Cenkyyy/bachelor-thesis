@@ -3,7 +3,7 @@ using UnityEngine;
 public class EntityData : ScriptableObject
 {
     [field: Header("Prefab")]
-    [field: SerializeField] public EntityCore Prefab { get; private set; }
+    [field: SerializeField] public GameObject Prefab { get; private set; }
 
     [field: Header("Core Stats")]
     [field: SerializeField] public int MaxHealth { get; private set; } = 40;

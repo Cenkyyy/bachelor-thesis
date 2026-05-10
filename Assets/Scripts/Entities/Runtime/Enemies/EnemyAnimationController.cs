@@ -1,10 +1,16 @@
 ﻿using UnityEngine;
 
-public class EnemyAnimationController : MonoBehaviour
+/// <summary>
+/// Updates enemy animator movement, facing, attack, running, and death parameters.
+/// </summary>
+[DisallowMultipleComponent]
+public sealed class EnemyAnimationController : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _renderer;
 
+    [Header("Sprites")]
     [SerializeField] private bool _mirrorSideSprites = true;
 
     [Header("Parameter Names")]
@@ -21,26 +27,11 @@ public class EnemyAnimationController : MonoBehaviour
     private bool _hasFacingOverride;
     private Vector2 _facingOverride = Vector2.down;
 
-    private void Awake()
-    {
-        if (_animator == null)
-        {
-            _animator = GetComponent<Animator>();
-        }
-
-        if (_renderer == null)
-        {
-            _renderer = GetComponent<SpriteRenderer>();
-        }
-    }
-
     public void SetMoving(Vector2 moveDirection)
     {
         var isMoving = moveDirection.sqrMagnitude > Mathf.Epsilon;
         if (isMoving)
-        {
             _lastMoveDirection = moveDirection.normalized;
-        }
 
         var facingDirection = _hasFacingOverride ? _facingOverride : _lastMoveDirection;
 
@@ -56,9 +47,7 @@ public class EnemyAnimationController : MonoBehaviour
     public void SetFacingOverride(Vector2 direction)
     {
         if (direction.sqrMagnitude < Mathf.Epsilon)
-        {
             return;
-        }
 
         _facingOverride = direction.normalized;
         _hasFacingOverride = true;
@@ -86,15 +75,11 @@ public class EnemyAnimationController : MonoBehaviour
 
     private void UpdateSideFlip(Vector2 direction)
     {
-        if (_renderer == null || !_mirrorSideSprites)
-        {
+        if (!_mirrorSideSprites)
             return;
-        }
 
         if (Mathf.Abs(direction.x) <= Mathf.Abs(direction.y))
-        {
             return;
-        }
 
         _renderer.flipX = direction.x < 0f;
     }

@@ -20,7 +20,8 @@ public sealed class PrefabPlacementStrategy : IPlacementStrategy
         if (placeableItem is not IPrefabPlaceableItem prefabPlaceableItem)
             return;
             
-        Object.Instantiate(prefabPlaceableItem.Prefab, targetPosition, Quaternion.identity, parent);
+        var instance = Object.Instantiate(prefabPlaceableItem.Prefab, targetPosition, Quaternion.identity, parent);
+        WorldNavigationObstacle.AttachTo(instance);
     }
 
     public void UpdatePreview(

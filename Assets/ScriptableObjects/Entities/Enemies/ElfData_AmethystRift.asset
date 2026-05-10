@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d15ecb9e5791b945bea4f384da70a48, type: 3}
   m_Name: ElfData_AmethystRift
   m_EditorClassIdentifier: 
-  <Prefab>k__BackingField: {fileID: 1670540943250230566, guid: a84f9034824b1bb4f896e7024e9939da, type: 3}
+  <Prefab>k__BackingField: {fileID: 2304351662522366803, guid: a84f9034824b1bb4f896e7024e9939da, type: 3}
   <MaxHealth>k__BackingField: 40
   <HomeBiome>k__BackingField: 4
   <Species>k__BackingField: 7
@@ -24,11 +24,13 @@ MonoBehaviour:
   <MoveSpeed>k__BackingField: 2.2
   <ArrivalEpsilon>k__BackingField: 0.12
   <RepathIntervalSeconds>k__BackingField: 0.7
-  <PathNodeStep>k__BackingField: 1
+  <PathNodeStep>k__BackingField: 0.5
   <MaxPathIterations>k__BackingField: 200
   <DetectionRadius>k__BackingField: 6
+  <RetargetIntervalSeconds>k__BackingField: 0.2
   <LeashRadius>k__BackingField: 10
-  <LostSightGraceSeconds>k__BackingField: 1.2
+  <InvestigationDurationMin>k__BackingField: 2.5
+  <InvestigationDurationMax>k__BackingField: 4
   <HomeRadius>k__BackingField: 5
   <IdleDurationMin>k__BackingField: 0.8
   <IdleDurationMax>k__BackingField: 1.6
@@ -39,6 +41,8 @@ MonoBehaviour:
   <AttackRecoverySeconds>k__BackingField: 0.8
   <PreferredRangedDistance>k__BackingField: 5.2
   <RangedRetreatBuffer>k__BackingField: 1.2
+  <RangedRepositionDurationMin>k__BackingField: 0.6
+  <RangedRepositionDurationMax>k__BackingField: 1.1
   <ProjectilePrefab>k__BackingField: {fileID: 6972902530202342435, guid: f7eda292a5b3e6a44b425a3588f4d256, type: 3}
   <ProjectileSpeed>k__BackingField: 8
   <ProjectileLifetimeSeconds>k__BackingField: 3

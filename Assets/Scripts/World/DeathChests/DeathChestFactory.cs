@@ -22,6 +22,7 @@ public sealed class DeathChestFactory : MonoBehaviour
 
         var spawnPosition = ResolveSpawnPosition(worldPosition);
         var deathChestObject = Instantiate(_deathChestPrefab, spawnPosition, Quaternion.identity, _deathChestParent);
+        WorldNavigationObstacle.AttachTo(deathChestObject);
         var deathChestInventory = deathChestObject.GetComponent<DeathChestInventory>();
 
         if (deathChestInventory == null)

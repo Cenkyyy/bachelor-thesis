@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d15ecb9e5791b945bea4f384da70a48, type: 3}
   m_Name: PredatorPlantData_Desert
   m_EditorClassIdentifier: 
-  <Prefab>k__BackingField: {fileID: 1670540943250230566, guid: 99fbfd30f3ae4b5419c0ee4c440457c6, type: 3}
+  <Prefab>k__BackingField: {fileID: 2304351662522366803, guid: 60d70b29195f27e4086e346523ff2e37, type: 3}
   <MaxHealth>k__BackingField: 100
   <HomeBiome>k__BackingField: 3
   <Species>k__BackingField: 6
@@ -24,11 +24,13 @@ MonoBehaviour:
   <MoveSpeed>k__BackingField: 2.2
   <ArrivalEpsilon>k__BackingField: 0.12
   <RepathIntervalSeconds>k__BackingField: 0.7
-  <PathNodeStep>k__BackingField: 1
+  <PathNodeStep>k__BackingField: 0.5
   <MaxPathIterations>k__BackingField: 200
   <DetectionRadius>k__BackingField: 8
+  <RetargetIntervalSeconds>k__BackingField: 0.2
   <LeashRadius>k__BackingField: 10
-  <LostSightGraceSeconds>k__BackingField: 1.2
+  <InvestigationDurationMin>k__BackingField: 2.5
+  <InvestigationDurationMax>k__BackingField: 4
   <HomeRadius>k__BackingField: 5
   <IdleDurationMin>k__BackingField: 0.8
   <IdleDurationMax>k__BackingField: 1.6
@@ -39,6 +41,8 @@ MonoBehaviour:
   <AttackRecoverySeconds>k__BackingField: 0.8
   <PreferredRangedDistance>k__BackingField: 4.5
   <RangedRetreatBuffer>k__BackingField: 1
+  <RangedRepositionDurationMin>k__BackingField: 0.6
+  <RangedRepositionDurationMax>k__BackingField: 1.1
   <ProjectilePrefab>k__BackingField: {fileID: 0}
   <ProjectileSpeed>k__BackingField: 8
   <ProjectileLifetimeSeconds>k__BackingField: 3
