@@ -25,6 +25,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     [SerializeField, Min(1)] private int _revealRadiusTiles = 8;
     [SerializeField, Min(1)] private int _chunkSizeTiles = 32;
     [SerializeField, Min(1)] private int _maxChunkUpdatesPerFrame = 2;
+    [SerializeField, Min(0)] private int _initializationChunkRadiusAroundPlayer = 4;
     [SerializeField, Min(1)] private int _initializationRowsPerFrame = 128;
     [SerializeField, Min(0.1f)] private float _maxInitializationMillisecondsPerFrame = 6f;
     [SerializeField] private Color32 _unexploredColor = new(0, 0, 0, 0);
@@ -59,6 +60,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     private readonly Dictionary<string, RectTransform> _markerViewById = new();
     private Vector2Int _lastPlayerTile = new(int.MinValue, int.MinValue);
     private Coroutine _enableMaskCoroutine;
+    private Coroutine _runtimeDataBuildCoroutine;
 
     private void OnEnable()
     {
@@ -80,6 +82,12 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
             StopCoroutine(_enableMaskCoroutine);
             _enableMaskCoroutine = null;
         }
+
+        if (_runtimeDataBuildCoroutine != null)
+        {
+            StopCoroutine(_runtimeDataBuildCoroutine);
+            _runtimeDataBuildCoroutine = null;
+        }
     }
 
     private IEnumerator EnableMaskNextFrameCoroutine()
@@ -99,16 +107,20 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
         BuildColorLookup();
         _chunksX = Mathf.CeilToInt(WorldData.Width / (float)_chunkSizeTiles);
         _chunksY = Mathf.CeilToInt(WorldData.Height / (float)_chunkSizeTiles);
-        yield return BuildRuntimeDataCoroutine();
+        _runtimeData = new MapRuntimeData(WorldData.Width, WorldData.Height, _chunksX * _chunksY, _unexploredColor);
         BuildTexture();
 
         _exploration = new ExplorationData(WorldData.Width, WorldData.Height);
         _terrainImage.texture = TerrainTexture;
 
-        RevealAround(GetPlayerTile());
+        var playerTile = GetPlayerTile();
+        ResolveChunksAround(playerTile, _initializationChunkRadiusAroundPlayer);
+        RevealAround(playerTile);
         ProcessDirtyChunks(forceAll: true);
         UpdateView(force: true);
         IsInitialized = true;
+
+        _runtimeDataBuildCoroutine = StartCoroutine(BuildRuntimeDataInBackgroundCoroutine());
         yield break;
     }
 
@@ -178,35 +190,71 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
         }
     }
 
-    private IEnumerator BuildRuntimeDataCoroutine()
+    private IEnumerator BuildRuntimeDataInBackgroundCoroutine()
     {
-        int chunkCount = _chunksX * _chunksY;
-        _runtimeData = new MapRuntimeData(WorldData.Width, WorldData.Height, chunkCount, _unexploredColor);
+        yield return null;
+
         int rowBudget = Mathf.Max(1, _initializationRowsPerFrame);
         float timeBudget = Mathf.Max(Mathf.Epsilon, _maxInitializationMillisecondsPerFrame * 0.001f);
         int processedRows = 0;
         float frameStartTime = Time.realtimeSinceStartup;
 
-        for (int y = 0; y < WorldData.Height; y++)
+        bool hasPendingTiles;
+        do
         {
-            for (int x = 0; x < WorldData.Width; x++)
-            {
-                int index = ToIndex(x, y);
-                var tileType = WorldData.GetTile(x, y).TileType;
-                _runtimeData.ResolvedPixelByIndex[index] = ResolveTileColor(tileType);
-            }
+            hasPendingTiles = false;
 
-            processedRows++;
-            if (processedRows >= rowBudget || Time.realtimeSinceStartup - frameStartTime >= timeBudget)
+            for (int y = 0; y < WorldData.Height; y++)
             {
-                processedRows = 0;
-                frameStartTime = Time.realtimeSinceStartup;
-                yield return null;
+                for (int x = 0; x < WorldData.Width; x++)
+                {
+                    int index = ToIndex(x, y);
+                    if (_runtimeData.IsResolvedPixelByIndex[index])
+                        continue;
+
+                    if (!WorldData.IsTileGenerated(x, y))
+                    {
+                        hasPendingTiles = true;
+                        continue;
+                    }
+
+                    ResolveBaseTileColor(x, y);
+                }
+
+                processedRows++;
+                if (processedRows >= rowBudget || Time.realtimeSinceStartup - frameStartTime >= timeBudget)
+                {
+                    processedRows = 0;
+                    frameStartTime = Time.realtimeSinceStartup;
+                    yield return null;
+                }
+            }
+        } while (hasPendingTiles);
+
+        _runtimeDataBuildCoroutine = null;
+        yield break;
+    }
+
+    private void ResolveChunksAround(Vector2Int centerTile, int chunkRadius)
+    {
+        if (_runtimeData == null || WorldData == null)
+            return;
+
+        var centerChunk = WorldChunkUtility.GetChunkCoordFromTile(centerTile, _chunkSizeTiles);
+        var chunks = WorldChunkUtility.BuildChunkSetInRadius(centerChunk, chunkRadius);
+        for (int i = 0; i < chunks.Count; i++)
+        {
+            var chunk = chunks[i];
+            if (!IsChunkInsideWorld(chunk.x, chunk.y))
+                continue;
+
+            var bounds = GetChunkBounds(chunk.x, chunk.y);
+            for (int y = bounds.MinY; y < bounds.MaxY; y++)
+            {
+                for (int x = bounds.MinX; x < bounds.MaxX; x++)
+                    ResolveBaseTileColor(x, y);
             }
         }
-
-        _runtimeData.ClearDirtyState();
-        yield break;
     }
 
     private void BuildTexture()
@@ -234,6 +282,19 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
         }
 
         return new Color32(0, 0, 0, 255);
+    }
+
+    private Color32 ResolveBaseTileColor(int x, int y)
+    {
+        int index = ToIndex(x, y);
+        if (_runtimeData.IsResolvedPixelByIndex[index])
+            return _runtimeData.ResolvedPixelByIndex[index];
+
+        var tileType = WorldData.GetTile(x, y).TileType;
+        var color = ResolveTileColor(tileType);
+        _runtimeData.ResolvedPixelByIndex[index] = color;
+        _runtimeData.IsResolvedPixelByIndex[index] = true;
+        return color;
     }
 
     private void UpdateView(bool force)
@@ -421,7 +482,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     private Color32 ResolveVisibleTileColor(int x, int y)
     {
         if (_wallChunkGenerator == null || !_wallChunkGenerator.TryGetWallDataAtDataTile(new Vector2Int(x, y), out var wallData))
-            return _runtimeData.ResolvedPixelByIndex[ToIndex(x, y)];
+            return ResolveBaseTileColor(x, y);
 
         return HasAdjacentOpenTile(x, y) ? wallData.MinimapBorderColor : wallData.MinimapInnerColor;
     }
@@ -451,11 +512,21 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
 
     private int ToChunkIndex(int chunkX, int chunkY) => (chunkY * _chunksX) + chunkX;
 
+    private bool IsChunkInsideWorld(int chunkX, int chunkY)
+    {
+        return chunkX >= 0 && chunkY >= 0 && chunkX < _chunksX && chunkY < _chunksY;
+    }
+
     private ChunkBounds GetChunkBounds(int chunkIndex)
     {
         int chunkX = chunkIndex % _chunksX;
         int chunkY = chunkIndex / _chunksX;
 
+        return GetChunkBounds(chunkX, chunkY);
+    }
+
+    private ChunkBounds GetChunkBounds(int chunkX, int chunkY)
+    {
         int minX = chunkX * _chunkSizeTiles;
         int minY = chunkY * _chunkSizeTiles;
 

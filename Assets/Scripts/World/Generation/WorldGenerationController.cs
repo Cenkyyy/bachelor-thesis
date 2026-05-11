@@ -3,13 +3,14 @@ using UnityEngine.Tilemaps;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadinessBlocker
 {
     private const int DefaultWorldWidth = 2048;
     private const int DefaultWorldHeight = DefaultWorldWidth;
     private const int DefaultBorderThickness = 32;
+    private const int DefaultWorldDataGenerationChunkSize = 32;
+    private const int DefaultInitialWorldDataGenerationRadiusInChunks = 4;
 
     [Header("Tilemaps")]
     [SerializeField] private Tilemap _groundTilemap;
@@ -40,6 +41,12 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
     [SerializeField, Range(0f, 1f)] private float _middleRingMaxNormalizedRadius = 0.70f;
     [SerializeField] private RadialBiomeWeights _middleRingWeights = RadialBiomeWeights.Create(25f, 37.5f, 37.5f, 0f);
     [SerializeField] private RadialBiomeWeights _outerRingWeights = RadialBiomeWeights.Create(10f, 17.5f, 17.5f, 55f);
+
+    [Header("Deferred World Data Generation")]
+    [SerializeField, Min(1)] private int _worldDataGenerationChunkSize = DefaultWorldDataGenerationChunkSize;
+    [SerializeField, Min(0)] private int _initialWorldDataGenerationRadiusInChunks = DefaultInitialWorldDataGenerationRadiusInChunks;
+    [SerializeField, Min(1)] private int _worldDataGenerationChunksPerFrame = 16;
+    [SerializeField, Min(0.1f)] private float _maxWorldDataGenerationMillisecondsPerFrame = 4f;
 
     [Header("Biome Transition Band")]
     [SerializeField, Min(0f)] private float _biomeTransitionBandWidthTiles = 6f;
@@ -83,6 +90,8 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
     private int _playableRadius => (_worldWidth - (2 * _borderThickness)) / 2;
     private Coroutine _generationCoroutine;
     private Coroutine _startupCoroutine;
+    private Coroutine _backgroundGenerationCoroutine;
+    private WorldGenerator _activeGenerator;
     private readonly WorldRuntimeState _runtimeState = new WorldRuntimeState();
 
     private void Start()
@@ -105,7 +114,14 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
             StopCoroutine(_generationCoroutine);
         }
 
+        if (_backgroundGenerationCoroutine != null)
+        {
+            StopCoroutine(_backgroundGenerationCoroutine);
+            _backgroundGenerationCoroutine = null;
+        }
+
         _runtimeState.Clear();
+        _activeGenerator = null;
         _generationCoroutine = StartCoroutine(GenerateAndRenderCoroutine(seedUsed));
     }
 
@@ -123,6 +139,13 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
             _startupCoroutine = null;
         }
 
+        if (_backgroundGenerationCoroutine != null)
+        {
+            StopCoroutine(_backgroundGenerationCoroutine);
+            _backgroundGenerationCoroutine = null;
+        }
+
+        _activeGenerator = null;
         _runtimeState.Clear();
     }
 
@@ -144,35 +167,143 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
             BiomeCenters = CreateBiomeCenters(seedUsed, worldShape)
         };
 
-        var generateTask = Task.Run(() =>
-        {
-            var generator = new WorldGenerator(settings);
-            return generator.Generate();
-        });
-
-        while (!generateTask.IsCompleted)
-        {
-            yield return null;
-        }
-
-        if (generateTask.IsFaulted)
-        {
-            Debug.LogException(generateTask.Exception);
-            IsReadyForSceneReveal = true;
-            _generationCoroutine = null;
-            yield break;
-        }
-
-        var data = generateTask.Result;
+        _activeGenerator = new WorldGenerator(settings);
+        var data = new WorldRuntimeData(_worldWidth, _worldHeight);
         _runtimeState.Update(seedUsed, data, _groundTilemap);
 
         PositionPlayer(data);
+        GenerateInitialWorldData(data);
 
         if (_minimap != null)
             yield return _minimap.InitializeCoroutine(data);
-        
+
         IsReadyForSceneReveal = true;
+        _backgroundGenerationCoroutine = StartCoroutine(GenerateRemainingWorldDataCoroutine(data));
         _generationCoroutine = null;
+    }
+
+    public void EnsureDataGeneratedForChunk(Vector2Int chunkCoord, int chunkSize)
+    {
+        int safeChunkSize = Mathf.Max(1, chunkSize);
+        EnsureDataGenerated(chunkCoord.x * safeChunkSize, chunkCoord.y * safeChunkSize, safeChunkSize, safeChunkSize);
+    }
+
+    public void EnsureDataGenerated(int startX, int startY, int width, int height)
+    {
+        if (_activeGenerator == null || _runtimeState.Data == null)
+            return;
+
+        int minX = Mathf.Clamp(startX, 0, _runtimeState.Data.Width);
+        int minY = Mathf.Clamp(startY, 0, _runtimeState.Data.Height);
+        int maxX = Mathf.Clamp(startX + Mathf.Max(0, width), 0, _runtimeState.Data.Width);
+        int maxY = Mathf.Clamp(startY + Mathf.Max(0, height), 0, _runtimeState.Data.Height);
+
+        if (minX >= maxX || minY >= maxY)
+            return;
+
+        int clampedWidth = maxX - minX;
+        int clampedHeight = maxY - minY;
+        if (_runtimeState.Data.IsRegionGenerated(minX, minY, clampedWidth, clampedHeight))
+            return;
+
+        _activeGenerator.GenerateInto(_runtimeState.Data, minX, minY, clampedWidth, clampedHeight);
+    }
+
+    private void GenerateInitialWorldData(WorldRuntimeData data)
+    {
+        if (data == null || _activeGenerator == null)
+            return;
+
+        var spawnChunk = WorldChunkUtility.GetChunkCoordFromTile(data.SpawnTile, _worldDataGenerationChunkSize);
+        var chunks = WorldChunkUtility.BuildChunkSetInRadius(spawnChunk, _initialWorldDataGenerationRadiusInChunks);
+        for (int i = 0; i < chunks.Count; i++)
+            GenerateWorldDataChunk(data, chunks[i]);
+    }
+
+    private IEnumerator GenerateRemainingWorldDataCoroutine(WorldRuntimeData data)
+    {
+        yield return null;
+
+        if (data == null || _activeGenerator == null)
+        {
+            _backgroundGenerationCoroutine = null;
+            yield break;
+        }
+
+        var chunks = BuildWorldDataChunksByDistance(data.SpawnTile);
+        int chunkBudget = Mathf.Max(1, _worldDataGenerationChunksPerFrame);
+        float timeBudget = Mathf.Max(Mathf.Epsilon, _maxWorldDataGenerationMillisecondsPerFrame * 0.001f);
+        int generatedThisFrame = 0;
+        float frameStartTime = Time.realtimeSinceStartup;
+
+        for (int i = 0; i < chunks.Count; i++)
+        {
+            var chunk = chunks[i];
+            if (!IsWorldDataChunkGenerated(data, chunk))
+                GenerateWorldDataChunk(data, chunk);
+
+            generatedThisFrame++;
+            if (generatedThisFrame >= chunkBudget || Time.realtimeSinceStartup - frameStartTime >= timeBudget)
+            {
+                generatedThisFrame = 0;
+                frameStartTime = Time.realtimeSinceStartup;
+                yield return null;
+            }
+        }
+
+        _backgroundGenerationCoroutine = null;
+    }
+
+    private List<Vector2Int> BuildWorldDataChunksByDistance(Vector2Int centerTile)
+    {
+        int chunkSize = Mathf.Max(1, _worldDataGenerationChunkSize);
+        int chunksX = Mathf.CeilToInt(_worldWidth / (float)chunkSize);
+        int chunksY = Mathf.CeilToInt(_worldHeight / (float)chunkSize);
+        var centerChunk = WorldChunkUtility.GetChunkCoordFromTile(centerTile, chunkSize);
+        var chunks = new List<Vector2Int>(chunksX * chunksY);
+
+        for (int y = 0; y < chunksY; y++)
+        {
+            for (int x = 0; x < chunksX; x++)
+                chunks.Add(new Vector2Int(x, y));
+        }
+
+        chunks.Sort((a, b) =>
+        {
+            int ax = a.x - centerChunk.x;
+            int ay = a.y - centerChunk.y;
+            int bx = b.x - centerChunk.x;
+            int by = b.y - centerChunk.y;
+            int aDistance = (ax * ax) + (ay * ay);
+            int bDistance = (bx * bx) + (by * by);
+            return aDistance.CompareTo(bDistance);
+        });
+
+        return chunks;
+    }
+
+    private bool IsWorldDataChunkGenerated(WorldRuntimeData data, Vector2Int chunk)
+    {
+        int chunkSize = Mathf.Max(1, _worldDataGenerationChunkSize);
+        int startX = chunk.x * chunkSize;
+        int startY = chunk.y * chunkSize;
+        int width = Mathf.Min(chunkSize, data.Width - startX);
+        int height = Mathf.Min(chunkSize, data.Height - startY);
+        return data.IsRegionGenerated(startX, startY, width, height);
+    }
+
+    private void GenerateWorldDataChunk(WorldRuntimeData data, Vector2Int chunk)
+    {
+        int chunkSize = Mathf.Max(1, _worldDataGenerationChunkSize);
+        int startX = chunk.x * chunkSize;
+        int startY = chunk.y * chunkSize;
+        int width = Mathf.Min(chunkSize, data.Width - startX);
+        int height = Mathf.Min(chunkSize, data.Height - startY);
+
+        if (width <= 0 || height <= 0)
+            return;
+
+        _activeGenerator.GenerateInto(data, startX, startY, width, height);
     }
 
     private int ResolveSeed()

@@ -43,6 +43,22 @@ public class WorldGenerator
     public WorldRuntimeData Generate()
     {
         var data = new WorldRuntimeData(_settings.Width, _settings.Height);
+        GenerateInto(data, 0, 0, _settings.Width, _settings.Height);
+        return data;
+    }
+
+    public void GenerateInto(WorldRuntimeData data, int startX, int startY, int width, int height)
+    {
+        if (data == null)
+            return;
+
+        int minX = Mathf.Max(0, startX);
+        int minY = Mathf.Max(0, startY);
+        int maxX = Mathf.Min(data.Width, startX + Mathf.Max(0, width));
+        int maxY = Mathf.Min(data.Height, startY + Mathf.Max(0, height));
+
+        if (minX >= maxX || minY >= maxY)
+            return;
 
         // Prepare biome centers
         var centers = _settings.BiomeCenters;
@@ -52,16 +68,20 @@ public class WorldGenerator
         }
 
         // Fill tiles
-        for (int y = 0; y < _settings.Height; y++)
+        for (int y = minY; y < maxY; y++)
         {
-            for (int x = 0; x < _settings.Width; x++)
+            for (int x = minX; x < maxX; x++)
             {
+                if (data.IsTileGenerated(x, y))
+                    continue;
+
                 // Center of this tile
                 var tileCenter = new Vector2(x + 0.5f, y + 0.5f);
 
                 if (!_settings.WorldShape.IsInsideBorder(tileCenter))
                 {
                     // Outside border ring: skip
+                    data.MarkTileGenerated(x, y);
                     continue;
                 }
 
@@ -82,8 +102,6 @@ public class WorldGenerator
                 data.SetTile(x, y, new WorldTile(biome, tileType));
             }
         }
-
-        return data;
     }
 
     private void FindNearestCenters(Vector2 position, List<BiomeCenter> centers, out BiomeCenter nearest, out BiomeCenter nearestDifferentBiome, out float nearestDistance, out float nearestDifferentBiomeDistance)

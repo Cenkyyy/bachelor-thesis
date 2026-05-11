@@ -5,6 +5,7 @@ public sealed class MapRuntimeData
 {
     public bool[] IsChunkDirty { get; private set; }
     public Color32[] ResolvedPixelByIndex { get; private set;  }
+    public bool[] IsResolvedPixelByIndex { get; private set; }
     public Color32[] DisplayPixelByIndex {  get; private set; }
     public Queue<int> DirtyChunkQueue { get; private set; } = new();
     public HashSet<int> QueuedChunkIndices { get; private set; } = new();
@@ -13,6 +14,7 @@ public sealed class MapRuntimeData
     {
         IsChunkDirty = new bool[Mathf.Max(1, chunkCount)];
         ResolvedPixelByIndex = new Color32[worldWidth * worldHeight];
+        IsResolvedPixelByIndex = new bool[worldWidth * worldHeight];
         DisplayPixelByIndex = new Color32[worldWidth * worldHeight];
 
         for (int i = 0; i < DisplayPixelByIndex.Length; i++)
