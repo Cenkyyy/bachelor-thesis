@@ -4724,7 +4724,8 @@ MonoBehaviour:
   _revealRadiusTiles: 8
   _chunkSizeTiles: 32
   _maxChunkUpdatesPerFrame: 2
-  _initializationRowsPerFrame: 200
+  _initializationChunkRadiusAroundPlayer: 4
+  _initializationRowsPerFrame: 250
   _maxInitializationMillisecondsPerFrame: 7
   _unexploredColor:
     serializedVersion: 2
@@ -10046,6 +10047,10 @@ MonoBehaviour:
     IceTundra: 17.5
     Desert: 17.5
     AmethystRift: 55
+  _worldDataGenerationChunkSize: 32
+  _initialWorldDataGenerationRadiusInChunks: 4
+  _worldDataGenerationChunksPerFrame: 32
+  _maxWorldDataGenerationMillisecondsPerFrame: 4
   _biomeTransitionBandWidthTiles: 6
   _biomeTransitionNoiseScale: 0.6
   _biomeTransitionDisplacementTiles: 4
@@ -14117,7 +14122,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 640, y: 360}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.5
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
