@@ -16,6 +16,28 @@ public sealed class EntityNavigationController : MonoBehaviour
     private Vector2 _lastRepathTarget;
     private bool _hasLastRepathTarget;
 
+    private void OnDrawGizmosSelected()
+    {
+        if (_currentPath.Count == 0)
+            return;
+
+        Gizmos.color = Color.blue;
+        var previous = (Vector2)transform.position;
+        for (var i = 0; i < _currentPath.Count; i++)
+        {
+            var waypoint = _currentPath[i];
+            Gizmos.DrawLine(previous, waypoint);
+            Gizmos.DrawWireSphere(waypoint, 0.08f);
+            previous = waypoint;
+        }
+
+        if (_pathIndex < 0 || _pathIndex >= _currentPath.Count)
+            return;
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawSphere(_currentPath[_pathIndex], 0.12f);
+    }
+
     public bool CanUsePathPosition(Vector2 worldPosition, float pathProbeRadius)
     {
         return ChunkWorldNavigationController.Instance.IsWorldAreaWalkable(worldPosition, pathProbeRadius);

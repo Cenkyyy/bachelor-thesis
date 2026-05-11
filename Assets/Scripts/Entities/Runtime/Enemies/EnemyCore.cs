@@ -33,7 +33,8 @@ public class EnemyCore : EntityCore
     public new EnemyData Data => _data;
     public override EntityRuntimeData RuntimeData { get; } = new();
     public Vector2 HomePoint => _homePoint;
-    public bool IsRanged => Data.Archetype == EnemyArchetype.Ranged || (Data.RoleTags & EnemyRoleTag.Ranged) != 0;
+    public bool IsRanged => Data is RangedEnemyData;
+    private RangedEnemyData RangedData => (RangedEnemyData)Data;
 
     private void Awake()
     {
@@ -165,7 +166,7 @@ public class EnemyCore : EntityCore
 
     public float SampleRangedRepositionDuration()
     {
-        return Random.Range(Data.RangedRepositionDurationMin, Data.RangedRepositionDurationMax);
+        return Random.Range(RangedData.RangedRepositionDurationMin, RangedData.RangedRepositionDurationMax);
     }
 
     public float SampleInvestigationDuration()
@@ -240,7 +241,7 @@ public class EnemyCore : EntityCore
 
     public bool TryShootProjectileAtCurrentTarget()
     {
-        if (RuntimeData.IsDead || !CanAttackCurrentTarget() || Data.ProjectilePrefab == null)
+        if (RuntimeData.IsDead || !CanAttackCurrentTarget())
             return false;
 
         var directionToTarget = ((Vector2)Target.position - (Vector2)transform.position).normalized;
@@ -248,8 +249,9 @@ public class EnemyCore : EntityCore
         var origin = spawnPoint != null ? (Vector2)spawnPoint.position : (Vector2)transform.position;
         var direction = ((Vector2)Target.position - origin).normalized;
 
-        var projectile = Instantiate(_data.ProjectilePrefab, origin, Quaternion.identity);
-        projectile.Launch(this, origin, direction, Data.AttackDamage, Data.ProjectileSpeed, Data.ProjectileLifetimeSeconds);
+        var projectileObject = Instantiate(RangedData.ProjectilePrefab, origin, Quaternion.identity);
+        var projectile = projectileObject.GetComponent<EnemyProjectile>();
+        projectile.Launch(this, origin, direction, Data.AttackDamage, RangedData.ProjectileSpeed, RangedData.ProjectileLifetimeSeconds);
         return true;
     }
 
@@ -258,7 +260,7 @@ public class EnemyCore : EntityCore
         if (!HasTarget)
             return false;
 
-        var desiredDistance = Mathf.Max(0f, Data.PreferredRangedDistance - Data.RangedRetreatBuffer);
+        var desiredDistance = Mathf.Max(0f, RangedData.PreferredRangedDistance - RangedData.RangedRetreatBuffer);
         var sqrDistance = ((Vector2)Target.position - (Vector2)transform.position).sqrMagnitude;
         return sqrDistance < desiredDistance * desiredDistance;
     }
@@ -272,7 +274,7 @@ public class EnemyCore : EntityCore
         if (away.sqrMagnitude < Mathf.Epsilon)
             away = Random.insideUnitCircle.normalized;
 
-        var desiredDistance = Mathf.Max(Data.AttackRange, Data.PreferredRangedDistance);
+        var desiredDistance = Mathf.Max(Data.AttackRange, RangedData.PreferredRangedDistance);
         return (Vector2)Target.position + away * desiredDistance;
     }
 
@@ -283,7 +285,7 @@ public class EnemyCore : EntityCore
         if (away.sqrMagnitude < Mathf.Epsilon)
             away = Random.insideUnitCircle.normalized;
 
-        var desiredDistance = Data.PreferredRangedDistance <= Data.AttackRange ? Data.PreferredRangedDistance : Data.AttackRange;
+        var desiredDistance = RangedData.PreferredRangedDistance <= Data.AttackRange ? RangedData.PreferredRangedDistance : Data.AttackRange;
         var bestPosition = reference + away * desiredDistance;
         var bestDistance = (bestPosition - reference).sqrMagnitude;
 

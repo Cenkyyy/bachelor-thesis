@@ -39,10 +39,3 @@ MonoBehaviour:
   <AttackWindupSeconds>k__BackingField: 0.35
   <AttackHitWindowSeconds>k__BackingField: 0.15
   <AttackRecoverySeconds>k__BackingField: 0.6
-  <PreferredRangedDistance>k__BackingField: 4.5
-  <RangedRetreatBuffer>k__BackingField: 1
-  <RangedRepositionDurationMin>k__BackingField: 0.6
-  <RangedRepositionDurationMax>k__BackingField: 1.1
-  <ProjectilePrefab>k__BackingField: {fileID: 0}
-  <ProjectileSpeed>k__BackingField: 8
-  <ProjectileLifetimeSeconds>k__BackingField: 3

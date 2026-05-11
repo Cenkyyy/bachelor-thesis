@@ -7,8 +7,8 @@ public class EnemyData : EntityData
     [field: Header("Identity")]
     [field: SerializeField] public ItemBiomeAffinity HomeBiome { get; private set; } = ItemBiomeAffinity.Grassland;
     [field: SerializeField] public EnemySpecies Species { get; private set; } = EnemySpecies.GrasslandTroll;
-    [field: SerializeField] public EnemyArchetype Archetype { get; private set; } = EnemyArchetype.Bruiser;
-    [field: SerializeField] public EnemyRoleTag RoleTags { get; private set; } = EnemyRoleTag.Bruiser;
+    [field: SerializeField] public EnemyArchetype Archetype { get; protected set; } = EnemyArchetype.Bruiser;
+    [field: SerializeField] public EnemyRoleTag RoleTags { get; protected set; } = EnemyRoleTag.Bruiser;
 
     [field: Header("Spawn")]
     [field: SerializeField, Min(0f)] public float SpawnWeight { get; private set; } = 1f;
@@ -27,7 +27,7 @@ public class EnemyData : EntityData
     [field: Header("Pathfinding")]
     [field: SerializeField] public float RepathIntervalSeconds { get; private set; } = 0.6f;
     [field: SerializeField] public float PathNodeStep { get; private set; } = 0.5f;
-    [field: SerializeField] public int MaxPathIterations { get; private set; } = 500;
+    [field: SerializeField] public int MaxPathIterations { get; private set; } = 200;
 
     [field: Header("Perception")]
     [field: SerializeField] public float DetectionRadius { get; private set; } = 6f;
@@ -49,15 +49,6 @@ public class EnemyData : EntityData
     [field: SerializeField] public float AttackWindupSeconds { get; private set; } = 0.6f;
     [field: SerializeField] public float AttackHitWindowSeconds { get; private set; } = 0.15f;
     [field: SerializeField] public float AttackRecoverySeconds { get; private set; } = 0.8f;
-
-    [field: Header("Ranged Combat")]
-    [field: SerializeField] public float PreferredRangedDistance { get; private set; } = 4.5f;
-    [field: SerializeField] public float RangedRetreatBuffer { get; private set; } = 1f;
-    [field: SerializeField] public float RangedRepositionDurationMin { get; private set; } = 0.6f;
-    [field: SerializeField] public float RangedRepositionDurationMax { get; private set; } = 1.1f;
-    [field: SerializeField] public EnemyProjectile ProjectilePrefab { get; private set; }
-    [field: SerializeField] public float ProjectileSpeed { get; private set; } = 8f;
-    [field: SerializeField] public float ProjectileLifetimeSeconds { get; private set; } = 3f;
 
     protected override void OnValidate()
     {
@@ -122,23 +113,5 @@ public class EnemyData : EntityData
 
         if (AttackRecoverySeconds < 0f)
             AttackRecoverySeconds = 0f;
-
-        if (PreferredRangedDistance < 0f)
-            PreferredRangedDistance = 0f;
-
-        if (RangedRetreatBuffer < 0f)
-            RangedRetreatBuffer = 0f;
-
-        if (RangedRepositionDurationMin < 0f)
-            RangedRepositionDurationMin = 0f;
-
-        if (RangedRepositionDurationMax < RangedRepositionDurationMin)
-            RangedRepositionDurationMax = RangedRepositionDurationMin;
-
-        if (ProjectileSpeed < 0f)
-            ProjectileSpeed = 0f;
-
-        if (ProjectileLifetimeSeconds < 0f)
-            ProjectileLifetimeSeconds = 0f;
     }
 }

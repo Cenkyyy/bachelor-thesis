@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d15ecb9e5791b945bea4f384da70a48, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f8cdd94682f4a0e9b8a4ed76c98a48b, type: 3}
   m_Name: ElfData_AmethystRift
   m_EditorClassIdentifier: 
   <Prefab>k__BackingField: {fileID: 2304351662522366803, guid: a84f9034824b1bb4f896e7024e9939da, type: 3}
@@ -43,6 +43,6 @@ MonoBehaviour:
   <RangedRetreatBuffer>k__BackingField: 1.2
   <RangedRepositionDurationMin>k__BackingField: 0.6
   <RangedRepositionDurationMax>k__BackingField: 1.1
-  <ProjectilePrefab>k__BackingField: {fileID: 6972902530202342435, guid: f7eda292a5b3e6a44b425a3588f4d256, type: 3}
+  <ProjectilePrefab>k__BackingField: {fileID: 2987626352167526763, guid: f7eda292a5b3e6a44b425a3588f4d256, type: 3}
   <ProjectileSpeed>k__BackingField: 8
   <ProjectileLifetimeSeconds>k__BackingField: 3
