@@ -16,6 +16,7 @@ public sealed class PlayerRespawnController : MonoBehaviour
     [SerializeField] private PlayerRegenerationController _regenerationController;
     [SerializeField] private PlayerStatusEffectController _statusEffectController;
     [SerializeField] private WorldTextPopupController _worldTextPopupController;
+    [SerializeField] private EnemySpawnController _enemySpawnController;
     [Tooltip("Optional explicit default spawn point. If empty, current player position at Start is used")]
     [SerializeField] private Transform _defaultSpawnPoint;
 
@@ -115,6 +116,7 @@ public sealed class PlayerRespawnController : MonoBehaviour
 
         _worldTextPopupController.ClearActivePopups();
         Respawn();
+        _enemySpawnController.DespawnEnemiesInsideMinimumSpawnDistance(_playerTransform.position);
 
         yield return WaitForRespawnDecorationsToBeGenerated();
 

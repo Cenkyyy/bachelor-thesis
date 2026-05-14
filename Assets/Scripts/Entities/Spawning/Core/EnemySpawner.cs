@@ -50,6 +50,11 @@ public sealed class EnemySpawner
         _registry.DespawnOutsideRadius(playerPosition, _settings.DespawnRadius);
     }
 
+    public int DespawnEnemiesInsideMinimumSpawnDistance(Vector2 playerPosition)
+    {
+        return _registry.DespawnInsideRadius(playerPosition, _settings.MinSpawnDistance);
+    }
+
     private bool TrySpawnOne(Vector2 playerPosition)
     {
         for (var sample = 0; sample < _settings.MaxSamplesPerAttempt; sample++)

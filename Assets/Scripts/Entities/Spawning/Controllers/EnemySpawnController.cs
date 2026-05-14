@@ -68,6 +68,14 @@ public class EnemySpawnController : MonoBehaviour
         _nextSpawnTime = Time.time + GetCurrentSpawnInterval();
     }
 
+    public int DespawnEnemiesInsideMinimumSpawnDistance(Vector2 center)
+    {
+        if (_enemySpawner == null && !TryBuildSpawner())
+            return 0;
+
+        return _enemySpawner.DespawnEnemiesInsideMinimumSpawnDistance(center);
+    }
+
     private bool TryBuildSpawner()
     {
         if (_worldGenerator == null || _worldGenerator.GroundTilemap == null || _worldGenerator.CurrentWorldData == null)

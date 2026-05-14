@@ -65,6 +65,34 @@ public sealed class SpawnedEntityRegistry<TEntity> : ISpawnRegistry<TEntity>
         }
     }
 
+    public int DespawnInsideRadius(Vector2 center, float radius)
+    {
+        if (radius <= 0f)
+            return 0;
+
+        var sqrRadius = radius * radius;
+        var despawnedCount = 0;
+
+        for (var i = _alive.Count - 1; i >= 0; i--)
+        {
+            var entity = _alive[i];
+            if (entity == null)
+            {
+                _alive.RemoveAt(i);
+                continue;
+            }
+
+            if (((Vector2)entity.transform.position - center).sqrMagnitude > sqrRadius)
+                continue;
+
+            Object.Destroy(entity.gameObject);
+            _alive.RemoveAt(i);
+            despawnedCount++;
+        }
+
+        return despawnedCount;
+    }
+
     private void PruneDeadReferences()
     {
         for (var i = _alive.Count - 1; i >= 0; i--)

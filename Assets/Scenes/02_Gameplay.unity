@@ -4722,6 +4722,7 @@ MonoBehaviour:
   _wallChunkGenerator: {fileID: 1097722633}
   _minimapHalfSizeTiles: 18
   _revealRadiusTiles: 8
+  _wallRevealDepthBehindOuterTile: 3
   _chunkSizeTiles: 32
   _maxChunkUpdatesPerFrame: 2
   _initializationChunkRadiusAroundPlayer: 4
@@ -14724,7 +14725,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 4.6875
+  orthographic size: 4.21875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -18192,6 +18193,10 @@ PrefabInstance:
       propertyPath: _deathFadeCanvasGroup
       value: 
       objectReference: {fileID: 669887594}
+    - target: {fileID: 2737436318412507732, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _enemySpawnController
+      value: 
+      objectReference: {fileID: 39805521}
     - target: {fileID: 2737436318412507732, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _decorationChunkGenerator
       value: 
