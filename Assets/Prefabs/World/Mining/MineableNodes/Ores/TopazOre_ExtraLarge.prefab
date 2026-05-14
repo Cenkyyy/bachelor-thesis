@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2428476888408303775}
   - component: {fileID: 660355792212658065}
   - component: {fileID: 5659910043473217245}
-  - component: {fileID: 1786944493288244570}
   - component: {fileID: 5965792816487423154}
+  - component: {fileID: 8635002915298500424}
   m_Layer: 10
   m_Name: TopazOre_ExtraLarge
   m_TagString: Untagged
@@ -78,43 +78,6 @@ MonoBehaviour:
   _cooldownSeconds: 2.5
   _stackSpacing: 0.2
   _maxActivePopups: 2
---- !u!70 &1786944493288244570
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8538597346553268886}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.02147305, y: -0.24905838}
-  m_Size: {x: 1.4060326, y: 1.4060326}
-  m_Direction: 0
 --- !u!212 &5965792816487423154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -170,6 +133,43 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!70 &8635002915298500424
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8538597346553268886}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.009440988, y: -0.49938536}
+  m_Size: {x: 0.9110667, y: 0.9110668}
+  m_Direction: 0
 --- !u!1 &9204967995848690793
 GameObject:
   m_ObjectHideFlags: 0

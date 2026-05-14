@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 660355792212658065}
   - component: {fileID: 5659910043473217245}
   - component: {fileID: 1786944493288244570}
-  - component: {fileID: 1128366054055667468}
   - component: {fileID: 5965792816487423154}
   m_Layer: 10
   m_Name: TopazOre_Large
@@ -113,46 +112,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.08268088, y: -0.2072733}
-  m_Size: {x: 0.82784593, y: 0.8798553}
-  m_Direction: 0
---- !u!70 &1128366054055667468
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8538597346553268886}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.2767638, y: -0.07069516}
-  m_Size: {x: 0.32628572, y: 0.99869156}
-  m_Direction: 0
+  m_Offset: {x: 0.009703623, y: -0.37147856}
+  m_Size: {x: 0.992655, y: 0.5116399}
+  m_Direction: 1
 --- !u!212 &5965792816487423154
 SpriteRenderer:
   m_ObjectHideFlags: 0

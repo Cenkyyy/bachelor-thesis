@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 3397039695531000351}
   - component: {fileID: 5041061783635166925}
   - component: {fileID: 5965792816487423154}
-  - component: {fileID: 8209507786774789427}
   m_Layer: 10
   m_Name: MemoryOre_ExtraLarge
   m_TagString: Untagged
@@ -115,9 +114,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.024095476, y: -0.018435478}
-  m_Size: {x: 1.1119307, y: 1.2577865}
-  m_Direction: 0
+  m_Offset: {x: -0.01101461, y: -0.22790307}
+  m_Size: {x: 1.0417131, y: 0.8076543}
+  m_Direction: 1
 --- !u!70 &3397039695531000351
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -152,8 +151,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.45149338, y: -0.12495865}
-  m_Size: {x: 0.23945427, y: 1.1614974}
+  m_Offset: {x: -0.45149338, y: -0.3473193}
+  m_Size: {x: 0.23945427, y: 0.716776}
   m_Direction: 0
 --- !u!70 &5041061783635166925
 CapsuleCollider2D:
@@ -247,43 +246,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &8209507786774789427
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8538597346553268886}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.34762874, y: 0.24164438}
-  m_Size: {x: 0.39631134, y: 0.83914137}
-  m_Direction: 0
 --- !u!1 &9204967995848690793
 GameObject:
   m_ObjectHideFlags: 0

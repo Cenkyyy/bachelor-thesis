@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1786944493288244570}
   - component: {fileID: 5965792816487423154}
   - component: {fileID: 2826174793317284469}
+  - component: {fileID: 4981851875333422825}
   m_Layer: 10
   m_Name: MemoryOre_Large
   m_TagString: Untagged
@@ -113,9 +114,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.020325422, y: -0.025626063}
-  m_Size: {x: 0.9281815, y: 0.9281815}
-  m_Direction: 0
+  m_Offset: {x: 0.13477983, y: -0.2836266}
+  m_Size: {x: 0.41526067, y: 0.34154674}
+  m_Direction: 1
 --- !u!212 &5965792816487423154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -205,9 +206,46 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.21549934, y: -0.0725044}
-  m_Size: {x: 0.4249667, y: 1.080823}
+  m_Offset: {x: -0.21549934, y: -0.37739688}
+  m_Size: {x: 0.4249667, y: 0.47103798}
   m_Direction: 0
+--- !u!70 &4981851875333422825
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8538597346553268886}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.004606373, y: -0.05374872}
+  m_Size: {x: 0.9336473, y: 0.17807876}
+  m_Direction: 1
 --- !u!1 &9204967995848690793
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5659910043473217245}
   - component: {fileID: 1786944493288244570}
   - component: {fileID: 5965792816487423154}
+  - component: {fileID: 9164421420379953722}
   m_Layer: 10
   m_Name: IceTundra_BerryBush_Medium
   m_TagString: Untagged
@@ -112,9 +113,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0068968832, y: -0.05371049}
-  m_Size: {x: 0.78641444, y: 0.78641444}
-  m_Direction: 0
+  m_Offset: {x: -0.03485631, y: -0.35872135}
+  m_Size: {x: 0.5169914, y: 0.14081551}
+  m_Direction: 1
 --- !u!212 &5965792816487423154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -170,6 +171,43 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!70 &9164421420379953722
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8538597346553268886}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.020334262, y: -0.13852611}
+  m_Size: {x: 0.89683306, y: 0.222525}
+  m_Direction: 1
 --- !u!1 &9204967995848690793
 GameObject:
   m_ObjectHideFlags: 0

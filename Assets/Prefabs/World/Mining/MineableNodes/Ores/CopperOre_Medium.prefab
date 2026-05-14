@@ -113,9 +113,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0169096, y: -0.011145949}
-  m_Size: {x: 0.6481855, y: 0.7246214}
-  m_Direction: 0
+  m_Offset: {x: -0.14310281, y: -0.20474061}
+  m_Size: {x: 0.46266854, y: 0.46266854}
+  m_Direction: 1
 --- !u!212 &5965792816487423154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -205,8 +205,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.2156582, y: -0.15107685}
-  m_Size: {x: 0.27651414, y: 0.6805321}
+  m_Offset: {x: 0.07654208, y: -0.12788622}
+  m_Size: {x: 0.25332367, y: 0.42029527}
   m_Direction: 0
 --- !u!1 &9204967995848690793
 GameObject:

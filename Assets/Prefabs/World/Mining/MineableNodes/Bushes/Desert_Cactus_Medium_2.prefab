@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5659910043473217245}
   - component: {fileID: 1786944493288244570}
   - component: {fileID: 5965792816487423154}
-  - component: {fileID: 5856092759428398988}
+  - component: {fileID: 212809461389982347}
   m_Layer: 10
   m_Name: Desert_Cactus_Medium_2
   m_TagString: Untagged
@@ -113,9 +113,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.020178504, y: -0.07469863}
-  m_Size: {x: 0.5237621, y: 0.65767336}
-  m_Direction: 0
+  m_Offset: {x: 0.02373305, y: -0.27051896}
+  m_Size: {x: 0.4037035, y: 0.28977087}
+  m_Direction: 1
 --- !u!212 &5965792816487423154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -171,7 +171,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &5856092759428398988
+--- !u!70 &212809461389982347
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,9 +205,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.25372612, y: 0.137435}
-  m_Size: {x: 0.19134903, y: 0.32526007}
-  m_Direction: 0
+  m_Offset: {x: -0.037976887, y: -0.16733663}
+  m_Size: {x: 0.61866224, y: 0.1273389}
+  m_Direction: 1
 --- !u!1 &9204967995848690793
 GameObject:
   m_ObjectHideFlags: 0

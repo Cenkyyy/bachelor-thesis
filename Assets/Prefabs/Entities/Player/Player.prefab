@@ -523,6 +523,7 @@ MonoBehaviour:
   _itemCooldownController: {fileID: 8033507651253804523}
   _regenerationController: {fileID: 8857977768433231325}
   _statusEffectController: {fileID: 3003602596391903937}
+  _worldTextPopupController: {fileID: 4686141728631495212}
   _defaultSpawnPoint: {fileID: 3689139185868277431}
   _respawnObstacleMask:
     serializedVersion: 2
@@ -556,7 +557,7 @@ MonoBehaviour:
   _blockingLayerMask:
     serializedVersion: 2
     m_Bits: 1408
-  _safePlacementRadius: 0.37
+  _safePlacementRadius: 0.42
   _placementRadius: 1
   _placementParent: {fileID: 0}
   _previewAlpha: 0.55

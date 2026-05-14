@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1786944493288244570}
   - component: {fileID: 5965792816487423154}
   - component: {fileID: 8043082195297925180}
-  - component: {fileID: 8589001051287305580}
   m_Layer: 10
   m_Name: CopperOre_Large
   m_TagString: Untagged
@@ -114,8 +113,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.11058536, y: -0.10417259}
-  m_Size: {x: 0.57774335, y: 1.1481473}
+  m_Offset: {x: 0.11058536, y: -0.26205057}
+  m_Size: {x: 0.57774335, y: 0.8323914}
   m_Direction: 0
 --- !u!212 &5965792816487423154
 SpriteRenderer:
@@ -208,43 +207,6 @@ CapsuleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.3383541, y: -0.09264458}
   m_Size: {x: 0.41704178, y: 0.6609341}
-  m_Direction: 0
---- !u!70 &8589001051287305580
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8538597346553268886}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.0802027, y: 0.03970039}
-  m_Size: {x: 0.9263704, y: 0.9263704}
   m_Direction: 0
 --- !u!1 &9204967995848690793
 GameObject:

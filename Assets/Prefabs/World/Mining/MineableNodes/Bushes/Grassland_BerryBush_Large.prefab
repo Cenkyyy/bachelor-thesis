@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5659910043473217245}
   - component: {fileID: 1786944493288244570}
   - component: {fileID: 5965792816487423154}
+  - component: {fileID: 2587375552242281895}
   m_Layer: 10
   m_Name: Grassland_BerryBush_Large
   m_TagString: Untagged
@@ -49,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de015b59478de6d4a8ec437b1ccce772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data: {fileID: 11400000, guid: 00e6627f81805844c9da9f98e8fca835, type: 2}
+  _data: {fileID: 11400000, guid: 5dc383e372f0bb2479d10fd1b645d783, type: 2}
   _dropAnchor: {fileID: 2423685725565155726}
   _feedbackPopup: {fileID: 5659910043473217245}
   _higherToolRequiredMessage: Higher tool is required
@@ -112,9 +113,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.023018688, y: -0.0692804}
-  m_Size: {x: 0.9498238, y: 0.94982386}
-  m_Direction: 0
+  m_Offset: {x: -0.011435372, y: -0.33708093}
+  m_Size: {x: 0.8809173, y: 0.41422766}
+  m_Direction: 1
 --- !u!212 &5965792816487423154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -170,6 +171,43 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!70 &2587375552242281895
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8538597346553268886}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.0000000057873297, y: -0.048547648}
+  m_Size: {x: 1.1562504, y: 0.1634333}
+  m_Direction: 1
 --- !u!1 &9204967995848690793
 GameObject:
   m_ObjectHideFlags: 0
