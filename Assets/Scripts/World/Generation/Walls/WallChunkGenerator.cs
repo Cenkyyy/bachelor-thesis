@@ -55,6 +55,8 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
     [SerializeField, Min(0)] private int _defaultSpawnExclusionRadiusTiles = 5;
 
     private readonly Dictionary<BiomeType, BiomeWallsListData> _wallsByBiome = new();
+    private readonly Dictionary<Vector2Int, WallData> _knownWallDataByTile = new();
+    private readonly HashSet<Vector2Int> _resolvedWallPlanChunks = new();
     private readonly Dictionary<Vector2Int, List<Vector2Int>> _spawnedChunkTiles = new();
     private readonly Dictionary<Vector2Int, List<GameObject>> _spawnedChunkOres = new();
     private readonly Dictionary<Vector2Int, WallTileMineableRuntimeData> _runtimeByTile = new();
@@ -107,6 +109,8 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             _wallTilemap.ClearAllTiles();
 
         var clearedTiles = new List<Vector2Int>(_runtimeByTile.Keys);
+        _knownWallDataByTile.Clear();
+        _resolvedWallPlanChunks.Clear();
         _spawnedChunkTiles.Clear();
         _spawnedChunkOres.Clear();
         _runtimeByTile.Clear();
@@ -148,20 +152,40 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         return _runtimeByTile.ContainsKey(dataTile);
     }
 
+    public bool HasKnownWallAtDataTile(Vector2Int dataTile)
+    {
+        return _knownWallDataByTile.ContainsKey(dataTile);
+    }
+
     public IEnumerable<Vector2Int> GetLoadedWallTiles()
     {
         foreach (var pair in _runtimeByTile)
             yield return pair.Key;
     }
 
-    public bool TryGetWallDataAtDataTile(Vector2Int dataTile, out WallData wallData)
+    public void EnsureWallPlansForTileRange(WorldRuntimeData data, int minX, int minY, int maxX, int maxY)
     {
-        wallData = null;
-        if (!_runtimeByTile.TryGetValue(dataTile, out var runtimeData))
-            return false;
+        if (data == null || data.Width <= 0 || data.Height <= 0)
+            return;
 
-        wallData = runtimeData.WallData;
-        return wallData != null;
+        int safeChunkSize = Mathf.Max(1, chunkSize);
+        int firstChunkX = Mathf.FloorToInt(Mathf.Clamp(minX, 0, data.Width - 1) / (float)safeChunkSize);
+        int lastChunkX = Mathf.FloorToInt(Mathf.Clamp(maxX, 0, data.Width - 1) / (float)safeChunkSize);
+        int firstChunkY = Mathf.FloorToInt(Mathf.Clamp(minY, 0, data.Height - 1) / (float)safeChunkSize);
+        int lastChunkY = Mathf.FloorToInt(Mathf.Clamp(maxY, 0, data.Height - 1) / (float)safeChunkSize);
+
+        for (int chunkY = firstChunkY; chunkY <= lastChunkY; chunkY++)
+        {
+            for (int chunkX = firstChunkX; chunkX <= lastChunkX; chunkX++) 
+            {
+                EnsureWallPlanForChunk(data, new Vector2Int(chunkX, chunkY));
+            }
+        }
+    }
+
+    public bool TryGetKnownWallDataAtDataTile(Vector2Int dataTile, out WallData wallData)
+    {
+        return _knownWallDataByTile.TryGetValue(dataTile, out wallData) && wallData != null;
     }
 
     public bool IsChunkLoadedAt(Vector2Int chunkCoord)
@@ -178,6 +202,20 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
         return _wallTilemap.GetCellCenterWorld(cell);
     }
 
+    private void EnsureWallPlanForChunk(WorldRuntimeData data, Vector2Int chunkCoord)
+    {
+        if (data == null || _resolvedWallPlanChunks.Contains(chunkCoord))
+            return;
+
+        if (_wallsByBiome.Count == 0)
+            BuildBiomeWallIndex();
+
+        worldGenerator?.EnsureDataGeneratedForChunk(chunkCoord, Mathf.Max(1, chunkSize));
+
+        var plan = BuildChunkPlan(data, chunkCoord);
+        CacheKnownWallPlan(chunkCoord, plan);
+    }
+
     private void HandleRuntimeTileDepleted(WallTileMineableRuntimeData runtimeData, Player miner, WorldItemSpawner dropSpawner)
     {
         if (runtimeData == null)
@@ -191,6 +229,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             _wallTilemap.SetTile(worldGenerator.CurrentWorldData.DataToCell(dataTile.x, dataTile.y), null);
 
         _runtimeByTile.Remove(dataTile);
+        _knownWallDataByTile.Remove(dataTile);
         _modificationState.MarkRemoved(dataTile);
         OnWallTileChanged?.Invoke(dataTile);
 
@@ -204,6 +243,7 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
             yield break;
 
         var plan = BuildChunkPlan(data, chunkCoord);
+        CacheKnownWallPlan(chunkCoord, plan);
         var chunkTiles = new List<Vector2Int>(plan.WallTiles.Count);
         int operationCount = 0;
         _tileWriteCellsBuffer.Clear();
@@ -320,6 +360,23 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
         content.WallTiles = new List<PlannedWallTile>(plannedTiles.Values);
         return content;
+    }
+
+    private void CacheKnownWallPlan(Vector2Int chunkCoord, PlannedChunkContent plan)
+    {
+        if (plan == null)
+            return;
+
+        for (int i = 0; i < plan.WallTiles.Count; i++)
+        {
+            var planned = plan.WallTiles[i];
+            if (_modificationState.IsRemoved(planned.DataTile))
+                _knownWallDataByTile.Remove(planned.DataTile);
+            else if (planned.WallData != null)
+                _knownWallDataByTile[planned.DataTile] = planned.WallData;
+        }
+
+        _resolvedWallPlanChunks.Add(chunkCoord);
     }
 
     private void GrowSingleCluster(
@@ -532,13 +589,14 @@ public sealed class WallChunkGenerator : ChunkWorldContentGeneratorBase
 
     private void EnsureWallClearedAtDataTile(Vector2Int dataTile)
     {
-        if (!_runtimeByTile.ContainsKey(dataTile))
+        if (!_runtimeByTile.ContainsKey(dataTile) && !_knownWallDataByTile.ContainsKey(dataTile))
             return;
 
-        if (_wallTilemap != null)
+        if (_runtimeByTile.ContainsKey(dataTile) && _wallTilemap != null)
             _wallTilemap.SetTile(worldGenerator.CurrentWorldData.DataToCell(dataTile.x, dataTile.y), null);
 
         _runtimeByTile.Remove(dataTile);
+        _knownWallDataByTile.Remove(dataTile);
         OnWallTileChanged?.Invoke(dataTile);
 
         var ownerChunk = WorldChunkUtility.GetChunkCoordFromTile(dataTile, chunkSize);

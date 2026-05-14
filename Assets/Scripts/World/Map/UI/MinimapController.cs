@@ -23,6 +23,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     [Header("Config")]
     [SerializeField, Min(1)] private int _minimapHalfSizeTiles = 18;
     [SerializeField, Min(1)] private int _revealRadiusTiles = 8;
+    [SerializeField, Min(0)] private int _wallRevealDepthBehindOuterTile = 3;
     [SerializeField, Min(1)] private int _chunkSizeTiles = 32;
     [SerializeField, Min(1)] private int _maxChunkUpdatesPerFrame = 2;
     [SerializeField, Min(0)] private int _initializationChunkRadiusAroundPlayer = 4;
@@ -194,7 +195,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     {
         yield return null;
 
-        int rowBudget = Mathf.Max(1, _initializationRowsPerFrame);
+        int rowBudget = _initializationRowsPerFrame;
         float timeBudget = Mathf.Max(Mathf.Epsilon, _maxInitializationMillisecondsPerFrame * 0.001f);
         int processedRows = 0;
         float frameStartTime = Time.realtimeSinceStartup;
@@ -349,6 +350,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
     private void RevealAround(Vector2Int center)
     {
         int radius = _revealRadiusTiles;
+        EnsureKnownWallPlansAround(center, radius + _wallRevealDepthBehindOuterTile + 1);
 
         for (int dy = -radius; dy <= radius; dy++)
         {
@@ -370,6 +372,19 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
         }
     }
 
+    private void EnsureKnownWallPlansAround(Vector2Int center, int radius)
+    {
+        if (_wallChunkGenerator == null || WorldData == null)
+            return;
+
+        _wallChunkGenerator.EnsureWallPlansForTileRange(
+            WorldData,
+            center.x - radius,
+            center.y - radius,
+            center.x + radius,
+            center.y + radius);
+    }
+
     private bool IsTileInsideRevealCircle(int dx, int dy, int radius)
     {
         float sampleX = Mathf.Abs(dx) + 0.5f;
@@ -389,15 +404,10 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
         int stepX = originX < targetX ? 1 : -1;
         int stepY = originY < targetY ? 1 : -1;
         int error = deltaX - deltaY;
+        int tilesBehindFirstWall = -1;
 
         while (currentX != targetX || currentY != targetY)
         {
-            if (currentX != originX || currentY != originY)
-            {
-                if (HasWallAt(currentX, currentY))
-                    return false;
-            }
-
             int twiceError = error * 2;
             if (twiceError > -deltaY)
             {
@@ -410,6 +420,16 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
                 error += deltaX;
                 currentY += stepY;
             }
+
+            if (tilesBehindFirstWall >= 0)
+            {
+                tilesBehindFirstWall++;
+                if (tilesBehindFirstWall > _wallRevealDepthBehindOuterTile)
+                    return false;
+            }
+
+            if (tilesBehindFirstWall < 0 && HasWallAt(currentX, currentY))
+                tilesBehindFirstWall = 0;
         }
 
         return true;
@@ -481,7 +501,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
 
     private Color32 ResolveVisibleTileColor(int x, int y)
     {
-        if (_wallChunkGenerator == null || !_wallChunkGenerator.TryGetWallDataAtDataTile(new Vector2Int(x, y), out var wallData))
+        if (_wallChunkGenerator == null || !_wallChunkGenerator.TryGetKnownWallDataAtDataTile(new Vector2Int(x, y), out var wallData))
             return ResolveBaseTileColor(x, y);
 
         return HasAdjacentOpenTile(x, y) ? wallData.MinimapBorderColor : wallData.MinimapInnerColor;
@@ -500,7 +520,7 @@ public sealed class MinimapController : MonoBehaviour, IMapMarkerPresenter
         if (!IsInsideWorld(x, y))
             return false;
 
-        return _wallChunkGenerator != null && _wallChunkGenerator.HasWallAtDataTile(new Vector2Int(x, y));
+        return _wallChunkGenerator != null && _wallChunkGenerator.HasKnownWallAtDataTile(new Vector2Int(x, y));
     }
 
     private bool IsInsideWorld(int x, int y)
