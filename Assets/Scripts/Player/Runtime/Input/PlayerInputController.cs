@@ -29,18 +29,11 @@ public sealed class PlayerInputController : MonoBehaviour
             return;
         }
 
-        var gameplayInputBlocked = IsGameplayInputBlocked();
-        if (gameplayInputBlocked)
-        {
-            MoveInput = Vector2.zero;
-        }
-        else
-        {
-            MoveInput = ReadMoveInput();
+        MoveInput = ReadMoveInput();
 
-            if (Input.GetKeyDown(_inputBindings.ConsumeKey))
-                ConsumePressed?.Invoke();
-        }
+        var gameplayInputBlocked = IsGameplayInputBlocked();
+        if (!gameplayInputBlocked && Input.GetKeyDown(_inputBindings.ConsumeKey))
+            ConsumePressed?.Invoke();
 
         if (CanReadDropInput(gameplayInputBlocked) && Input.GetKeyDown(_inputBindings.DropKey))
             DropPressed?.Invoke(Input.GetKey(_inputBindings.DropAllModifierKey));
