@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: CelestineWand
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Celestine Wand
-  <Icon>k__BackingField: {fileID: 0}
-  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: -1672256150818418849, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
   <Category>k__BackingField: 1
   <Rarity>k__BackingField: 2
   <BiomeAffinity>k__BackingField: 2

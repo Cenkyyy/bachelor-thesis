@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CopperLeggings
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Copper Leggings
-  <Icon>k__BackingField: {fileID: -5944346377430760592, guid: 0bbceb06760663a409587298001ad43c, type: 3}
+  <Icon>k__BackingField: {fileID: 3273128412157937740, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
   <Category>k__BackingField: 0
   <Rarity>k__BackingField: 1
   <BiomeAffinity>k__BackingField: 1

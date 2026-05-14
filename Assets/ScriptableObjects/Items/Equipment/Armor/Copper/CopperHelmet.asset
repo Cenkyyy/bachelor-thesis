@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CopperHelmet
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Copper Helmet
-  <Icon>k__BackingField: {fileID: 2214101062971801023, guid: 0bbceb06760663a409587298001ad43c, type: 3}
+  <Icon>k__BackingField: {fileID: -4898793395372108695, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
   <Category>k__BackingField: 0
   <Rarity>k__BackingField: 1
   <BiomeAffinity>k__BackingField: 1

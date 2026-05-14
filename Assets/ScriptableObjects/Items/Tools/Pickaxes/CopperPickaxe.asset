@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: CopperPickaxe
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Copper Pickaxe
-  <Icon>k__BackingField: {fileID: 0}
-  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: -4711126059757905320, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
   <Category>k__BackingField: 2
   <Rarity>k__BackingField: 1
   <BiomeAffinity>k__BackingField: 1

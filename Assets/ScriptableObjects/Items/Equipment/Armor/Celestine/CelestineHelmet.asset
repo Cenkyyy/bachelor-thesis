@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CelestineHelmet
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Celestine Helmet
-  <Icon>k__BackingField: {fileID: -3057936823440700881, guid: 0bbceb06760663a409587298001ad43c, type: 3}
+  <Icon>k__BackingField: {fileID: 4852123596264371691, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
   <Category>k__BackingField: 0
   <Rarity>k__BackingField: 2
   <BiomeAffinity>k__BackingField: 2

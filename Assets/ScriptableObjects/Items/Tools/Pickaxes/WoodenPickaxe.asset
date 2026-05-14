@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: WoodenPickaxe
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Wooden Pickaxe
-  <Icon>k__BackingField: {fileID: -6448221919121275678, guid: d8e21400704d5db4da356c909a6da235, type: 3}
-  <Description>k__BackingField: 
+  <Icon>k__BackingField: {fileID: 4281034526459131148, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
   <Category>k__BackingField: 2
   <Rarity>k__BackingField: 0
   <BiomeAffinity>k__BackingField: 0

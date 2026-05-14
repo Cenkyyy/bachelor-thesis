@@ -24,7 +24,7 @@ public sealed class EquipmentItemData : ItemData
             ProgressionTier = ToolTier.None;
     }
 
-    private static bool IsAccessorySlot(EquipmentType slot)
+    private bool IsAccessorySlot(EquipmentType slot)
     {
         return slot == EquipmentType.Necklace
                || slot == EquipmentType.RingLeft

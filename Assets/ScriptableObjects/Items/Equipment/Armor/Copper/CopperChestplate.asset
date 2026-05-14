@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CopperChestplate
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Copper Chestplate
-  <Icon>k__BackingField: {fileID: 98052465305053622, guid: 0bbceb06760663a409587298001ad43c, type: 3}
+  <Icon>k__BackingField: {fileID: -5133693209702179737, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
   <Category>k__BackingField: 0
   <Rarity>k__BackingField: 1
   <BiomeAffinity>k__BackingField: 1
