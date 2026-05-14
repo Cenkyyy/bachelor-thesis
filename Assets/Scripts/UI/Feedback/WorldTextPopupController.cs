@@ -59,6 +59,21 @@ public sealed class WorldTextPopupController : MonoBehaviour
         ShowMessageInternal(message, colorOverride, cooldownOverrideSeconds, null, transform);
     }
 
+    public void ClearActivePopups()
+    {
+        for (int i = 0; i < _activePopups.Count; i++)
+        {
+            var popup = _activePopups[i];
+            if (popup.Routine != null)
+                StopCoroutine(popup.Routine);
+
+            if (popup.Root != null)
+                Destroy(popup.Root);
+        }
+
+        _activePopups.Clear();
+    }
+
     private void ShowMessageInternal(string message, Color? colorOverride, float? cooldownOverrideSeconds, Vector3? worldPosition, Transform parent)
     {
         if (string.IsNullOrWhiteSpace(message))

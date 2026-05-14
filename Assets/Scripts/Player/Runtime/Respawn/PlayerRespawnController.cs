@@ -15,6 +15,7 @@ public sealed class PlayerRespawnController : MonoBehaviour
     [SerializeField] private PlayerItemCooldownController _itemCooldownController;
     [SerializeField] private PlayerRegenerationController _regenerationController;
     [SerializeField] private PlayerStatusEffectController _statusEffectController;
+    [SerializeField] private WorldTextPopupController _worldTextPopupController;
     [Tooltip("Optional explicit default spawn point. If empty, current player position at Start is used")]
     [SerializeField] private Transform _defaultSpawnPoint;
 
@@ -112,6 +113,7 @@ public sealed class PlayerRespawnController : MonoBehaviour
         SetDeathFadeVisible(true);
         yield return _fadeService.FadeIn(_fadeInDuration);
 
+        _worldTextPopupController.ClearActivePopups();
         Respawn();
 
         yield return WaitForRespawnDecorationsToBeGenerated();
