@@ -26,7 +26,7 @@ MonoBehaviour:
   <RepathIntervalSeconds>k__BackingField: 0.7
   <PathNodeStep>k__BackingField: 0.5
   <MaxPathIterations>k__BackingField: 200
-  <DetectionRadius>k__BackingField: 8
+  <DetectionRadius>k__BackingField: 4.5
   <RetargetIntervalSeconds>k__BackingField: 0.2
   <LeashRadius>k__BackingField: 10
   <InvestigationDurationMin>k__BackingField: 2.5
@@ -35,7 +35,7 @@ MonoBehaviour:
   <IdleDurationMin>k__BackingField: 0.8
   <IdleDurationMax>k__BackingField: 1.6
   <AttackDamage>k__BackingField: 5
-  <AttackRange>k__BackingField: 1.4
+  <AttackRange>k__BackingField: 0.9
   <AttackWindupSeconds>k__BackingField: 0.4
   <AttackHitWindowSeconds>k__BackingField: 0.15
   <AttackRecoverySeconds>k__BackingField: 0.8

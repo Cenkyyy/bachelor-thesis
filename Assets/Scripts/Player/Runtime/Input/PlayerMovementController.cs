@@ -38,6 +38,9 @@ public sealed class PlayerMovementController : MonoBehaviour
 
     private void UpdatePosition()
     {
+        if (GameStateManager.IsGamePaused)
+            return;
+
         if (_input.sqrMagnitude <= Mathf.Epsilon)
             return;
 

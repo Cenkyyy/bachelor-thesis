@@ -68,7 +68,7 @@ public sealed class PrefabPlacementStrategy : IPlacementStrategy
             previewState.Renderer.color = previewColor;
     }
 
-    private static void DestroyPreview(PlacementPreviewState previewState)
+    private void DestroyPreview(PlacementPreviewState previewState)
     {
         if (previewState.Instance != null)
             Object.Destroy(previewState.Instance);

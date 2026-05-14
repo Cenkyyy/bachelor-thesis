@@ -10,12 +10,10 @@ public class CraftingRecipeBookData : ScriptableObject
     [Header("Recipes")]
     [SerializeField] private List<CraftingRecipeData> _recipes = new();
 
-    public IReadOnlyList<CraftingRecipeData> Recipes => _recipes;
-
     /// <summary>
     /// Returns every recipe assigned to the requested crafting category.
     /// </summary>
-    public List<CraftingRecipeData> GetRecipesByCategory(CraftingRecipeCategory category)
+    public IEnumerable<CraftingRecipeData> GetRecipesByCategory(CraftingRecipeCategory category)
     {
         var result = new List<CraftingRecipeData>();
         foreach (var recipe in _recipes)

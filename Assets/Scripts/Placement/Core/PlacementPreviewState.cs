@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Represents the current state of an active placement preview, including the preview instance.
+/// </summary>
 public sealed class PlacementPreviewState
 {
     public GameObject Instance { get; set; }
