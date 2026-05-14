@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -22,8 +23,12 @@ public sealed class WorldItemRuntimeController : MonoBehaviour
 
     private WorldItem _worldItem;
     private float _spawnTime;
+    private readonly HashSet<Player> _overlappingPlayers = new();
+    private readonly List<Player> _pickupPlayerBuffer = new();
+    private Coroutine _delayedPickupCoroutine;
     private bool _isMerging;
     private bool _isPendingPickupDestroy;
+    private bool _isResolvingPickup;
 
     private bool CanBePickedUp => Time.time >= _spawnTime + _pickupDelay;
 
@@ -40,22 +45,41 @@ public sealed class WorldItemRuntimeController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.TryGetComponent<WorldItemRuntimeController>(out var otherController))
-            return;
+        if (other.TryGetComponent<WorldItemRuntimeController>(out var otherController))
+            TryStartVisualMerge(otherController);
 
-        TryStartVisualMerge(otherController);
+        TryRegisterOverlappingPlayer(other);
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (!CanBePickedUp || !other.CompareTag("Player"))
+        if (!TryRegisterOverlappingPlayer(other) || !CanBePickedUp)
             return;
 
-        var player = other.GetComponent<Player>() ?? other.GetComponentInParent<Player>();
-        if (player == null)
-            return;
+        TryPickupWithOverlappingPlayers();
+    }
 
-        TryPickupInto(player.Inventory);
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        TryUnregisterOverlappingPlayer(other);
+    }
+
+    private void OnDisable()
+    {
+        if (_delayedPickupCoroutine != null)
+        {
+            StopCoroutine(_delayedPickupCoroutine);
+            _delayedPickupCoroutine = null;
+        }
+
+        foreach (var player in _overlappingPlayers)
+        {
+            if (player != null && player.Inventory != null)
+                player.Inventory.OnItemChanged -= HandleOverlappingPlayerInventoryChanged;
+        }
+
+        _overlappingPlayers.Clear();
+        _pickupPlayerBuffer.Clear();
     }
 
     private void HandleLifetime()
@@ -169,30 +193,129 @@ public sealed class WorldItemRuntimeController : MonoBehaviour
         _isMerging = false;
     }
 
+    private bool TryRegisterOverlappingPlayer(Collider2D other)
+    {
+        if (!TryGetPlayer(other, out var player))
+            return false;
+
+        if (!_overlappingPlayers.Add(player))
+            return true;
+
+        if (player.Inventory != null)
+            player.Inventory.OnItemChanged += HandleOverlappingPlayerInventoryChanged;
+
+        if (CanBePickedUp)
+            TryPickupInto(player.Inventory);
+        else
+            EnsureDelayedPickupCheck();
+
+        return true;
+    }
+
+    private void TryUnregisterOverlappingPlayer(Collider2D other)
+    {
+        if (!TryGetPlayer(other, out var player))
+            return;
+
+        if (!_overlappingPlayers.Remove(player))
+            return;
+
+        if (player.Inventory != null)
+            player.Inventory.OnItemChanged -= HandleOverlappingPlayerInventoryChanged;
+    }
+
+    private static bool TryGetPlayer(Collider2D other, out Player player)
+    {
+        player = null;
+
+        if (other == null || !other.CompareTag("Player"))
+            return false;
+
+        player = other.GetComponent<Player>() ?? other.GetComponentInParent<Player>();
+        return player != null;
+    }
+
+    private void HandleOverlappingPlayerInventoryChanged(int _)
+    {
+        if (CanBePickedUp)
+            TryPickupWithOverlappingPlayers();
+        else
+            EnsureDelayedPickupCheck();
+    }
+
+    private void EnsureDelayedPickupCheck()
+    {
+        if (_delayedPickupCoroutine != null || CanBePickedUp)
+            return;
+
+        _delayedPickupCoroutine = StartCoroutine(WaitForPickupDelay());
+    }
+
+    private IEnumerator WaitForPickupDelay()
+    {
+        var pickupTime = _spawnTime + _pickupDelay;
+
+        while (Time.time < pickupTime)
+            yield return null;
+
+        _delayedPickupCoroutine = null;
+        TryPickupWithOverlappingPlayers();
+    }
+
+    private void TryPickupWithOverlappingPlayers()
+    {
+        if (_isPendingPickupDestroy || _overlappingPlayers.Count == 0)
+            return;
+
+        _pickupPlayerBuffer.Clear();
+        foreach (var player in _overlappingPlayers)
+        {
+            if (player != null)
+                _pickupPlayerBuffer.Add(player);
+        }
+
+        for (int i = 0; i < _pickupPlayerBuffer.Count && !_isPendingPickupDestroy; i++)
+        {
+            var player = _pickupPlayerBuffer[i];
+            if (player != null)
+                TryPickupInto(player.Inventory);
+        }
+
+        _pickupPlayerBuffer.Clear();
+    }
+
     private void TryPickupInto(PlayerInventory inventory)
     {
-        if (_isPendingPickupDestroy)
+        if (_isMerging || _isPendingPickupDestroy || _isResolvingPickup || inventory == null || !CanBePickedUp)
             return;
 
-        var currentItem = _worldItem.Item;
-        if (currentItem.IsEmpty)
+        _isResolvingPickup = true;
+        try
         {
-            _isPendingPickupDestroy = true;
-            Destroy(gameObject);
-            return;
+            var currentItem = _worldItem.Item;
+            if (currentItem.IsEmpty)
+            {
+                _isPendingPickupDestroy = true;
+                Destroy(gameObject);
+                return;
+            }
+
+            inventory.TryAddItemToRange(currentItem, new SlotRange(0, inventory.Capacity), out var leftoverItem);
+            ItemPickupFeedReporter.ReportAddedToInventory(currentItem, leftoverItem);
+
+            if (leftoverItem.IsEmpty)
+            {
+                _isPendingPickupDestroy = true;
+                if (_worldItem.Collider != null)
+                    _worldItem.Collider.enabled = false;
+                Destroy(gameObject);
+            }
+            else
+                _worldItem.SetItem(leftoverItem);
         }
-
-        inventory.TryAddItemToRange(currentItem, new SlotRange(0, inventory.Capacity), out var leftoverItem);
-        ItemPickupFeedReporter.ReportAddedToInventory(currentItem, leftoverItem);
-
-        if (leftoverItem.IsEmpty)
+        finally
         {
-            _isPendingPickupDestroy = true;
-            if (_worldItem.Collider != null)
-                _worldItem.Collider.enabled = false;
-            Destroy(gameObject);
+            _isResolvingPickup = false;
         }
-        else
-            _worldItem.SetItem(leftoverItem);
     }
 }
