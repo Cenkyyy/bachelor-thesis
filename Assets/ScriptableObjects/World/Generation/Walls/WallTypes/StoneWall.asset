@@ -17,7 +17,7 @@ MonoBehaviour:
   <MineableData>k__BackingField: {fileID: 11400000, guid: 07c04f9c8f16ee041a8bf72d9dfa537c, type: 2}
   <MinimapInnerColor>k__BackingField:
     serializedVersion: 2
-    rgba: 4280492835
+    rgba: 4281019179
   <MinimapBorderColor>k__BackingField:
     serializedVersion: 2
     rgba: 4285624689
