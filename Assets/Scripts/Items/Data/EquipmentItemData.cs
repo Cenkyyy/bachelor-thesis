@@ -4,6 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewEquipmentItem", menuName = "Items/Equipment Item")]
 public sealed class EquipmentItemData : ItemData
 {
+    private const EquipmentType AccessorySlots = EquipmentType.Necklace | EquipmentType.RingLeft | EquipmentType.RingRight | EquipmentType.Amulet;
+
     [field: Header("Equipment Settings")]
     [field: SerializeField] public EquipmentType Slot { get; private set; }
     [field: SerializeField] public ToolTier ProgressionTier { get; private set; } = ToolTier.Copper;
@@ -24,11 +26,5 @@ public sealed class EquipmentItemData : ItemData
             ProgressionTier = ToolTier.None;
     }
 
-    private bool IsAccessorySlot(EquipmentType slot)
-    {
-        return slot == EquipmentType.Necklace
-               || slot == EquipmentType.RingLeft
-               || slot == EquipmentType.RingRight
-               || slot == EquipmentType.Amulet;
-    }
+    private bool IsAccessorySlot(EquipmentType slot) => (slot & AccessorySlots) != 0;
 }

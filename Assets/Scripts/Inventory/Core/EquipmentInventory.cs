@@ -190,12 +190,8 @@ public sealed class EquipmentInventory : IInventory
     {
         if (!IsEquipment(item.Item, out var equip))
             return false;
-        
+
         var slotType = _slotLayout[index];
-
-        if (equip.Slot == EquipmentType.RingLeft || equip.Slot == EquipmentType.RingRight)
-            return slotType == EquipmentType.RingLeft || slotType == EquipmentType.RingRight;
-
-        return equip.Slot == slotType;
+        return (equip.Slot & slotType) != 0;
     }
 }

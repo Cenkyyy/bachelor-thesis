@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Amethyst Topaz Ring
   <Icon>k__BackingField: {fileID: 8318876783339487375, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
-  <Category>k__BackingField: 0
+  <Category>k__BackingField: 5
   <Rarity>k__BackingField: 3
   <BiomeAffinity>k__BackingField: 4
   <MaxStackSize>k__BackingField: 1
