@@ -367,7 +367,7 @@ MonoBehaviour:
   _spawnArea: {fileID: 403471234}
   _instanceParent: {fileID: 1697500776}
   _spawnIntervalRange: {x: 0.03, y: 0.04}
-  _spawnYOffsetRange: {x: -14, y: 7}
+  _spawnYOffsetRange: {x: -25, y: -10}
   _spawnEntries:
   - <Sprite>k__BackingField: {fileID: -2275160820100057453, guid: 658d4c5b4c4862f42abe97527f85a458, type: 3}
     <Weight>k__BackingField: 100
@@ -819,7 +819,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 7071881630838703602, guid: 31a451a1530b4e244af45484a01af482, type: 3}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
