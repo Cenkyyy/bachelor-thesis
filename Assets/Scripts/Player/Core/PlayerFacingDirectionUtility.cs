@@ -12,6 +12,17 @@ public static class PlayerFacingDirectionUtility
 
         return direction.y >= 0f ? PlayerFacingDirection.Up : PlayerFacingDirection.Down;
     }
+
+    public static Vector2 ToVector(PlayerFacingDirection direction)
+    {
+        return direction switch
+        {
+            PlayerFacingDirection.Up => Vector2.up,
+            PlayerFacingDirection.Left => Vector2.left,
+            PlayerFacingDirection.Right => Vector2.right,
+            _ => Vector2.down
+        };
+    }
 }
 
 /// <summary>

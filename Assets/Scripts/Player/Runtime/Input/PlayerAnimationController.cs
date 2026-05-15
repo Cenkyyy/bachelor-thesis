@@ -49,11 +49,13 @@ public sealed class PlayerAnimationController : MonoBehaviour
             OnFacingDirectionChanged?.Invoke(FacingDirection);
         }
 
+        var animatorDirection = PlayerFacingDirectionUtility.ToVector(facingDirection);
+
         _animator.SetBool(IsWalkingHash, _isWalking);
-        _animator.SetFloat(InputXHash, aimDirection.x);
-        _animator.SetFloat(InputYHash, aimDirection.y);
-        _animator.SetFloat(LastInputXHash, _lastMouseAimedDirection.x);
-        _animator.SetFloat(LastInputYHash, _lastMouseAimedDirection.y);
+        _animator.SetFloat(InputXHash, animatorDirection.x);
+        _animator.SetFloat(InputYHash, animatorDirection.y);
+        _animator.SetFloat(LastInputXHash, animatorDirection.x);
+        _animator.SetFloat(LastInputYHash, animatorDirection.y);
     }
 
     private Vector2 GetMouseDirection()

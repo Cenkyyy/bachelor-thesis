@@ -20,12 +20,22 @@ public abstract class ItemData : ScriptableObject
     [field: SerializeField] public int MaxStackSize { get; private set; } = 999;
     public bool IsStackable => MaxStackSize > 1;
 
+    [field: Header("Held Visual")]
+    [field: SerializeField] public HeldItemPresentationMode HeldPresentationMode { get; private set; } = HeldItemPresentationMode.Simple;
+    [field: SerializeField] public Vector2 HeldScale { get; private set; } = new(0.3f, 0.3f);
+
     protected virtual ItemType? ExpectedCategory => null;
 
     protected virtual void OnValidate()
     {
         if (MaxStackSize < 1)
             MaxStackSize = 1;
+
+        if (HeldScale.x < 0f)
+            HeldScale = new Vector2(0f, HeldScale.y);
+
+        if (HeldScale.y < 0f)
+            HeldScale = new Vector2(HeldScale.x, 0f);
 
         if (string.IsNullOrWhiteSpace(ItemName))
             ItemName = name;

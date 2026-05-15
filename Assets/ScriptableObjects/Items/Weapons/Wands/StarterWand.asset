@@ -18,6 +18,8 @@ MonoBehaviour:
   <Rarity>k__BackingField: 0
   <BiomeAffinity>k__BackingField: 0
   <MaxStackSize>k__BackingField: 1
+  <HeldPresentationMode>k__BackingField: 1
+  <HeldScale>k__BackingField: {x: 0.35, y: 0.35}
   <Archetype>k__BackingField: 0
   <ProgressionTier>k__BackingField: 1
   <Damage>k__BackingField: 5

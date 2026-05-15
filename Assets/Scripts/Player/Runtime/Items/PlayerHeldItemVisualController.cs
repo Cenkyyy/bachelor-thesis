@@ -17,14 +17,18 @@ public sealed class PlayerHeldItemVisualController : MonoBehaviour
     [SerializeField] private Transform _leftAnchor;
     [SerializeField] private Transform _rightAnchor;
 
+    [Header("Directional Held Item Pose Anchors")]
+    [SerializeField] private Transform _downPoseAnchor;
+    [SerializeField] private Transform _upPoseAnchor;
+    [SerializeField] private Transform _leftPoseAnchor;
+    [SerializeField] private Transform _rightPoseAnchor;
+
     [Header("Render Order")]
     [SerializeField] private int _abovePlayerOrder = 12;
     [SerializeField] private int _belowPlayerOrder = 8;
 
-    [Header("Visual")]
-    [SerializeField] private Vector3 _itemLocalScale = Vector3.one;
-
     private bool _isSubscribed;
+    private ItemData _currentItem;
 
     public Transform CurrentHandAnchor { get; private set; }
 
@@ -109,31 +113,40 @@ public sealed class PlayerHeldItemVisualController : MonoBehaviour
         var selectedItem = _player.Inventory.GetItemAt(_player.Inventory.SelectedHotbarIndex);
         if (selectedItem.IsEmpty || selectedItem.Item.Icon == null)
         {
+            _currentItem = null;
             _heldItemRenderer.sprite = null;
             _heldItemRenderer.gameObject.SetActive(false);
             return;
         }
 
+        _currentItem = selectedItem.Item;
         _heldItemRenderer.sprite = selectedItem.Item.Icon;
         _heldItemRenderer.gameObject.SetActive(true);
-        _heldItemRenderer.transform.localScale = _itemLocalScale;
         ApplyFacingDirection(_playerAnimation.FacingDirection);
     }
 
     private void ApplyFacingDirection(PlayerFacingDirection direction)
     {
-        var anchor = GetAnchorForFacingDirection(direction);
+        var anchor = GetHeldItemAnchorForFacingDirection(direction);
         CurrentHandAnchor = anchor;
 
         if (_heldItemRenderer.transform.parent != anchor)
-        {
             _heldItemRenderer.transform.SetParent(anchor, false);
-            _heldItemRenderer.transform.localPosition = Vector3.zero;
-            _heldItemRenderer.transform.localRotation = Quaternion.identity;
-            _heldItemRenderer.transform.localScale = _itemLocalScale;
-        }
+
+        _heldItemRenderer.transform.localPosition = Vector3.zero;
+        _heldItemRenderer.transform.localRotation = Quaternion.identity;
+        _heldItemRenderer.transform.localScale = GetCurrentItemScale();
 
         _heldItemRenderer.sortingOrder = GetSortingOrder(direction);
+    }
+
+    private Transform GetHeldItemAnchorForFacingDirection(PlayerFacingDirection direction)
+    {
+        var anchor = GetAnchorForFacingDirection(direction);
+        if (_currentItem == null || _currentItem.HeldPresentationMode != HeldItemPresentationMode.Posed)
+            return anchor;
+
+        return GetPoseAnchorForFacingDirection(direction) ?? anchor;
     }
 
     private Transform GetAnchorForFacingDirection(PlayerFacingDirection direction)
@@ -145,6 +158,25 @@ public sealed class PlayerHeldItemVisualController : MonoBehaviour
             PlayerFacingDirection.Right => _rightAnchor,
             _ => _downAnchor
         };
+    }
+
+    private Transform GetPoseAnchorForFacingDirection(PlayerFacingDirection direction)
+    {
+        return direction switch
+        {
+            PlayerFacingDirection.Up => _upPoseAnchor,
+            PlayerFacingDirection.Left => _leftPoseAnchor,
+            PlayerFacingDirection.Right => _rightPoseAnchor,
+            _ => _downPoseAnchor
+        };
+    }
+
+    private Vector3 GetCurrentItemScale()
+    {
+        if (_currentItem == null)
+            return Vector3.one;
+
+        return new Vector3(_currentItem.HeldScale.x, _currentItem.HeldScale.y, 1f);
     }
 
     private int GetSortingOrder(PlayerFacingDirection direction)
