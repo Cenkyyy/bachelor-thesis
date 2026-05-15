@@ -7,10 +7,13 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public sealed class WorldNavigationObstacle : MonoBehaviour
 {
-    [Header("Colliders")]
-    [SerializeField] private List<Collider2D> _colliders = new();
+    private static readonly LayerMask DefaultBlockingLayerMask = LayerMask.GetMask("Obstacle");
 
-    public IReadOnlyList<Collider2D> Colliders => _colliders;
+    [Header("Colliders")]
+    [SerializeField] private LayerMask _blockingLayerMask = DefaultBlockingLayerMask;
+    [SerializeField] private List<Collider2D> _blockingColliders = new();
+
+    public IReadOnlyList<Collider2D> BlockingColliders => _blockingColliders;
 
     private void Awake()
     {
@@ -30,7 +33,7 @@ public sealed class WorldNavigationObstacle : MonoBehaviour
 
     public static void AttachTo(GameObject instance)
     {
-        if (instance == null || instance.GetComponentInChildren<Collider2D>(includeInactive: false) == null)
+        if (instance == null || !HasBlockingCollider(instance))
             return;
 
         var obstacle = instance.GetComponent<WorldNavigationObstacle>();
@@ -48,10 +51,33 @@ public sealed class WorldNavigationObstacle : MonoBehaviour
 
     private void EnsureColliders()
     {
-        _colliders.RemoveAll(collider => collider == null);
-        if (_colliders.Count > 0)
+        _blockingColliders.RemoveAll(collider => !IsBlockingCollider(collider, _blockingLayerMask));
+        if (_blockingColliders.Count > 0)
             return;
 
-        GetComponentsInChildren(includeInactive: false, _colliders);
+        GetComponentsInChildren(includeInactive: false, _blockingColliders);
+        _blockingColliders.RemoveAll(collider => !IsBlockingCollider(collider, _blockingLayerMask));
+    }
+
+    private static bool HasBlockingCollider(GameObject instance)
+    {
+        var colliders = instance.GetComponentsInChildren<Collider2D>(includeInactive: false);
+        for (var i = 0; i < colliders.Length; i++)
+        {
+            var collider = colliders[i];
+            if (IsBlockingCollider(collider, DefaultBlockingLayerMask))
+                return true;
+        }
+
+        return false;
+    }
+
+    private static bool IsBlockingCollider(Collider2D collider, LayerMask layerMask)
+    {
+        if (collider == null || collider.isTrigger)
+            return false;
+
+        var colliderLayerMask = 1 << collider.gameObject.layer;
+        return (layerMask.value & colliderLayerMask) != 0;
     }
 }

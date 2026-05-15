@@ -232,7 +232,7 @@ MonoBehaviour:
   _targetTag: Player
   _visionBlockerMask:
     serializedVersion: 2
-    m_Bits: 2304
+    m_Bits: 2048
 --- !u!114 &5900000000000000006
 MonoBehaviour:
   m_ObjectHideFlags: 0

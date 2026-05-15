@@ -524,10 +524,11 @@ MonoBehaviour:
   _regenerationController: {fileID: 8857977768433231325}
   _statusEffectController: {fileID: 3003602596391903937}
   _worldTextPopupController: {fileID: 4686141728631495212}
+  _enemySpawnController: {fileID: 0}
   _defaultSpawnPoint: {fileID: 3689139185868277431}
   _respawnObstacleMask:
     serializedVersion: 2
-    m_Bits: 1408
+    m_Bits: 2432
   _respawnProbeRadius: 0.25
   _searchRadius: 3
   _deathFadeRoot: {fileID: 0}
@@ -556,8 +557,8 @@ MonoBehaviour:
   _inputBindings: {fileID: 11400000, guid: 74f26f7b74a7c064c9dd65b0fdaee61a, type: 2}
   _blockingLayerMask:
     serializedVersion: 2
-    m_Bits: 1408
-  _safePlacementRadius: 0.42
+    m_Bits: 2432
+  _safePlacementRadius: 0.55
   _placementRadius: 1
   _placementParent: {fileID: 0}
   _previewAlpha: 0.55

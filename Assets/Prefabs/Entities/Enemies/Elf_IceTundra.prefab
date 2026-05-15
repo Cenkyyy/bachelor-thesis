@@ -188,8 +188,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5aeeb9277becfe43804a178b49c36ad, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _movement: {fileID: 1022348196}
   _perception: {fileID: 3686757145256087193}
   _navigation: {fileID: 5900000000000000003}
@@ -212,8 +212,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fb74382555942ff96a6a2509ec84d42, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _body: {fileID: 7230757641956250488}
 --- !u!114 &3686757145256087193
 MonoBehaviour:
@@ -225,15 +225,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fe20b50d4174712bac88439952a85d7, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _detectionMask:
     serializedVersion: 2
     m_Bits: 512
   _targetTag: Player
   _visionBlockerMask:
     serializedVersion: 2
-    m_Bits: 2304
+    m_Bits: 2048
 --- !u!114 &5900000000000000003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,8 +244,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f2246a04919434a80e3ac80b1159456, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _movement: {fileID: 1022348196}
 --- !u!114 &4020545909293481426
 MonoBehaviour:
@@ -257,8 +257,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f980f1ae7b6c4bc41980cecc2935542c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _animator: {fileID: 5100529384874108249}
   _renderer: {fileID: 1636735027427193827}
   _mirrorSideSprites: 1
@@ -280,8 +280,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7868daeb6fc1ae439601a56a1ce2040, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _entityCore: {fileID: 1670540943250230566}
   _deathRewards: {fileID: 5744313436986119435}
   _currentHealth: 0
@@ -297,8 +297,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df82921f6d483f7499f298c72b806482, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _entityCore: {fileID: 1670540943250230566}
   _dropSpawner: {fileID: 0}
   _dropAnchor: {fileID: 3227767779565571614}
@@ -313,8 +313,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 934df7d394770f34cada31a7761cb49f, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _enemyCore: {fileID: 1670540943250230566}
   _damageable: {fileID: 2908348382214334344}
   _statusTickInterval: 0.5
@@ -336,8 +336,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1971731234e694f4ab34acd03d85fe09, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _localOffset: {x: 0, y: 0.3, z: 0}
   _textColor: {r: 1, g: 1, b: 1, a: 1}
   _fontSize: 3.5

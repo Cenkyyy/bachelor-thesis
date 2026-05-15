@@ -85,11 +85,11 @@ public sealed class ChunkWorldNavigationController : MonoBehaviour
         UnregisterObstacle(obstacle);
 
         var cells = new List<Vector2Int>();
-        var colliders = obstacle.Colliders;
+        var colliders = obstacle.BlockingColliders;
         for (var i = 0; i < colliders.Count; i++)
         {
             var collider = colliders[i];
-            if (collider == null || !collider.enabled || !collider.gameObject.activeInHierarchy)
+            if (collider == null || collider.isTrigger || !collider.enabled || !collider.gameObject.activeInHierarchy)
                 continue;
 
             AppendBoundsCells(collider.bounds, cells);

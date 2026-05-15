@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D), typeof(PrefabMineableRuntimeData))]
+[RequireComponent(typeof(CircleCollider2D), typeof(Rigidbody2D), typeof(PrefabMineableRuntimeData))]
 public sealed class BedrollInteractable : InteractableBase
 {
     [Header("Spawn Point")]
@@ -21,15 +21,6 @@ public sealed class BedrollInteractable : InteractableBase
     [SerializeField] private string _cannotSleepMessage = "Cannot sleep, enemies nearby";
 
     private Player _playerInRange;
-
-    private void Awake()
-    {
-        if (_feedbackPopup == null)
-            _feedbackPopup = GetComponent<WorldTextPopupController>();
-
-        if (_feedbackPopup == null)
-            _feedbackPopup = gameObject.AddComponent<WorldTextPopupController>();
-    }
 
     public override bool CanInteract()
     {
