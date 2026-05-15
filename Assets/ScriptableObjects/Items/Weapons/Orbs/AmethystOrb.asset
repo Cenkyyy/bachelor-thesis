@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AmethystOrb
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Amethyst Orb
-  <Icon>k__BackingField: {fileID: 3932859964956347085, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
+  <Icon>k__BackingField: {fileID: -852026989, guid: 7150e356b9a2aef40820f5e0c9889678, type: 3}
   <Category>k__BackingField: 1
   <Rarity>k__BackingField: 3
   <BiomeAffinity>k__BackingField: 4

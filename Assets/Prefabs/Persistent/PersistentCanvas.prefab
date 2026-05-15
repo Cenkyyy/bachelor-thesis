@@ -60,8 +60,8 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 10000
@@ -338,6 +338,10 @@ PrefabInstance:
     - target: {fileID: 501162975880676658, guid: 5c1f867b7a5642043ae6c2a63088386b, type: 3}
       propertyPath: m_Name
       value: NarrativeIntroductionRoot
+      objectReference: {fileID: 0}
+    - target: {fileID: 501162975880676658, guid: 5c1f867b7a5642043ae6c2a63088386b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1227746745906381441, guid: 5c1f867b7a5642043ae6c2a63088386b, type: 3}
       propertyPath: _enableNarrativeIntro

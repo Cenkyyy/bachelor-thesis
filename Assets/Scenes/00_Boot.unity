@@ -591,14 +591,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3133926489316534996, guid: 3476e884cbb7739438940f4d3148ab14, type: 3}
-      propertyPath: _enableNarrativeIntro
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4359583062547262823, guid: 3476e884cbb7739438940f4d3148ab14, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4955470400049087551, guid: 3476e884cbb7739438940f4d3148ab14, type: 3}
       propertyPath: m_Name
       value: PersistentCanvas

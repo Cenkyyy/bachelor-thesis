@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2cc6a19b30c5dd24a8b4b7b09ae95ff0, type: 3}
-  m_Name: AmethystWand
+  m_Name: AmethystStaff
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Amethyst Wand
-  <Icon>k__BackingField: {fileID: -158818285651713422, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
+  <ItemName>k__BackingField: Amethyst Staff
+  <Icon>k__BackingField: {fileID: -1773801508, guid: 7150e356b9a2aef40820f5e0c9889678, type: 3}
   <Category>k__BackingField: 1
   <Rarity>k__BackingField: 3
   <BiomeAffinity>k__BackingField: 4

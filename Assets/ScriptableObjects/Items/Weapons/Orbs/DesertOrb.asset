@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DesertOrb
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Desert Orb
-  <Icon>k__BackingField: {fileID: -6956834293525874785, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
+  <Icon>k__BackingField: {fileID: -6302328, guid: 7150e356b9a2aef40820f5e0c9889678, type: 3}
   <Category>k__BackingField: 1
   <Rarity>k__BackingField: 2
   <BiomeAffinity>k__BackingField: 3

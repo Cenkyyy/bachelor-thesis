@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b20d55cfd28c47240b46f895e90886b0, type: 3}
   m_Name: AmethystAxe
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Wooden Pickaxe
-  <Icon>k__BackingField: {fileID: 7941551304874310647, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
+  <ItemName>k__BackingField: Amethyst Axe
+  <Icon>k__BackingField: {fileID: 463745230, guid: 7150e356b9a2aef40820f5e0c9889678, type: 3}
   <Category>k__BackingField: 2
   <Rarity>k__BackingField: 3
   <BiomeAffinity>k__BackingField: 4

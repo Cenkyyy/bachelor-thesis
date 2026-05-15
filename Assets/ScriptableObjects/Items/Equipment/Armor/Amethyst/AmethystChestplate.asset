@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: AmethystChestplate
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Amethyst Chestplate
-  <Icon>k__BackingField: {fileID: -8025423204045621679, guid: 96dbaf4260256594c961a679e8d5ca26, type: 3}
+  <Icon>k__BackingField: {fileID: 1292826932, guid: 7150e356b9a2aef40820f5e0c9889678, type: 3}
   <Category>k__BackingField: 0
   <Rarity>k__BackingField: 3
   <BiomeAffinity>k__BackingField: 4
   <MaxStackSize>k__BackingField: 1
+  <HeldPresentationMode>k__BackingField: 0
+  <HeldScale>k__BackingField: {x: 0.3, y: 0.3}
   <Slot>k__BackingField: 2
   <ProgressionTier>k__BackingField: 4
   _statusEffects: []
