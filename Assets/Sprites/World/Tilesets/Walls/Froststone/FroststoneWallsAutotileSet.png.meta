@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c6eaba62bc85bed47871898a3a0361d3
+guid: 93cd41cce49094049bc134e17fd4e59e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6354549681381725989
-    second: BorderWallsAutotileSet_0
+      213: -202971455194444984
+    second: FroststoneWallsAutotileSet_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -47,8 +47,8 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
-  spriteMeshType: 1
+  spriteExtrude: 2
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_0
+      name: FroststoneWallsAutotileSet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,14 +115,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 52754527445ef2850800000000000000
-      internalID: 6354549681381725989
+      spriteID: 84b47917986ee2df0800000000000000
+      internalID: -202971455194444984
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_1
+      name: FroststoneWallsAutotileSet_1
       rect:
         serializedVersion: 2
         x: 32
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f4eb1ed416573a48bd60065bb5f7651
-      internalID: 1799766483
+      spriteID: f7440d98eefe1e547b3e2cd03898b10a
+      internalID: 701617525
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_2
+      name: FroststoneWallsAutotileSet_2
       rect:
         serializedVersion: 2
         x: 64
@@ -159,14 +159,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35edd7e39849b824cbb1441c6347db60
-      internalID: 1227866084
+      spriteID: c377961512bd9f144a1b7a16b459747a
+      internalID: 565421890
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_3
+      name: FroststoneWallsAutotileSet_3
       rect:
         serializedVersion: 2
         x: 96
@@ -181,14 +181,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2561d610f37bf4549beb7cb310e128aa
-      internalID: 846402569
+      spriteID: 4b33faeb5e3a5a944825adbabb501559
+      internalID: -1387724786
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_4
+      name: FroststoneWallsAutotileSet_4
       rect:
         serializedVersion: 2
         x: 128
@@ -203,14 +203,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c38e70b7d3948d9488e116d0eb293064
-      internalID: 688892111
+      spriteID: 1f07959e4bb94a54c91f1aa1a273b4d1
+      internalID: 1494928383
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_5
+      name: FroststoneWallsAutotileSet_5
       rect:
         serializedVersion: 2
         x: 160
@@ -225,14 +225,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33f7d4d728a3e2f489bd33828cd30b04
-      internalID: -367159875
+      spriteID: 6a57e725f5935774d8d5464a26e0ba97
+      internalID: -883603758
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_6
+      name: FroststoneWallsAutotileSet_6
       rect:
         serializedVersion: 2
         x: 192
@@ -247,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dab008c3c7ad6214b9e9063ccac6bb0f
-      internalID: 1415510030
+      spriteID: cf044a7059c9e2e4cb00f596a9c74586
+      internalID: -422971777
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_7
+      name: FroststoneWallsAutotileSet_7
       rect:
         serializedVersion: 2
         x: 224
@@ -269,14 +269,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 464130e2f0131ac44856b9b7b8412aa2
-      internalID: 671370132
+      spriteID: eab7fc10e427fda429a34c58b3319662
+      internalID: 1005871897
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_8
+      name: FroststoneWallsAutotileSet_8
       rect:
         serializedVersion: 2
         x: 0
@@ -291,14 +291,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9965a85439be8a4488096286d617e32
-      internalID: 1215947674
+      spriteID: 9226ac62500d17a45beaa0c1542d73c5
+      internalID: 2077288292
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_9
+      name: FroststoneWallsAutotileSet_9
       rect:
         serializedVersion: 2
         x: 32
@@ -313,14 +313,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 86c7b8160af0c4d40b9694da87a425dd
-      internalID: 1057286240
+      spriteID: c037b30f7901a08428e3cebb4ff13569
+      internalID: 769842525
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_10
+      name: FroststoneWallsAutotileSet_10
       rect:
         serializedVersion: 2
         x: 64
@@ -335,14 +335,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 994435b70affd9e4490f8364a9f11574
-      internalID: 1244742187
+      spriteID: 77c496d8cb45c2d439fafdd8f79bbff7
+      internalID: 82344327
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_11
+      name: FroststoneWallsAutotileSet_11
       rect:
         serializedVersion: 2
         x: 96
@@ -357,14 +357,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8dd6f21a2e3ae7941aad8b8c86b54f96
-      internalID: 1664060863
+      spriteID: af505fee2cba0fc48b8ffa48cf7489d7
+      internalID: -2012294252
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_12
+      name: FroststoneWallsAutotileSet_12
       rect:
         serializedVersion: 2
         x: 128
@@ -379,14 +379,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cfd192e67fa648348b34da9a16cf5d2f
-      internalID: 947612666
+      spriteID: 91c88cd5d2ebc25479804b3539768db3
+      internalID: 698709440
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_13
+      name: FroststoneWallsAutotileSet_13
       rect:
         serializedVersion: 2
         x: 160
@@ -401,14 +401,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: acc19c7b0e3a60c40b7f578cb0bd35a2
-      internalID: -440097015
+      spriteID: dd1e3adbd69bfd6438b620f6fe080782
+      internalID: -1829385228
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_14
+      name: FroststoneWallsAutotileSet_14
       rect:
         serializedVersion: 2
         x: 192
@@ -423,14 +423,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8a881b54be0dfe544b71b7db671108f9
-      internalID: 436422753
+      spriteID: b63388d767403af499e4c3b940f2a249
+      internalID: 1731349288
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_15
+      name: FroststoneWallsAutotileSet_15
       rect:
         serializedVersion: 2
         x: 224
@@ -445,14 +445,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e538bd2141aa01d4a9df639ba7d063b0
-      internalID: 249362698
+      spriteID: df9718f82d4778745a621053a41da409
+      internalID: -1232657816
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_16
+      name: FroststoneWallsAutotileSet_16
       rect:
         serializedVersion: 2
         x: 0
@@ -467,14 +467,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 193a55385f69ce849947db839069ca1a
-      internalID: -136907308
+      spriteID: da190bbe74362854eb747e3962af701f
+      internalID: 1893328462
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_17
+      name: FroststoneWallsAutotileSet_17
       rect:
         serializedVersion: 2
         x: 32
@@ -489,14 +489,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a91595953ab8644fadcb10dd972e8b9
-      internalID: -551418271
+      spriteID: 783c1a3eeb84da840a8406aad4d45725
+      internalID: -1646482880
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_18
+      name: FroststoneWallsAutotileSet_18
       rect:
         serializedVersion: 2
         x: 64
@@ -511,14 +511,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a557b6ea49aa7042a67aeaac9797fec
-      internalID: -782905784
+      spriteID: bb0066af925b04c49bad9e46f64521ad
+      internalID: -292330284
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_19
+      name: FroststoneWallsAutotileSet_19
       rect:
         serializedVersion: 2
         x: 96
@@ -533,14 +533,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 189e6003105ab8b458a78b317fa47a69
-      internalID: 160676914
+      spriteID: 803851b25a810114fbbc5aa7413ae85c
+      internalID: 1881252682
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_20
+      name: FroststoneWallsAutotileSet_20
       rect:
         serializedVersion: 2
         x: 128
@@ -555,14 +555,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbdba3ac1089f954d90613e492612910
-      internalID: -1569440894
+      spriteID: 6517828e6569c134ca80120a0e738f8b
+      internalID: 958500884
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_21
+      name: FroststoneWallsAutotileSet_21
       rect:
         serializedVersion: 2
         x: 160
@@ -577,14 +577,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aaf5e2552fbfc7a43bd329b6f667fa42
-      internalID: 51213992
+      spriteID: fc5ec847944634d44b914b3b83bd0237
+      internalID: 476438726
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_22
+      name: FroststoneWallsAutotileSet_22
       rect:
         serializedVersion: 2
         x: 192
@@ -599,14 +599,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79d386a3a19e7fc4995906d5bb67c3c5
-      internalID: 1864828335
+      spriteID: c650849b0577ab34c8f7330fb03e892f
+      internalID: 2027224059
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_23
+      name: FroststoneWallsAutotileSet_23
       rect:
         serializedVersion: 2
         x: 224
@@ -621,14 +621,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a21768f06070724e8cd6075a7dd5fd4
-      internalID: -682671860
+      spriteID: 00963af0ad8dc1e4fb2b09ab4d878e7c
+      internalID: -2017543779
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_24
+      name: FroststoneWallsAutotileSet_24
       rect:
         serializedVersion: 2
         x: 0
@@ -643,14 +643,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10d32d6cc8c37f547a007a1fe82b798a
-      internalID: -680208724
+      spriteID: d19c818c5a89cd849b6c0a0cdcb932f5
+      internalID: -1854895524
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_25
+      name: FroststoneWallsAutotileSet_25
       rect:
         serializedVersion: 2
         x: 32
@@ -665,14 +665,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a9a2182a007a0449891cf707f285e5d
-      internalID: -427391628
+      spriteID: dc60d62a3e3315045ad2f7bc25cc3a85
+      internalID: 1970876969
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_26
+      name: FroststoneWallsAutotileSet_26
       rect:
         serializedVersion: 2
         x: 64
@@ -687,14 +687,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: abb5a6c3c69375442a74e37bc20ee83c
-      internalID: 700667640
+      spriteID: b82bcaa2d7a8b434cb0f8029ea9bc059
+      internalID: 850174672
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_27
+      name: FroststoneWallsAutotileSet_27
       rect:
         serializedVersion: 2
         x: 96
@@ -709,14 +709,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26aa9e89228eb6347928192f2ef68ba5
-      internalID: 158101185
+      spriteID: 2c692fd86d721054b99fc28401191f79
+      internalID: -82274869
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_28
+      name: FroststoneWallsAutotileSet_28
       rect:
         serializedVersion: 2
         x: 128
@@ -731,14 +731,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b424c700ff1be024c9bb25a90971184f
-      internalID: 563931372
+      spriteID: 1e684479b38d62c4d8698ee699579824
+      internalID: 574181934
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_29
+      name: FroststoneWallsAutotileSet_29
       rect:
         serializedVersion: 2
         x: 160
@@ -753,14 +753,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ff6dc51b37c9f34f95aff55822e358f
-      internalID: 621468496
+      spriteID: 486faefcee68b804db1d8759a4e25dcb
+      internalID: 1952327849
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_30
+      name: FroststoneWallsAutotileSet_30
       rect:
         serializedVersion: 2
         x: 192
@@ -775,14 +775,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5495942596d4374aab8a5c210078995
-      internalID: -77628075
+      spriteID: 5a369ee80fd665e49ae1de49246cf04f
+      internalID: -847748314
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_31
+      name: FroststoneWallsAutotileSet_31
       rect:
         serializedVersion: 2
         x: 224
@@ -797,14 +797,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6d7abc0a17511647b60cd329f9adce6
-      internalID: -1921742694
+      spriteID: c54d98a50ca56f044938648e23d6a020
+      internalID: -1849954566
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_32
+      name: FroststoneWallsAutotileSet_32
       rect:
         serializedVersion: 2
         x: 0
@@ -819,14 +819,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 378b418b0f82da046af1a23e5479c7fc
-      internalID: 1809563772
+      spriteID: 4d8d1d1df0fdc5a42a84d9a164ef2b02
+      internalID: -1190063025
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_33
+      name: FroststoneWallsAutotileSet_33
       rect:
         serializedVersion: 2
         x: 32
@@ -841,14 +841,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4921e641b5e1d343b2e76570aa64f40
-      internalID: 884495473
+      spriteID: 41bd17d4358a4c744912e29378a2beab
+      internalID: 396111732
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_34
+      name: FroststoneWallsAutotileSet_34
       rect:
         serializedVersion: 2
         x: 64
@@ -863,14 +863,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11d802e0d6720a34dbd72f232e53df81
-      internalID: -1577701109
+      spriteID: 922644e66acb4af45ba464b5fddd1bd1
+      internalID: 1284690149
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_35
+      name: FroststoneWallsAutotileSet_35
       rect:
         serializedVersion: 2
         x: 96
@@ -885,14 +885,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57327d76d7a8eed4c838aaeeaba139f0
-      internalID: 1168577898
+      spriteID: 8c9ecae11e77a2347ba41bf25ea6d459
+      internalID: -120630529
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_36
+      name: FroststoneWallsAutotileSet_36
       rect:
         serializedVersion: 2
         x: 128
@@ -907,14 +907,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0af21c62503f3834ba1a3f0440a86664
-      internalID: -301067450
+      spriteID: 0d35c9665a87ebc40b7b5289897648e5
+      internalID: 754907029
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_37
+      name: FroststoneWallsAutotileSet_37
       rect:
         serializedVersion: 2
         x: 160
@@ -929,14 +929,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7f9b890610cb704bae2c4d445e28e7c
-      internalID: -947333034
+      spriteID: 2c8140267e12a9f4785d7761117b8dc5
+      internalID: -765818985
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_38
+      name: FroststoneWallsAutotileSet_38
       rect:
         serializedVersion: 2
         x: 192
@@ -951,14 +951,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12367a1816e37fd40bf14976874c6e36
-      internalID: 770875652
+      spriteID: f0156fe6e54d09d44a3ee30d561c05e4
+      internalID: -474615204
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_39
+      name: FroststoneWallsAutotileSet_39
       rect:
         serializedVersion: 2
         x: 224
@@ -973,14 +973,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 573ee3dee6d3e00438de2bc13ec8c337
-      internalID: -1436425293
+      spriteID: 85e878dd134c88b45b12084c133c713e
+      internalID: 158180273
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_40
+      name: FroststoneWallsAutotileSet_40
       rect:
         serializedVersion: 2
         x: 0
@@ -995,14 +995,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 88ed5b38ef7119b42878ba1670ac06a9
-      internalID: 1433969131
+      spriteID: ee5f19db0708a7643865ed9f90be6b65
+      internalID: 1796335936
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_41
+      name: FroststoneWallsAutotileSet_41
       rect:
         serializedVersion: 2
         x: 32
@@ -1017,14 +1017,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c74b183af2bcc840b8c996746fa7619
-      internalID: -1890953804
+      spriteID: 14dae4a0fac021a4f9aa7664b15f8753
+      internalID: 1606567866
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_42
+      name: FroststoneWallsAutotileSet_42
       rect:
         serializedVersion: 2
         x: 64
@@ -1039,14 +1039,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ed06c025c822c34ab98eca44776becc
-      internalID: 162751363
+      spriteID: d49aad58404249e4280bcfb8690395b1
+      internalID: 165205017
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_43
+      name: FroststoneWallsAutotileSet_43
       rect:
         serializedVersion: 2
         x: 96
@@ -1061,14 +1061,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67c4148056271d34fbaf3843534e59ba
-      internalID: -1633937067
+      spriteID: e9407ca640b5d5a47b04eeb2d23d9c14
+      internalID: 1947035236
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_44
+      name: FroststoneWallsAutotileSet_44
       rect:
         serializedVersion: 2
         x: 128
@@ -1083,14 +1083,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24b415456826d31499c5f96eb505e85b
-      internalID: -1777707798
+      spriteID: 55fd583c521045e46becfd274e76e026
+      internalID: 1346376526
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_45
+      name: FroststoneWallsAutotileSet_45
       rect:
         serializedVersion: 2
         x: 160
@@ -1105,14 +1105,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c289f0ef4efbafb4380c74ac783eda9e
-      internalID: -59552712
+      spriteID: 5c9ca3116f29ef24caf149655c69ea79
+      internalID: 543815102
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BorderWallsAutotileSet_46
+      name: FroststoneWallsAutotileSet_46
       rect:
         serializedVersion: 2
         x: 192
@@ -1127,8 +1127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a51c98c6560e474c8c94074b3f61ea5
-      internalID: -1747334645
+      spriteID: a1d4a177582e8724fa27491aed59aa95
+      internalID: 1695258666
       vertices: []
       indices: 
       edges: []
@@ -1137,7 +1137,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 380239bc249120f4883d5e099820ea21
+    spriteID: dc5f596bec22ff847918e250b6d1f63f
     internalID: 0
     vertices: []
     indices: 
@@ -1147,53 +1147,53 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BorderWallsAutotileSet_0: 6354549681381725989
-      BorderWallsAutotileSet_1: 1799766483
-      BorderWallsAutotileSet_10: 1244742187
-      BorderWallsAutotileSet_11: 1664060863
-      BorderWallsAutotileSet_12: 947612666
-      BorderWallsAutotileSet_13: -440097015
-      BorderWallsAutotileSet_14: 436422753
-      BorderWallsAutotileSet_15: 249362698
-      BorderWallsAutotileSet_16: -136907308
-      BorderWallsAutotileSet_17: -551418271
-      BorderWallsAutotileSet_18: -782905784
-      BorderWallsAutotileSet_19: 160676914
-      BorderWallsAutotileSet_2: 1227866084
-      BorderWallsAutotileSet_20: -1569440894
-      BorderWallsAutotileSet_21: 51213992
-      BorderWallsAutotileSet_22: 1864828335
-      BorderWallsAutotileSet_23: -682671860
-      BorderWallsAutotileSet_24: -680208724
-      BorderWallsAutotileSet_25: -427391628
-      BorderWallsAutotileSet_26: 700667640
-      BorderWallsAutotileSet_27: 158101185
-      BorderWallsAutotileSet_28: 563931372
-      BorderWallsAutotileSet_29: 621468496
-      BorderWallsAutotileSet_3: 846402569
-      BorderWallsAutotileSet_30: -77628075
-      BorderWallsAutotileSet_31: -1921742694
-      BorderWallsAutotileSet_32: 1809563772
-      BorderWallsAutotileSet_33: 884495473
-      BorderWallsAutotileSet_34: -1577701109
-      BorderWallsAutotileSet_35: 1168577898
-      BorderWallsAutotileSet_36: -301067450
-      BorderWallsAutotileSet_37: -947333034
-      BorderWallsAutotileSet_38: 770875652
-      BorderWallsAutotileSet_39: -1436425293
-      BorderWallsAutotileSet_4: 688892111
-      BorderWallsAutotileSet_40: 1433969131
-      BorderWallsAutotileSet_41: -1890953804
-      BorderWallsAutotileSet_42: 162751363
-      BorderWallsAutotileSet_43: -1633937067
-      BorderWallsAutotileSet_44: -1777707798
-      BorderWallsAutotileSet_45: -59552712
-      BorderWallsAutotileSet_46: -1747334645
-      BorderWallsAutotileSet_5: -367159875
-      BorderWallsAutotileSet_6: 1415510030
-      BorderWallsAutotileSet_7: 671370132
-      BorderWallsAutotileSet_8: 1215947674
-      BorderWallsAutotileSet_9: 1057286240
+      FroststoneWallsAutotileSet_0: -202971455194444984
+      FroststoneWallsAutotileSet_1: 701617525
+      FroststoneWallsAutotileSet_10: 82344327
+      FroststoneWallsAutotileSet_11: -2012294252
+      FroststoneWallsAutotileSet_12: 698709440
+      FroststoneWallsAutotileSet_13: -1829385228
+      FroststoneWallsAutotileSet_14: 1731349288
+      FroststoneWallsAutotileSet_15: -1232657816
+      FroststoneWallsAutotileSet_16: 1893328462
+      FroststoneWallsAutotileSet_17: -1646482880
+      FroststoneWallsAutotileSet_18: -292330284
+      FroststoneWallsAutotileSet_19: 1881252682
+      FroststoneWallsAutotileSet_2: 565421890
+      FroststoneWallsAutotileSet_20: 958500884
+      FroststoneWallsAutotileSet_21: 476438726
+      FroststoneWallsAutotileSet_22: 2027224059
+      FroststoneWallsAutotileSet_23: -2017543779
+      FroststoneWallsAutotileSet_24: -1854895524
+      FroststoneWallsAutotileSet_25: 1970876969
+      FroststoneWallsAutotileSet_26: 850174672
+      FroststoneWallsAutotileSet_27: -82274869
+      FroststoneWallsAutotileSet_28: 574181934
+      FroststoneWallsAutotileSet_29: 1952327849
+      FroststoneWallsAutotileSet_3: -1387724786
+      FroststoneWallsAutotileSet_30: -847748314
+      FroststoneWallsAutotileSet_31: -1849954566
+      FroststoneWallsAutotileSet_32: -1190063025
+      FroststoneWallsAutotileSet_33: 396111732
+      FroststoneWallsAutotileSet_34: 1284690149
+      FroststoneWallsAutotileSet_35: -120630529
+      FroststoneWallsAutotileSet_36: 754907029
+      FroststoneWallsAutotileSet_37: -765818985
+      FroststoneWallsAutotileSet_38: -474615204
+      FroststoneWallsAutotileSet_39: 158180273
+      FroststoneWallsAutotileSet_4: 1494928383
+      FroststoneWallsAutotileSet_40: 1796335936
+      FroststoneWallsAutotileSet_41: 1606567866
+      FroststoneWallsAutotileSet_42: 165205017
+      FroststoneWallsAutotileSet_43: 1947035236
+      FroststoneWallsAutotileSet_44: 1346376526
+      FroststoneWallsAutotileSet_45: 543815102
+      FroststoneWallsAutotileSet_46: 1695258666
+      FroststoneWallsAutotileSet_5: -883603758
+      FroststoneWallsAutotileSet_6: -422971777
+      FroststoneWallsAutotileSet_7: 1005871897
+      FroststoneWallsAutotileSet_8: 2077288292
+      FroststoneWallsAutotileSet_9: 769842525
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

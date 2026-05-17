@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 93cd41cce49094049bc134e17fd4e59e
+guid: 94c8b197fc3b78e41b3943a8e352caa1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -202971455194444984
-    second: FroststoneWallsAutotileSet_0
+      213: -110909605663331713
+    second: Stone_47_AutotileSet_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -47,8 +47,8 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
-  spriteMeshType: 1
+  spriteExtrude: 2
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_0
+      name: StoneWallsAutotileSet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -108,21 +108,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 84b47917986ee2df0800000000000000
-      internalID: -202971455194444984
+      spriteID: 43b497a68546ebf42a6fac3fc29869cb
+      internalID: 570968250
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_1
+      name: StoneWallsAutotileSet_1
       rect:
         serializedVersion: 2
         x: 32
@@ -130,21 +130,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7440d98eefe1e547b3e2cd03898b10a
-      internalID: 701617525
+      spriteID: 58fd973140bb60c4c909cdfd4896f12b
+      internalID: 826070525
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_2
+      name: StoneWallsAutotileSet_2
       rect:
         serializedVersion: 2
         x: 64
@@ -152,21 +152,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c377961512bd9f144a1b7a16b459747a
-      internalID: 565421890
+      spriteID: cd406877aa3ca6f489d180e67322631e
+      internalID: -1734769815
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_3
+      name: StoneWallsAutotileSet_3
       rect:
         serializedVersion: 2
         x: 96
@@ -174,21 +174,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b33faeb5e3a5a944825adbabb501559
-      internalID: -1387724786
+      spriteID: a0941a4a146300c448c7f1606f9a06f6
+      internalID: -1363755535
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_4
+      name: StoneWallsAutotileSet_4
       rect:
         serializedVersion: 2
         x: 128
@@ -196,21 +196,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f07959e4bb94a54c91f1aa1a273b4d1
-      internalID: 1494928383
+      spriteID: 13315575db5260849acc8b307ba7b1f2
+      internalID: 33941986
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_5
+      name: StoneWallsAutotileSet_5
       rect:
         serializedVersion: 2
         x: 160
@@ -218,21 +218,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a57e725f5935774d8d5464a26e0ba97
-      internalID: -883603758
+      spriteID: c7eb4b25b40044c4cb4bc81d4ac8799c
+      internalID: -596297953
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_6
+      name: StoneWallsAutotileSet_6
       rect:
         serializedVersion: 2
         x: 192
@@ -240,21 +240,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf044a7059c9e2e4cb00f596a9c74586
-      internalID: -422971777
+      spriteID: 7d53644e29f7b7243ba06565df14f39c
+      internalID: -1743722397
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_7
+      name: StoneWallsAutotileSet_7
       rect:
         serializedVersion: 2
         x: 224
@@ -262,21 +262,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eab7fc10e427fda429a34c58b3319662
-      internalID: 1005871897
+      spriteID: 571661f78894ae24da2f40bbdd0dd325
+      internalID: 1502357813
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_8
+      name: StoneWallsAutotileSet_8
       rect:
         serializedVersion: 2
         x: 0
@@ -284,21 +284,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9226ac62500d17a45beaa0c1542d73c5
-      internalID: 2077288292
+      spriteID: 2a08b9d4a9a0a7f4b9265015bd7f6996
+      internalID: -1373897948
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_9
+      name: StoneWallsAutotileSet_9
       rect:
         serializedVersion: 2
         x: 32
@@ -306,21 +306,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c037b30f7901a08428e3cebb4ff13569
-      internalID: 769842525
+      spriteID: 196b6cfaea930be4591d09c1f8318921
+      internalID: -1578505387
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_10
+      name: StoneWallsAutotileSet_10
       rect:
         serializedVersion: 2
         x: 64
@@ -328,21 +328,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77c496d8cb45c2d439fafdd8f79bbff7
-      internalID: 82344327
+      spriteID: 43786bd18f9609647969689fdff5fedb
+      internalID: -604561790
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_11
+      name: StoneWallsAutotileSet_11
       rect:
         serializedVersion: 2
         x: 96
@@ -350,21 +350,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af505fee2cba0fc48b8ffa48cf7489d7
-      internalID: -2012294252
+      spriteID: 7a5d14746c1e6ef499ed3e423a85d376
+      internalID: -1662884189
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_12
+      name: StoneWallsAutotileSet_12
       rect:
         serializedVersion: 2
         x: 128
@@ -372,21 +372,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91c88cd5d2ebc25479804b3539768db3
-      internalID: 698709440
+      spriteID: cd3a5a7dc7c1b954595a90e2e09647f2
+      internalID: -1889650097
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_13
+      name: StoneWallsAutotileSet_13
       rect:
         serializedVersion: 2
         x: 160
@@ -394,21 +394,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd1e3adbd69bfd6438b620f6fe080782
-      internalID: -1829385228
+      spriteID: 6c81c983009960e479437a8d5be0ad41
+      internalID: -452449128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_14
+      name: StoneWallsAutotileSet_14
       rect:
         serializedVersion: 2
         x: 192
@@ -416,21 +416,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b63388d767403af499e4c3b940f2a249
-      internalID: 1731349288
+      spriteID: 26e55304083488c4eb091b71af9da20c
+      internalID: 1264699878
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_15
+      name: StoneWallsAutotileSet_15
       rect:
         serializedVersion: 2
         x: 224
@@ -438,21 +438,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df9718f82d4778745a621053a41da409
-      internalID: -1232657816
+      spriteID: 05434dae2b7ba924e966556644b92450
+      internalID: -740186864
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_16
+      name: StoneWallsAutotileSet_16
       rect:
         serializedVersion: 2
         x: 0
@@ -460,21 +460,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da190bbe74362854eb747e3962af701f
-      internalID: 1893328462
+      spriteID: 6c65df018e697a949bd9e2e13dbe19a4
+      internalID: 1340913272
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_17
+      name: StoneWallsAutotileSet_17
       rect:
         serializedVersion: 2
         x: 32
@@ -482,21 +482,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 783c1a3eeb84da840a8406aad4d45725
-      internalID: -1646482880
+      spriteID: 4cf459fd6dae7a84d998f412985f1078
+      internalID: -246388494
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_18
+      name: StoneWallsAutotileSet_18
       rect:
         serializedVersion: 2
         x: 64
@@ -504,21 +504,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb0066af925b04c49bad9e46f64521ad
-      internalID: -292330284
+      spriteID: f892ba4f7bfe52048b9e81b7d7089c69
+      internalID: -1128165423
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_19
+      name: StoneWallsAutotileSet_19
       rect:
         serializedVersion: 2
         x: 96
@@ -526,21 +526,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 803851b25a810114fbbc5aa7413ae85c
-      internalID: 1881252682
+      spriteID: fae97730158431448a0c43b38edc3653
+      internalID: -578744494
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_20
+      name: StoneWallsAutotileSet_20
       rect:
         serializedVersion: 2
         x: 128
@@ -548,21 +548,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6517828e6569c134ca80120a0e738f8b
-      internalID: 958500884
+      spriteID: dce8bdc948eb9854ba9fd81e28079c7f
+      internalID: 959027896
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_21
+      name: StoneWallsAutotileSet_21
       rect:
         serializedVersion: 2
         x: 160
@@ -570,21 +570,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc5ec847944634d44b914b3b83bd0237
-      internalID: 476438726
+      spriteID: a91caf263a5d6ab48b73f988feec7d5a
+      internalID: -1841178962
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_22
+      name: StoneWallsAutotileSet_22
       rect:
         serializedVersion: 2
         x: 192
@@ -592,21 +592,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c650849b0577ab34c8f7330fb03e892f
-      internalID: 2027224059
+      spriteID: d250e4ec46b78044b99589ba608c582f
+      internalID: 765008300
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_23
+      name: StoneWallsAutotileSet_23
       rect:
         serializedVersion: 2
         x: 224
@@ -614,21 +614,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00963af0ad8dc1e4fb2b09ab4d878e7c
-      internalID: -2017543779
+      spriteID: 54bce9fc08a3867438ce6ddb9c823aa1
+      internalID: -88303361
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_24
+      name: StoneWallsAutotileSet_24
       rect:
         serializedVersion: 2
         x: 0
@@ -636,21 +636,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d19c818c5a89cd849b6c0a0cdcb932f5
-      internalID: -1854895524
+      spriteID: 6f307c5d47a28ef40b5d3bc6302c97e2
+      internalID: 2068307849
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_25
+      name: StoneWallsAutotileSet_25
       rect:
         serializedVersion: 2
         x: 32
@@ -658,21 +658,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc60d62a3e3315045ad2f7bc25cc3a85
-      internalID: 1970876969
+      spriteID: c7530ddcf6da7244faa7fdbc955d34f0
+      internalID: 1178520209
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_26
+      name: StoneWallsAutotileSet_26
       rect:
         serializedVersion: 2
         x: 64
@@ -680,21 +680,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b82bcaa2d7a8b434cb0f8029ea9bc059
-      internalID: 850174672
+      spriteID: 364dfa31894e0c24db37571f47fb0fee
+      internalID: -2025487198
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_27
+      name: StoneWallsAutotileSet_27
       rect:
         serializedVersion: 2
         x: 96
@@ -702,21 +702,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c692fd86d721054b99fc28401191f79
-      internalID: -82274869
+      spriteID: e57ca80d6b404324ea2ae85113852937
+      internalID: 629178807
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_28
+      name: StoneWallsAutotileSet_28
       rect:
         serializedVersion: 2
         x: 128
@@ -724,21 +724,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e684479b38d62c4d8698ee699579824
-      internalID: 574181934
+      spriteID: 6a6a9ffd582c1984f9ee3a53e236d3f7
+      internalID: -1821642722
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_29
+      name: StoneWallsAutotileSet_29
       rect:
         serializedVersion: 2
         x: 160
@@ -746,21 +746,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 486faefcee68b804db1d8759a4e25dcb
-      internalID: 1952327849
+      spriteID: e28bc029d7197824ba1bed162c3ab07c
+      internalID: -359032586
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_30
+      name: StoneWallsAutotileSet_30
       rect:
         serializedVersion: 2
         x: 192
@@ -768,21 +768,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a369ee80fd665e49ae1de49246cf04f
-      internalID: -847748314
+      spriteID: ce72728129cf3ec4faf5a34ca0575164
+      internalID: -222338961
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_31
+      name: StoneWallsAutotileSet_31
       rect:
         serializedVersion: 2
         x: 224
@@ -790,21 +790,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c54d98a50ca56f044938648e23d6a020
-      internalID: -1849954566
+      spriteID: 213519c98a961064f81b2d9cc2432020
+      internalID: -1783350659
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_32
+      name: StoneWallsAutotileSet_32
       rect:
         serializedVersion: 2
         x: 0
@@ -812,21 +812,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d8d1d1df0fdc5a42a84d9a164ef2b02
-      internalID: -1190063025
+      spriteID: 60f2ef63ca13eb3448a8577b105757a0
+      internalID: -975472665
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_33
+      name: StoneWallsAutotileSet_33
       rect:
         serializedVersion: 2
         x: 32
@@ -834,21 +834,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41bd17d4358a4c744912e29378a2beab
-      internalID: 396111732
+      spriteID: 8ebac42a68586844cb9799822e0a834c
+      internalID: -272256992
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_34
+      name: StoneWallsAutotileSet_34
       rect:
         serializedVersion: 2
         x: 64
@@ -856,21 +856,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 922644e66acb4af45ba464b5fddd1bd1
-      internalID: 1284690149
+      spriteID: 7796e81af9c120a4587435d621ed6ead
+      internalID: -105375457
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_35
+      name: StoneWallsAutotileSet_35
       rect:
         serializedVersion: 2
         x: 96
@@ -878,21 +878,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c9ecae11e77a2347ba41bf25ea6d459
-      internalID: -120630529
+      spriteID: 492983adc7338af47ba55b3df6adbc84
+      internalID: -430293876
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_36
+      name: StoneWallsAutotileSet_36
       rect:
         serializedVersion: 2
         x: 128
@@ -900,21 +900,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d35c9665a87ebc40b7b5289897648e5
-      internalID: 754907029
+      spriteID: 996fc51db151cfb4d8a535e29ee5e689
+      internalID: -1539775578
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_37
+      name: StoneWallsAutotileSet_37
       rect:
         serializedVersion: 2
         x: 160
@@ -922,21 +922,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c8140267e12a9f4785d7761117b8dc5
-      internalID: -765818985
+      spriteID: f4bd2a7eca9d62e43b4230c6f22060a7
+      internalID: 1523038783
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_38
+      name: StoneWallsAutotileSet_38
       rect:
         serializedVersion: 2
         x: 192
@@ -944,21 +944,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0156fe6e54d09d44a3ee30d561c05e4
-      internalID: -474615204
+      spriteID: b4cbce9cab3a44a4aa1341e98b0295a1
+      internalID: -598096729
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_39
+      name: StoneWallsAutotileSet_39
       rect:
         serializedVersion: 2
         x: 224
@@ -966,21 +966,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85e878dd134c88b45b12084c133c713e
-      internalID: 158180273
+      spriteID: 892180901f1d3354b8c72766b18393bf
+      internalID: -1474194499
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_40
+      name: StoneWallsAutotileSet_40
       rect:
         serializedVersion: 2
         x: 0
@@ -988,21 +988,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee5f19db0708a7643865ed9f90be6b65
-      internalID: 1796335936
+      spriteID: 1e18cbcf7732f804b833abb61490719d
+      internalID: 778680388
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_41
+      name: StoneWallsAutotileSet_41
       rect:
         serializedVersion: 2
         x: 32
@@ -1010,21 +1010,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14dae4a0fac021a4f9aa7664b15f8753
-      internalID: 1606567866
+      spriteID: b43e7c33145313944aedb049b0333fea
+      internalID: 113860577
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_42
+      name: StoneWallsAutotileSet_42
       rect:
         serializedVersion: 2
         x: 64
@@ -1032,21 +1032,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d49aad58404249e4280bcfb8690395b1
-      internalID: 165205017
+      spriteID: 07fdc7070ba17934b9295a7afe075ec2
+      internalID: -1698742096
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_43
+      name: StoneWallsAutotileSet_43
       rect:
         serializedVersion: 2
         x: 96
@@ -1054,21 +1054,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9407ca640b5d5a47b04eeb2d23d9c14
-      internalID: 1947035236
+      spriteID: 46ebb2d2175301b418219f2624a6fefa
+      internalID: 932114914
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_44
+      name: StoneWallsAutotileSet_44
       rect:
         serializedVersion: 2
         x: 128
@@ -1076,21 +1076,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55fd583c521045e46becfd274e76e026
-      internalID: 1346376526
+      spriteID: 5f58adaa84a23e140b7a4ba0d7d064e9
+      internalID: -793546836
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_45
+      name: StoneWallsAutotileSet_45
       rect:
         serializedVersion: 2
         x: 160
@@ -1098,21 +1098,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c9ca3116f29ef24caf149655c69ea79
-      internalID: 543815102
+      spriteID: 48e227f78bec83949b38ff005b3e5df1
+      internalID: 1680343508
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FroststoneWallsAutotileSet_46
+      name: StoneWallsAutotileSet_46
       rect:
         serializedVersion: 2
         x: 192
@@ -1120,15 +1120,15 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1d4a177582e8724fa27491aed59aa95
-      internalID: 1695258666
+      spriteID: 7ae29147193adf340ad19f82e787c6da
+      internalID: 84634276
       vertices: []
       indices: 
       edges: []
@@ -1137,7 +1137,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: dc5f596bec22ff847918e250b6d1f63f
+    spriteID: 48dbc661be9a8864faf8393c35e80519
     internalID: 0
     vertices: []
     indices: 
@@ -1147,53 +1147,54 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      FroststoneWallsAutotileSet_0: -202971455194444984
-      FroststoneWallsAutotileSet_1: 701617525
-      FroststoneWallsAutotileSet_10: 82344327
-      FroststoneWallsAutotileSet_11: -2012294252
-      FroststoneWallsAutotileSet_12: 698709440
-      FroststoneWallsAutotileSet_13: -1829385228
-      FroststoneWallsAutotileSet_14: 1731349288
-      FroststoneWallsAutotileSet_15: -1232657816
-      FroststoneWallsAutotileSet_16: 1893328462
-      FroststoneWallsAutotileSet_17: -1646482880
-      FroststoneWallsAutotileSet_18: -292330284
-      FroststoneWallsAutotileSet_19: 1881252682
-      FroststoneWallsAutotileSet_2: 565421890
-      FroststoneWallsAutotileSet_20: 958500884
-      FroststoneWallsAutotileSet_21: 476438726
-      FroststoneWallsAutotileSet_22: 2027224059
-      FroststoneWallsAutotileSet_23: -2017543779
-      FroststoneWallsAutotileSet_24: -1854895524
-      FroststoneWallsAutotileSet_25: 1970876969
-      FroststoneWallsAutotileSet_26: 850174672
-      FroststoneWallsAutotileSet_27: -82274869
-      FroststoneWallsAutotileSet_28: 574181934
-      FroststoneWallsAutotileSet_29: 1952327849
-      FroststoneWallsAutotileSet_3: -1387724786
-      FroststoneWallsAutotileSet_30: -847748314
-      FroststoneWallsAutotileSet_31: -1849954566
-      FroststoneWallsAutotileSet_32: -1190063025
-      FroststoneWallsAutotileSet_33: 396111732
-      FroststoneWallsAutotileSet_34: 1284690149
-      FroststoneWallsAutotileSet_35: -120630529
-      FroststoneWallsAutotileSet_36: 754907029
-      FroststoneWallsAutotileSet_37: -765818985
-      FroststoneWallsAutotileSet_38: -474615204
-      FroststoneWallsAutotileSet_39: 158180273
-      FroststoneWallsAutotileSet_4: 1494928383
-      FroststoneWallsAutotileSet_40: 1796335936
-      FroststoneWallsAutotileSet_41: 1606567866
-      FroststoneWallsAutotileSet_42: 165205017
-      FroststoneWallsAutotileSet_43: 1947035236
-      FroststoneWallsAutotileSet_44: 1346376526
-      FroststoneWallsAutotileSet_45: 543815102
-      FroststoneWallsAutotileSet_46: 1695258666
-      FroststoneWallsAutotileSet_5: -883603758
-      FroststoneWallsAutotileSet_6: -422971777
-      FroststoneWallsAutotileSet_7: 1005871897
-      FroststoneWallsAutotileSet_8: 2077288292
-      FroststoneWallsAutotileSet_9: 769842525
+      StoneWallsAutotileSet_0: 570968250
+      StoneWallsAutotileSet_1: 826070525
+      StoneWallsAutotileSet_10: -604561790
+      StoneWallsAutotileSet_11: -1662884189
+      StoneWallsAutotileSet_12: -1889650097
+      StoneWallsAutotileSet_13: -452449128
+      StoneWallsAutotileSet_14: 1264699878
+      StoneWallsAutotileSet_15: -740186864
+      StoneWallsAutotileSet_16: 1340913272
+      StoneWallsAutotileSet_17: -246388494
+      StoneWallsAutotileSet_18: -1128165423
+      StoneWallsAutotileSet_19: -578744494
+      StoneWallsAutotileSet_2: -1734769815
+      StoneWallsAutotileSet_20: 959027896
+      StoneWallsAutotileSet_21: -1841178962
+      StoneWallsAutotileSet_22: 765008300
+      StoneWallsAutotileSet_23: -88303361
+      StoneWallsAutotileSet_24: 2068307849
+      StoneWallsAutotileSet_25: 1178520209
+      StoneWallsAutotileSet_26: -2025487198
+      StoneWallsAutotileSet_27: 629178807
+      StoneWallsAutotileSet_28: -1821642722
+      StoneWallsAutotileSet_29: -359032586
+      StoneWallsAutotileSet_3: -1363755535
+      StoneWallsAutotileSet_30: -222338961
+      StoneWallsAutotileSet_31: -1783350659
+      StoneWallsAutotileSet_32: -975472665
+      StoneWallsAutotileSet_33: -272256992
+      StoneWallsAutotileSet_34: -105375457
+      StoneWallsAutotileSet_35: -430293876
+      StoneWallsAutotileSet_36: -1539775578
+      StoneWallsAutotileSet_37: 1523038783
+      StoneWallsAutotileSet_38: -598096729
+      StoneWallsAutotileSet_39: -1474194499
+      StoneWallsAutotileSet_4: 33941986
+      StoneWallsAutotileSet_40: 778680388
+      StoneWallsAutotileSet_41: 113860577
+      StoneWallsAutotileSet_42: -1698742096
+      StoneWallsAutotileSet_43: 932114914
+      StoneWallsAutotileSet_44: -793546836
+      StoneWallsAutotileSet_45: 1680343508
+      StoneWallsAutotileSet_46: 84634276
+      StoneWallsAutotileSet_47: -3757110
+      StoneWallsAutotileSet_5: -596297953
+      StoneWallsAutotileSet_6: -1743722397
+      StoneWallsAutotileSet_7: 1502357813
+      StoneWallsAutotileSet_8: -1373897948
+      StoneWallsAutotileSet_9: -1578505387
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

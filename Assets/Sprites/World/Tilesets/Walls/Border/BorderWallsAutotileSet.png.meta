@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 94c8b197fc3b78e41b3943a8e352caa1
+guid: c6eaba62bc85bed47871898a3a0361d3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -110909605663331713
-    second: Stone_47_AutotileSet_0
+      213: 6354549681381725989
+    second: BorderWallsAutotileSet_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -47,8 +47,8 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
-  spriteMeshType: 1
+  spriteExtrude: 2
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_0
+      name: BorderWallsAutotileSet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -108,21 +108,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 43b497a68546ebf42a6fac3fc29869cb
-      internalID: 570968250
+      spriteID: 52754527445ef2850800000000000000
+      internalID: 6354549681381725989
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_1
+      name: BorderWallsAutotileSet_1
       rect:
         serializedVersion: 2
         x: 32
@@ -130,21 +130,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58fd973140bb60c4c909cdfd4896f12b
-      internalID: 826070525
+      spriteID: 4f4eb1ed416573a48bd60065bb5f7651
+      internalID: 1799766483
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_2
+      name: BorderWallsAutotileSet_2
       rect:
         serializedVersion: 2
         x: 64
@@ -152,21 +152,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd406877aa3ca6f489d180e67322631e
-      internalID: -1734769815
+      spriteID: 35edd7e39849b824cbb1441c6347db60
+      internalID: 1227866084
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_3
+      name: BorderWallsAutotileSet_3
       rect:
         serializedVersion: 2
         x: 96
@@ -174,21 +174,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a0941a4a146300c448c7f1606f9a06f6
-      internalID: -1363755535
+      spriteID: 2561d610f37bf4549beb7cb310e128aa
+      internalID: 846402569
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_4
+      name: BorderWallsAutotileSet_4
       rect:
         serializedVersion: 2
         x: 128
@@ -196,21 +196,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 13315575db5260849acc8b307ba7b1f2
-      internalID: 33941986
+      spriteID: c38e70b7d3948d9488e116d0eb293064
+      internalID: 688892111
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_5
+      name: BorderWallsAutotileSet_5
       rect:
         serializedVersion: 2
         x: 160
@@ -218,21 +218,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7eb4b25b40044c4cb4bc81d4ac8799c
-      internalID: -596297953
+      spriteID: 33f7d4d728a3e2f489bd33828cd30b04
+      internalID: -367159875
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_6
+      name: BorderWallsAutotileSet_6
       rect:
         serializedVersion: 2
         x: 192
@@ -240,21 +240,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d53644e29f7b7243ba06565df14f39c
-      internalID: -1743722397
+      spriteID: dab008c3c7ad6214b9e9063ccac6bb0f
+      internalID: 1415510030
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_7
+      name: BorderWallsAutotileSet_7
       rect:
         serializedVersion: 2
         x: 224
@@ -262,21 +262,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 571661f78894ae24da2f40bbdd0dd325
-      internalID: 1502357813
+      spriteID: 464130e2f0131ac44856b9b7b8412aa2
+      internalID: 671370132
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_8
+      name: BorderWallsAutotileSet_8
       rect:
         serializedVersion: 2
         x: 0
@@ -284,21 +284,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a08b9d4a9a0a7f4b9265015bd7f6996
-      internalID: -1373897948
+      spriteID: c9965a85439be8a4488096286d617e32
+      internalID: 1215947674
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_9
+      name: BorderWallsAutotileSet_9
       rect:
         serializedVersion: 2
         x: 32
@@ -306,21 +306,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 196b6cfaea930be4591d09c1f8318921
-      internalID: -1578505387
+      spriteID: 86c7b8160af0c4d40b9694da87a425dd
+      internalID: 1057286240
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_10
+      name: BorderWallsAutotileSet_10
       rect:
         serializedVersion: 2
         x: 64
@@ -328,21 +328,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 43786bd18f9609647969689fdff5fedb
-      internalID: -604561790
+      spriteID: 994435b70affd9e4490f8364a9f11574
+      internalID: 1244742187
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_11
+      name: BorderWallsAutotileSet_11
       rect:
         serializedVersion: 2
         x: 96
@@ -350,21 +350,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a5d14746c1e6ef499ed3e423a85d376
-      internalID: -1662884189
+      spriteID: 8dd6f21a2e3ae7941aad8b8c86b54f96
+      internalID: 1664060863
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_12
+      name: BorderWallsAutotileSet_12
       rect:
         serializedVersion: 2
         x: 128
@@ -372,21 +372,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd3a5a7dc7c1b954595a90e2e09647f2
-      internalID: -1889650097
+      spriteID: cfd192e67fa648348b34da9a16cf5d2f
+      internalID: 947612666
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_13
+      name: BorderWallsAutotileSet_13
       rect:
         serializedVersion: 2
         x: 160
@@ -394,21 +394,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c81c983009960e479437a8d5be0ad41
-      internalID: -452449128
+      spriteID: acc19c7b0e3a60c40b7f578cb0bd35a2
+      internalID: -440097015
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_14
+      name: BorderWallsAutotileSet_14
       rect:
         serializedVersion: 2
         x: 192
@@ -416,21 +416,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26e55304083488c4eb091b71af9da20c
-      internalID: 1264699878
+      spriteID: 8a881b54be0dfe544b71b7db671108f9
+      internalID: 436422753
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_15
+      name: BorderWallsAutotileSet_15
       rect:
         serializedVersion: 2
         x: 224
@@ -438,21 +438,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 05434dae2b7ba924e966556644b92450
-      internalID: -740186864
+      spriteID: e538bd2141aa01d4a9df639ba7d063b0
+      internalID: 249362698
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_16
+      name: BorderWallsAutotileSet_16
       rect:
         serializedVersion: 2
         x: 0
@@ -460,21 +460,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c65df018e697a949bd9e2e13dbe19a4
-      internalID: 1340913272
+      spriteID: 193a55385f69ce849947db839069ca1a
+      internalID: -136907308
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_17
+      name: BorderWallsAutotileSet_17
       rect:
         serializedVersion: 2
         x: 32
@@ -482,21 +482,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4cf459fd6dae7a84d998f412985f1078
-      internalID: -246388494
+      spriteID: 2a91595953ab8644fadcb10dd972e8b9
+      internalID: -551418271
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_18
+      name: BorderWallsAutotileSet_18
       rect:
         serializedVersion: 2
         x: 64
@@ -504,21 +504,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f892ba4f7bfe52048b9e81b7d7089c69
-      internalID: -1128165423
+      spriteID: 4a557b6ea49aa7042a67aeaac9797fec
+      internalID: -782905784
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_19
+      name: BorderWallsAutotileSet_19
       rect:
         serializedVersion: 2
         x: 96
@@ -526,21 +526,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fae97730158431448a0c43b38edc3653
-      internalID: -578744494
+      spriteID: 189e6003105ab8b458a78b317fa47a69
+      internalID: 160676914
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_20
+      name: BorderWallsAutotileSet_20
       rect:
         serializedVersion: 2
         x: 128
@@ -548,21 +548,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dce8bdc948eb9854ba9fd81e28079c7f
-      internalID: 959027896
+      spriteID: fbdba3ac1089f954d90613e492612910
+      internalID: -1569440894
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_21
+      name: BorderWallsAutotileSet_21
       rect:
         serializedVersion: 2
         x: 160
@@ -570,21 +570,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a91caf263a5d6ab48b73f988feec7d5a
-      internalID: -1841178962
+      spriteID: aaf5e2552fbfc7a43bd329b6f667fa42
+      internalID: 51213992
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_22
+      name: BorderWallsAutotileSet_22
       rect:
         serializedVersion: 2
         x: 192
@@ -592,21 +592,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d250e4ec46b78044b99589ba608c582f
-      internalID: 765008300
+      spriteID: 79d386a3a19e7fc4995906d5bb67c3c5
+      internalID: 1864828335
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_23
+      name: BorderWallsAutotileSet_23
       rect:
         serializedVersion: 2
         x: 224
@@ -614,21 +614,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54bce9fc08a3867438ce6ddb9c823aa1
-      internalID: -88303361
+      spriteID: 0a21768f06070724e8cd6075a7dd5fd4
+      internalID: -682671860
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_24
+      name: BorderWallsAutotileSet_24
       rect:
         serializedVersion: 2
         x: 0
@@ -636,21 +636,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f307c5d47a28ef40b5d3bc6302c97e2
-      internalID: 2068307849
+      spriteID: 10d32d6cc8c37f547a007a1fe82b798a
+      internalID: -680208724
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_25
+      name: BorderWallsAutotileSet_25
       rect:
         serializedVersion: 2
         x: 32
@@ -658,21 +658,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7530ddcf6da7244faa7fdbc955d34f0
-      internalID: 1178520209
+      spriteID: 4a9a2182a007a0449891cf707f285e5d
+      internalID: -427391628
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_26
+      name: BorderWallsAutotileSet_26
       rect:
         serializedVersion: 2
         x: 64
@@ -680,21 +680,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 364dfa31894e0c24db37571f47fb0fee
-      internalID: -2025487198
+      spriteID: abb5a6c3c69375442a74e37bc20ee83c
+      internalID: 700667640
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_27
+      name: BorderWallsAutotileSet_27
       rect:
         serializedVersion: 2
         x: 96
@@ -702,21 +702,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e57ca80d6b404324ea2ae85113852937
-      internalID: 629178807
+      spriteID: 26aa9e89228eb6347928192f2ef68ba5
+      internalID: 158101185
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_28
+      name: BorderWallsAutotileSet_28
       rect:
         serializedVersion: 2
         x: 128
@@ -724,21 +724,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a6a9ffd582c1984f9ee3a53e236d3f7
-      internalID: -1821642722
+      spriteID: b424c700ff1be024c9bb25a90971184f
+      internalID: 563931372
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_29
+      name: BorderWallsAutotileSet_29
       rect:
         serializedVersion: 2
         x: 160
@@ -746,21 +746,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e28bc029d7197824ba1bed162c3ab07c
-      internalID: -359032586
+      spriteID: 8ff6dc51b37c9f34f95aff55822e358f
+      internalID: 621468496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_30
+      name: BorderWallsAutotileSet_30
       rect:
         serializedVersion: 2
         x: 192
@@ -768,21 +768,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce72728129cf3ec4faf5a34ca0575164
-      internalID: -222338961
+      spriteID: f5495942596d4374aab8a5c210078995
+      internalID: -77628075
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_31
+      name: BorderWallsAutotileSet_31
       rect:
         serializedVersion: 2
         x: 224
@@ -790,21 +790,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 213519c98a961064f81b2d9cc2432020
-      internalID: -1783350659
+      spriteID: a6d7abc0a17511647b60cd329f9adce6
+      internalID: -1921742694
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_32
+      name: BorderWallsAutotileSet_32
       rect:
         serializedVersion: 2
         x: 0
@@ -812,21 +812,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60f2ef63ca13eb3448a8577b105757a0
-      internalID: -975472665
+      spriteID: 378b418b0f82da046af1a23e5479c7fc
+      internalID: 1809563772
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_33
+      name: BorderWallsAutotileSet_33
       rect:
         serializedVersion: 2
         x: 32
@@ -834,21 +834,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ebac42a68586844cb9799822e0a834c
-      internalID: -272256992
+      spriteID: b4921e641b5e1d343b2e76570aa64f40
+      internalID: 884495473
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_34
+      name: BorderWallsAutotileSet_34
       rect:
         serializedVersion: 2
         x: 64
@@ -856,21 +856,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7796e81af9c120a4587435d621ed6ead
-      internalID: -105375457
+      spriteID: 11d802e0d6720a34dbd72f232e53df81
+      internalID: -1577701109
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_35
+      name: BorderWallsAutotileSet_35
       rect:
         serializedVersion: 2
         x: 96
@@ -878,21 +878,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 492983adc7338af47ba55b3df6adbc84
-      internalID: -430293876
+      spriteID: 57327d76d7a8eed4c838aaeeaba139f0
+      internalID: 1168577898
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_36
+      name: BorderWallsAutotileSet_36
       rect:
         serializedVersion: 2
         x: 128
@@ -900,21 +900,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 996fc51db151cfb4d8a535e29ee5e689
-      internalID: -1539775578
+      spriteID: 0af21c62503f3834ba1a3f0440a86664
+      internalID: -301067450
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_37
+      name: BorderWallsAutotileSet_37
       rect:
         serializedVersion: 2
         x: 160
@@ -922,21 +922,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4bd2a7eca9d62e43b4230c6f22060a7
-      internalID: 1523038783
+      spriteID: f7f9b890610cb704bae2c4d445e28e7c
+      internalID: -947333034
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_38
+      name: BorderWallsAutotileSet_38
       rect:
         serializedVersion: 2
         x: 192
@@ -944,21 +944,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4cbce9cab3a44a4aa1341e98b0295a1
-      internalID: -598096729
+      spriteID: 12367a1816e37fd40bf14976874c6e36
+      internalID: 770875652
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_39
+      name: BorderWallsAutotileSet_39
       rect:
         serializedVersion: 2
         x: 224
@@ -966,21 +966,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 892180901f1d3354b8c72766b18393bf
-      internalID: -1474194499
+      spriteID: 573ee3dee6d3e00438de2bc13ec8c337
+      internalID: -1436425293
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_40
+      name: BorderWallsAutotileSet_40
       rect:
         serializedVersion: 2
         x: 0
@@ -988,21 +988,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e18cbcf7732f804b833abb61490719d
-      internalID: 778680388
+      spriteID: 88ed5b38ef7119b42878ba1670ac06a9
+      internalID: 1433969131
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_41
+      name: BorderWallsAutotileSet_41
       rect:
         serializedVersion: 2
         x: 32
@@ -1010,21 +1010,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b43e7c33145313944aedb049b0333fea
-      internalID: 113860577
+      spriteID: 2c74b183af2bcc840b8c996746fa7619
+      internalID: -1890953804
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_42
+      name: BorderWallsAutotileSet_42
       rect:
         serializedVersion: 2
         x: 64
@@ -1032,21 +1032,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07fdc7070ba17934b9295a7afe075ec2
-      internalID: -1698742096
+      spriteID: 8ed06c025c822c34ab98eca44776becc
+      internalID: 162751363
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_43
+      name: BorderWallsAutotileSet_43
       rect:
         serializedVersion: 2
         x: 96
@@ -1054,21 +1054,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46ebb2d2175301b418219f2624a6fefa
-      internalID: 932114914
+      spriteID: 67c4148056271d34fbaf3843534e59ba
+      internalID: -1633937067
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_44
+      name: BorderWallsAutotileSet_44
       rect:
         serializedVersion: 2
         x: 128
@@ -1076,21 +1076,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f58adaa84a23e140b7a4ba0d7d064e9
-      internalID: -793546836
+      spriteID: 24b415456826d31499c5f96eb505e85b
+      internalID: -1777707798
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_45
+      name: BorderWallsAutotileSet_45
       rect:
         serializedVersion: 2
         x: 160
@@ -1098,21 +1098,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 48e227f78bec83949b38ff005b3e5df1
-      internalID: 1680343508
+      spriteID: c289f0ef4efbafb4380c74ac783eda9e
+      internalID: -59552712
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StoneWallsAutotileSet_46
+      name: BorderWallsAutotileSet_46
       rect:
         serializedVersion: 2
         x: 192
@@ -1120,15 +1120,15 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ae29147193adf340ad19f82e787c6da
-      internalID: 84634276
+      spriteID: 2a51c98c6560e474c8c94074b3f61ea5
+      internalID: -1747334645
       vertices: []
       indices: 
       edges: []
@@ -1137,7 +1137,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 48dbc661be9a8864faf8393c35e80519
+    spriteID: 380239bc249120f4883d5e099820ea21
     internalID: 0
     vertices: []
     indices: 
@@ -1147,54 +1147,53 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      StoneWallsAutotileSet_0: 570968250
-      StoneWallsAutotileSet_1: 826070525
-      StoneWallsAutotileSet_10: -604561790
-      StoneWallsAutotileSet_11: -1662884189
-      StoneWallsAutotileSet_12: -1889650097
-      StoneWallsAutotileSet_13: -452449128
-      StoneWallsAutotileSet_14: 1264699878
-      StoneWallsAutotileSet_15: -740186864
-      StoneWallsAutotileSet_16: 1340913272
-      StoneWallsAutotileSet_17: -246388494
-      StoneWallsAutotileSet_18: -1128165423
-      StoneWallsAutotileSet_19: -578744494
-      StoneWallsAutotileSet_2: -1734769815
-      StoneWallsAutotileSet_20: 959027896
-      StoneWallsAutotileSet_21: -1841178962
-      StoneWallsAutotileSet_22: 765008300
-      StoneWallsAutotileSet_23: -88303361
-      StoneWallsAutotileSet_24: 2068307849
-      StoneWallsAutotileSet_25: 1178520209
-      StoneWallsAutotileSet_26: -2025487198
-      StoneWallsAutotileSet_27: 629178807
-      StoneWallsAutotileSet_28: -1821642722
-      StoneWallsAutotileSet_29: -359032586
-      StoneWallsAutotileSet_3: -1363755535
-      StoneWallsAutotileSet_30: -222338961
-      StoneWallsAutotileSet_31: -1783350659
-      StoneWallsAutotileSet_32: -975472665
-      StoneWallsAutotileSet_33: -272256992
-      StoneWallsAutotileSet_34: -105375457
-      StoneWallsAutotileSet_35: -430293876
-      StoneWallsAutotileSet_36: -1539775578
-      StoneWallsAutotileSet_37: 1523038783
-      StoneWallsAutotileSet_38: -598096729
-      StoneWallsAutotileSet_39: -1474194499
-      StoneWallsAutotileSet_4: 33941986
-      StoneWallsAutotileSet_40: 778680388
-      StoneWallsAutotileSet_41: 113860577
-      StoneWallsAutotileSet_42: -1698742096
-      StoneWallsAutotileSet_43: 932114914
-      StoneWallsAutotileSet_44: -793546836
-      StoneWallsAutotileSet_45: 1680343508
-      StoneWallsAutotileSet_46: 84634276
-      StoneWallsAutotileSet_47: -3757110
-      StoneWallsAutotileSet_5: -596297953
-      StoneWallsAutotileSet_6: -1743722397
-      StoneWallsAutotileSet_7: 1502357813
-      StoneWallsAutotileSet_8: -1373897948
-      StoneWallsAutotileSet_9: -1578505387
+      BorderWallsAutotileSet_0: 6354549681381725989
+      BorderWallsAutotileSet_1: 1799766483
+      BorderWallsAutotileSet_10: 1244742187
+      BorderWallsAutotileSet_11: 1664060863
+      BorderWallsAutotileSet_12: 947612666
+      BorderWallsAutotileSet_13: -440097015
+      BorderWallsAutotileSet_14: 436422753
+      BorderWallsAutotileSet_15: 249362698
+      BorderWallsAutotileSet_16: -136907308
+      BorderWallsAutotileSet_17: -551418271
+      BorderWallsAutotileSet_18: -782905784
+      BorderWallsAutotileSet_19: 160676914
+      BorderWallsAutotileSet_2: 1227866084
+      BorderWallsAutotileSet_20: -1569440894
+      BorderWallsAutotileSet_21: 51213992
+      BorderWallsAutotileSet_22: 1864828335
+      BorderWallsAutotileSet_23: -682671860
+      BorderWallsAutotileSet_24: -680208724
+      BorderWallsAutotileSet_25: -427391628
+      BorderWallsAutotileSet_26: 700667640
+      BorderWallsAutotileSet_27: 158101185
+      BorderWallsAutotileSet_28: 563931372
+      BorderWallsAutotileSet_29: 621468496
+      BorderWallsAutotileSet_3: 846402569
+      BorderWallsAutotileSet_30: -77628075
+      BorderWallsAutotileSet_31: -1921742694
+      BorderWallsAutotileSet_32: 1809563772
+      BorderWallsAutotileSet_33: 884495473
+      BorderWallsAutotileSet_34: -1577701109
+      BorderWallsAutotileSet_35: 1168577898
+      BorderWallsAutotileSet_36: -301067450
+      BorderWallsAutotileSet_37: -947333034
+      BorderWallsAutotileSet_38: 770875652
+      BorderWallsAutotileSet_39: -1436425293
+      BorderWallsAutotileSet_4: 688892111
+      BorderWallsAutotileSet_40: 1433969131
+      BorderWallsAutotileSet_41: -1890953804
+      BorderWallsAutotileSet_42: 162751363
+      BorderWallsAutotileSet_43: -1633937067
+      BorderWallsAutotileSet_44: -1777707798
+      BorderWallsAutotileSet_45: -59552712
+      BorderWallsAutotileSet_46: -1747334645
+      BorderWallsAutotileSet_5: -367159875
+      BorderWallsAutotileSet_6: 1415510030
+      BorderWallsAutotileSet_7: 671370132
+      BorderWallsAutotileSet_8: 1215947674
+      BorderWallsAutotileSet_9: 1057286240
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
