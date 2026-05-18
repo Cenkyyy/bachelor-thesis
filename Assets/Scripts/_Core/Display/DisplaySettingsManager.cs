@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public sealed class DisplaySettingsManager : MonoBehaviour
 {
     private const string FullscreenPrefsKey = "Display.Fullscreen";
-    private const string WindowWidthPrefsKey = "Display.WindowWidth";
-    private const string WindowHeightPrefsKey = "Display.WindowHeight";
 
     private const int DefaultMinVirtualWidth = 480;
     private const int DefaultMinVirtualHeight = 270;
@@ -90,16 +88,11 @@ public sealed class DisplaySettingsManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        EnforceWindowedMinimumSize();
-
         if (Screen.width == _lastScreenWidth && Screen.height == _lastScreenHeight)
             return;
 
         _lastScreenWidth = Screen.width;
         _lastScreenHeight = Screen.height;
-
-        if (!_isFullscreen)
-            SaveWindowedSize(Screen.width, Screen.height);
 
         ApplyDisplayPolicy();
     }
@@ -111,9 +104,6 @@ public sealed class DisplaySettingsManager : MonoBehaviour
 
     private void ApplyFullscreen(bool isFullscreen, bool shouldPersist = true)
     {
-        if (!_isFullscreen && isFullscreen)
-            SaveWindowedSize(Screen.width, Screen.height);
-
         _isFullscreen = isFullscreen;
 
         if (shouldPersist)
@@ -131,8 +121,9 @@ public sealed class DisplaySettingsManager : MonoBehaviour
         }
         else
         {
-            int width = Mathf.Max(PlayerPrefs.GetInt(WindowWidthPrefsKey, Screen.width), _minWindowWidth);
-            int height = Mathf.Max(PlayerPrefs.GetInt(WindowHeightPrefsKey, Screen.height), _minWindowHeight);
+            var resolution = Screen.currentResolution;
+            int width = Mathf.Max(resolution.width, _minWindowWidth);
+            int height = Mathf.Max(resolution.height, _minWindowHeight);
             Screen.SetResolution(width, height, FullScreenMode.Windowed);
         }
 
@@ -145,27 +136,6 @@ public sealed class DisplaySettingsManager : MonoBehaviour
     {
         ApplyCameraPolicy();
         ApplyCanvasPolicy();
-    }
-
-    private void EnforceWindowedMinimumSize()
-    {
-        if (_isFullscreen || Screen.fullScreen)
-            return;
-
-        int width = Mathf.Max(Screen.width, _minWindowWidth);
-        int height = Mathf.Max(Screen.height, _minWindowHeight);
-
-        if (width == Screen.width && height == Screen.height)
-            return;
-
-        Screen.SetResolution(width, height, FullScreenMode.Windowed);
-        SaveWindowedSize(width, height);
-    }
-
-    private void SaveWindowedSize(int width, int height)
-    {
-        PlayerPrefs.SetInt(WindowWidthPrefsKey, Mathf.Max(width, _minWindowWidth));
-        PlayerPrefs.SetInt(WindowHeightPrefsKey, Mathf.Max(height, _minWindowHeight));
     }
 
     private void ApplyCameraPolicy()
