@@ -1,6 +1,5 @@
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -33,7 +32,7 @@ public sealed class DisplaySettingsManager : MonoBehaviour
     [SerializeField, Min(1)] private int _uiReferenceWidth = DefaultUiReferenceWidth;
     [SerializeField, Min(1)] private int _uiReferenceHeight = DefaultUiReferenceHeight;
     [SerializeField, Min(0.1f)] private float _minUiScale = 0.75f;
-    [SerializeField, Min(0.1f)] private float _maxUiScale = 4f;
+    [SerializeField, Min(0.1f)] private float _maxUiScale = 8f;
     [SerializeField, Min(0.01f)] private float _uiScaleStep = 0.25f;
 
     private int _lastScreenWidth;
@@ -172,7 +171,7 @@ public sealed class DisplaySettingsManager : MonoBehaviour
     private void ApplyCameraPolicy()
     {
         int pixelScale = CurrentPixelScale;
-        float orthographicSize = CalculateOrthographicSize(Screen.height, pixelScale);
+        float orthographicSize = CalculateOrthographicSize(Screen.width, Screen.height);
 
         ApplyCinemachinePolicy(orthographicSize);
 
@@ -216,16 +215,6 @@ public sealed class DisplaySettingsManager : MonoBehaviour
         if (camera == null || !camera.orthographic || camera.targetTexture != null)
             return;
 
-        if (camera.TryGetComponent(out PixelPerfectCamera pixelPerfectCamera))
-        {
-            pixelPerfectCamera.assetsPPU = _assetsPPU;
-            pixelPerfectCamera.refResolutionX = _minVirtualWidth;
-            pixelPerfectCamera.refResolutionY = _minVirtualHeight;
-            pixelPerfectCamera.cropFrame = PixelPerfectCamera.CropFrame.None;
-            pixelPerfectCamera.gridSnapping = PixelPerfectCamera.GridSnapping.None;
-            return;
-        }
-
         camera.orthographicSize = orthographicSize;
         SnapCameraTransform(camera, pixelScale);
     }
@@ -239,30 +228,47 @@ public sealed class DisplaySettingsManager : MonoBehaviour
         camera.transform.position = position;
     }
 
-    private float CalculateOrthographicSize(int screenHeight, int pixelScale)
+    private float CalculateOrthographicSize(int screenWidth, int screenHeight)
     {
-        float visibleVirtualHeight = screenHeight / (float)pixelScale;
+        float aspect = screenHeight > 0 ? screenWidth / (float)screenHeight : _minVirtualWidth / (float)_minVirtualHeight;
+        float referenceAspect = _minVirtualWidth / (float)_minVirtualHeight;
+        float visibleVirtualHeight = aspect >= referenceAspect ? _minVirtualHeight : _minVirtualWidth / aspect;
         return visibleVirtualHeight / _assetsPPU * 0.5f;
     }
 
     private void CalculateUiScalePolicy(int screenWidth, int screenHeight, out Vector2 referenceResolution, out float matchWidthOrHeight)
     {
-        float widthScale = screenWidth / (float)_uiReferenceWidth;
-        float heightScale = screenHeight / (float)_uiReferenceHeight;
+        Vector2 visibleReferenceResolution = CalculateVisibleReferenceResolution(
+            screenWidth,
+            screenHeight,
+            _uiReferenceWidth,
+            _uiReferenceHeight);
+
+        float widthScale = screenWidth / visibleReferenceResolution.x;
+        float heightScale = screenHeight / visibleReferenceResolution.y;
         float unclampedScale = Mathf.Min(widthScale, heightScale);
         float minScale = Mathf.Min(_minUiScale, _maxUiScale);
         float maxScale = Mathf.Max(_minUiScale, _maxUiScale);
         float clampedScale = Mathf.Clamp(SnapScale(unclampedScale), minScale, maxScale);
 
-        if (widthScale <= heightScale)
-        {
-            matchWidthOrHeight = 0f;
-            referenceResolution = new Vector2(screenWidth / clampedScale, _uiReferenceHeight);
-            return;
-        }
+        matchWidthOrHeight = 0f;
+        referenceResolution = new Vector2(screenWidth / clampedScale, screenHeight / clampedScale);
+    }
 
-        matchWidthOrHeight = 1f;
-        referenceResolution = new Vector2(_uiReferenceWidth, screenHeight / clampedScale);
+    private static Vector2 CalculateVisibleReferenceResolution(
+        int screenWidth,
+        int screenHeight,
+        int referenceWidth,
+        int referenceHeight)
+    {
+        float fallbackAspect = referenceWidth / (float)referenceHeight;
+        float aspect = screenHeight > 0 ? screenWidth / (float)screenHeight : fallbackAspect;
+        float referenceAspect = referenceWidth / (float)referenceHeight;
+
+        if (aspect >= referenceAspect)
+            return new Vector2(referenceHeight * aspect, referenceHeight);
+
+        return new Vector2(referenceWidth, referenceWidth / aspect);
     }
 
     private float SnapScale(float scale)

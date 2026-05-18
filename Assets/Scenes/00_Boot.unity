@@ -770,7 +770,7 @@ MonoBehaviour:
   _uiReferenceWidth: 640
   _uiReferenceHeight: 360
   _minUiScale: 0.75
-  _maxUiScale: 4
+  _maxUiScale: 8
   _uiScaleStep: 0.25
 --- !u!1001 &5918332265443993898
 PrefabInstance:
