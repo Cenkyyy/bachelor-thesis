@@ -17,3 +17,6 @@ MonoBehaviour:
   <Form>k__BackingField: 1
   <ManaCost>k__BackingField: 0
   <ProjectilePrefab>k__BackingField: {fileID: 6381046162596957270, guid: 2f7c266d8c80bc247adeeaae6442a74c, type: 3}
+  _vfxLifetime: 0.9
+  _vfxSpeed: 2
+  _vfxScale: {x: 3, y: 0.2, z: 1}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StunningModifierWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Stunning
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 10
   <Modifier>k__BackingField: 1
   <AdditionalManaCost>k__BackingField: 0
   <OptionalPrefab>k__BackingField: {fileID: 0}

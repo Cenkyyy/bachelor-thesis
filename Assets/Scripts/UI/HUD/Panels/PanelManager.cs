@@ -18,7 +18,7 @@ public sealed class PanelManager : MonoBehaviour
     [SerializeField] private WorldMapPanelController _mapPanel;
     [SerializeField] private OverworldSettingsPanel _settingsPanel;
     [SerializeField] private CraftingPanel _craftingPanel;
-    [SerializeField] private WordShopPanelController _wordShopPanel;
+    [SerializeField] private SpellWordShopPanelController _wordShopPanel;
 
     [Header("Panels - Secondary")]
     [SerializeField] private EquipmentPanel _equipmentPanel;

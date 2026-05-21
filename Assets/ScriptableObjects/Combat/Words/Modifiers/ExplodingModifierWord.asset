@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExplodingModifierWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Exploding
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 10
   <Modifier>k__BackingField: 2
   <AdditionalManaCost>k__BackingField: 0
   <OptionalPrefab>k__BackingField: {fileID: 6381046162596957270, guid: 2e161987ee518d84883a58691046253d, type: 3}

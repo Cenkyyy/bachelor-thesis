@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EmberElementWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Ember
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 1
   <Element>k__BackingField: 3
   <Material>k__BackingField: {fileID: 2100000, guid: 113fb732d36568c47b6effc8873ba915, type: 2}
+  <VfxColor>k__BackingField: {r: 0.8207547, g: 0.355797, b: 0.14324492, a: 1}

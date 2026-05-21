@@ -1,22 +1,22 @@
 public struct SpellPhrase
 {
-    public ModifierWord? Modifier { get; private set; }
-    public ElementWord? Element { get; private set; }
-    public FormWord? Form { get; private set; }
+    public ModifierWordType? Modifier { get; private set; }
+    public ElementWordType? Element { get; private set; }
+    public FormWordType? Form { get; private set; }
 
     public bool IsComplete => Modifier.HasValue && Element.HasValue && Form.HasValue;
 
-    public void SetModifier(ModifierWord modifier)
+    public void SetModifier(ModifierWordType modifier)
     {
         Modifier = modifier;
     }
 
-    public void SetElement(ElementWord element)
+    public void SetElement(ElementWordType element)
     {
         Element = element;
     }
 
-    public void SetForm(FormWord form)
+    public void SetForm(FormWordType form)
     {
         Form = form;
     }

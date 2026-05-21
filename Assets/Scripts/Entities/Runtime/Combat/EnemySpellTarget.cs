@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,10 +13,10 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget, ISpellWordEf
     [SerializeField] private float _statusTickInterval = 0.5f;
 
     [Header("Damage Word Text Popup Settings")]
-    [SerializeField] private DamageWordTextPopupSettings _damageWordTextPopupSettings = new();
+    [SerializeField] private DamagePopupFeedbackSettings _damagePopupFeedbackSettings = new();
 
-    private readonly Dictionary<CombatStatusEffect, float> _statusUntil = new();
-    private readonly List<CombatStatusEffect> _cleanupBuffer = new();
+    private readonly Dictionary<CombatStatusEffectType, float> _statusUntil = new();
+    private readonly List<CombatStatusEffectType> _cleanupBuffer = new();
     private float _stunBuildup;
 
     public Vector2 Position => transform.position;
@@ -67,9 +67,9 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget, ISpellWordEf
         _damageable.ReceiveDamage(rounded, source);
     }
 
-    public void ApplyStatus(CombatStatusEffect effect, float durationSeconds)
+    public void ApplyStatus(CombatStatusEffectType effect, float durationSeconds)
     {
-        if (effect == CombatStatusEffect.None || durationSeconds <= 0f)
+        if (effect == CombatStatusEffectType.None || durationSeconds <= 0f)
             return;
 
         _statusUntil[effect] = Time.time + durationSeconds;
@@ -93,7 +93,7 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget, ISpellWordEf
             return;
 
         _stunBuildup = 0f;
-        ApplyStatus(CombatStatusEffect.Stunned, stunDurationSeconds);
+        ApplyStatus(CombatStatusEffectType.Stunned, stunDurationSeconds);
         _enemyCore?.StopMovement();
     }
 
@@ -117,7 +117,7 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget, ISpellWordEf
             if (damage > 0)
             {
                 _damageable.ReceiveDamage(damage, source);
-                DamageWordTextPopupUtility.ShowForGameObject(gameObject, damage, effectivenessMultiplier, _damageWordTextPopupSettings);
+                DamagePopupFeedbackUtility.ShowForGameObject(gameObject, damage, effectivenessMultiplier, _damagePopupFeedbackSettings);
             }
 
             elapsed += delta;

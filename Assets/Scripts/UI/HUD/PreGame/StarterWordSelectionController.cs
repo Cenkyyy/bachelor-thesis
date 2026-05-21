@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +10,9 @@ public sealed class StarterWordSelectionController : MonoBehaviour
     [Serializable]
     public sealed class StarterWordSelectionResult
     {
-        public List<ModifierWord> Modifiers = new();
-        public List<ElementWord> Elements = new();
-        public List<FormWord> Forms = new();
+        public List<ModifierWordType> Modifiers = new();
+        public List<ElementWordType> Elements = new();
+        public List<FormWordType> Forms = new();
     }
 
     [Header("Settings")]
@@ -115,9 +115,9 @@ public sealed class StarterWordSelectionController : MonoBehaviour
 
         Result = new StarterWordSelectionResult
         {
-            Modifiers = _modifierPanel.GetSelectedWords<ModifierWord>(),
-            Elements = _elementPanel.GetSelectedWords<ElementWord>(),
-            Forms = _formPanel.GetSelectedWords<FormWord>(),
+            Modifiers = _modifierPanel.GetSelectedWords<ModifierWordType>(),
+            Elements = _elementPanel.GetSelectedWords<ElementWordType>(),
+            Forms = _formPanel.GetSelectedWords<FormWordType>(),
         };
 
         WasConfirmed = true;

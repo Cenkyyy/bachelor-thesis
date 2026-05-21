@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DarkElementWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Dark
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 1
   <Element>k__BackingField: 4
   <Material>k__BackingField: {fileID: 2100000, guid: a4164421eb72fcc408e567256e010d5e, type: 2}
+  <VfxColor>k__BackingField: {r: 0.1721397, g: 0.15606087, b: 0.1981132, a: 1}

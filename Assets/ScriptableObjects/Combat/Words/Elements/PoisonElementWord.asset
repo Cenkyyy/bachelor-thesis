@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PoisonElementWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Poison
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 1
   <Element>k__BackingField: 1
   <Material>k__BackingField: {fileID: 2100000, guid: b5e056f0a19143d47bb4cf323f987009, type: 2}
+  <VfxColor>k__BackingField: {r: 0.5377358, g: 0.16487184, b: 0.32918715, a: 1}

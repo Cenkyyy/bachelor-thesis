@@ -15,7 +15,7 @@ public sealed class PlayerDamageable : MonoBehaviour, IDamageable
     [SerializeField, Min(0)] private int _minimumDamageTaken = 1;
 
     [Header("Damage Feedback")]
-    [SerializeField] private DamageWordTextPopupSettings _damageWordTextPopupSettings = new();
+    [SerializeField] private DamagePopupFeedbackSettings _damagePopupFeedbackSettings = new();
 
     public bool CanReceiveDamage => !_respawnController.IsDefeated;
 
@@ -48,7 +48,7 @@ public sealed class PlayerDamageable : MonoBehaviour, IDamageable
         if (damage <= 0)
             return;
 
-        DamageWordTextPopupUtility.ShowForGameObject(gameObject, damage, 1f, _damageWordTextPopupSettings);
+        DamagePopupFeedbackUtility.ShowForGameObject(gameObject, damage, 1f, _damagePopupFeedbackSettings);
     }
 
     private int CalculateFinalDamage(int incomingDamage, int defense)

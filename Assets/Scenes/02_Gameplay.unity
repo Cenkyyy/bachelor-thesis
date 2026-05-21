@@ -13464,7 +13464,7 @@ GameObject:
   - component: {fileID: 1643230813}
   - component: {fileID: 1643230814}
   m_Layer: 5
-  m_Name: WordShopPanelController
+  m_Name: SpellWordShopPanelController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13503,7 +13503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _root: {fileID: 360906240}
   _player: {fileID: 2010244819}
-  _catalog: {fileID: 11400000, guid: 243bfd3f5af014641970f684ca5e7c0f, type: 2}
+  _combatWordsData: {fileID: 11400000, guid: 3001151ae3897c7428306d4f9be649e3, type: 2}
   _leaveButton: {fileID: 28052951}
   _buyButton: {fileID: 2053194699}
   _buyButtonLabel: {fileID: 1731535750}

@@ -318,7 +318,7 @@ MonoBehaviour:
   _enemyCore: {fileID: 1670540943250230566}
   _damageable: {fileID: 2908348382214334344}
   _statusTickInterval: 0.5
-  _damageWordTextPopupSettings:
+  _damagePopupFeedbackSettings:
     _effectiveColor: {r: 0.1, g: 1, b: 0.85, a: 1}
     _resistedColor: {r: 1, g: 0.4, b: 0.15, a: 1}
     _neutralColor: {r: 1, g: 1, b: 1, a: 1}

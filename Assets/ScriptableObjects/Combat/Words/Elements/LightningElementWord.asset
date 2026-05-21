@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LightningElementWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Lightning
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 1
   <Element>k__BackingField: 0
   <Material>k__BackingField: {fileID: 2100000, guid: fa356e83de2b1aa4cbc1acdbcb328de3, type: 2}
+  <VfxColor>k__BackingField: {r: 0.8060002, g: 0.8867924, b: 0.08784264, a: 1}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ReclaimingModifierWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Reclaiming
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 10
   <Modifier>k__BackingField: 3
   <AdditionalManaCost>k__BackingField: 0
   <OptionalPrefab>k__BackingField: {fileID: 0}

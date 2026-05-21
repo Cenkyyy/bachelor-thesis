@@ -404,7 +404,7 @@ MonoBehaviour:
     m_Bits: 128
   _combatWordsData: {fileID: 11400000, guid: 3001151ae3897c7428306d4f9be649e3, type: 2}
   _wordEffectivenessData: {fileID: 11400000, guid: 3a8b4fc74c636fe499555877dc976ff7, type: 2}
-  _damageWordTextPopupSettings:
+  _damagePopupFeedbackSettings:
     _effectiveColor: {r: 0.1, g: 1, b: 0.85, a: 1}
     _resistedColor: {r: 1, g: 0.4, b: 0.15, a: 1}
     _neutralColor: {r: 1, g: 1, b: 1, a: 1}
@@ -503,7 +503,6 @@ MonoBehaviour:
   _spellCombatController: {fileID: 4319894653538523301}
   _playerHeldItemVisual: {fileID: 8949116740228414771}
   _combatWordsData: {fileID: 11400000, guid: 3001151ae3897c7428306d4f9be649e3, type: 2}
-  _vfxData: {fileID: 11400000, guid: d596ae22048838d4ba36735254e29ae2, type: 2}
   _barrageInterval: 0.08
 --- !u!114 &2737436318412507732
 MonoBehaviour:
@@ -581,7 +580,7 @@ MonoBehaviour:
   _respawnController: {fileID: 2737436318412507732}
   _defenceCoefficient: 100
   _minimumDamageTaken: 1
-  _damageWordTextPopupSettings:
+  _damagePopupFeedbackSettings:
     _effectiveColor: {r: 0.9433962, g: 0.12904951, b: 0.12904951, a: 1}
     _resistedColor: {r: 0.94509804, g: 0.12941177, b: 0.12941177, a: 1}
     _neutralColor: {r: 0.94509804, g: 0.12941177, b: 0.12941177, a: 1}
