@@ -15,7 +15,7 @@ public sealed class Player : MonoBehaviour
     [SerializeField] private int _inventorySize = 24;
 
     [Header("Combat")]
-    [SerializeField] private SpellWordInventory _spellWordInventory;
+    [SerializeField] private PlayerSpellWordInventory _playerSpellWordInventory;
 
     /// <summary> Runtime player stats (health, mana, xp, hunger...). </summary>
     public PlayerRuntimeData Data { get; private set; } = new PlayerRuntimeData();
@@ -27,7 +27,7 @@ public sealed class Player : MonoBehaviour
     public EquipmentInventory Equipment { get; private set; }
 
     /// <summary> Runtime unlocked combat words owned by player. </summary>
-    public SpellWordInventory SpellWords => _spellWordInventory;
+    public PlayerSpellWordInventory SpellWords => _playerSpellWordInventory;
 
     private void Awake()
     {

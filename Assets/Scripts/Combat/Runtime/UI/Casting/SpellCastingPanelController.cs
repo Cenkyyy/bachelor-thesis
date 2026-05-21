@@ -28,7 +28,7 @@ public class SpellCastingPanelController : MonoBehaviour
     [SerializeField, Min(0f)] private float _castLockDurationSeconds = 0.2f;
     [SerializeField, Min(0f)] private float _autoCancelCastingAfterSeconds = 4f;
 
-    private SpellWordInventory _wordInventory;
+    private PlayerSpellWordInventory _wordInventory;
     private SpellPhrase _currentPhrase;
     private CastingStage _stage;
     private bool _isCastLocked;
@@ -139,9 +139,9 @@ public class SpellCastingPanelController : MonoBehaviour
 
     private void RefreshPanels()
     {
-        _modifierPanel.Bind(_wordInventory.UnlockedModifiers, word => word.ToString());
-        _elementPanel.Bind(_wordInventory.UnlockedElements, word => word.ToString());
-        _formPanel.Bind(_wordInventory.UnlockedForms, word => word.ToString());
+        _modifierPanel.Bind(_wordInventory.UnlockedModifiers, word => word.DisplayName);
+        _elementPanel.Bind(_wordInventory.UnlockedElements, word => word.DisplayName);
+        _formPanel.Bind(_wordInventory.UnlockedForms, word => word.DisplayName);
         RefreshInteractionAvailability();
         ApplyStageVisuals();
     }
@@ -280,9 +280,9 @@ public class SpellCastingPanelController : MonoBehaviour
 
     private bool IsCastingInProgress()
     {
-        return _currentPhrase.Modifier.HasValue ||
-               _currentPhrase.Element.HasValue ||
-               _currentPhrase.Form.HasValue;
+        return _currentPhrase.Modifier != null ||
+               _currentPhrase.Element != null ||
+               _currentPhrase.Form != null;
     }
 
     private void RegisterCastingProgress()

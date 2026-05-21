@@ -1,22 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpellVfxController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private SpellCombatController _spellCombatController;
-    [SerializeField] private PlayerHeldItemVisualController _playerHeldItemVisual;
-    [SerializeField] private CombatWordsData _combatWordsData;
-
-    [Header("Spawning")]
-    [SerializeField, Min(0.01f)] private float _barrageInterval = 0.08f;
-
-    private void Awake()
-    {
-        if (_playerHeldItemVisual == null)
-            _playerHeldItemVisual = GetComponentInChildren<PlayerHeldItemVisualController>();
-    }
 
     private void OnEnable()
     {
@@ -30,96 +18,54 @@ public class SpellVfxController : MonoBehaviour
             _spellCombatController.OnSpellCastCommitted -= HandleSpellCastCommitted;
     }
 
-    private void HandleSpellCastCommitted(SpellPhrase phrase)
+    private void HandleSpellCastCommitted(ResolvedSpellCast spell)
     {
-        if (!phrase.IsComplete || _combatWordsData == null)
+        if (!spell.IsValid || spell.Form.ProjectilePrefab == null)
             return;
 
-        var origin = _playerHeldItemVisual.CurrentHandAnchor.position;
-        var direction = GetForwardDirection(origin);
-        var directions = BuildDirections(direction, phrase.Modifier.Value);
-
-        var formData = _combatWordsData.GetForm(phrase.Form.Value);
-        if (formData == null || formData.ProjectilePrefab == null)
-            return;
-
-        var elementData = _combatWordsData.GetElement(phrase.Element.Value);
-        var modifierData = _combatWordsData.GetModifier(phrase.Modifier.Value);
-
-        if (phrase.Form == FormWordType.Barrage)
+        if (spell.Form.Type == FormWordType.Barrage)
         {
-            StartCoroutine(PlayBarrage(directions, formData, elementData?.Material));
+            StartCoroutine(PlayBarrage(spell));
             return;
         }
 
-        SpawnBatch(directions, formData, elementData?.Material);
+        SpawnBatch(spell);
 
-        if (modifierData != null && modifierData.OptionalPrefab != null)
-            SpawnModifierVisual(modifierData.OptionalPrefab, origin, direction, elementData?.Material);
+        if (spell.Modifier.OptionalPrefab != null)
+            SpawnModifierVisual(spell);
     }
 
-    private IEnumerator PlayBarrage(IReadOnlyList<Vector2> directions, FormWordData formData, Material elementMaterial)
+    private IEnumerator PlayBarrage(ResolvedSpellCast spell)
     {
-        const int defaultShots = 4;
-        for (var i = 0; i < defaultShots; i++)
+        for (var i = 0; i < spell.Form.BarrageProjectileCount; i++)
         {
-            SpawnBatch(directions, formData, elementMaterial);
-            yield return new WaitForSeconds(_barrageInterval);
+            SpawnBatch(spell);
+            yield return new WaitForSeconds(spell.Form.BarrageInterval);
         }
     }
 
-    private void SpawnBatch(IReadOnlyList<Vector2> directions, FormWordData formData, Material elementMaterial)
+    private void SpawnBatch(ResolvedSpellCast spell)
     {
-        var origin = _playerHeldItemVisual.CurrentHandAnchor.position;
-        for (var i = 0; i < directions.Count; i++)
+        for (var i = 0; i < spell.Directions.Count; i++)
         {
-            var spellObject = Instantiate(formData.ProjectilePrefab, origin, Quaternion.identity);
-            spellObject.transform.localScale = formData.VfxScale;
+            var spellObject = Instantiate(spell.Form.ProjectilePrefab, spell.Origin, Quaternion.identity);
+            spellObject.transform.localScale = spell.Form.VfxScale;
 
             var instance = spellObject.GetComponent<SpellVfxInstance>();
             if (instance == null)
                 instance = spellObject.AddComponent<SpellVfxInstance>();
 
-            instance.Initialize(directions[i], formData.VfxSpeed, formData.VfxLifetime, elementMaterial);
+            instance.Initialize(spell.Directions[i], spell.Form.VfxSpeed, spell.Form.VfxLifetime, spell.Element.Material);
         }
     }
 
-    private void SpawnModifierVisual(GameObject optionalPrefab, Vector2 origin, Vector2 direction, Material elementMaterial)
+    private void SpawnModifierVisual(ResolvedSpellCast spell)
     {
-        var modifierObject = Instantiate(optionalPrefab, origin, Quaternion.identity);
-        modifierObject.transform.right = direction;
+        var modifierObject = Instantiate(spell.Modifier.OptionalPrefab, spell.Origin, Quaternion.identity);
+        modifierObject.transform.right = spell.Directions[0];
 
         var renderer = modifierObject.GetComponentInChildren<SpriteRenderer>();
-        if (renderer != null && elementMaterial != null)
-            renderer.material = elementMaterial;
-    }
-
-    private List<Vector2> BuildDirections(Vector2 forward, ModifierWordType modifier)
-    {
-        if (modifier != ModifierWordType.Splitting)
-            return new List<Vector2> { forward };
-
-        return new List<Vector2>
-        {
-            forward,
-            Rotate(forward, -45f),
-            Rotate(forward, 45f)
-        };
-    }
-
-    private Vector2 GetForwardDirection(Vector2 origin)
-    {
-        var mouseWorld = Camera.main != null ? (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) : origin + Vector2.right;
-
-        var forward = (mouseWorld - origin).normalized;
-        return forward == Vector2.zero ? Vector2.right : forward;
-    }
-
-    private static Vector2 Rotate(Vector2 vector, float degrees)
-    {
-        var radians = degrees * Mathf.Deg2Rad;
-        var sin = Mathf.Sin(radians);
-        var cos = Mathf.Cos(radians);
-        return new Vector2(cos * vector.x - sin * vector.y, sin * vector.x + cos * vector.y).normalized;
+        if (renderer != null && spell.Element.Material != null)
+            renderer.material = spell.Element.Material;
     }
 }

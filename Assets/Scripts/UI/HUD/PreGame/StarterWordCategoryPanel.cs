@@ -7,7 +7,7 @@ public sealed class StarterWordCategoryPanel : MonoBehaviour
 {
     private struct ButtonOptionData
     {
-        public int Value;
+        public WordData Word;
         public bool IsFixed;
     }
 
@@ -17,62 +17,67 @@ public sealed class StarterWordCategoryPanel : MonoBehaviour
     [SerializeField] private StarterWordOptionButton _optionButtonPrefab;
 
     private readonly List<StarterWordOptionButton> _spawnedOptions = new();
-    private readonly List<int> _selectedValues = new();
+    private readonly List<WordData> _selectedWords = new();
     private readonly Dictionary<StarterWordOptionButton, ButtonOptionData> _optionByButton = new();
     private int _requiredCount;
 
-    public IReadOnlyList<int> SelectedValues => _selectedValues;
-    public bool IsRequirementSatisfied => _selectedValues.Count >= _requiredCount;
+    public IReadOnlyList<WordData> SelectedWords => _selectedWords;
+    public bool IsRequirementSatisfied => _selectedWords.Count >= _requiredCount;
 
     public event Action SelectionChanged;
 
-    public void BuildButtonOptions<TWord>(string categoryLabel, int requiredCount, IReadOnlyList<TWord> fixedWords, IReadOnlyList<TWord> choiceWords, Func<TWord, string> labelProvider)
-        where TWord : struct, Enum
+    public void BuildButtonOptions<TWordData>(string categoryLabel, int requiredCount, IReadOnlyList<TWordData> fixedWords, IReadOnlyList<TWordData> choiceWords)
+        where TWordData : WordData
     {
         _categoryLabel = categoryLabel;
         _requiredCount = Mathf.Max(requiredCount, fixedWords.Count);
 
         ClearOptions();
-        _selectedValues.Clear();
+        _selectedWords.Clear();
 
         for (int i = 0; i < fixedWords.Count; i++)
         {
             var word = fixedWords[i];
-            int value = Convert.ToInt32(word);
-            _selectedValues.Add(value);
-            SpawnButtonOption(value, labelProvider(word), isFixed: true, isSelected: true);
+            if (word == null)
+                continue;
+
+            _selectedWords.Add(word);
+            SpawnButtonOption(word, isFixed: true, isSelected: true);
         }
 
         for (int i = 0; i < choiceWords.Count; i++)
         {
             var word = choiceWords[i];
-            SpawnButtonOption(Convert.ToInt32(word), labelProvider(word), isFixed: false, isSelected: false);
+            if (word != null)
+                SpawnButtonOption(word, isFixed: false, isSelected: false);
         }
 
         UpdateTitle();
     }
 
-    public List<TWord> GetSelectedWords<TWord>()
-        where TWord : struct, Enum
+    public List<TWordData> GetSelectedWords<TWordData>()
+        where TWordData : WordData
     {
-        var selected = new List<TWord>(_selectedValues.Count);
-        for (int i = 0; i < _selectedValues.Count; i++)
-            selected.Add((TWord)Enum.ToObject(typeof(TWord), _selectedValues[i]));
+        var selected = new List<TWordData>(_selectedWords.Count);
+        for (int i = 0; i < _selectedWords.Count; i++)
+        {
+            if (_selectedWords[i] is TWordData word)
+                selected.Add(word);
+        }
 
-        selected.Sort();
         return selected;
     }
 
-    private void SpawnButtonOption(int value, string label, bool isFixed, bool isSelected)
+    private void SpawnButtonOption(WordData word, bool isFixed, bool isSelected)
     {
         var button = Instantiate(_optionButtonPrefab, _optionsRoot);
-        button.Bind(value, label, isFixed, isSelected);
+        button.Bind(word, word.DisplayName, isFixed, isSelected);
         button.Clicked += HandleOptionClicked;
 
         _spawnedOptions.Add(button);
         _optionByButton[button] = new ButtonOptionData
         {
-            Value = value,
+            Word = word,
             IsFixed = isFixed,
         };
     }
@@ -82,14 +87,14 @@ public sealed class StarterWordCategoryPanel : MonoBehaviour
         if (!_optionByButton.TryGetValue(button, out var option) || option.IsFixed)
             return;
 
-        if (_selectedValues.Contains(option.Value))
+        if (_selectedWords.Contains(option.Word))
         {
-            _selectedValues.Remove(option.Value);
+            _selectedWords.Remove(option.Word);
             button.SetSelected(false);
         }
-        else if (_selectedValues.Count < _requiredCount)
+        else if (_selectedWords.Count < _requiredCount)
         {
-            _selectedValues.Add(option.Value);
+            _selectedWords.Add(option.Word);
             button.SetSelected(true);
         }
 
@@ -100,7 +105,7 @@ public sealed class StarterWordCategoryPanel : MonoBehaviour
     private void UpdateTitle()
     {
         if (_titleText != null)
-            _titleText.text = $"Choose {_categoryLabel} ({_selectedValues.Count}/{_requiredCount})";
+            _titleText.text = $"Choose {_categoryLabel} ({_selectedWords.Count}/{_requiredCount})";
     }
 
     private void ClearOptions()

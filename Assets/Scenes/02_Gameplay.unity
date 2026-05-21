@@ -13503,7 +13503,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _root: {fileID: 360906240}
   _player: {fileID: 2010244819}
-  _combatWordsData: {fileID: 11400000, guid: 3001151ae3897c7428306d4f9be649e3, type: 2}
   _leaveButton: {fileID: 28052951}
   _buyButton: {fileID: 2053194699}
   _buyButtonLabel: {fileID: 1731535750}

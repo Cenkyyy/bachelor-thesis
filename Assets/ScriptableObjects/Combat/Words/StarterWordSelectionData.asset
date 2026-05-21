@@ -15,12 +15,18 @@ MonoBehaviour:
   <ModifierRule>k__BackingField:
     <RequiredCount>k__BackingField: 2
     _fixedWords: 
-    _choiceWords: 000000000100000003000000
+    _choiceWords:
+    - {fileID: 11400000, guid: c82436ca7a6439040bf897435f02338d, type: 2}
+    - {fileID: 11400000, guid: 2a89775dddf0ed14b9eb62f398212827, type: 2}
+    - {fileID: 11400000, guid: 784a2a4f45615fe4bab83f21e32a7b55, type: 2}
   <ElementRule>k__BackingField:
     <RequiredCount>k__BackingField: 1
     _fixedWords: 
-    _choiceWords: 0200000003000000
+    _choiceWords:
+    - {fileID: 11400000, guid: 6b104e1148df4674cb19f8e8394e2402, type: 2}
+    - {fileID: 11400000, guid: 307dc4ac8933c1f4dab673f7eb51d9e0, type: 2}
   <FormRule>k__BackingField:
     <RequiredCount>k__BackingField: 1
-    _fixedWords: 00000000
+    _fixedWords:
+    - {fileID: 11400000, guid: b5873f3d7a812b74ea13b4a5565e0f17, type: 2}
     _choiceWords: 

@@ -13,7 +13,7 @@ public sealed class StarterWordOptionButton : MonoBehaviour
 
     public bool IsFixed { get; private set; }
     public bool IsSelected { get; private set; }
-    public int Value { get; private set; }
+    public WordData Word { get; private set; }
 
     public event Action<StarterWordOptionButton> Clicked;
 
@@ -29,9 +29,9 @@ public sealed class StarterWordOptionButton : MonoBehaviour
             _button.onClick.RemoveListener(HandleClick);
     }
 
-    public void Bind(int value, string label, bool isFixed, bool isSelected)
+    public void Bind(WordData word, string label, bool isFixed, bool isSelected)
     {
-        Value = value;
+        Word = word;
         IsFixed = isFixed;
         IsSelected = isSelected;
         _label.text = label;

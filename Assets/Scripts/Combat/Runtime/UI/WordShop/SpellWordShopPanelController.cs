@@ -10,7 +10,6 @@ public sealed class SpellWordShopPanelController : MonoBehaviour, IMajorPanel
 
     [Header("References")]
     [SerializeField] private Player _player;
-    [SerializeField] private CombatWordsData _combatWordsData;
 
     [Header("Controls")]
     [SerializeField] private Button _leaveButton;
@@ -138,10 +137,10 @@ public sealed class SpellWordShopPanelController : MonoBehaviour, IMajorPanel
     {
         _availableWords.Clear();
 
-        if (_combatWordsData == null || _player?.SpellWords == null)
+        if (_player?.SpellWords == null)
             return;
 
-        _combatWordsData.GetAvailableWords(_player.SpellWords, _availableWords);
+        _player.SpellWords.GetAvailableWords(_availableWords);
 
         if (_selectedWord != null && !_availableWords.Contains(_selectedWord))
             _selectedWord = null;
@@ -266,7 +265,7 @@ public sealed class SpellWordShopPanelController : MonoBehaviour, IMajorPanel
         if (_selectedWord == null || _player?.Data == null || _player.SpellWords == null)
             return;
 
-        if (!_selectedWord.IsValid || _player.SpellWords.IsUnlocked(_selectedWord))
+        if (_player.SpellWords.IsUnlocked(_selectedWord))
             return;
 
         if (!_player.Data.TrySpendMemoryLevels(_selectedWord.MemoryCost))

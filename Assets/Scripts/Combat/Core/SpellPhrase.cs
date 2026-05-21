@@ -1,22 +1,22 @@
 public struct SpellPhrase
 {
-    public ModifierWordType? Modifier { get; private set; }
-    public ElementWordType? Element { get; private set; }
-    public FormWordType? Form { get; private set; }
+    public ModifierWordData Modifier { get; private set; }
+    public ElementWordData Element { get; private set; }
+    public FormWordData Form { get; private set; }
 
-    public bool IsComplete => Modifier.HasValue && Element.HasValue && Form.HasValue;
+    public bool IsComplete => Modifier != null && Element != null && Form != null;
 
-    public void SetModifier(ModifierWordType modifier)
+    public void SetModifier(ModifierWordData modifier)
     {
         Modifier = modifier;
     }
 
-    public void SetElement(ElementWordType element)
+    public void SetElement(ElementWordData element)
     {
         Element = element;
     }
 
-    public void SetForm(FormWordType form)
+    public void SetForm(FormWordData form)
     {
         Form = form;
     }
@@ -30,9 +30,9 @@ public struct SpellPhrase
 
     public override string ToString()
     {
-        var modifierLabel = Modifier.HasValue ? Modifier.Value.ToString() : "--";
-        var elementLabel = Element.HasValue ? Element.Value.ToString() : "--";
-        var formLabel = Form.HasValue ? Form.Value.ToString() : "--";
+        var modifierLabel = Modifier != null ? Modifier.DisplayName : "--";
+        var elementLabel = Element != null ? Element.DisplayName : "--";
+        var formLabel = Form != null ? Form.DisplayName : "--";
 
         return $"{modifierLabel} - {elementLabel} - {formLabel}";
     }

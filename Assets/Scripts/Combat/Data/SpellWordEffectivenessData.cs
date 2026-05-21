@@ -20,7 +20,7 @@ public sealed class SpellWordEffectivenessData : ScriptableObject
     [Header("Enemy Tag -> Form/Modifier Rules")]
     [SerializeField] private List<EnemyRoleWordEffectivenessRule> _enemyRoleRules = new();
 
-    public float CalculateFinalMultiplier(ItemBiomeAffinity biome, EnemyRoleTag roleTags, ModifierWordType modifier, ElementWordType element, FormWordType form)
+    public float CalculateFinalMultiplier(ItemBiomeAffinity biome, EnemyRoleTag roleTags, ModifierWordData modifier, ElementWordData element, FormWordData form)
     {
         var modifierMultiplier = ResolveModifierMultiplier(roleTags, modifier);
         var biomeMultiplier = ResolveBiomeElementMultiplier(biome, element);
@@ -30,7 +30,7 @@ public sealed class SpellWordEffectivenessData : ScriptableObject
         return Mathf.Clamp(combined, MinFinalMultiplier, MaxFinalMultiplier);
     }
 
-    private float ResolveBiomeElementMultiplier(ItemBiomeAffinity biome, ElementWordType element)
+    private float ResolveBiomeElementMultiplier(ItemBiomeAffinity biome, ElementWordData element)
     {
         for (var i = 0; i < _biomeRules.Count; i++)
         {
@@ -44,17 +44,18 @@ public sealed class SpellWordEffectivenessData : ScriptableObject
         return NeutralMultiplier;
     }
 
-    private float ResolveFormMultiplier(EnemyRoleTag roleTags, FormWordType form)
+    private float ResolveFormMultiplier(EnemyRoleTag roleTags, FormWordData form)
     {
         return ResolveRoleTagWordEffectiveness(roleTags, form, rule => rule.EffectiveForms, rule => rule.IneffectiveForms);
     }
 
-    private float ResolveModifierMultiplier(EnemyRoleTag roleTags, ModifierWordType modifier)
+    private float ResolveModifierMultiplier(EnemyRoleTag roleTags, ModifierWordData modifier)
     {
         return ResolveRoleTagWordEffectiveness(roleTags, modifier, rule => rule.EffectiveModifiers, rule => rule.IneffectiveModifiers);
     }
 
-    private float ResolveRoleTagWordEffectiveness<TWord>(EnemyRoleTag roleTags, TWord word, Func<EnemyRoleWordEffectivenessRule, IReadOnlyList<TWord>> effectiveSelector, Func<EnemyRoleWordEffectivenessRule, IReadOnlyList<TWord>> ineffectiveSelector)
+    private float ResolveRoleTagWordEffectiveness<TWordData>(EnemyRoleTag roleTags, TWordData word, Func<EnemyRoleWordEffectivenessRule, IReadOnlyList<TWordData>> effectiveSelector, Func<EnemyRoleWordEffectivenessRule, IReadOnlyList<TWordData>> ineffectiveSelector)
+        where TWordData : WordData
     {
         var hasEffective = false;
         var hasIneffective = false;
@@ -78,7 +79,7 @@ public sealed class SpellWordEffectivenessData : ScriptableObject
         return hasEffective ? _effectiveMultiplier : _ineffectiveMultiplier;
     }
 
-    private float ResolveWordEffectiveness<TWord>(IReadOnlyList<TWord> effectiveWords, IReadOnlyList<TWord> ineffectiveWords, TWord word)
+    private float ResolveWordEffectiveness(IReadOnlyList<ElementWordData> effectiveWords, IReadOnlyList<ElementWordData> ineffectiveWords, ElementWordData word)
     {
         if (ContainsWord(effectiveWords, word))
             return _effectiveMultiplier;
@@ -89,14 +90,15 @@ public sealed class SpellWordEffectivenessData : ScriptableObject
         return NeutralMultiplier;
     }
 
-    private bool ContainsWord<TWord>(IReadOnlyList<TWord> words, TWord value)
+    private bool ContainsWord<TWordData>(IReadOnlyList<TWordData> words, TWordData word)
+        where TWordData : WordData
     {
-        if (words == null)
+        if (words == null || word == null)
             return false;
 
         for (var i = 0; i < words.Count; i++)
         {
-            if (EqualityComparer<TWord>.Default.Equals(words[i], value))
+            if (words[i] == word)
                 return true;
         }
 
@@ -126,11 +128,11 @@ public sealed class SpellWordEffectivenessData : ScriptableObject
     {
         [field: SerializeField] public ItemBiomeAffinity Biome { get; private set; } = ItemBiomeAffinity.Grassland;
 
-        [SerializeField] private List<ElementWordType> _effectiveElements = new();
-        [SerializeField] private List<ElementWordType> _ineffectiveElements = new();
+        [SerializeField] private List<ElementWordData> _effectiveElements = new();
+        [SerializeField] private List<ElementWordData> _ineffectiveElements = new();
 
-        public IReadOnlyList<ElementWordType> EffectiveElements => _effectiveElements;
-        public IReadOnlyList<ElementWordType> IneffectiveElements => _ineffectiveElements;
+        public IReadOnlyList<ElementWordData> EffectiveElements => _effectiveElements;
+        public IReadOnlyList<ElementWordData> IneffectiveElements => _ineffectiveElements;
     }
 
     [Serializable]
@@ -138,14 +140,14 @@ public sealed class SpellWordEffectivenessData : ScriptableObject
     {
         [field: SerializeField] public EnemyRoleTag RoleTag { get; private set; } = EnemyRoleTag.Bruiser;
 
-        [SerializeField] private List<FormWordType> _effectiveForms = new();
-        [SerializeField] private List<FormWordType> _ineffectiveForms = new();
-        [SerializeField] private List<ModifierWordType> _effectiveModifiers = new();
-        [SerializeField] private List<ModifierWordType> _ineffectiveModifiers = new();
+        [SerializeField] private List<FormWordData> _effectiveForms = new();
+        [SerializeField] private List<FormWordData> _ineffectiveForms = new();
+        [SerializeField] private List<ModifierWordData> _effectiveModifiers = new();
+        [SerializeField] private List<ModifierWordData> _ineffectiveModifiers = new();
 
-        public IReadOnlyList<FormWordType> EffectiveForms => _effectiveForms;
-        public IReadOnlyList<FormWordType> IneffectiveForms => _ineffectiveForms;
-        public IReadOnlyList<ModifierWordType> EffectiveModifiers => _effectiveModifiers;
-        public IReadOnlyList<ModifierWordType> IneffectiveModifiers => _ineffectiveModifiers;
+        public IReadOnlyList<FormWordData> EffectiveForms => _effectiveForms;
+        public IReadOnlyList<FormWordData> IneffectiveForms => _ineffectiveForms;
+        public IReadOnlyList<ModifierWordData> EffectiveModifiers => _effectiveModifiers;
+        public IReadOnlyList<ModifierWordData> IneffectiveModifiers => _ineffectiveModifiers;
     }
 }

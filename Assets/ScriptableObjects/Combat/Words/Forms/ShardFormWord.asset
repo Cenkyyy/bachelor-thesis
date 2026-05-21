@@ -14,9 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Shard
   <MemoryCost>k__BackingField: 0
-  <Form>k__BackingField: 0
-  <ManaCost>k__BackingField: 0
+  <Type>k__BackingField: 0
+  <ManaCost>k__BackingField: 8
+  <CooldownSeconds>k__BackingField: 0.25
+  <BaseDamage>k__BackingField: 18
+  <Range>k__BackingField: 8
+  <HitRadius>k__BackingField: 0.5
+  <WaveArcAngle>k__BackingField: -1
+  <BeamDuration>k__BackingField: -1
+  <BeamTickInterval>k__BackingField: -1
+  <BarrageProjectileCount>k__BackingField: -1
+  <BarrageInterval>k__BackingField: -1
   <ProjectilePrefab>k__BackingField: {fileID: 6381046162596957270, guid: 48048d9fd167b9b47aa47fbb6d9d026a, type: 3}
   _vfxLifetime: 0.35
   _vfxSpeed: 14
-  _vfxScale: {x: 0.35, y: 0.35, z: 1}
+  _vfxScale: {x: 1, y: 1, z: 1}

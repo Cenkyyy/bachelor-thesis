@@ -22,27 +22,43 @@ MonoBehaviour:
     _effectiveElements: 
     _ineffectiveElements: 
   - <Biome>k__BackingField: 2
-    _effectiveElements: 03000000
-    _ineffectiveElements: 00000000
+    _effectiveElements:
+    - {fileID: 11400000, guid: 307dc4ac8933c1f4dab673f7eb51d9e0, type: 2}
+    _ineffectiveElements:
+    - {fileID: 11400000, guid: 1f3898d8107eae045a0a66db6c1b9717, type: 2}
   - <Biome>k__BackingField: 3
-    _effectiveElements: 02000000
-    _ineffectiveElements: 01000000
+    _effectiveElements:
+    - {fileID: 11400000, guid: 6b104e1148df4674cb19f8e8394e2402, type: 2}
+    _ineffectiveElements:
+    - {fileID: 11400000, guid: 80e82d5c7a97f4d4ba568611502edf04, type: 2}
   - <Biome>k__BackingField: 4
-    _effectiveElements: 04000000
-    _ineffectiveElements: 03000000
+    _effectiveElements:
+    - {fileID: 11400000, guid: 0107badaf4e2b0b47a8665fc7adf71f4, type: 2}
+    _ineffectiveElements:
+    - {fileID: 11400000, guid: 307dc4ac8933c1f4dab673f7eb51d9e0, type: 2}
   _enemyRoleRules:
   - <RoleTag>k__BackingField: 1
-    _effectiveForms: 00000000
+    _effectiveForms:
+    - {fileID: 11400000, guid: b5873f3d7a812b74ea13b4a5565e0f17, type: 2}
     _ineffectiveForms: 
-    _effectiveModifiers: 00000000
-    _ineffectiveModifiers: 0200000004000000
+    _effectiveModifiers:
+    - {fileID: 11400000, guid: c82436ca7a6439040bf897435f02338d, type: 2}
+    _ineffectiveModifiers:
+    - {fileID: 11400000, guid: 4c5c812d39f5a354e8de87cdde29e55b, type: 2}
+    - {fileID: 11400000, guid: 3f529838fa12a1c4db699b80f7ac4be5, type: 2}
   - <RoleTag>k__BackingField: 2
-    _effectiveForms: 00000000
-    _ineffectiveForms: 0200000003000000
-    _effectiveModifiers: 00000000
+    _effectiveForms:
+    - {fileID: 11400000, guid: b5873f3d7a812b74ea13b4a5565e0f17, type: 2}
+    _ineffectiveForms:
+    - {fileID: 11400000, guid: 45dca3e19434d584d88100ba3b9c9acd, type: 2}
+    - {fileID: 11400000, guid: 4b4320f675128084596115c7c01ce5dd, type: 2}
+    _effectiveModifiers:
+    - {fileID: 11400000, guid: c82436ca7a6439040bf897435f02338d, type: 2}
     _ineffectiveModifiers: 
   - <RoleTag>k__BackingField: 4
     _effectiveForms: 
     _ineffectiveForms: 
-    _effectiveModifiers: 01000000
-    _ineffectiveModifiers: 02000000
+    _effectiveModifiers:
+    - {fileID: 11400000, guid: 2a89775dddf0ed14b9eb62f398212827, type: 2}
+    _ineffectiveModifiers:
+    - {fileID: 11400000, guid: 4c5c812d39f5a354e8de87cdde29e55b, type: 2}

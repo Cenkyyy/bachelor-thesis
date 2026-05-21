@@ -10,9 +10,9 @@ public sealed class StarterWordSelectionController : MonoBehaviour
     [Serializable]
     public sealed class StarterWordSelectionResult
     {
-        public List<ModifierWordType> Modifiers = new();
-        public List<ElementWordType> Elements = new();
-        public List<FormWordType> Forms = new();
+        public List<ModifierWordData> Modifiers = new();
+        public List<ElementWordData> Elements = new();
+        public List<FormWordData> Forms = new();
     }
 
     [Header("Settings")]
@@ -95,9 +95,9 @@ public sealed class StarterWordSelectionController : MonoBehaviour
 
         ApplyBackground(backgroundSprite, backgroundColor);
 
-        _modifierPanel.BuildButtonOptions("modifier", _starterWordSelectionData.ModifierRule.RequiredCount, _starterWordSelectionData.ModifierRule.FixedWords, _starterWordSelectionData.ModifierRule.ChoiceWords, word => word.ToString());
-        _elementPanel.BuildButtonOptions("element", _starterWordSelectionData.ElementRule.RequiredCount, _starterWordSelectionData.ElementRule.FixedWords, _starterWordSelectionData.ElementRule.ChoiceWords, word => word.ToString());
-        _formPanel.BuildButtonOptions("form", _starterWordSelectionData.FormRule.RequiredCount, _starterWordSelectionData.FormRule.FixedWords, _starterWordSelectionData.FormRule.ChoiceWords, word => word.ToString());
+        _modifierPanel.BuildButtonOptions("modifier", _starterWordSelectionData.ModifierRule.RequiredCount, _starterWordSelectionData.ModifierRule.FixedWords, _starterWordSelectionData.ModifierRule.ChoiceWords);
+        _elementPanel.BuildButtonOptions("element", _starterWordSelectionData.ElementRule.RequiredCount, _starterWordSelectionData.ElementRule.FixedWords, _starterWordSelectionData.ElementRule.ChoiceWords);
+        _formPanel.BuildButtonOptions("form", _starterWordSelectionData.FormRule.RequiredCount, _starterWordSelectionData.FormRule.FixedWords, _starterWordSelectionData.FormRule.ChoiceWords);
 
         RefreshContinueInteractable();
         SetVisible(true);
@@ -115,9 +115,9 @@ public sealed class StarterWordSelectionController : MonoBehaviour
 
         Result = new StarterWordSelectionResult
         {
-            Modifiers = _modifierPanel.GetSelectedWords<ModifierWordType>(),
-            Elements = _elementPanel.GetSelectedWords<ElementWordType>(),
-            Forms = _formPanel.GetSelectedWords<FormWordType>(),
+            Modifiers = _modifierPanel.GetSelectedWords<ModifierWordData>(),
+            Elements = _elementPanel.GetSelectedWords<ElementWordData>(),
+            Forms = _formPanel.GetSelectedWords<FormWordData>(),
         };
 
         WasConfirmed = true;

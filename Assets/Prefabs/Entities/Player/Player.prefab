@@ -249,7 +249,7 @@ MonoBehaviour:
   _playerData: {fileID: 11400000, guid: a1f7d4f498103bc4baf6dadc9cb30777, type: 2}
   _hotbarSize: 8
   _inventorySize: 24
-  _spellWordInventory: {fileID: 6731827953367733980}
+  _playerSpellWordInventory: {fileID: 6731827953367733980}
 --- !u!114 &3306367631584077544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,9 +378,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16794312120646341bdf9ea7e8a76238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unlockedModifiers: 0000000001000000020000000300000004000000
-  _unlockedElements: 0000000001000000020000000300000004000000
-  _unlockedForms: 00000000010000000200000003000000
+  _combatWordsData: {fileID: 11400000, guid: 3001151ae3897c7428306d4f9be649e3, type: 2}
+  _unlockedModifiers:
+  - {fileID: 11400000, guid: c82436ca7a6439040bf897435f02338d, type: 2}
+  - {fileID: 11400000, guid: 2a89775dddf0ed14b9eb62f398212827, type: 2}
+  - {fileID: 11400000, guid: 4c5c812d39f5a354e8de87cdde29e55b, type: 2}
+  - {fileID: 11400000, guid: 784a2a4f45615fe4bab83f21e32a7b55, type: 2}
+  - {fileID: 11400000, guid: 3f529838fa12a1c4db699b80f7ac4be5, type: 2}
+  _unlockedElements:
+  - {fileID: 11400000, guid: 307dc4ac8933c1f4dab673f7eb51d9e0, type: 2}
+  - {fileID: 11400000, guid: 6b104e1148df4674cb19f8e8394e2402, type: 2}
+  - {fileID: 11400000, guid: 1f3898d8107eae045a0a66db6c1b9717, type: 2}
+  - {fileID: 11400000, guid: 80e82d5c7a97f4d4ba568611502edf04, type: 2}
+  - {fileID: 11400000, guid: 0107badaf4e2b0b47a8665fc7adf71f4, type: 2}
+  _unlockedForms:
+  - {fileID: 11400000, guid: b5873f3d7a812b74ea13b4a5565e0f17, type: 2}
+  - {fileID: 11400000, guid: a00180b722c639440b1349b614c49343, type: 2}
+  - {fileID: 11400000, guid: 45dca3e19434d584d88100ba3b9c9acd, type: 2}
+  - {fileID: 11400000, guid: 4b4320f675128084596115c7c01ce5dd, type: 2}
 --- !u!114 &4319894653538523301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,7 +417,6 @@ MonoBehaviour:
   _targetMask:
     serializedVersion: 2
     m_Bits: 128
-  _combatWordsData: {fileID: 11400000, guid: 3001151ae3897c7428306d4f9be649e3, type: 2}
   _wordEffectivenessData: {fileID: 11400000, guid: 3a8b4fc74c636fe499555877dc976ff7, type: 2}
   _damagePopupFeedbackSettings:
     _effectiveColor: {r: 0.1, g: 1, b: 0.85, a: 1}
@@ -412,57 +426,6 @@ MonoBehaviour:
     _effectiveThreshold: 1.1
     _cooldownSeconds: 0
     _showMultiplierInDebugBuilds: 0
-  _settings:
-    Range: 8
-    HitRadius: 0.5
-    WaveArcAngle: 80
-    Shard:
-      ManaCost: 8
-      CooldownSeconds: 0.25
-      BaseDamage: 18
-    Beam:
-      ManaCost: 14
-      CooldownSeconds: 0.9
-      BaseDamage: 8
-    Wave:
-      ManaCost: 12
-      CooldownSeconds: 0.6
-      BaseDamage: 14
-    Barrage:
-      ManaCost: 15
-      CooldownSeconds: 0.7
-      BaseDamage: 8
-    BeamDuration: 1
-    BeamTickInterval: 0.2
-    BarrageProjectileCount: 4
-    BarrageInterval: 0.08
-    LightningBonusMultiplier: 1.35
-    DotDamagePerSecond: 5
-    StatusDuration: 3
-    Piercing:
-      AdditionalManaCost: 2
-      AdditionalCooldownSeconds: 0.1
-    Stunning:
-      AdditionalManaCost: 3
-      AdditionalCooldownSeconds: 0.2
-    Exploding:
-      AdditionalManaCost: 4
-      AdditionalCooldownSeconds: 0.25
-    Reclaiming:
-      AdditionalManaCost: 2
-      AdditionalCooldownSeconds: 0.1
-    Splitting:
-      AdditionalManaCost: 3
-      AdditionalCooldownSeconds: 0.2
-    StunBuildupPerHit: 1
-    StunThreshold: 3
-    StunDuration: 1.25
-    ExplosionRadius: 1.8
-    ExplosionDamageMultiplier: 0.7
-    ReclaimManaPerHit: 2
-    MaxReclaimsPerCast: 2
-    PoisonCloudRadius: 1.9
-    PoisonCloudDuration: 4
 --- !u!114 &4686141728631495212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,9 +464,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spellCombatController: {fileID: 4319894653538523301}
-  _playerHeldItemVisual: {fileID: 8949116740228414771}
-  _combatWordsData: {fileID: 11400000, guid: 3001151ae3897c7428306d4f9be649e3, type: 2}
-  _barrageInterval: 0.08
 --- !u!114 &2737436318412507732
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,6 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Stunning
   <MemoryCost>k__BackingField: 10
-  <Modifier>k__BackingField: 1
-  <AdditionalManaCost>k__BackingField: 0
+  <Type>k__BackingField: 1
+  <AdditionalManaCost>k__BackingField: 3
+  <AdditionalCooldownSeconds>k__BackingField: 0.2
+  <StunBuildupPerHit>k__BackingField: 1
+  <StunThreshold>k__BackingField: 3
+  <StunDuration>k__BackingField: 1.25
+  <ExplosionRadius>k__BackingField: -1
+  <ExplosionDamageMultiplier>k__BackingField: -1
+  <ReclaimManaPerHit>k__BackingField: -1
+  <MaxReclaimsPerCast>k__BackingField: -1
+  <SplitAngleDegrees>k__BackingField: -1
+  <SplitDamageMultiplier>k__BackingField: -1
   <OptionalPrefab>k__BackingField: {fileID: 0}

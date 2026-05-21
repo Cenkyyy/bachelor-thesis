@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Frost
   <MemoryCost>k__BackingField: 1
-  <Element>k__BackingField: 2
+  <Type>k__BackingField: 2
   <Material>k__BackingField: {fileID: 2100000, guid: e1f102781bae49f4b9e41d977a1cf617, type: 2}
-  <VfxColor>k__BackingField: {r: 0.16789784, g: 0.7264151, b: 0.6949241, a: 1}
+  <StatusDuration>k__BackingField: 3
+  <DamageOverTimePerSecond>k__BackingField: -1
+  <LightningBonusMultiplier>k__BackingField: -1
+  <PoisonCloudRadius>k__BackingField: -1
+  <PoisonCloudDuration>k__BackingField: -1
