@@ -1,5 +1,5 @@
 public enum WeaponType
 {
-    Wand = 0,
+    Staff = 0,
     Orb = 1
 }

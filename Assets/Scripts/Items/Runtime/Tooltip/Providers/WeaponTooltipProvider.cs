@@ -17,9 +17,7 @@ public sealed class WeaponTooltipProvider : IItemTooltipProvider
         if (inventoryItem.Item is not WeaponItemData weapon)
             return;
 
-        if (weapon.HasProgressionTier)
-            lines.Add(new ItemTooltipLineRuntimeData("Tier", ItemTooltipFormatter.FormatEnumValue(weapon.ProgressionTier)));
-
+        lines.Add(new ItemTooltipLineRuntimeData("Tier", ItemTooltipFormatter.FormatEnumValue(weapon.Tier)));
         lines.Add(new ItemTooltipLineRuntimeData("Damage", ItemTooltipFormatter.FormatInt(weapon.Damage)));
         lines.Add(new ItemTooltipLineRuntimeData("Mana Cost", ItemTooltipFormatter.FormatInt(weapon.ManaCost)));
     }

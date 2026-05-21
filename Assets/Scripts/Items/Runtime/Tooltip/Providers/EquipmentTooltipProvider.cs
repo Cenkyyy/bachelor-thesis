@@ -18,7 +18,7 @@ public sealed class EquipmentTooltipProvider : IItemTooltipProvider
             return;
 
         if (equipment.HasProgressionTier)
-            lines.Add(new ItemTooltipLineRuntimeData("Tier", ItemTooltipFormatter.FormatEnumValue(equipment.ProgressionTier)));
+            lines.Add(new ItemTooltipLineRuntimeData("Tier", ItemTooltipFormatter.FormatEnumValue(equipment.Tier)));
 
         AppendStatusEffects(equipment.StatusEffect, lines);
     }
