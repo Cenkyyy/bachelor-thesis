@@ -7,9 +7,6 @@ public sealed class MainMenuSettingsPanel : MonoBehaviour
     [Header("World Seed")]
     [SerializeField] private TMP_InputField _worldSeedInputField;
 
-    [Header("Display")]
-    [SerializeField] private Toggle _fullscreenToggle;
-
     [Header("Audio")]
     [SerializeField] private Slider _audioSlider;
 
@@ -21,12 +18,6 @@ public sealed class MainMenuSettingsPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_fullscreenToggle != null)
-        {
-            _fullscreenToggle.SetIsOnWithoutNotify(DisplaySettingsManager.GetFullscreen());
-            _fullscreenToggle.onValueChanged.AddListener(OnFullscreenChanged);
-        }
-
         if (_audioSlider != null)
         {
             _audioSlider.SetValueWithoutNotify(AudioManager.Instance != null ? AudioManager.Instance.MasterVolume : AudioListener.volume);
@@ -42,9 +33,6 @@ public sealed class MainMenuSettingsPanel : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_fullscreenToggle != null)
-            _fullscreenToggle.onValueChanged.RemoveListener(OnFullscreenChanged);
-
         if (_audioSlider != null)
             _audioSlider.onValueChanged.RemoveListener(OnAudioChanged);
 
@@ -56,11 +44,6 @@ public sealed class MainMenuSettingsPanel : MonoBehaviour
             SaveWorldSeedFromInputField();
             _worldSeedInputField.onEndEdit.RemoveListener(OnWorldSeedEndEdit);
         }
-    }
-
-    private void OnFullscreenChanged(bool isFullscreen)
-    {
-        DisplaySettingsManager.SetFullscreen(isFullscreen);
     }
 
     private void BindWorldSeedInput()

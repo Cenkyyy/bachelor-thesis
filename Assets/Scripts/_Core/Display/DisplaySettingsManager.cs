@@ -6,8 +6,6 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public sealed class DisplaySettingsManager : MonoBehaviour
 {
-    private const string FullscreenPrefsKey = "Display.Fullscreen";
-
     private const int DefaultMinVirtualWidth = 480;
     private const int DefaultMinVirtualHeight = 270;
     private const int DefaultAssetsPPU = 32;
@@ -22,10 +20,6 @@ public sealed class DisplaySettingsManager : MonoBehaviour
     [SerializeField, Min(1)] private int _assetsPPU = DefaultAssetsPPU;
     [SerializeField, Min(1)] private int _pixelScale = 4;
 
-    [Header("Windowed Mode")]
-    [SerializeField, Min(1)] private int _minWindowWidth = DefaultMinVirtualWidth;
-    [SerializeField, Min(1)] private int _minWindowHeight = DefaultMinVirtualHeight;
-
     [Header("UI Scaling")]
     [SerializeField, Min(1)] private int _uiReferenceWidth = DefaultUiReferenceWidth;
     [SerializeField, Min(1)] private int _uiReferenceHeight = DefaultUiReferenceHeight;
@@ -35,27 +29,9 @@ public sealed class DisplaySettingsManager : MonoBehaviour
 
     private int _lastScreenWidth;
     private int _lastScreenHeight;
-    private bool _isFullscreen;
 
-    public bool IsFullscreen => _isFullscreen;
     public int CurrentPixelScale => Mathf.Max(1, _pixelScale);
     public Vector2Int MinimumVirtualResolution => new(_minVirtualWidth, _minVirtualHeight);
-
-    public static bool GetFullscreen()
-    {
-        return Instance != null ? Instance.IsFullscreen : Screen.fullScreen;
-    }
-
-    public static void SetFullscreen(bool isFullscreen)
-    {
-        if (Instance != null)
-        {
-            Instance.ApplyFullscreen(isFullscreen);
-            return;
-        }
-
-        Screen.SetResolution(Screen.width, Screen.height, isFullscreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed);
-    }
 
     private void Awake()
     {
@@ -68,11 +44,9 @@ public sealed class DisplaySettingsManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        _isFullscreen = PlayerPrefs.GetInt(FullscreenPrefsKey, Screen.fullScreen ? 1 : 0) != 0;
         _lastScreenWidth = Screen.width;
         _lastScreenHeight = Screen.height;
 
-        ApplyFullscreen(_isFullscreen, shouldPersist: false);
         ApplyDisplayPolicy();
     }
 
@@ -88,7 +62,9 @@ public sealed class DisplaySettingsManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Screen.width == _lastScreenWidth && Screen.height == _lastScreenHeight)
+        bool sizeChanged = Screen.width != _lastScreenWidth || Screen.height != _lastScreenHeight;
+
+        if (!sizeChanged)
             return;
 
         _lastScreenWidth = Screen.width;
@@ -99,36 +75,6 @@ public sealed class DisplaySettingsManager : MonoBehaviour
 
     private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        ApplyDisplayPolicy();
-    }
-
-    private void ApplyFullscreen(bool isFullscreen, bool shouldPersist = true)
-    {
-        _isFullscreen = isFullscreen;
-
-        if (shouldPersist)
-        {
-            PlayerPrefs.SetInt(FullscreenPrefsKey, _isFullscreen ? 1 : 0);
-            PlayerPrefs.Save();
-        }
-
-        if (_isFullscreen)
-        {
-            var resolution = Screen.currentResolution;
-            int width = Mathf.Max(resolution.width, _minWindowWidth);
-            int height = Mathf.Max(resolution.height, _minWindowHeight);
-            Screen.SetResolution(width, height, FullScreenMode.FullScreenWindow);
-        }
-        else
-        {
-            var resolution = Screen.currentResolution;
-            int width = Mathf.Max(resolution.width, _minWindowWidth);
-            int height = Mathf.Max(resolution.height, _minWindowHeight);
-            Screen.SetResolution(width, height, FullScreenMode.Windowed);
-        }
-
-        _lastScreenWidth = Screen.width;
-        _lastScreenHeight = Screen.height;
         ApplyDisplayPolicy();
     }
 

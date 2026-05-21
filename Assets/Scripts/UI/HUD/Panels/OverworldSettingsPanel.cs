@@ -13,7 +13,6 @@ public sealed class OverworldSettingsPanel : MonoBehaviour, IMajorPanel
     [SerializeField] private ButtonVisual _exitGameButton;
 
     [Header("Runtime Settings")]
-    [SerializeField] private Toggle _fullscreenToggle;
     [SerializeField] private Slider _audioSlider;
     [SerializeField] private Slider _cursorColorSlider;
     [SerializeField] private Image _cursorColorReferenceImage;
@@ -38,11 +37,6 @@ public sealed class OverworldSettingsPanel : MonoBehaviour, IMajorPanel
 
     private void OnEnable()
     {
-        if (_fullscreenToggle != null)
-        {
-            _fullscreenToggle.onValueChanged.AddListener(OnFullscreenChanged);
-        }
-
         if (_audioSlider != null)
         {
             _audioSlider.onValueChanged.AddListener(OnAudioChanged);
@@ -56,11 +50,6 @@ public sealed class OverworldSettingsPanel : MonoBehaviour, IMajorPanel
 
     private void OnDisable()
     {
-        if (_fullscreenToggle != null)
-        {
-            _fullscreenToggle.onValueChanged.RemoveListener(OnFullscreenChanged);
-        }
-
         if (_audioSlider != null)
         {
             _audioSlider.onValueChanged.RemoveListener(OnAudioChanged);
@@ -106,11 +95,6 @@ public sealed class OverworldSettingsPanel : MonoBehaviour, IMajorPanel
 
     private void SyncFromRuntimeState()
     {
-        if (_fullscreenToggle != null)
-        {
-            _fullscreenToggle.SetIsOnWithoutNotify(DisplaySettingsManager.GetFullscreen());
-        }
-
         if (_audioSlider != null)
         {
             _audioSlider.SetValueWithoutNotify(AudioManager.Instance != null ? AudioManager.Instance.MasterVolume : AudioListener.volume);
@@ -129,11 +113,6 @@ public sealed class OverworldSettingsPanel : MonoBehaviour, IMajorPanel
         }
 
         _cursorColorSlider.SetValueWithoutNotify(sliderValue);
-    }
-
-    private void OnFullscreenChanged(bool isFullscreen)
-    {
-        DisplaySettingsManager.SetFullscreen(isFullscreen);
     }
 
     private void OnAudioChanged(float value)

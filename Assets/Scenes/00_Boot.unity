@@ -761,8 +761,6 @@ MonoBehaviour:
   _minVirtualHeight: 270
   _assetsPPU: 32
   _pixelScale: 4
-  _minWindowWidth: 480
-  _minWindowHeight: 270
   _uiReferenceWidth: 640
   _uiReferenceHeight: 360
   _minUiScale: 0.75
