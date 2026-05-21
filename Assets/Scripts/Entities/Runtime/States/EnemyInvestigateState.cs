@@ -51,9 +51,9 @@ public class EnemyInvestigateState : EnemyStateBase
                 return;
             }
 
-            if (enemyCore.IsRanged)
+            if (enemyCore is RangedEnemyCore rangedEnemyCore)
             {
-                ShouldReposition = enemyCore.IsTargetTooCloseForRanged();
+                ShouldReposition = rangedEnemyCore.IsTargetTooCloseForRanged();
                 return;
             }
 

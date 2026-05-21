@@ -158,11 +158,6 @@ MonoBehaviour:
   _homePointOverride: {fileID: 3227767779565571614}
   _animation: {fileID: 3686757145256087193}
   _pathProbeRadius: 0.18
-  _projectileSpawnPoint: {fileID: 0}
-  _projectileSpawnUp: {fileID: 0}
-  _projectileSpawnDown: {fileID: 0}
-  _projectileSpawnLeft: {fileID: 0}
-  _projectileSpawnRight: {fileID: 0}
 --- !u!114 &1266075310
 MonoBehaviour:
   m_ObjectHideFlags: 0

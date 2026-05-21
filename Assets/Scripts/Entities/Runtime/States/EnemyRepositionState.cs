@@ -5,11 +5,13 @@ using UnityEngine;
 /// </summary>
 public class EnemyRepositionState : EnemyStateBase
 {
+    private readonly RangedEnemyCore _rangedEnemyCore;
     private float _duration;
     private Vector2 _targetPosition;
 
     public EnemyRepositionState(EnemyCore enemyCore) : base(enemyCore)
     {
+        _rangedEnemyCore = enemyCore as RangedEnemyCore;
     }
 
     public bool ShouldAttack { get; private set; }
@@ -18,10 +20,22 @@ public class EnemyRepositionState : EnemyStateBase
     public override void OnEnter()
     {
         base.OnEnter();
-        _duration = enemyCore.SampleRangedRepositionDuration();
-        _targetPosition = enemyCore.SampleRangedRepositionTarget();
         ShouldAttack = false;
         ShouldInvestigate = false;
+
+        if (_rangedEnemyCore == null)
+        {
+            _duration = 0f;
+            _targetPosition = enemyCore.transform.position;
+            ShouldInvestigate = true;
+            enemyCore.ClearFacingOverride();
+            enemyCore.SetRunningAnimation(false);
+            enemyCore.StopMovement();
+            return;
+        }
+
+        _duration = _rangedEnemyCore.SampleRangedRepositionDuration();
+        _targetPosition = _rangedEnemyCore.SampleRangedRepositionTarget();
         enemyCore.ClearFacingOverride();
         enemyCore.SetRunningAnimation(true);
     }

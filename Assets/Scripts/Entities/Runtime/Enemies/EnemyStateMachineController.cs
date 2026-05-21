@@ -125,7 +125,7 @@ public sealed class EnemyStateMachineController
         if (_enemyCore.CanAttackCurrentTarget())
             return StateId.Attack;
 
-        return _enemyCore.IsRanged ? StateId.Investigate : StateId.Chase;
+        return _enemyCore is RangedEnemyCore ? StateId.Investigate : StateId.Chase;
     }
 
     private bool IsDead()

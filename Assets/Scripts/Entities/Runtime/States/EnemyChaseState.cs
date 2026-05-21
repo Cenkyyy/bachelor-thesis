@@ -23,7 +23,7 @@ public class EnemyChaseState : EnemyStateBase
         ShouldAttack = false;
         ShouldInvestigate = false;
 
-        if (enemyCore.IsRanged)
+        if (enemyCore is RangedEnemyCore)
         {
             ShouldInvestigate = true;
             return;

@@ -4,9 +4,11 @@
 public class EnemyAttackState : EnemyStateBase
 {
     private bool _hasAppliedDamage;
+    private readonly RangedEnemyCore _rangedEnemyCore;
 
     public EnemyAttackState(EnemyCore enemyCore) : base(enemyCore)
     {
+        _rangedEnemyCore = enemyCore as RangedEnemyCore;
     }
 
     public bool ShouldChase { get; private set; }
@@ -31,8 +33,8 @@ public class EnemyAttackState : EnemyStateBase
         if (enemyCore.RuntimeData.IsDead)
             return;
 
-        if (enemyCore.IsRanged && enemyCore.HasTarget)
-            enemyCore.FaceTargetWhileKiting();
+        if (_rangedEnemyCore != null && enemyCore.HasTarget)
+            _rangedEnemyCore.FaceTargetWhileKiting();
 
         TryApplyAttackDamage();
 
@@ -55,9 +57,9 @@ public class EnemyAttackState : EnemyStateBase
             return;
         }
 
-        if (enemyCore.IsRanged)
+        if (_rangedEnemyCore != null)
         {
-            ShouldReposition = enemyCore.IsTargetTooCloseForRanged() || enemyCore.CanAttackCurrentTarget();
+            ShouldReposition = _rangedEnemyCore.IsTargetTooCloseForRanged() || enemyCore.CanAttackCurrentTarget();
             ShouldInvestigate = !ShouldReposition;
             return;
         }
@@ -103,8 +105,8 @@ public class EnemyAttackState : EnemyStateBase
             return;
         }
 
-        _hasAppliedDamage = enemyCore.IsRanged
-            ? enemyCore.TryShootProjectileAtCurrentTarget()
+        _hasAppliedDamage = _rangedEnemyCore != null
+            ? _rangedEnemyCore.TryShootProjectileAtCurrentTarget()
             : enemyCore.TryDealDamageToCurrentTarget(enemyCore.Data.AttackDamage);
     }
 }
