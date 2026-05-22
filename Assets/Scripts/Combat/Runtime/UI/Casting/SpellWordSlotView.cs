@@ -2,10 +2,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpellWordSlotView : MonoBehaviour
+/// <summary>
+/// Displays one selectable spell word slot in the casting UI.
+/// </summary>
+public sealed class SpellWordSlotView : MonoBehaviour
 {
+    [Header("Labels")]
     [SerializeField] private TMP_Text _indexLabel;
     [SerializeField] private TMP_Text _wordLabel;
+
+    [Header("Visuals")]
     [SerializeField] private Image _background;
     [SerializeField] private Color _enabledColor = Color.white;
     [SerializeField] private Color _disabledColor = new(0.4f, 0.4f, 0.4f, 1f);

@@ -9,7 +9,7 @@ public sealed class PanelManager : MonoBehaviour
     [SerializeField] private MajorPanelKeybindsData _panelKeybinds;
 
     [Header("Input Handlers")]
-    [SerializeField] private SpellCastingPanelController _spellCastingPanel;
+    [SerializeField] private SpellCastingPanel _spellCastingPanel;
     [SerializeField] private InventoryItemInteractionController _inventoryItemInteractionController;
 
     [Header("Panels - Major")]
@@ -18,7 +18,7 @@ public sealed class PanelManager : MonoBehaviour
     [SerializeField] private WorldMapPanelController _mapPanel;
     [SerializeField] private OverworldSettingsPanel _settingsPanel;
     [SerializeField] private CraftingPanel _craftingPanel;
-    [SerializeField] private SpellWordShopPanelController _wordShopPanel;
+    [SerializeField] private SpellWordShopPanel _wordShopPanel;
 
     [Header("Panels - Secondary")]
     [SerializeField] private EquipmentPanel _equipmentPanel;

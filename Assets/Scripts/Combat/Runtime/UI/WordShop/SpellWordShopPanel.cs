@@ -3,7 +3,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class SpellWordShopPanelController : MonoBehaviour, IMajorPanel
+/// <summary>
+/// Major panel that lists locked spell words and unlocks selected words by spending memory levels.
+/// </summary>
+public sealed class SpellWordShopPanel : MonoBehaviour, IMajorPanel
 {
     [Header("Root")]
     [SerializeField] private GameObject _root;
@@ -32,15 +35,15 @@ public sealed class SpellWordShopPanelController : MonoBehaviour, IMajorPanel
     [Header("Visual States")]
     [SerializeField, Range(0.1f, 1f)] private float _buyDisabledAlpha = 0.6f;
 
-    public PanelId Id => PanelId.WordShop;
-    public bool IsOpen => _root != null && _root.activeSelf;
-    public bool PausesGame => true;
-    public bool BlocksGameplayInput => true;
-
     private readonly List<WordShopButtonView> _spawnedButtons = new();
     private readonly List<WordData> _availableWords = new();
     private WordData _selectedWord;
     private CanvasGroup _buyButtonCanvasGroup;
+
+    public PanelId Id => PanelId.WordShop;
+    public bool IsOpen => _root != null && _root.activeSelf;
+    public bool PausesGame => true;
+    public bool BlocksGameplayInput => true;
 
     private void Awake()
     {
@@ -148,7 +151,7 @@ public sealed class SpellWordShopPanelController : MonoBehaviour, IMajorPanel
 
     private void RebuildWordButtons()
     {
-        for (int i = 0; i < _spawnedButtons.Count; i++)
+        for (var i = 0; i < _spawnedButtons.Count; i++)
         {
             var button = _spawnedButtons[i];
             if (button == null)
@@ -163,7 +166,7 @@ public sealed class SpellWordShopPanelController : MonoBehaviour, IMajorPanel
         if (_wordButtonContainer == null || _wordButtonPrefab == null)
             return;
 
-        for (int i = 0; i < _availableWords.Count; i++)
+        for (var i = 0; i < _availableWords.Count; i++)
         {
             var button = Instantiate(_wordButtonPrefab, _wordButtonContainer);
             button.Bind(_availableWords[i]);
@@ -194,7 +197,7 @@ public sealed class SpellWordShopPanelController : MonoBehaviour, IMajorPanel
 
     private void RefreshWordHighlights()
     {
-        for (int i = 0; i < _spawnedButtons.Count; i++)
+        for (var i = 0; i < _spawnedButtons.Count; i++)
         {
             var button = _spawnedButtons[i];
             if (button == null)

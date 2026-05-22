@@ -13464,7 +13464,7 @@ GameObject:
   - component: {fileID: 1643230813}
   - component: {fileID: 1643230814}
   m_Layer: 5
-  m_Name: SpellWordShopPanelController
+  m_Name: SpellWordShopPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -3,10 +3,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Displays one purchasable spell word in the word shop.
+/// </summary>
 public sealed class WordShopButtonView : MonoBehaviour
 {
+    [Header("Controls")]
     [SerializeField] private Button _button;
     [SerializeField] private TMP_Text _label;
+
+    [Header("Visuals")]
     [SerializeField] private Image _background;
     [SerializeField] private Sprite _defaultSprite;
     [SerializeField] private Sprite _selectedSprite;

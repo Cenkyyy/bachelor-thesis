@@ -4,7 +4,7 @@ using UnityEngine;
 public class SpellVfxController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private SpellCombatController _spellCombatController;
+    [SerializeField] private PlayerSpellCombatController _spellCombatController;
 
     private void OnEnable()
     {

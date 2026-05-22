@@ -2,8 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellWordPanelView : MonoBehaviour
+/// <summary>
+/// Displays one spell word category list using a fixed set of spell word slot views.
+/// </summary>
+public sealed class SpellWordListView : MonoBehaviour
 {
+    [Header("Slots")]
     [SerializeField] private SpellWordSlotView[] _slots;
 
     public int VisibleCount { get; private set; }
@@ -27,6 +31,8 @@ public class SpellWordPanelView : MonoBehaviour
     public void SetPanelInteractable(bool interactable)
     {
         for (int i = 0; i < VisibleCount; i++)
+        {
             _slots[i].SetInteractable(interactable);
+        }
     }
 }

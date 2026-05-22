@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellCombatController : MonoBehaviour
+public class PlayerSpellCombatController : MonoBehaviour
 {
     private const float DamageOverTimeTickIntervalSeconds = 0.5f;
 
     [Header("References")]
     [SerializeField] private Player _player;
     [SerializeField] private PlayerHeldItemVisualController _playerHeldItemVisual;
-    [SerializeField] private SpellCastingPanelController _castingPanel;
+    [SerializeField] private SpellCastingPanel _castingPanel;
     [SerializeField] private WorldTextPopupController _feedbackPopup;
 
     [Header("Feedback")]

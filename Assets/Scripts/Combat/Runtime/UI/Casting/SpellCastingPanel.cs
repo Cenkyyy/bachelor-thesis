@@ -3,8 +3,14 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class SpellCastingPanelController : MonoBehaviour
+/// <summary>
+/// Handles spell word selection UI, builds the current spell phrase, and emits completed phrases.
+/// </summary>
+public sealed class SpellCastingPanel : MonoBehaviour
 {
+    /// <summary>
+    /// Represents the next spell word category the player must choose.
+    /// </summary>
     private enum CastingStage
     {
         Modifier,
@@ -14,9 +20,9 @@ public class SpellCastingPanelController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Player _player;
-    [SerializeField] private SpellWordPanelView _modifierPanel;
-    [SerializeField] private SpellWordPanelView _elementPanel;
-    [SerializeField] private SpellWordPanelView _formPanel;
+    [SerializeField] private SpellWordListView _modifierPanel;
+    [SerializeField] private SpellWordListView _elementPanel;
+    [SerializeField] private SpellWordListView _formPanel;
 
     [Header("HUD")]
     [SerializeField] private TMP_Text _currentPhraseText;
@@ -62,40 +68,6 @@ public class SpellCastingPanelController : MonoBehaviour
         _wordInventory.OnWordsChanged += RefreshPanels;
     }
 
-    private void HandleWordsInitialized() 
-    {
-        if (_wordInventory == null || _isWordInventoryInitialized)
-            return;
-
-        _wordInventory.OnWordsInitialized -= HandleWordsInitialized;
-
-        RefreshPanels();
-        ResetCastingState();
-        RefreshInteractionAvailability();
-        _isWordInventoryInitialized = true;
-    }
-
-    private void HandleInventoryInitialized()
-    {
-        if (_isPlayerInventoryInitialized || _player == null || _player.Inventory == null)
-            return;
-
-        _player.Inventory.OnHotbarSelectionChanged -= HandleSelectedHotbarChanged;
-        _player.Inventory.OnItemChanged -= HandleInventoryItemChanged;
-        _player.Inventory.OnHotbarSelectionChanged += HandleSelectedHotbarChanged;
-        _player.Inventory.OnItemChanged += HandleInventoryItemChanged;
-        RefreshInteractionAvailability();
-        _isPlayerInventoryInitialized = true;
-    }
-
-    private bool TryResolveDependencies()
-    {
-        if (_player != null && _wordInventory == null)
-            _wordInventory = _player.SpellWords;
-
-        return _player != null && _wordInventory != null;
-    }
-
     private void OnDisable()
     {
         if (_wordInventory != null)
@@ -135,6 +107,49 @@ public class SpellCastingPanelController : MonoBehaviour
             return;
 
         TrySelectWord(pressedIndex.Value);
+    }
+
+    public bool TryCancelActiveCasting()
+    {
+        if (!IsCastingInProgress())
+            return false;
+
+        CancelCasting();
+        return true;
+    }
+
+    private void HandleWordsInitialized()
+    {
+        if (_wordInventory == null || _isWordInventoryInitialized)
+            return;
+
+        _wordInventory.OnWordsInitialized -= HandleWordsInitialized;
+
+        RefreshPanels();
+        ResetCastingState();
+        RefreshInteractionAvailability();
+        _isWordInventoryInitialized = true;
+    }
+
+    private void HandleInventoryInitialized()
+    {
+        if (_isPlayerInventoryInitialized || _player == null || _player.Inventory == null)
+            return;
+
+        _player.Inventory.OnHotbarSelectionChanged -= HandleSelectedHotbarChanged;
+        _player.Inventory.OnItemChanged -= HandleInventoryItemChanged;
+        _player.Inventory.OnHotbarSelectionChanged += HandleSelectedHotbarChanged;
+        _player.Inventory.OnItemChanged += HandleInventoryItemChanged;
+        RefreshInteractionAvailability();
+        _isPlayerInventoryInitialized = true;
+    }
+
+    private bool TryResolveDependencies()
+    {
+        if (_player != null && _wordInventory == null)
+            _wordInventory = _player.SpellWords;
+
+        return _player != null && _wordInventory != null;
     }
 
     private void RefreshPanels()
@@ -241,7 +256,6 @@ public class SpellCastingPanelController : MonoBehaviour
     {
         _isCastLocked = true;
 
-        // all slots disabled while the spell commit is active
         _modifierPanel.SetPanelInteractable(false);
         _elementPanel.SetPanelInteractable(false);
         _formPanel.SetPanelInteractable(false);
@@ -267,15 +281,6 @@ public class SpellCastingPanelController : MonoBehaviour
             return;
 
         CancelCasting();
-    }
-
-    public bool TryCancelActiveCasting()
-    {
-        if (!IsCastingInProgress())
-            return false;
-
-        CancelCasting();
-        return true;
     }
 
     private bool IsCastingInProgress()
