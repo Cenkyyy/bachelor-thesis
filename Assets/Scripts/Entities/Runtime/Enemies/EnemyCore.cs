@@ -21,6 +21,7 @@ public class EnemyCore : EntityCore
     private bool _hasPatrolTarget;
     private IDamageable _cachedDamageableTarget;
     private Transform _cachedDamageableTransform;
+    private IStatusEffectTarget _statusEffectTarget;
     private EnemyStateMachineController _stateMachineController;
 
     public new EnemyData Data => _data;
@@ -32,6 +33,7 @@ public class EnemyCore : EntityCore
     protected virtual void Awake()
     {
         SetData(_data);
+        ResolveStatusEffectTarget();
     }
 
     protected virtual void Start()
@@ -47,11 +49,23 @@ public class EnemyCore : EntityCore
 
     protected virtual void Update()
     {
+        if (IsStunned())
+        {
+            StopMovement();
+            return;
+        }
+
         _stateMachineController.Do();
     }
 
     protected virtual void FixedUpdate()
     {
+        if (IsStunned())
+        {
+            StopMovement();
+            return;
+        }
+
         _stateMachineController.FixedDo();
     }
 
@@ -245,6 +259,19 @@ public class EnemyCore : EntityCore
     private void ResolveHomePoint()
     {
         _homePoint = _homePointOverride != null ? (Vector2)_homePointOverride.position : (Vector2)transform.position;
+    }
+
+    private bool IsStunned()
+    {
+        if (_statusEffectTarget == null)
+            ResolveStatusEffectTarget();
+
+        return _statusEffectTarget != null && _statusEffectTarget.HasStatus(CombatStatusEffectType.Stunned);
+    }
+
+    private void ResolveStatusEffectTarget()
+    {
+        _statusEffectTarget = GetComponent<IStatusEffectTarget>() ?? GetComponentInChildren<IStatusEffectTarget>();
     }
 
     private bool TryGetCurrentTargetDamageable(out IDamageable damageable)

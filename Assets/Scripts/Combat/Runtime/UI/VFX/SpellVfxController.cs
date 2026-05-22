@@ -18,9 +18,9 @@ public class SpellVfxController : MonoBehaviour
             _spellCombatController.OnSpellCastCommitted -= HandleSpellCastCommitted;
     }
 
-    private void HandleSpellCastCommitted(ResolvedSpellCast spell)
+    private void HandleSpellCastCommitted(SpellPhrase spell)
     {
-        if (!spell.IsValid || spell.Form.ProjectilePrefab == null)
+        if (!spell.IsCommitted || spell.Form.ProjectilePrefab == null)
             return;
 
         if (spell.Form.Type == FormWordType.Barrage)
@@ -35,7 +35,7 @@ public class SpellVfxController : MonoBehaviour
             SpawnModifierVisual(spell);
     }
 
-    private IEnumerator PlayBarrage(ResolvedSpellCast spell)
+    private IEnumerator PlayBarrage(SpellPhrase spell)
     {
         for (var i = 0; i < spell.Form.BarrageProjectileCount; i++)
         {
@@ -44,7 +44,7 @@ public class SpellVfxController : MonoBehaviour
         }
     }
 
-    private void SpawnBatch(ResolvedSpellCast spell)
+    private void SpawnBatch(SpellPhrase spell)
     {
         for (var i = 0; i < spell.Directions.Count; i++)
         {
@@ -59,7 +59,7 @@ public class SpellVfxController : MonoBehaviour
         }
     }
 
-    private void SpawnModifierVisual(ResolvedSpellCast spell)
+    private void SpawnModifierVisual(SpellPhrase spell)
     {
         var modifierObject = Instantiate(spell.Modifier.OptionalPrefab, spell.Origin, Quaternion.identity);
         modifierObject.transform.right = spell.Directions[0];

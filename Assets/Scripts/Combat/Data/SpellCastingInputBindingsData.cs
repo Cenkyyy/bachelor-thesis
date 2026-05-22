@@ -1,8 +1,12 @@
 using UnityEngine;
 
+/// <summary>
+/// Defines the key bindings used to select spell word slots during spell casting.
+/// </summary>
 [CreateAssetMenu(menuName = "Game/Input/Spellcasting Input Bindings", fileName = "SpellCastingInputBindings")]
 public sealed class SpellCastingInputBindingsData : ScriptableObject
 {
+    [field: Header("Slots")]
     [field: SerializeField] public KeyCode Slot1 { get; private set; } = KeyCode.Alpha1;
     [field: SerializeField] public KeyCode Slot2 { get; private set; } = KeyCode.Alpha2;
     [field: SerializeField] public KeyCode Slot3 { get; private set; } = KeyCode.Alpha3;
@@ -11,11 +15,21 @@ public sealed class SpellCastingInputBindingsData : ScriptableObject
 
     public int? TryGetPressedIndex()
     {
-        if (Input.GetKeyDown(Slot1)) return 0;
-        if (Input.GetKeyDown(Slot2)) return 1;
-        if (Input.GetKeyDown(Slot3)) return 2;
-        if (Input.GetKeyDown(Slot4)) return 3;
-        if (Input.GetKeyDown(Slot5)) return 4;
+        if (Input.GetKeyDown(Slot1))
+            return 0;
+
+        if (Input.GetKeyDown(Slot2))
+            return 1;
+
+        if (Input.GetKeyDown(Slot3))
+            return 2;
+
+        if (Input.GetKeyDown(Slot4))
+            return 3;
+
+        if (Input.GetKeyDown(Slot5))
+            return 4;
+
         return null;
     }
 }

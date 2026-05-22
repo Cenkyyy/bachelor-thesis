@@ -1,3 +1,6 @@
+/// <summary>
+/// Represents the modifier word behavior represented by a ModifierWordData asset.
+/// </summary>
 public enum ModifierWordType
 {
     Piercing = 0,

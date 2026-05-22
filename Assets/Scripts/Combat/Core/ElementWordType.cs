@@ -1,3 +1,6 @@
+/// <summary>
+/// Represents the element word behavior represented by an ElementWordData asset.
+/// </summary>
 public enum ElementWordType
 {
     Lightning = 0,

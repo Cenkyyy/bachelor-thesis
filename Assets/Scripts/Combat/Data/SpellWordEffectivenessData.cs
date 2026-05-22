@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Defines word effectiveness rules that modify spell damage against biome and enemy-role contexts.
+/// </summary>
 [CreateAssetMenu(menuName = "Combat/Word Effectiveness Data")]
 public sealed class SpellWordEffectivenessData : ScriptableObject
 {
@@ -123,11 +126,16 @@ public sealed class SpellWordEffectivenessData : ScriptableObject
             MaxFinalMultiplier = MinFinalMultiplier;
     }
 
+    /// <summary>
+    /// Defines element words that are effective or ineffective against one biome affinity.
+    /// </summary>
     [Serializable]
     public sealed class BiomeElementEffectivenessRule
     {
+        [field: Header("Biome")]
         [field: SerializeField] public ItemBiomeAffinity Biome { get; private set; } = ItemBiomeAffinity.Grassland;
 
+        [Header("Element Rules")]
         [SerializeField] private List<ElementWordData> _effectiveElements = new();
         [SerializeField] private List<ElementWordData> _ineffectiveElements = new();
 
@@ -135,13 +143,20 @@ public sealed class SpellWordEffectivenessData : ScriptableObject
         public IReadOnlyList<ElementWordData> IneffectiveElements => _ineffectiveElements;
     }
 
+    /// <summary>
+    /// Defines form and modifier words that are effective or ineffective against one enemy role tag.
+    /// </summary>
     [Serializable]
     public sealed class EnemyRoleWordEffectivenessRule
     {
+        [field: Header("Enemy Role")]
         [field: SerializeField] public EnemyRoleTag RoleTag { get; private set; } = EnemyRoleTag.Bruiser;
 
+        [Header("Form Rules")]
         [SerializeField] private List<FormWordData> _effectiveForms = new();
         [SerializeField] private List<FormWordData> _ineffectiveForms = new();
+
+        [Header("Modifier Rules")]
         [SerializeField] private List<ModifierWordData> _effectiveModifiers = new();
         [SerializeField] private List<ModifierWordData> _ineffectiveModifiers = new();
 

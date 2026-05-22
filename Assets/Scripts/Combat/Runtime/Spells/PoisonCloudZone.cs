@@ -61,12 +61,22 @@ public class PoisonCloudZone : MonoBehaviour
 
         for (var i = 0; i < _buffer.Count; i++)
         {
-            var target = _buffer[i].GetComponentInParent<ISpellTarget>();
+            var target = _buffer[i].GetComponentInParent<ICombatTarget>();
             if (target == null || !target.IsAlive)
                 continue;
 
-            target.ReceiveSpellDamage(_dps * tickDuration, _damageSource);
-            target.ApplyStatus(CombatStatusEffectType.Poison, TickIntervalSeconds);
+            var damageable = _buffer[i].GetComponentInParent<IDamageable>();
+            if (damageable == null || !damageable.CanReceiveDamage)
+                continue;
+
+            var damage = Mathf.RoundToInt(_dps * tickDuration);
+            if (damage <= 0)
+                damage = 1;
+
+            damageable.ReceiveDamage(damage, _damageSource);
+
+            var statusTarget = _buffer[i].GetComponentInParent<IStatusEffectTarget>();
+            statusTarget?.ApplyStatus(CombatStatusEffectType.Poison, TickIntervalSeconds);
         }
     }
 }

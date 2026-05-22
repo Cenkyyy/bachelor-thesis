@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class SpellCombatController : MonoBehaviour
 {
+    private const float DamageOverTimeTickIntervalSeconds = 0.5f;
+
     [Header("References")]
     [SerializeField] private Player _player;
     [SerializeField] private PlayerHeldItemVisualController _playerHeldItemVisual;
@@ -26,7 +28,7 @@ public class SpellCombatController : MonoBehaviour
     private ContactFilter2D _targetFilter;
     private float _nextCastAllowedAt;
 
-    public event Action<ResolvedSpellCast> OnSpellCastCommitted;
+    public event Action<SpellPhrase> OnSpellCastCommitted;
 
     private void Awake()
     {
@@ -86,17 +88,12 @@ public class SpellCombatController : MonoBehaviour
         _nextCastAllowedAt = Time.time + cooldown;
 
         var origin = (Vector2)_playerHeldItemVisual.CurrentHandAnchor.position;
-        var resolvedCast = new ResolvedSpellCast(
-            modifierData,
-            elementData,
-            formData,
-            origin,
-            BuildCastDirections(origin, modifierData));
+        phrase.SetCastContext(origin, BuildCastDirections(origin, modifierData));
 
-        OnSpellCastCommitted?.Invoke(resolvedCast);
+        OnSpellCastCommitted?.Invoke(phrase);
 
         var castState = new CastState(
-            resolvedCast,
+            phrase,
             GetDamageAfterItemBonuses(formData.BaseDamage));
         StartCoroutine(ExecuteCast(castState));
     }
@@ -165,11 +162,11 @@ public class SpellCombatController : MonoBehaviour
         Vector2 origin = _playerHeldItemVisual.CurrentHandAnchor.position;
         QueryTargetsInRadius(origin, castState.Form.Range);
         var nearestDistance = float.MaxValue;
-        var nearestTarget = (ISpellTarget)null;
+        var nearestTarget = (ICombatTarget)null;
 
         for (var i = 0; i < _targetBuffer.Count; i++)
         {
-            var target = _targetBuffer[i].GetComponentInParent<ISpellTarget>();
+            var target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
             if (target == null || !target.IsAlive)
                 continue;
 
@@ -215,7 +212,7 @@ public class SpellCombatController : MonoBehaviour
 
         for (var i = 0; i < _targetBuffer.Count; i++)
         {
-            var target = _targetBuffer[i].GetComponentInParent<ISpellTarget>();
+            var target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
             if (target == null || !target.IsAlive)
                 continue;
 
@@ -231,24 +228,23 @@ public class SpellCombatController : MonoBehaviour
         }
     }
 
-    private void ApplyHit(CastState castState, ISpellTarget target, Vector2 hitPosition)
+    private void ApplyHit(CastState castState, ICombatTarget target, Vector2 hitPosition)
     {
         var effectivenessMultiplier = ResolveWordEffectivenessMultiplier(castState, target);
         var damage = castState.BaseDamage * effectivenessMultiplier;
+        var statusTarget = GetStatusEffectTarget(target);
 
-        if (castState.Element.Type == ElementWordType.Lightning && target.HasAnyNegativeStatus)
+        if (castState.Element.Type == ElementWordType.Lightning && statusTarget != null && statusTarget.HasAnyNegativeStatus)
             damage *= castState.Element.LightningBonusMultiplier;
 
-        var displayedDamage = Mathf.Max(1, Mathf.RoundToInt(damage));
+        if (TryApplyDamage(target, damage, _player, out var displayedDamage))
+            DamagePopupFeedbackUtility.ShowForTarget(target, displayedDamage, effectivenessMultiplier, _damagePopupFeedbackSettings);
 
-        DamagePopupFeedbackUtility.ShowForTarget(target, displayedDamage, effectivenessMultiplier, _damagePopupFeedbackSettings);
-
-        target.ReceiveSpellDamage(damage, _player);
-        ApplyElementStatus(castState, target, hitPosition, effectivenessMultiplier);
-        ApplyModifierSideEffects(castState, target, hitPosition);
+        ApplyElementStatus(castState, target, statusTarget, hitPosition, effectivenessMultiplier);
+        ApplyModifierSideEffects(castState, statusTarget, hitPosition);
     }
 
-    private float ResolveWordEffectivenessMultiplier(CastState castState, ISpellTarget target)
+    private float ResolveWordEffectivenessMultiplier(CastState castState, ICombatTarget target)
     {
         if (target == null)
             return _wordEffectivenessData.NeutralMultiplier;
@@ -263,7 +259,7 @@ public class SpellCombatController : MonoBehaviour
         return _wordEffectivenessData.CalculateFinalMultiplier(biome, roleTags, castState.Modifier, castState.Element, castState.Form);
     }
 
-    private void ApplyElementStatus(CastState castState, ISpellTarget target, Vector2 hitPosition, float effectivenessMultiplier)
+    private void ApplyElementStatus(CastState castState, ICombatTarget target, IStatusEffectTarget statusTarget, Vector2 hitPosition, float effectivenessMultiplier)
     {
         switch (castState.Element.Type)
         {
@@ -272,24 +268,24 @@ public class SpellCombatController : MonoBehaviour
                     SpawnPoisonCloud(castState.Element, hitPosition);
                 break;
             case ElementWordType.Frost:
-                target.ApplyStatus(CombatStatusEffectType.Slow, castState.Element.StatusDuration);
+                statusTarget?.ApplyStatus(CombatStatusEffectType.Slow, castState.Element.StatusDuration);
                 break;
             case ElementWordType.Ember:
-                target.ApplyStatus(CombatStatusEffectType.Burn, castState.Element.StatusDuration);
-                target.ApplyDamageOverTime(castState.Element.DamageOverTimePerSecond * effectivenessMultiplier, castState.Element.StatusDuration, effectivenessMultiplier, _player);
+                statusTarget?.ApplyStatus(CombatStatusEffectType.Burn, castState.Element.StatusDuration);
+                StartCoroutine(ApplyBurnDamageTicks(target, castState.Element.DamageOverTimePerSecond * effectivenessMultiplier, castState.Element.StatusDuration, effectivenessMultiplier, _player));
                 break;
             case ElementWordType.Dark:
-                target.ApplyStatus(CombatStatusEffectType.Weakened, castState.Element.StatusDuration);
+                statusTarget?.ApplyStatus(CombatStatusEffectType.Weakened, castState.Element.StatusDuration);
                 break;
         }
     }
 
-    private void ApplyModifierSideEffects(CastState castState, ISpellTarget target, Vector2 hitPosition)
+    private void ApplyModifierSideEffects(CastState castState, IStatusEffectTarget statusTarget, Vector2 hitPosition)
     {
         switch (castState.Modifier.Type)
         {
             case ModifierWordType.Stunning:
-                target.AddStunBuildup(castState.Modifier.StunBuildupPerHit, castState.Modifier.StunThreshold, castState.Modifier.StunDuration);
+                statusTarget?.ApplyStatus(CombatStatusEffectType.Stunned, ResolveStunDuration(castState.Modifier));
                 break;
 
             case ModifierWordType.Exploding:
@@ -313,15 +309,46 @@ public class SpellCombatController : MonoBehaviour
         QueryTargetsInRadius(center, castState.Modifier.ExplosionRadius);
         for (var i = 0; i < _targetBuffer.Count; i++)
         {
-            var target = _targetBuffer[i].GetComponentInParent<ISpellTarget>();
+            var target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
             if (target == null || !target.IsAlive)
                 continue;
 
             var effectivenessMultiplier = ResolveWordEffectivenessMultiplier(castState, target);
             var damage = castState.BaseDamage * castState.Modifier.ExplosionDamageMultiplier * effectivenessMultiplier;
-            var displayedDamage = Mathf.Max(1, Mathf.RoundToInt(damage));
-            DamagePopupFeedbackUtility.ShowForTarget(target, displayedDamage, effectivenessMultiplier, _damagePopupFeedbackSettings);
-            target.ReceiveSpellDamage(damage, _player);
+            if (TryApplyDamage(target, damage, _player, out var displayedDamage))
+                DamagePopupFeedbackUtility.ShowForTarget(target, displayedDamage, effectivenessMultiplier, _damagePopupFeedbackSettings);
+        }
+    }
+
+    private IEnumerator ApplyBurnDamageTicks(ICombatTarget target, float damagePerSecond, float durationSeconds, float effectivenessMultiplier, object source)
+    {
+        if (damagePerSecond <= 0f || durationSeconds <= 0f)
+            yield break;
+
+        var elapsed = 0f;
+        var initialDelay = Mathf.Min(DamageOverTimeTickIntervalSeconds, durationSeconds);
+        if (initialDelay > 0f)
+        {
+            yield return new WaitForSeconds(initialDelay);
+            elapsed += initialDelay;
+        }
+
+        while (elapsed < durationSeconds)
+        {
+            if (target is not Component targetComponent || targetComponent == null || !target.IsAlive)
+                yield break;
+
+            var delta = Mathf.Min(DamageOverTimeTickIntervalSeconds, durationSeconds - elapsed);
+            var damage = Mathf.RoundToInt(damagePerSecond * delta);
+            if (damage > 0)
+            {
+                if (TryApplyDamage(target, damage, source, out var displayedDamage))
+                    DamagePopupFeedbackUtility.ShowForTarget(target, displayedDamage, effectivenessMultiplier, _damagePopupFeedbackSettings);
+            }
+
+            elapsed += delta;
+            if (elapsed < durationSeconds)
+                yield return new WaitForSeconds(Mathf.Min(DamageOverTimeTickIntervalSeconds, durationSeconds - elapsed));
         }
     }
 
@@ -337,6 +364,52 @@ public class SpellCombatController : MonoBehaviour
         cloud.transform.position = position;
         var zone = cloud.AddComponent<PoisonCloudZone>();
         zone.Initialize(element.PoisonCloudRadius, element.PoisonCloudDuration, element.DamageOverTimePerSecond, _targetMask, _player);
+    }
+
+    private bool TryApplyDamage(ICombatTarget target, float amount, object source, out int appliedDamage)
+    {
+        appliedDamage = 0;
+
+        if (!TryGetDamageable(target, out var damageable))
+            return false;
+
+        var roundedDamage = Mathf.RoundToInt(amount);
+        if (roundedDamage <= 0)
+            roundedDamage = 1;
+
+        damageable.ReceiveDamage(roundedDamage, source);
+        appliedDamage = roundedDamage;
+        return true;
+    }
+
+    private bool TryGetDamageable(ICombatTarget target, out IDamageable damageable)
+    {
+        damageable = null;
+
+        if (target is not Component targetComponent || targetComponent == null)
+            return false;
+
+        damageable = targetComponent.GetComponentInParent<IDamageable>();
+        return damageable != null && damageable.CanReceiveDamage;
+    }
+
+    private IStatusEffectTarget GetStatusEffectTarget(ICombatTarget target)
+    {
+        if (target is not Component targetComponent || targetComponent == null)
+            return null;
+
+        return targetComponent.GetComponentInParent<IStatusEffectTarget>();
+    }
+
+    private static float ResolveStunDuration(ModifierWordData modifier)
+    {
+        if (modifier == null)
+            return 0f;
+
+        if (modifier.StunDurationMax <= modifier.StunDurationMin)
+            return modifier.StunDurationMin;
+
+        return UnityEngine.Random.Range(modifier.StunDurationMin, modifier.StunDurationMax);
     }
 
     private Vector2[] BuildCastDirections(Vector2 origin, ModifierWordData modifier)
@@ -368,7 +441,7 @@ public class SpellCombatController : MonoBehaviour
 
     private sealed class CastState
     {
-        private readonly HashSet<ISpellTarget> _hitTargets = new();
+        private readonly HashSet<ICombatTarget> _hitTargets = new();
         private int _remainingExplosions = 1;
         private int _remainingPoisonClouds = 1;
         private int _remainingReclaims;
@@ -377,19 +450,19 @@ public class SpellCombatController : MonoBehaviour
         public ElementWordData Element => Spell.Element;
         public FormWordData Form => Spell.Form;
         public IReadOnlyList<Vector2> Directions => Spell.Directions;
-        public ResolvedSpellCast Spell { get; }
+        public SpellPhrase Spell { get; }
         public float BaseDamage { get; set; }
 
-        public CastState(ResolvedSpellCast spell, float baseDamage)
+        public CastState(SpellPhrase spell, float baseDamage)
         {
             Spell = spell;
             BaseDamage = baseDamage;
             _remainingReclaims = Mathf.Max(0, spell.Modifier.MaxReclaimsPerCast);
         }
 
-        public bool WasTargetHit(ISpellTarget target) => _hitTargets.Contains(target);
+        public bool WasTargetHit(ICombatTarget target) => _hitTargets.Contains(target);
 
-        public void MarkTargetAsHit(ISpellTarget target)
+        public void MarkTargetAsHit(ICombatTarget target)
         {
             _hitTargets.Add(target);
         }

@@ -1,8 +1,12 @@
 using UnityEngine;
 
+/// <summary>
+/// Defines one form word and the shape, timing, cost, damage, targeting, and VFX data for that spell form.
+/// </summary>
 [CreateAssetMenu(menuName = "Combat/Words/Form Word", fileName = "FormWordData")]
 public sealed class FormWordData : WordData
 {
+    [field: Header("Identity")]
     [field: SerializeField] public FormWordType Type { get; private set; }
 
     [Header("Combat")]
@@ -47,23 +51,13 @@ public sealed class FormWordData : WordData
         Range = Mathf.Max(0.1f, Range);
         HitRadius = Mathf.Max(0.1f, HitRadius);
 
-        WaveArcAngle = Type == FormWordType.Wave ? GetPositiveOrDefault(WaveArcAngle, 80f) : -1f;
-        BeamDuration = Type == FormWordType.Beam ? GetPositiveOrDefault(BeamDuration, 1f) : -1f;
-        BeamTickInterval = Type == FormWordType.Beam ? GetPositiveOrDefault(BeamTickInterval, 0.2f) : -1f;
-        BarrageProjectileCount = Type == FormWordType.Barrage ? GetPositiveOrDefault(BarrageProjectileCount, 4) : -1;
-        BarrageInterval = Type == FormWordType.Barrage ? GetPositiveOrDefault(BarrageInterval, 0.08f) : -1f;
+        WaveArcAngle = Type == FormWordType.Wave ? Mathf.Max(0f, WaveArcAngle) : -1f;
+        BeamDuration = Type == FormWordType.Beam ? Mathf.Max(0f, BeamDuration) : -1f;
+        BeamTickInterval = Type == FormWordType.Beam ? Mathf.Max(0f, BeamTickInterval) : -1f;
+        BarrageProjectileCount = Type == FormWordType.Barrage ? Mathf.Max(0, BarrageProjectileCount) : -1;
+        BarrageInterval = Type == FormWordType.Barrage ? Mathf.Max(0f, BarrageInterval) : -1f;
 
         _vfxLifetime = Mathf.Max(0.01f, _vfxLifetime);
         _vfxSpeed = Mathf.Max(0f, _vfxSpeed);
-    }
-
-    private static float GetPositiveOrDefault(float value, float defaultValue)
-    {
-        return value > 0f ? value : defaultValue;
-    }
-
-    private static int GetPositiveOrDefault(int value, int defaultValue)
-    {
-        return value > 0 ? value : defaultValue;
     }
 }

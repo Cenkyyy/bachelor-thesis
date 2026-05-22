@@ -1,23 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget, ISpellWordEffectivenessTarget
+public sealed class EnemySpellTarget : MonoBehaviour, ICombatTarget, IStatusEffectTarget, ISpellWordEffectivenessTarget
 {
     [Header("References")]
     [SerializeField] private EnemyCore _enemyCore;
     [SerializeField] private EntityDamageable _damageable;
 
-    [Header("Status Runtime")]
-    [SerializeField] private float _statusTickInterval = 0.5f;
-
-    [Header("Damage Word Text Popup Settings")]
-    [SerializeField] private DamagePopupFeedbackSettings _damagePopupFeedbackSettings = new();
-
     private readonly Dictionary<CombatStatusEffectType, float> _statusUntil = new();
     private readonly List<CombatStatusEffectType> _cleanupBuffer = new();
-    private float _stunBuildup;
 
     public Vector2 Position => transform.position;
 
@@ -30,6 +22,12 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget, ISpellWordEf
             CleanupExpiredStatuses();
             return _statusUntil.Count > 0;
         }
+    }
+
+    public bool HasStatus(CombatStatusEffectType effect)
+    {
+        CleanupExpiredStatuses();
+        return _statusUntil.ContainsKey(effect);
     }
 
     private void Awake()
@@ -55,75 +53,15 @@ public sealed class EnemySpellTarget : MonoBehaviour, ISpellTarget, ISpellWordEf
         return true;
     }
 
-    public void ReceiveSpellDamage(float amount, object source = null)
-    {
-        if (_damageable == null)
-            return;
-
-        var rounded = Mathf.RoundToInt(amount);
-        if (rounded <= 0)
-            rounded = 1;
-
-        _damageable.ReceiveDamage(rounded, source);
-    }
-
     public void ApplyStatus(CombatStatusEffectType effect, float durationSeconds)
     {
         if (effect == CombatStatusEffectType.None || durationSeconds <= 0f)
             return;
 
         _statusUntil[effect] = Time.time + durationSeconds;
-    }
 
-    public void ApplyDamageOverTime(float damagePerSecond, float durationSeconds, float effectivenessMultiplier = 1f, object source = null)
-    {
-        if (damagePerSecond <= 0f || durationSeconds <= 0f)
-            return;
-
-        StartCoroutine(ApplyDamageOverTimeRoutine(damagePerSecond, durationSeconds, effectivenessMultiplier, source));
-    }
-
-    public void AddStunBuildup(float amount, float threshold, float stunDurationSeconds)
-    {
-        if (amount <= 0f || threshold <= 0f)
-            return;
-
-        _stunBuildup += amount;
-        if (_stunBuildup < threshold)
-            return;
-
-        _stunBuildup = 0f;
-        ApplyStatus(CombatStatusEffectType.Stunned, stunDurationSeconds);
-        _enemyCore?.StopMovement();
-    }
-
-    private IEnumerator ApplyDamageOverTimeRoutine(float damagePerSecond, float durationSeconds, float effectivenessMultiplier, object source)
-    {
-        var elapsed = 0f;
-        var initialDelay = Mathf.Min(_statusTickInterval, durationSeconds);
-        if (initialDelay > 0f)
-        {
-            yield return new WaitForSeconds(initialDelay);
-            elapsed += initialDelay;
-        }
-
-        while (elapsed < durationSeconds)
-        {
-            if (!IsAlive)
-                yield break;
-
-            var delta = Mathf.Min(_statusTickInterval, durationSeconds - elapsed);
-            var damage = Mathf.RoundToInt(damagePerSecond * delta);
-            if (damage > 0)
-            {
-                _damageable.ReceiveDamage(damage, source);
-                DamagePopupFeedbackUtility.ShowForGameObject(gameObject, damage, effectivenessMultiplier, _damagePopupFeedbackSettings);
-            }
-
-            elapsed += delta;
-            if (elapsed < durationSeconds)
-                yield return new WaitForSeconds(Mathf.Min(_statusTickInterval, durationSeconds - elapsed));
-        }
+        if (effect == CombatStatusEffectType.Stunned)
+            _enemyCore?.StopMovement();
     }
 
     private void CleanupExpiredStatuses()

@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 
+/// <summary>
+/// Base asset for spell words, containing shared display and shop metadata.
+/// </summary>
 public abstract class WordData : ScriptableObject
 {
     [field: Header("Word")]

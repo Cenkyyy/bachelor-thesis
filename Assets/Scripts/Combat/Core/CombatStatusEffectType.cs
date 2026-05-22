@@ -1,3 +1,6 @@
+/// <summary>
+/// Represents status effects that combat systems can apply to spell targets.
+/// </summary>
 public enum CombatStatusEffectType
 {
     None = 0,

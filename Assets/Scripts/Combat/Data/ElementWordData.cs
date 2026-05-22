@@ -1,9 +1,15 @@
 using UnityEngine;
 
+/// <summary>
+/// Defines one element word and the elemental combat effects it can apply.
+/// </summary>
 [CreateAssetMenu(menuName = "Combat/Words/Element Word", fileName = "ElementWordData")]
 public sealed class ElementWordData : WordData
 {
+    [field: Header("Identity")]
     [field: SerializeField] public ElementWordType Type { get; private set; }
+
+    [field: Header("Visuals")]
     [field: SerializeField] public Material Material { get; private set; }
 
     [Header("Status")]
@@ -24,11 +30,11 @@ public sealed class ElementWordData : WordData
     {
         base.OnValidate();
 
-        StatusDuration = UsesStatusDuration() ? GetPositiveOrDefault(StatusDuration, 3f) : -1f;
-        DamageOverTimePerSecond = UsesDamageOverTime() ? GetNonNegativeOrDefault(DamageOverTimePerSecond, 5f) : -1f;
-        LightningBonusMultiplier = Type == ElementWordType.Lightning ? GetPositiveOrDefault(LightningBonusMultiplier, 1.35f) : -1f;
-        PoisonCloudRadius = Type == ElementWordType.Poison ? GetPositiveOrDefault(PoisonCloudRadius, 1.9f) : -1f;
-        PoisonCloudDuration = Type == ElementWordType.Poison ? GetPositiveOrDefault(PoisonCloudDuration, 4f) : -1f;
+        StatusDuration = UsesStatusDuration() ? Mathf.Max(0f, StatusDuration) : -1f;
+        DamageOverTimePerSecond = UsesDamageOverTime() ? Mathf.Max(0f, DamageOverTimePerSecond) : -1f;
+        LightningBonusMultiplier = Type == ElementWordType.Lightning ? Mathf.Max(0f, LightningBonusMultiplier) : -1f;
+        PoisonCloudRadius = Type == ElementWordType.Poison ? Mathf.Max(0f, PoisonCloudRadius) : -1f;
+        PoisonCloudDuration = Type == ElementWordType.Poison ? Mathf.Max(0f, PoisonCloudDuration) : -1f;
     }
 
     private bool UsesStatusDuration()
@@ -42,15 +48,5 @@ public sealed class ElementWordData : WordData
     {
         return Type == ElementWordType.Ember ||
                Type == ElementWordType.Poison;
-    }
-
-    private static float GetPositiveOrDefault(float value, float defaultValue)
-    {
-        return value > 0f ? value : defaultValue;
-    }
-
-    private static float GetNonNegativeOrDefault(float value, float defaultValue)
-    {
-        return value >= 0f ? value : defaultValue;
     }
 }

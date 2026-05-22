@@ -17,9 +17,8 @@ MonoBehaviour:
   <Type>k__BackingField: 0
   <AdditionalManaCost>k__BackingField: 2
   <AdditionalCooldownSeconds>k__BackingField: 0.1
-  <StunBuildupPerHit>k__BackingField: -1
-  <StunThreshold>k__BackingField: -1
-  <StunDuration>k__BackingField: -1
+  <StunDurationMin>k__BackingField: -1
+  <StunDurationMax>k__BackingField: -1
   <ExplosionRadius>k__BackingField: -1
   <ExplosionDamageMultiplier>k__BackingField: -1
   <ReclaimManaPerHit>k__BackingField: -1

@@ -1,5 +1,5 @@
-﻿/// <summary>
-/// Defines a contract for retrieving spell word effectiveness data, including biome affinity and enemy role tags, for a target.
+/// <summary>
+/// Contract for targets that expose biome affinity and role tags used by spell word effectiveness rules.
 /// </summary>
 public interface ISpellWordEffectivenessTarget
 {
