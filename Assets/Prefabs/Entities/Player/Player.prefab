@@ -172,7 +172,6 @@ GameObject:
   - component: {fileID: 6731827953367733980}
   - component: {fileID: 4319894653538523301}
   - component: {fileID: 4686141728631495212}
-  - component: {fileID: 3171962435665915792}
   - component: {fileID: 2737436318412507732}
   - component: {fileID: 5815203664740908025}
   - component: {fileID: 691936326778899438}
@@ -455,20 +454,6 @@ MonoBehaviour:
   _cooldownSeconds: 1
   _stackSpacing: 0.2
   _maxActivePopups: 4
---- !u!114 &3171962435665915792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2259951683026114348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 950b57fd1e315c14e8b91016ffc7fdb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spellCombatController: {fileID: 4319894653538523301}
-  _spellContainer: {fileID: 0}
 --- !u!114 &2737436318412507732
 MonoBehaviour:
   m_ObjectHideFlags: 0

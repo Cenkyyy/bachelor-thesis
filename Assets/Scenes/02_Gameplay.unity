@@ -2195,8 +2195,9 @@ MonoBehaviour:
   _elementPanel: {fileID: 945923688}
   _formPanel: {fileID: 2079023826}
   _currentPhraseText: {fileID: 1122847216}
-  _feedbackPopup: {fileID: 0}
+  _feedbackPopup: {fileID: 317918005633736360}
   _weaponRequiredMessage: Arm a weapon to cast spells
+  _weaponRequiredMessageColor: {r: 1, g: 1, b: 1, a: 1}
   _spellCastingKeys: {fileID: 11400000, guid: 3e021325f9dbcae49a3b7568466162af, type: 2}
   _castLockDurationSeconds: 0.2
   _autoCancelCastingAfterSeconds: 4
@@ -18322,10 +18323,6 @@ PrefabInstance:
       propertyPath: _decorationChunkGenerator
       value: 
       objectReference: {fileID: 1097722630}
-    - target: {fileID: 3171962435665915792, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
-      propertyPath: _spellContainer
-      value: 
-      objectReference: {fileID: 2222222002}
     - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _uiRaycaster
       value: 
@@ -18474,6 +18471,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6883eac39f5c3a1469a0c2bf1fdc7bd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &317918005633736360 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4686141728631495212, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+  m_PrefabInstance: {fileID: 317918005633736356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1971731234e694f4ab34acd03d85fe09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &317918005633736361 stripped

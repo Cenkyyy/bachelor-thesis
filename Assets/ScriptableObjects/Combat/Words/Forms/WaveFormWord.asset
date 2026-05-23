@@ -28,4 +28,4 @@ MonoBehaviour:
   <ProjectilePrefab>k__BackingField: {fileID: 6381046162596957270, guid: 9e3f545fdb760454986e5d273dd3e896, type: 3}
   _vfxLifetime: 0.45
   _vfxSpeed: 6
-  _vfxScale: {x: 1, y: 1, z: 1}
+  _vfxScale: {x: 0.8, y: 0.8, z: 1}
