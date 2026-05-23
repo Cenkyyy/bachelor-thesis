@@ -27,7 +27,7 @@ public sealed class RangedEnemyCore : EnemyCore
 
     public bool TryShootProjectileAtCurrentTarget()
     {
-        if (RuntimeData.IsDead || !CanAttackCurrentTarget())
+        if (RuntimeData.IsDead || !HasTarget)
             return false;
 
         var directionToTarget = ((Vector2)Target.position - (Vector2)transform.position).normalized;

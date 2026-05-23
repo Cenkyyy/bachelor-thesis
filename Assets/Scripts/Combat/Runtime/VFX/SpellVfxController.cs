@@ -1,71 +1,57 @@
-using System.Collections;
 using UnityEngine;
 
-public class SpellVfxController : MonoBehaviour
+/// <summary>
+/// Spawns world-space spell visuals requested by the player spell combat flow.
+/// </summary>
+public sealed class SpellVfxController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerSpellCombatController _spellCombatController;
+    [SerializeField] private Transform _spellContainer;
 
     private void OnEnable()
     {
         if (_spellCombatController != null)
-            _spellCombatController.OnSpellCastCommitted += HandleSpellCastCommitted;
+            _spellCombatController.OnSpellVisualRequested += HandleSpellVisualRequested;
     }
 
     private void OnDisable()
     {
         if (_spellCombatController != null)
-            _spellCombatController.OnSpellCastCommitted -= HandleSpellCastCommitted;
+            _spellCombatController.OnSpellVisualRequested -= HandleSpellVisualRequested;
     }
 
-    private void HandleSpellCastCommitted(SpellPhrase spell)
+    private void HandleSpellVisualRequested(SpellVisualRequest request)
     {
-        if (!spell.IsCommitted || spell.Form.ProjectilePrefab == null)
+        if (!request.Spell.IsCommitted || request.Spell.Form.ProjectilePrefab == null)
             return;
 
-        if (spell.Form.Type == FormWordType.Barrage)
-        {
-            StartCoroutine(PlayBarrage(spell));
-            return;
-        }
-
-        SpawnBatch(spell);
-
-        if (spell.Modifier.OptionalPrefab != null)
-            SpawnModifierVisual(spell);
+        SpawnBatch(request);
     }
 
-    private IEnumerator PlayBarrage(SpellPhrase spell)
+    private void SpawnBatch(SpellVisualRequest request)
     {
-        for (var i = 0; i < spell.Form.BarrageProjectileCount; i++)
+        SpellPhrase spell = request.Spell;
+        for (int i = 0; i < spell.Directions.Count; i++)
         {
-            SpawnBatch(spell);
-            yield return new WaitForSeconds(spell.Form.BarrageInterval);
-        }
-    }
-
-    private void SpawnBatch(SpellPhrase spell)
-    {
-        for (var i = 0; i < spell.Directions.Count; i++)
-        {
-            var spellObject = Instantiate(spell.Form.ProjectilePrefab, spell.Origin, Quaternion.identity);
+            GameObject spellObject = Instantiate(spell.Form.ProjectilePrefab, spell.Origin, Quaternion.identity, _spellContainer);
             spellObject.transform.localScale = spell.Form.VfxScale;
 
-            var instance = spellObject.GetComponent<SpellVfxInstance>();
-            if (instance == null)
-                instance = spellObject.AddComponent<SpellVfxInstance>();
+            SpellProjectile projectileVfx = spellObject.GetComponent<SpellProjectile>();
+            if (projectileVfx == null)
+                projectileVfx = spellObject.AddComponent<SpellProjectile>();
 
-            instance.Initialize(spell.Directions[i], spell.Form.VfxSpeed, spell.Form.VfxLifetime, spell.Element.Material);
+            float travelDistance = request.TravelDistances != null && i < request.TravelDistances.Count ? request.TravelDistances[i] : spell.Form.Range;
+            float lifetime = ResolveLifetime(spell.Form.VfxLifetime, spell.Form.VfxSpeed, travelDistance);
+            projectileVfx.Initialize(spell.Directions[i], spell.Form.VfxSpeed, lifetime, travelDistance, request.ObstructionMask, spell.Element.Material);
         }
     }
 
-    private void SpawnModifierVisual(SpellPhrase spell)
+    private static float ResolveLifetime(float configuredLifetime, float speed, float travelDistance)
     {
-        var modifierObject = Instantiate(spell.Modifier.OptionalPrefab, spell.Origin, Quaternion.identity);
-        modifierObject.transform.right = spell.Directions[0];
+        if (speed <= 0f)
+            return configuredLifetime;
 
-        var renderer = modifierObject.GetComponentInChildren<SpriteRenderer>();
-        if (renderer != null && spell.Element.Material != null)
-            renderer.material = spell.Element.Material;
+        return Mathf.Max(configuredLifetime, travelDistance / speed);
     }
 }

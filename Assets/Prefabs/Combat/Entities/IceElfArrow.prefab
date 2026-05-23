@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 427747824887228422}
+  - component: {fileID: 6972902530202342435}
   - component: {fileID: 8882785894407575887}
   - component: {fileID: 4956070707948046794}
-  - component: {fileID: 4076517112183233803}
-  - component: {fileID: 6972902530202342435}
+  - component: {fileID: 5941476368445960826}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: IceElfArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,6 +35,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6972902530202342435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2987626352167526763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb4d788de56cbd4bb378df524066f30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 4956070707948046794}
+  _collider: {fileID: 5941476368445960826}
+  _defaultSpeed: 8
+  _defaultLifetimeSeconds: 4
+  _damageMask:
+    serializedVersion: 2
+    m_Bits: 512
+  _blockerMask:
+    serializedVersion: 2
+    m_Bits: 2304
 --- !u!212 &8882785894407575887
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -79,8 +101,8 @@ SpriteRenderer:
   m_SortingLayerID: 790479049
   m_SortingLayer: 5
   m_SortingOrder: 1
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.13238695, g: 0.8018868, b: 0.73376876, a: 1}
+  m_Sprite: {fileID: -7401007624760152020, guid: 1261e8100c7956c418b6f3986fa70901, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -117,8 +139,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &4076517112183233803
-CircleCollider2D:
+--- !u!61 &5941476368445960826
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -151,23 +173,15 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.000000014901161}
-  m_Radius: 0.11294918
---- !u!114 &6972902530202342435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2987626352167526763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fb4d788de56cbd4bb378df524066f30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 4956070707948046794}
-  _defaultSpeed: 8
-  _defaultLifetimeSeconds: 4
-  _damageMask:
-    serializedVersion: 2
-    m_Bits: 512
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.28125, y: 0.65625}
+    newSize: {x: 0.2, y: 0.2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.28125, y: 0.65625}
+  m_EdgeRadius: 0

@@ -26,6 +26,8 @@ public sealed class SpellCastingPanel : MonoBehaviour
 
     [Header("HUD")]
     [SerializeField] private TMP_Text _currentPhraseText;
+    [SerializeField] private WorldTextPopupController _feedbackPopup;
+    [SerializeField] private string _weaponRequiredMessage = "Arm a weapon to cast spells";
 
     [Header("Input")]
     [SerializeField] private SpellCastingInputBindingsData _spellCastingKeys;
@@ -66,6 +68,9 @@ public sealed class SpellCastingPanel : MonoBehaviour
 
         _wordInventory.OnWordsInitialized += HandleWordsInitialized;
         _wordInventory.OnWordsChanged += RefreshPanels;
+
+        if (_wordInventory.HasInitializedWords)
+            HandleWordsInitialized();
     }
 
     private void OnDisable()
@@ -94,7 +99,7 @@ public sealed class SpellCastingPanel : MonoBehaviour
             return;
         }
 
-        if (_isCastLocked || GameStateManager.IsGamePaused || !_canInteractWithSpellcasting)
+        if (_isCastLocked || GameStateManager.IsGamePaused)
             return;
 
         if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
@@ -105,6 +110,12 @@ public sealed class SpellCastingPanel : MonoBehaviour
         var pressedIndex = _spellCastingKeys.TryGetPressedIndex();
         if (!pressedIndex.HasValue)
             return;
+
+        if (!_canInteractWithSpellcasting)
+        {
+            _feedbackPopup?.ShowMessage(_weaponRequiredMessage);
+            return;
+        }
 
         TrySelectWord(pressedIndex.Value);
     }
@@ -148,6 +159,9 @@ public sealed class SpellCastingPanel : MonoBehaviour
     {
         if (_player != null && _wordInventory == null)
             _wordInventory = _player.SpellWords;
+
+        if (_player != null && _feedbackPopup == null)
+            _feedbackPopup = _player.GetComponent<WorldTextPopupController>();
 
         return _player != null && _wordInventory != null;
     }

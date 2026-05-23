@@ -591,6 +591,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2544520321049281736, guid: 3476e884cbb7739438940f4d3148ab14, type: 3}
+      propertyPath: _enableWordSelection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4955470400049087551, guid: 3476e884cbb7739438940f4d3148ab14, type: 3}
       propertyPath: m_Name
       value: PersistentCanvas

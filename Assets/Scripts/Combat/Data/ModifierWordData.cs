@@ -29,9 +29,6 @@ public sealed class ModifierWordData : WordData
     [field: SerializeField, Min(-1f)] public float SplitAngleDegrees { get; private set; }
     [field: SerializeField, Min(-1f)] public float SplitDamageMultiplier { get; private set; }
 
-    [Header("Visuals")]
-    [field: SerializeField] public GameObject OptionalPrefab { get; private set; }
-
     public override WordCategory Category => WordCategory.Modifier;
     public override bool IsValid => System.Enum.IsDefined(typeof(ModifierWordType), Type);
 

@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoisonCloudZone : MonoBehaviour
+/// <summary>
+/// Applies poison damage and poison status to combat targets inside a temporary area.
+/// </summary>
+public sealed class PoisonCloudZone : MonoBehaviour
 {
     private const float TickIntervalSeconds = 0.5f;
 
@@ -15,6 +18,26 @@ public class PoisonCloudZone : MonoBehaviour
     private float _elapsed;
     private float _tickAccumulator;
     private object _damageSource;
+
+    private void Update()
+    {
+        float delta = Time.deltaTime;
+        _elapsed += delta;
+
+        _tickAccumulator += delta;
+
+        while (_tickAccumulator >= TickIntervalSeconds)
+        {
+            _tickAccumulator -= TickIntervalSeconds;
+
+            float remainingDuration = Mathf.Max(0f, _duration - (_elapsed - _tickAccumulator));
+            float tickDuration = Mathf.Min(TickIntervalSeconds, remainingDuration);
+            ApplyPoisonTick(tickDuration);
+        }
+
+        if (_elapsed >= _duration)
+            Destroy(gameObject);
+    }
 
     public void Initialize(float radius, float durationSeconds, float damagePerSecond, LayerMask targetMask, object damageSource)
     {
@@ -31,26 +54,6 @@ public class PoisonCloudZone : MonoBehaviour
         };
     }
 
-    private void Update()
-    {
-        var delta = Time.deltaTime;
-        _elapsed += delta;
-
-        _tickAccumulator += delta;
-
-        while (_tickAccumulator >= TickIntervalSeconds)
-        {
-            _tickAccumulator -= TickIntervalSeconds;
-
-            var remainingDuration = Mathf.Max(0f, _duration - (_elapsed - _tickAccumulator));
-            var tickDuration = Mathf.Min(TickIntervalSeconds, remainingDuration);
-            ApplyPoisonTick(tickDuration);
-        }
-
-        if (_elapsed >= _duration)
-            Destroy(gameObject);
-    }
-
     private void ApplyPoisonTick(float tickDuration)
     {
         if (tickDuration <= 0f)
@@ -61,21 +64,13 @@ public class PoisonCloudZone : MonoBehaviour
 
         for (var i = 0; i < _buffer.Count; i++)
         {
-            var target = _buffer[i].GetComponentInParent<ICombatTarget>();
-            if (target == null || !target.IsAlive)
+            if (!SpellCombatTargetUtility.TryGetCombatTarget(_buffer[i], out ICombatTarget target))
                 continue;
 
-            var damageable = _buffer[i].GetComponentInParent<IDamageable>();
-            if (damageable == null || !damageable.CanReceiveDamage)
+            if (!SpellCombatTargetUtility.TryApplyDamage(target, _dps * tickDuration, _damageSource, out _))
                 continue;
 
-            var damage = Mathf.RoundToInt(_dps * tickDuration);
-            if (damage <= 0)
-                damage = 1;
-
-            damageable.ReceiveDamage(damage, _damageSource);
-
-            var statusTarget = _buffer[i].GetComponentInParent<IStatusEffectTarget>();
+            IStatusEffectTarget statusTarget = SpellCombatTargetUtility.GetStatusEffectTarget(target);
             statusTarget?.ApplyStatus(CombatStatusEffectType.Poison, TickIntervalSeconds);
         }
     }

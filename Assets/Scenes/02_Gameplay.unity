@@ -2195,6 +2195,8 @@ MonoBehaviour:
   _elementPanel: {fileID: 945923688}
   _formPanel: {fileID: 2079023826}
   _currentPhraseText: {fileID: 1122847216}
+  _feedbackPopup: {fileID: 0}
+  _weaponRequiredMessage: Arm a weapon to cast spells
   _spellCastingKeys: {fileID: 11400000, guid: 3e021325f9dbcae49a3b7568466162af, type: 2}
   _castLockDurationSeconds: 0.2
   _autoCancelCastingAfterSeconds: 4
@@ -11198,6 +11200,7 @@ Transform:
   - {fileID: 1426833342}
   - {fileID: 325433512}
   - {fileID: 1087975137}
+  - {fileID: 2222222002}
   m_Father: {fileID: 174293338}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1362542294
@@ -18256,6 +18259,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097751cbe32392e4482e110af72b9f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2222222001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2222222002}
+  m_Layer: 0
+  m_Name: SpellContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2222222002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2222222001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1327090048}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &317918005633736356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18288,6 +18322,10 @@ PrefabInstance:
       propertyPath: _decorationChunkGenerator
       value: 
       objectReference: {fileID: 1097722630}
+    - target: {fileID: 3171962435665915792, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _spellContainer
+      value: 
+      objectReference: {fileID: 2222222002}
     - target: {fileID: 3255990485141274289, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _uiRaycaster
       value: 
@@ -18364,6 +18402,14 @@ PrefabInstance:
       propertyPath: _castingPanel
       value: 
       objectReference: {fileID: 192015840}
+    - target: {fileID: 4319894653538523301, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _spellContainer
+      value: 
+      objectReference: {fileID: 2222222002}
+    - target: {fileID: 4319894653538523301, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
+      propertyPath: _spellObstructionMask.m_Bits
+      value: 2304
+      objectReference: {fileID: 0}
     - target: {fileID: 5402159747806690286, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _worldCamera
       value: 

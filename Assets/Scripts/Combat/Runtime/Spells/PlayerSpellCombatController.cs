@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSpellCombatController : MonoBehaviour
+/// <summary>
+/// Orchestrates player spell casting, resource payment, target checks, damage, and word side effects.
+/// </summary>
+public sealed class PlayerSpellCombatController : MonoBehaviour
 {
     private const float DamageOverTimeTickIntervalSeconds = 0.5f;
 
@@ -12,6 +15,7 @@ public class PlayerSpellCombatController : MonoBehaviour
     [SerializeField] private PlayerHeldItemVisualController _playerHeldItemVisual;
     [SerializeField] private SpellCastingPanel _castingPanel;
     [SerializeField] private WorldTextPopupController _feedbackPopup;
+    [SerializeField] private Transform _spellContainer;
 
     [Header("Feedback")]
     [SerializeField] private string _castOnCooldownMessage = "Spell is recharging";
@@ -19,6 +23,7 @@ public class PlayerSpellCombatController : MonoBehaviour
 
     [Header("Targeting")]
     [SerializeField] private LayerMask _targetMask;
+    [SerializeField] private LayerMask _spellObstructionMask;
 
     [Header("Word Effectiveness")]
     [SerializeField] private SpellWordEffectivenessData _wordEffectivenessData;
@@ -28,7 +33,7 @@ public class PlayerSpellCombatController : MonoBehaviour
     private ContactFilter2D _targetFilter;
     private float _nextCastAllowedAt;
 
-    public event Action<SpellPhrase> OnSpellCastCommitted;
+    public event Action<SpellVisualRequest> OnSpellVisualRequested;
 
     private void Awake()
     {
@@ -69,14 +74,14 @@ public class PlayerSpellCombatController : MonoBehaviour
         if (_player == null || _player.Data == null)
             return;
 
-        var modifierData = phrase.Modifier;
-        var elementData = phrase.Element;
-        var formData = phrase.Form;
+        ModifierWordData modifierData = phrase.Modifier;
+        ElementWordData elementData = phrase.Element;
+        FormWordData formData = phrase.Form;
         if (modifierData == null || elementData == null || formData == null)
             return;
 
-        var manaCost = Mathf.Max(0, formData.ManaCost) + Mathf.Max(0, modifierData.AdditionalManaCost);
-        var cooldown = Mathf.Max(0f, formData.CooldownSeconds) + Mathf.Max(0f, modifierData.AdditionalCooldownSeconds);
+        int manaCost = Mathf.Max(0, formData.ManaCost) + Mathf.Max(0, modifierData.AdditionalManaCost);
+        float cooldown = Mathf.Max(0f, formData.CooldownSeconds) + Mathf.Max(0f, modifierData.AdditionalCooldownSeconds);
 
         if (_player.Data.CurrentMana < manaCost)
         {
@@ -87,12 +92,10 @@ public class PlayerSpellCombatController : MonoBehaviour
         _player.Data.UseMana(manaCost);
         _nextCastAllowedAt = Time.time + cooldown;
 
-        var origin = (Vector2)_playerHeldItemVisual.CurrentHandAnchor.position;
+        Vector2 origin = _playerHeldItemVisual.CurrentHandAnchor.position;
         phrase.SetCastContext(origin, BuildCastDirections(origin, modifierData));
 
-        OnSpellCastCommitted?.Invoke(phrase);
-
-        var castState = new CastState(
+        CastState castState = new(
             phrase,
             GetDamageAfterItemBonuses(formData.BaseDamage));
         StartCoroutine(ExecuteCast(castState));
@@ -114,16 +117,21 @@ public class PlayerSpellCombatController : MonoBehaviour
         switch (castState.Form.Type)
         {
             case FormWordType.Shard:
-                foreach (var direction in castState.Directions)
-                    FireLineSpell(castState, direction, oncePerTarget: true);
+                float[] shardTravelDistances = new float[castState.Directions.Count];
+                for (int directionIndex = 0; directionIndex < castState.Directions.Count; directionIndex++)
+                    shardTravelDistances[directionIndex] = FireLineSpell(castState, castState.Directions[directionIndex], oncePerTarget: true);
+
+                RequestSpellVisual(castState, shardTravelDistances);
                 break;
 
             case FormWordType.Beam:
+                RequestSpellVisual(castState, CreateObstructedTravelDistances(castState));
                 yield return RunBeam(castState);
                 break;
 
             case FormWordType.Wave:
-                foreach (var direction in castState.Directions)
+                RequestSpellVisual(castState, CreateFullRangeTravelDistances(castState));
+                foreach (Vector2 direction in castState.Directions)
                     FireWaveSpell(castState, direction);
                 break;
 
@@ -135,10 +143,10 @@ public class PlayerSpellCombatController : MonoBehaviour
 
     private IEnumerator RunBeam(CastState castState)
     {
-        var elapsed = 0f;
+        float elapsed = 0f;
         while (elapsed < castState.Form.BeamDuration)
         {
-            foreach (var direction in castState.Directions)
+            foreach (Vector2 direction in castState.Directions)
                 FireLineSpell(castState, direction, oncePerTarget: false);
 
             elapsed += castState.Form.BeamTickInterval;
@@ -148,39 +156,48 @@ public class PlayerSpellCombatController : MonoBehaviour
 
     private IEnumerator RunBarrage(CastState castState)
     {
-        for (var i = 0; i < castState.Form.BarrageProjectileCount; i++)
+        for (int i = 0; i < castState.Form.BarrageProjectileCount; i++)
         {
-            foreach (var direction in castState.Directions)
-                FireLineSpell(castState, direction, oncePerTarget: true);
+            castState.ClearHitTargets();
+            float[] travelDistances = new float[castState.Directions.Count];
+
+            for (int directionIndex = 0; directionIndex < castState.Directions.Count; directionIndex++)
+                travelDistances[directionIndex] = FireLineSpell(castState, castState.Directions[directionIndex], oncePerTarget: true);
+
+            RequestSpellVisual(castState, travelDistances);
 
             yield return new WaitForSeconds(castState.Form.BarrageInterval);
         }
     }
 
-    private void FireLineSpell(CastState castState, Vector2 direction, bool oncePerTarget)
+    private float FireLineSpell(CastState castState, Vector2 direction, bool oncePerTarget)
     {
         Vector2 origin = _playerHeldItemVisual.CurrentHandAnchor.position;
-        QueryTargetsInRadius(origin, castState.Form.Range);
-        var nearestDistance = float.MaxValue;
-        var nearestTarget = (ICombatTarget)null;
+        float maxTravelDistance = ResolveLineSpellTravelDistance(origin, direction, castState.Form.Range);
+        QueryTargetsInRadius(origin, maxTravelDistance);
+        float nearestDistance = float.MaxValue;
+        ICombatTarget nearestTarget = null;
 
         for (var i = 0; i < _targetBuffer.Count; i++)
         {
-            var target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
+            ICombatTarget target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
             if (target == null || !target.IsAlive)
                 continue;
 
-            var toTarget = target.Position - origin;
-            var projected = Vector2.Dot(toTarget, direction);
-            if (projected <= 0f || projected > castState.Form.Range)
+            Vector2 toTarget = target.Position - origin;
+            float projected = Vector2.Dot(toTarget, direction);
+            if (projected <= 0f || projected > maxTravelDistance)
                 continue;
 
-            var lateralDistance = Mathf.Abs(Vector3.Cross(direction, toTarget.normalized).z) * toTarget.magnitude;
+            float lateralDistance = Mathf.Abs(Vector3.Cross(direction, toTarget.normalized).z) * toTarget.magnitude;
             if (lateralDistance > castState.Form.HitRadius)
                 continue;
 
             if (castState.Modifier.Type == ModifierWordType.Piercing)
             {
+                if (oncePerTarget && castState.WasTargetHit(target))
+                    continue;
+
                 ApplyHit(castState, target, target.Position);
                 if (oncePerTarget)
                     castState.MarkTargetAsHit(target);
@@ -202,7 +219,11 @@ public class PlayerSpellCombatController : MonoBehaviour
             ApplyHit(castState, nearestTarget, nearestTarget.Position);
             if (oncePerTarget)
                 castState.MarkTargetAsHit(nearestTarget);
+
+            return nearestDistance;
         }
+
+        return maxTravelDistance;
     }
 
     private void FireWaveSpell(CastState castState, Vector2 direction)
@@ -212,15 +233,15 @@ public class PlayerSpellCombatController : MonoBehaviour
 
         for (var i = 0; i < _targetBuffer.Count; i++)
         {
-            var target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
+            ICombatTarget target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
             if (target == null || !target.IsAlive)
                 continue;
 
-            var toTarget = target.Position - origin;
+            Vector2 toTarget = target.Position - origin;
             if (toTarget.magnitude > castState.Form.Range)
                 continue;
 
-            var angle = Vector2.Angle(direction, toTarget);
+            float angle = Vector2.Angle(direction, toTarget);
             if (angle > castState.Form.WaveArcAngle * 0.5f)
                 continue;
 
@@ -230,18 +251,18 @@ public class PlayerSpellCombatController : MonoBehaviour
 
     private void ApplyHit(CastState castState, ICombatTarget target, Vector2 hitPosition)
     {
-        var effectivenessMultiplier = ResolveWordEffectivenessMultiplier(castState, target);
-        var damage = castState.BaseDamage * effectivenessMultiplier;
-        var statusTarget = GetStatusEffectTarget(target);
+        float effectivenessMultiplier = ResolveWordEffectivenessMultiplier(castState, target);
+        float damage = castState.BaseDamage * effectivenessMultiplier;
+        IStatusEffectTarget statusTarget = SpellCombatTargetUtility.GetStatusEffectTarget(target);
 
         if (castState.Element.Type == ElementWordType.Lightning && statusTarget != null && statusTarget.HasAnyNegativeStatus)
             damage *= castState.Element.LightningBonusMultiplier;
 
-        if (TryApplyDamage(target, damage, _player, out var displayedDamage))
+        if (SpellCombatTargetUtility.TryApplyDamage(target, damage, _player, out int displayedDamage))
             DamagePopupFeedbackUtility.ShowForTarget(target, displayedDamage, effectivenessMultiplier, _damagePopupFeedbackSettings);
 
         ApplyElementStatus(castState, target, statusTarget, hitPosition, effectivenessMultiplier);
-        ApplyModifierSideEffects(castState, statusTarget, hitPosition);
+        ApplyModifierSideEffects(castState, target, statusTarget, hitPosition);
     }
 
     private float ResolveWordEffectivenessMultiplier(CastState castState, ICombatTarget target)
@@ -252,8 +273,8 @@ public class PlayerSpellCombatController : MonoBehaviour
         if (target is not Component targetComponent)
             return _wordEffectivenessData.NeutralMultiplier;
 
-        var effectivenessReceiver = targetComponent.GetComponentInParent<ISpellWordEffectivenessTarget>();
-        if (effectivenessReceiver == null || !effectivenessReceiver.TryGetSpellWordEffectivenessData(out var biome, out var roleTags))
+        ISpellWordEffectivenessTarget effectivenessReceiver = targetComponent.GetComponentInParent<ISpellWordEffectivenessTarget>();
+        if (effectivenessReceiver == null || !effectivenessReceiver.TryGetSpellWordEffectivenessData(out ItemBiomeAffinity biome, out EnemyRoleTag roleTags))
             return _wordEffectivenessData.NeutralMultiplier;
 
         return _wordEffectivenessData.CalculateFinalMultiplier(biome, roleTags, castState.Modifier, castState.Element, castState.Form);
@@ -280,7 +301,7 @@ public class PlayerSpellCombatController : MonoBehaviour
         }
     }
 
-    private void ApplyModifierSideEffects(CastState castState, IStatusEffectTarget statusTarget, Vector2 hitPosition)
+    private void ApplyModifierSideEffects(CastState castState, ICombatTarget directHitTarget, IStatusEffectTarget statusTarget, Vector2 hitPosition)
     {
         switch (castState.Modifier.Type)
         {
@@ -292,7 +313,7 @@ public class PlayerSpellCombatController : MonoBehaviour
                 if (!castState.TryConsumeExplosion())
                     return;
 
-                ApplyExplosion(castState, hitPosition);
+                ApplyExplosion(castState, hitPosition, directHitTarget);
                 break;
 
             case ModifierWordType.Reclaiming:
@@ -304,18 +325,21 @@ public class PlayerSpellCombatController : MonoBehaviour
         }
     }
 
-    private void ApplyExplosion(CastState castState, Vector2 center)
+    private void ApplyExplosion(CastState castState, Vector2 center, ICombatTarget directHitTarget)
     {
         QueryTargetsInRadius(center, castState.Modifier.ExplosionRadius);
         for (var i = 0; i < _targetBuffer.Count; i++)
         {
-            var target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
+            ICombatTarget target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
             if (target == null || !target.IsAlive)
                 continue;
 
-            var effectivenessMultiplier = ResolveWordEffectivenessMultiplier(castState, target);
-            var damage = castState.BaseDamage * castState.Modifier.ExplosionDamageMultiplier * effectivenessMultiplier;
-            if (TryApplyDamage(target, damage, _player, out var displayedDamage))
+            if (ReferenceEquals(target, directHitTarget))
+                continue;
+
+            float effectivenessMultiplier = ResolveWordEffectivenessMultiplier(castState, target);
+            float damage = castState.BaseDamage * castState.Modifier.ExplosionDamageMultiplier * effectivenessMultiplier;
+            if (SpellCombatTargetUtility.TryApplyDamage(target, damage, _player, out int displayedDamage))
                 DamagePopupFeedbackUtility.ShowForTarget(target, displayedDamage, effectivenessMultiplier, _damagePopupFeedbackSettings);
         }
     }
@@ -325,8 +349,8 @@ public class PlayerSpellCombatController : MonoBehaviour
         if (damagePerSecond <= 0f || durationSeconds <= 0f)
             yield break;
 
-        var elapsed = 0f;
-        var initialDelay = Mathf.Min(DamageOverTimeTickIntervalSeconds, durationSeconds);
+        float elapsed = 0f;
+        float initialDelay = Mathf.Min(DamageOverTimeTickIntervalSeconds, durationSeconds);
         if (initialDelay > 0f)
         {
             yield return new WaitForSeconds(initialDelay);
@@ -338,11 +362,11 @@ public class PlayerSpellCombatController : MonoBehaviour
             if (target is not Component targetComponent || targetComponent == null || !target.IsAlive)
                 yield break;
 
-            var delta = Mathf.Min(DamageOverTimeTickIntervalSeconds, durationSeconds - elapsed);
-            var damage = Mathf.RoundToInt(damagePerSecond * delta);
+            float delta = Mathf.Min(DamageOverTimeTickIntervalSeconds, durationSeconds - elapsed);
+            int damage = Mathf.RoundToInt(damagePerSecond * delta);
             if (damage > 0)
             {
-                if (TryApplyDamage(target, damage, source, out var displayedDamage))
+                if (SpellCombatTargetUtility.TryApplyDamage(target, damage, source, out int displayedDamage))
                     DamagePopupFeedbackUtility.ShowForTarget(target, displayedDamage, effectivenessMultiplier, _damagePopupFeedbackSettings);
             }
 
@@ -358,47 +382,34 @@ public class PlayerSpellCombatController : MonoBehaviour
         Physics2D.OverlapCircle(center, radius, _targetFilter, _targetBuffer);
     }
 
+    private float ResolveLineSpellTravelDistance(Vector2 origin, Vector2 direction, float maxRange)
+    {
+        if (_spellObstructionMask.value == 0)
+            return maxRange;
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction, maxRange, _spellObstructionMask);
+        if (hit.collider == null)
+            return maxRange;
+
+        return Mathf.Max(0.01f, hit.distance);
+    }
+
     private void SpawnPoisonCloud(ElementWordData element, Vector2 position)
     {
-        var cloud = new GameObject("PoisonCloud");
+        GameObject cloud = new("PoisonCloud");
         cloud.transform.position = position;
-        var zone = cloud.AddComponent<PoisonCloudZone>();
+        if (_spellContainer != null)
+            cloud.transform.SetParent(_spellContainer);
+
+        PoisonCloudZone zone = cloud.AddComponent<PoisonCloudZone>();
         zone.Initialize(element.PoisonCloudRadius, element.PoisonCloudDuration, element.DamageOverTimePerSecond, _targetMask, _player);
     }
 
-    private bool TryApplyDamage(ICombatTarget target, float amount, object source, out int appliedDamage)
+    private void RequestSpellVisual(CastState castState, IReadOnlyList<float> travelDistances)
     {
-        appliedDamage = 0;
-
-        if (!TryGetDamageable(target, out var damageable))
-            return false;
-
-        var roundedDamage = Mathf.RoundToInt(amount);
-        if (roundedDamage <= 0)
-            roundedDamage = 1;
-
-        damageable.ReceiveDamage(roundedDamage, source);
-        appliedDamage = roundedDamage;
-        return true;
-    }
-
-    private bool TryGetDamageable(ICombatTarget target, out IDamageable damageable)
-    {
-        damageable = null;
-
-        if (target is not Component targetComponent || targetComponent == null)
-            return false;
-
-        damageable = targetComponent.GetComponentInParent<IDamageable>();
-        return damageable != null && damageable.CanReceiveDamage;
-    }
-
-    private IStatusEffectTarget GetStatusEffectTarget(ICombatTarget target)
-    {
-        if (target is not Component targetComponent || targetComponent == null)
-            return null;
-
-        return targetComponent.GetComponentInParent<IStatusEffectTarget>();
+        SpellPhrase visualSpell = castState.Spell;
+        visualSpell.SetCastContext(_playerHeldItemVisual.CurrentHandAnchor.position, CopyDirections(castState.Directions));
+        OnSpellVisualRequested?.Invoke(new SpellVisualRequest(visualSpell, travelDistances, _spellObstructionMask));
     }
 
     private static float ResolveStunDuration(ModifierWordData modifier)
@@ -412,11 +423,39 @@ public class PlayerSpellCombatController : MonoBehaviour
         return UnityEngine.Random.Range(modifier.StunDurationMin, modifier.StunDurationMax);
     }
 
+    private static Vector2[] CopyDirections(IReadOnlyList<Vector2> directions)
+    {
+        Vector2[] copiedDirections = new Vector2[directions.Count];
+        for (int i = 0; i < directions.Count; i++)
+            copiedDirections[i] = directions[i];
+
+        return copiedDirections;
+    }
+
+    private static float[] CreateFullRangeTravelDistances(CastState castState)
+    {
+        float[] travelDistances = new float[castState.Directions.Count];
+        for (int i = 0; i < travelDistances.Length; i++)
+            travelDistances[i] = castState.Form.Range;
+
+        return travelDistances;
+    }
+
+    private float[] CreateObstructedTravelDistances(CastState castState)
+    {
+        Vector2 origin = _playerHeldItemVisual.CurrentHandAnchor.position;
+        float[] travelDistances = new float[castState.Directions.Count];
+        for (int i = 0; i < travelDistances.Length; i++)
+            travelDistances[i] = ResolveLineSpellTravelDistance(origin, castState.Directions[i], castState.Form.Range);
+
+        return travelDistances;
+    }
+
     private Vector2[] BuildCastDirections(Vector2 origin, ModifierWordData modifier)
     {
-        var mouseWorld = Camera.main != null ? (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) : origin + Vector2.right;
+        Vector2 mouseWorld = Camera.main != null ? (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) : origin + Vector2.right;
 
-        var forward = (mouseWorld - origin).normalized;
+        Vector2 forward = (mouseWorld - origin).normalized;
         if (forward == Vector2.zero)
             forward = Vector2.right;
 
@@ -433,12 +472,15 @@ public class PlayerSpellCombatController : MonoBehaviour
 
     private static Vector2 Rotate(Vector2 vector, float degrees)
     {
-        var radians = degrees * Mathf.Deg2Rad;
-        var sin = Mathf.Sin(radians);
-        var cos = Mathf.Cos(radians);
+        float radians = degrees * Mathf.Deg2Rad;
+        float sin = Mathf.Sin(radians);
+        float cos = Mathf.Cos(radians);
         return new Vector2(cos * vector.x - sin * vector.y, sin * vector.x + cos * vector.y).normalized;
     }
 
+    /// <summary>
+    /// Stores per-cast word data and one-time modifier consumption state while a spell executes.
+    /// </summary>
     private sealed class CastState
     {
         private readonly HashSet<ICombatTarget> _hitTargets = new();
@@ -461,6 +503,11 @@ public class PlayerSpellCombatController : MonoBehaviour
         }
 
         public bool WasTargetHit(ICombatTarget target) => _hitTargets.Contains(target);
+
+        public void ClearHitTargets()
+        {
+            _hitTargets.Clear();
+        }
 
         public void MarkTargetAsHit(ICombatTarget target)
         {

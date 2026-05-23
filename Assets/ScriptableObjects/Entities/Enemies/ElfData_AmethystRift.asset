@@ -43,6 +43,6 @@ MonoBehaviour:
   <RangedRetreatBuffer>k__BackingField: 1.2
   <RangedRepositionDurationMin>k__BackingField: 0.6
   <RangedRepositionDurationMax>k__BackingField: 1.1
-  <ProjectilePrefab>k__BackingField: {fileID: 2987626352167526763, guid: f7eda292a5b3e6a44b425a3588f4d256, type: 3}
+  <ProjectilePrefab>k__BackingField: {fileID: 2987626352167526763, guid: b5cc102027b1e424f8231beb7f156950, type: 3}
   <ProjectileSpeed>k__BackingField: 8
   <ProjectileLifetimeSeconds>k__BackingField: 3

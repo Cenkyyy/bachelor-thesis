@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Tracks the player's unlocked spell words at runtime and exposes available locked words for purchasing.
+/// </summary>
 public sealed class PlayerSpellWordInventory : MonoBehaviour
 {
     [Header("Definitions")]
@@ -15,6 +18,7 @@ public sealed class PlayerSpellWordInventory : MonoBehaviour
     public IReadOnlyList<ModifierWordData> UnlockedModifiers => _unlockedModifiers;
     public IReadOnlyList<ElementWordData> UnlockedElements => _unlockedElements;
     public IReadOnlyList<FormWordData> UnlockedForms => _unlockedForms;
+    public bool HasInitializedWords => _hasInitializedWords;
 
     public event Action OnWordsInitialized;
     public event Action OnWordsChanged;
@@ -29,6 +33,23 @@ public sealed class PlayerSpellWordInventory : MonoBehaviour
     private void OnEnable()
     {
         SortUnlockedWords();
+    }
+
+    private void Start()
+    {
+        InitializeUnlockedWords();
+    }
+
+    public void InitializeUnlockedWords()
+    {
+        SortUnlockedWords();
+
+        if (_hasInitializedWords)
+            return;
+
+        _hasInitializedWords = true;
+        OnWordsInitialized?.Invoke();
+        OnWordsChanged?.Invoke();
     }
 
     public void SetUnlockedWords(IReadOnlyList<ModifierWordData> modifiers, IReadOnlyList<ElementWordData> elements, IReadOnlyList<FormWordData> forms)
@@ -131,7 +152,7 @@ public sealed class PlayerSpellWordInventory : MonoBehaviour
 
         for (var i = 0; i < words.Count; i++)
         {
-            var word = words[i];
+            TWordData word = words[i];
             if (word == null || IsUnlocked(word))
                 continue;
 
@@ -146,7 +167,7 @@ public sealed class PlayerSpellWordInventory : MonoBehaviour
 
         for (var i = 0; i < _unlockedModifiers.Count; i++)
         {
-            var unlockedWord = _unlockedModifiers[i];
+            ModifierWordData unlockedWord = _unlockedModifiers[i];
             if (unlockedWord != null && unlockedWord.Type == word.Type)
                 return true;
         }
@@ -161,7 +182,7 @@ public sealed class PlayerSpellWordInventory : MonoBehaviour
 
         for (var i = 0; i < _unlockedElements.Count; i++)
         {
-            var unlockedWord = _unlockedElements[i];
+            ElementWordData unlockedWord = _unlockedElements[i];
             if (unlockedWord != null && unlockedWord.Type == word.Type)
                 return true;
         }
@@ -176,7 +197,7 @@ public sealed class PlayerSpellWordInventory : MonoBehaviour
 
         for (var i = 0; i < _unlockedForms.Count; i++)
         {
-            var unlockedWord = _unlockedForms[i];
+            FormWordData unlockedWord = _unlockedForms[i];
             if (unlockedWord != null && unlockedWord.Type == word.Type)
                 return true;
         }
@@ -208,7 +229,7 @@ public sealed class PlayerSpellWordInventory : MonoBehaviour
         if (second == null)
             return -1;
 
-        var nameComparison = string.Compare(first.DisplayName, second.DisplayName, StringComparison.Ordinal);
+        int nameComparison = string.Compare(first.DisplayName, second.DisplayName, StringComparison.Ordinal);
         if (nameComparison != 0)
             return nameComparison;
 

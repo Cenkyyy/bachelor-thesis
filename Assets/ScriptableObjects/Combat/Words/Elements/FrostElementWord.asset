@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FrostElementWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Frost
-  <MemoryCost>k__BackingField: 1
+  <MemoryCost>k__BackingField: 0
   <Type>k__BackingField: 2
   <Material>k__BackingField: {fileID: 2100000, guid: e1f102781bae49f4b9e41d977a1cf617, type: 2}
   <StatusDuration>k__BackingField: 3
