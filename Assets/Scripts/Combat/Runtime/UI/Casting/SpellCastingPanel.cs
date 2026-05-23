@@ -28,6 +28,7 @@ public sealed class SpellCastingPanel : MonoBehaviour
     [SerializeField] private TMP_Text _currentPhraseText;
     [SerializeField] private WorldTextPopupController _feedbackPopup;
     [SerializeField] private string _weaponRequiredMessage = "Arm a weapon to cast spells";
+    [SerializeField] private Color _weaponRequiredMessageColor = Color.white;
 
     [Header("Input")]
     [SerializeField] private SpellCastingInputBindingsData _spellCastingKeys;
@@ -113,7 +114,7 @@ public sealed class SpellCastingPanel : MonoBehaviour
 
         if (!_canInteractWithSpellcasting)
         {
-            _feedbackPopup?.ShowMessage(_weaponRequiredMessage);
+            _feedbackPopup?.ShowMessage(_weaponRequiredMessage, _weaponRequiredMessageColor, null);
             return;
         }
 

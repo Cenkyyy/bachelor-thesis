@@ -448,7 +448,7 @@ MonoBehaviour:
   _fontAsset: {fileID: 11400000, guid: b38523a5958474b49b379ba60931379c, type: 2}
   _inheritHostRendererSorting: 0
   _sortingOrderOffset: 10
-  _sortingLayerName: Player
+  _sortingLayerName: UI
   _sortingOrder: 50
   _duration: 1
   _riseDistance: 0.5
