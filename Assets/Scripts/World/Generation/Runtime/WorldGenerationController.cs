@@ -17,13 +17,8 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
     [SerializeField] private Tilemap _borderVisualTilemap;
     [SerializeField] private Tilemap _borderCollisionTilemap;
 
-    [Header("Tiles")]
-    [SerializeField] private TileBase _voidTile;
-    [SerializeField] private TileBase _grasslandBaseTile;
-    [SerializeField] private TileBase _iceTundraBaseTile;
-    [SerializeField] private TileBase _desertBaseTile;
-    [SerializeField] private TileBase _amethystRiftBaseTile;
-    [SerializeField] private TileBase _borderTile;
+    [Header("Tile Data")]
+    [SerializeField] private WorldTileData[] _worldTiles;
 
     [Header("World Settings")]
     [SerializeField] private int _worldWidth = DefaultWorldWidth;
@@ -500,27 +495,35 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
         return allowedBiomes[idx];
     }
 
-    public TileBase GetBorderTileAsset() => _borderTile;
+    public TileBase GetBorderTileAsset()
+    {
+        return GetTileAsset(WorldTileType.BorderBase);
+    }
 
-    public TileBase GetBorderCollisionTileAsset() => _voidTile;
+    public TileBase GetBorderCollisionTileAsset()
+    {
+        return GetTileAsset(WorldTileType.BorderBase);
+    }
 
     public TileBase GetTileAsset(WorldTileType tileType)
     {
-        switch (tileType)
+        var worldTile = GetWorldTileData(tileType);
+        return worldTile != null ? worldTile.Tile : null;
+    }
+
+    private WorldTileData GetWorldTileData(WorldTileType tileType)
+    {
+        if (_worldTiles == null)
+            return null;
+
+        for (int i = 0; i < _worldTiles.Length; i++)
         {
-            case WorldTileType.BorderBase:
-                return _voidTile;
-            case WorldTileType.GrasslandBase:
-                return _grasslandBaseTile;
-            case WorldTileType.IceTundraBase:
-                return _iceTundraBaseTile;
-            case WorldTileType.DesertBase:
-                return _desertBaseTile;
-            case WorldTileType.AmethystRiftBase:
-                return _amethystRiftBaseTile;
-            default:
-                return null;
+            var worldTile = _worldTiles[i];
+            if (worldTile != null && worldTile.TileType == tileType)
+                return worldTile;
         }
+
+        return null;
     }
 
     private void PositionPlayer(WorldRuntimeData data)

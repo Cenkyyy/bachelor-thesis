@@ -1895,6 +1895,12 @@ MonoBehaviour:
   _groundTilemap: {fileID: 188757767}
   _playerTransform: {fileID: 2010244813}
   _wallChunkGenerator: {fileID: 1097722633}
+  _worldTiles:
+  - {fileID: 11400000, guid: 6ff09781ae8847fda13f09dc877000e4, type: 2}
+  - {fileID: 11400000, guid: a38dbb15148f401381229a6dcbdac90a, type: 2}
+  - {fileID: 11400000, guid: a01d954ba7854dd3ad159094ed4e1fa8, type: 2}
+  - {fileID: 11400000, guid: 2851152547094375a88e5072e4c89b9e, type: 2}
+  - {fileID: 11400000, guid: b4996f1774424a548679ecb3ec8aa870, type: 2}
   _revealRadiusTiles: 8
   _wallRevealDepthBehindOuterTile: 3
   _chunkSizeTiles: 32
@@ -1905,27 +1911,6 @@ MonoBehaviour:
   _unexploredColor:
     serializedVersion: 2
     rgba: 0
-  _tileColors:
-  - TileType: 0
-    Color:
-      serializedVersion: 2
-      rgba: 4280098077
-  - TileType: 1
-    Color:
-      serializedVersion: 2
-      rgba: 4281226789
-  - TileType: 2
-    Color:
-      serializedVersion: 2
-      rgba: 4290416463
-  - TileType: 3
-    Color:
-      serializedVersion: 2
-      rgba: 4281027464
-  - TileType: 4
-    Color:
-      serializedVersion: 2
-      rgba: 4283508544
 --- !u!1 &188757764
 GameObject:
   m_ObjectHideFlags: 0
@@ -9910,12 +9895,12 @@ MonoBehaviour:
   _groundTilemap: {fileID: 188757767}
   _borderVisualTilemap: {fileID: 1915761084}
   _borderCollisionTilemap: {fileID: 270447266}
-  _voidTile: {fileID: 11400000, guid: 2338bd3061057b1419c8a04c4c675237, type: 2}
-  _grasslandBaseTile: {fileID: 11400000, guid: 4f587eafb0690284cae2a8e47e8caaef, type: 2}
-  _iceTundraBaseTile: {fileID: 11400000, guid: e8aa19b3ae5ba4d45ace0ac550f02d18, type: 2}
-  _desertBaseTile: {fileID: 11400000, guid: 41ce95c70781cd740bdbe91a3bd6d42d, type: 2}
-  _amethystRiftBaseTile: {fileID: 11400000, guid: ce1d79f143210d7419932146dc87f46a, type: 2}
-  _borderTile: {fileID: 11400000, guid: 428fb27ffe4618b42a1f5fa7fbd89d6e, type: 2}
+  _worldTiles:
+  - {fileID: 11400000, guid: 6ff09781ae8847fda13f09dc877000e4, type: 2}
+  - {fileID: 11400000, guid: a38dbb15148f401381229a6dcbdac90a, type: 2}
+  - {fileID: 11400000, guid: a01d954ba7854dd3ad159094ed4e1fa8, type: 2}
+  - {fileID: 11400000, guid: 2851152547094375a88e5072e4c89b9e, type: 2}
+  - {fileID: 11400000, guid: b4996f1774424a548679ecb3ec8aa870, type: 2}
   _worldWidth: 2048
   _worldHeight: 2048
   _borderThickness: 32

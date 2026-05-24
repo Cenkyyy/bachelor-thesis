@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -9,16 +8,6 @@ using UnityEngine.Tilemaps;
 [DisallowMultipleComponent]
 public sealed class MapTextureController : MonoBehaviour
 {
-    /// <summary>
-    /// Defines the map texture color used for a world tile type.
-    /// </summary>
-    [Serializable]
-    public struct TileColor
-    {
-        public WorldTileType TileType;
-        public Color32 Color;
-    }
-
     private struct ChunkBounds
     {
         public int MinX;
@@ -32,6 +21,9 @@ public sealed class MapTextureController : MonoBehaviour
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private WallChunkGenerator _wallChunkGenerator;
 
+    [Header("Tile Data")]
+    [SerializeField] private WorldTileData[] _worldTiles;
+
     [Header("Reveal Settings")]
     [SerializeField, Min(1)] private int _revealRadiusTiles = 8;
     [SerializeField, Min(0)] private int _wallRevealDepthBehindOuterTile = 3;
@@ -43,7 +35,6 @@ public sealed class MapTextureController : MonoBehaviour
     [SerializeField, Min(1)] private int _initializationRowsPerFrame = 128;
     [SerializeField, Min(0.1f)] private float _maxInitializationMillisecondsPerFrame = 6f;
     [SerializeField] private Color32 _unexploredColor = new(0, 0, 0, 0);
-    [SerializeField] private TileColor[] _tileColors;
 
     public WorldRuntimeData WorldData { get; private set; }
     public Texture2D TerrainTexture { get; private set; }
@@ -53,8 +44,6 @@ public sealed class MapTextureController : MonoBehaviour
     public float PlayerRotationZ => _playerTransform != null ? _playerTransform.eulerAngles.z : 0f;
 
     private MapExplorationData _exploration;
-    private Color32[] _tileColorLookup;
-    private bool[] _hasColorOverrideForTileType;
     private MapTextureRuntimeData _textureRuntimeData;
     private int _chunksX;
     private int _chunksY;
@@ -93,7 +82,6 @@ public sealed class MapTextureController : MonoBehaviour
         if (WorldData == null)
             yield break;
 
-        BuildColorLookup();
         _chunksX = Mathf.CeilToInt(WorldData.Width / (float)_chunkSizeTiles);
         _chunksY = Mathf.CeilToInt(WorldData.Height / (float)_chunkSizeTiles);
         _textureRuntimeData = new MapTextureRuntimeData(WorldData.Width, WorldData.Height, _chunksX * _chunksY, _unexploredColor);
@@ -163,26 +151,6 @@ public sealed class MapTextureController : MonoBehaviour
 
         StopCoroutine(_runtimeDataBuildCoroutine);
         _runtimeDataBuildCoroutine = null;
-    }
-
-    private void BuildColorLookup()
-    {
-        int maxTileTypeValue = 0;
-        for (int i = 0; i < _tileColors.Length; i++)
-        {
-            maxTileTypeValue = Mathf.Max(maxTileTypeValue, (int)_tileColors[i].TileType);
-        }
-
-        int lookupSize = Mathf.Max(maxTileTypeValue + 1, Enum.GetValues(typeof(WorldTileType)).Length);
-        _tileColorLookup = new Color32[lookupSize];
-        _hasColorOverrideForTileType = new bool[lookupSize];
-
-        for (int i = 0; i < _tileColors.Length; i++)
-        {
-            int tileTypeIndex = (int)_tileColors[i].TileType;
-            _tileColorLookup[tileTypeIndex] = _tileColors[i].Color;
-            _hasColorOverrideForTileType[tileTypeIndex] = true;
-        }
     }
 
     private IEnumerator BuildRuntimeDataInBackgroundCoroutine()
@@ -267,15 +235,26 @@ public sealed class MapTextureController : MonoBehaviour
 
     private Color32 ResolveTileColor(WorldTileType tileType)
     {
-        int tileTypeIndex = (int)tileType;
-        if (_tileColorLookup != null
-            && _hasColorOverrideForTileType != null
-            && tileTypeIndex >= 0
-            && tileTypeIndex < _tileColorLookup.Length
-            && _hasColorOverrideForTileType[tileTypeIndex])
-            return _tileColorLookup[tileTypeIndex];
+        var worldTile = GetWorldTileData(tileType);
+        if (worldTile != null)
+            return worldTile.MapColor;
 
         return new Color32(0, 0, 0, 255);
+    }
+
+    private WorldTileData GetWorldTileData(WorldTileType tileType)
+    {
+        if (_worldTiles == null)
+            return null;
+
+        for (int i = 0; i < _worldTiles.Length; i++)
+        {
+            var worldTile = _worldTiles[i];
+            if (worldTile != null && worldTile.TileType == tileType)
+                return worldTile;
+        }
+
+        return null;
     }
 
     private Color32 ResolveBaseTileColor(int x, int y)
