@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Item data for wearable equipment and accessories with optional status effects.
+/// </summary>
 [CreateAssetMenu(fileName = "NewEquipmentItem", menuName = "Items/Equipment Item")]
 public sealed class EquipmentItemData : ItemData
 {

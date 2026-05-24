@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Item data for tools used by interaction systems such as mining.
+/// </summary>
 [CreateAssetMenu(menuName = "Items/Tool Item")]
 public class ToolItemData : ItemData, IMiningTool
 {

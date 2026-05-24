@@ -1,3 +1,6 @@
+/// <summary>
+/// Classifies material items by their source or primary gameplay use.
+/// </summary>
 public enum MaterialType
 {
     Wall = 0,

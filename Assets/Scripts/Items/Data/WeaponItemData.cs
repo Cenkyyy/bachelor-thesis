@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Item data for weapons, including combat values and weapon progression tier.
+/// </summary>
 [CreateAssetMenu(menuName = "Items/Weapon Item")]
 public class WeaponItemData : ItemData
 {

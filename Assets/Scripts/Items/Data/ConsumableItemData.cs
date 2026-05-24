@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Item data for consumables that restore stats, apply timed effects, or use cooldown rules.
+/// </summary>
 [CreateAssetMenu(menuName = "Items/Consumable Item")]
 public class ConsumableItemData : ItemData, ICooldownItem
 {

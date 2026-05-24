@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Displays one active item status effect icon and its remaining cooldown overlay.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class ItemStatusEffectEntryView : MonoBehaviour
 {

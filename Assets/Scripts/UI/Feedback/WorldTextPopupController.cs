@@ -208,6 +208,9 @@ public sealed class WorldTextPopupController : MonoBehaviour
         text.sortingOrder = _sortingOrder;
     }
 
+    /// <summary>
+    /// Runtime handle for one active world text popup instance.
+    /// </summary>
     private sealed class WorldTextPopupRuntimeData
     {
         public GameObject Root { get; }

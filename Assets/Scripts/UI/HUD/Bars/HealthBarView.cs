@@ -2,6 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// HUD bar view that displays the player's current health value.
+/// </summary>
 public class HealthBarView : StatBarViewBase
 {
     [Header("View References")]

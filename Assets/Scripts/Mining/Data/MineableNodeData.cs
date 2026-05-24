@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Authored mining node data that defines tool requirements, durability, drops, and memory XP rewards.
+/// </summary>
 [CreateAssetMenu(menuName = "World/Mineable Node")]
 public sealed class MineableNodeData : ScriptableObject
 {
@@ -24,6 +27,9 @@ public sealed class MineableNodeData : ScriptableObject
     [field: SerializeField] public int MemoryXpAmount { get; private set; } = 0;
 }
 
+/// <summary>
+/// Defines a potential item drop from mining a node, including the item reference and the range of possible amounts that can drop.
+/// </summary>
 [Serializable]
 public struct MiningDropEntry
 {

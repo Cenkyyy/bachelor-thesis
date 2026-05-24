@@ -1,3 +1,6 @@
+/// <summary>
+/// Defines stat modifiers that items can grant through equipment or consumable effects.
+/// </summary>
 public enum ItemStatusEffectType
 {
     MaxHealth = 0,

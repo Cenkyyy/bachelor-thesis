@@ -1,5 +1,8 @@
 using System;
 
+/// <summary>
+/// Defines equipment slot flags used by equipment items and slot validation.
+/// </summary>
 [Flags]
 public enum EquipmentType
 {

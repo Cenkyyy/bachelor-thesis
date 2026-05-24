@@ -1,11 +1,17 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Coordinates the pre-game flow between scene loading, narrative intro, and starter word selection.
+/// </summary>
 [DisallowMultipleComponent]
 public class PreGameManager : MonoBehaviour
 {
     public static PreGameManager Instance { get; private set; }
 
+    /// <summary>
+    /// Represents the current step of the pre-game scene entry flow.
+    /// </summary>
     public enum PreGameState
     {
         Idle = 0,

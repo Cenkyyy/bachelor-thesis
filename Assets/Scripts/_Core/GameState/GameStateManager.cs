@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Central pause state manager that combines manual pause requests with temporary pause locks.
+/// </summary>
 public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager Instance { get; private set; }

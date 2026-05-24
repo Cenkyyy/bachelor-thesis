@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles the scene transitions with overlay fades, loading text, pause locks, and reveal readiness checks.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class SceneTransitionController : MonoBehaviour
 {

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Persistent visual settings used by the custom cursor at runtime.
+/// </summary>
 [CreateAssetMenu(menuName = "Game/UI/Cursor Visual Settings", fileName = "CursorVisualSettingsData")]
 public sealed class CursorVisualSettingsData : ScriptableObject
 {

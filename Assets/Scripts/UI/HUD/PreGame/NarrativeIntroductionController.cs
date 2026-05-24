@@ -3,6 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Runs the pre-game narrative intro with background visuals, typewriter text, and advance input.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class NarrativeIntroductionController : MonoBehaviour
 {

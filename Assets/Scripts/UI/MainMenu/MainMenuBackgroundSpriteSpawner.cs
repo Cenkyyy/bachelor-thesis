@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Spawns weighted background symbols for the animated main menu background.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class MainMenuBackgroundSpriteSpawner : MonoBehaviour
 {
+    /// <summary>
+    /// Authored spawn option for one background symbol sprite and its visual variation.
+    /// </summary>
     [Serializable]
     private sealed class SpawnEntry
     {

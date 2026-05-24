@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Authored key bindings used to open and close major HUD panels.
+/// </summary>
 [CreateAssetMenu(menuName = "Game/Input/Panel Keybinds", fileName = "MajorPanelKeybinds")]
 public sealed class MajorPanelKeybindsData : ScriptableObject
 {

@@ -2,6 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// HUD bar view that displays the player's current mana value.
+/// </summary>
 public class ManaBarView : StatBarViewBase
 {
     [Header("View References")]

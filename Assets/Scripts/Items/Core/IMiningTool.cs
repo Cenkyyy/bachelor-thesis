@@ -1,3 +1,6 @@
+/// <summary>
+/// Contract for item data that can provide mining tool stats to the mining system.
+/// </summary>
 public interface IMiningTool
 {
     ToolType ToolType { get; }

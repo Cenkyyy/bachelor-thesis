@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Base class for HUD stat bars that subscribe to player runtime data changes.
+/// </summary>
 public abstract class StatBarViewBase : MonoBehaviour, IStatBar
 {
     protected PlayerRuntimeData Data { get; private set; }

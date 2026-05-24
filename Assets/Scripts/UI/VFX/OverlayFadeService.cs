@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Shared service for applying overlay visuals and running unscaled fade transitions.
+/// </summary>
 public sealed class OverlayFadeService
 {
     private readonly CanvasGroup _overlayCanvasGroup;

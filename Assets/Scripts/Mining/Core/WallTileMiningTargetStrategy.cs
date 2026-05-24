@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Resolves mineable targets from wall tiles through the wall chunk generator.
+/// </summary>
 public sealed class WallTileMiningTargetStrategy : IMiningTargetStrategy
 {
     private readonly WallChunkGenerator _wallChunkGenerator;

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Material item data for items that can place a prefab instance into the world.
+/// </summary>
 [CreateAssetMenu(menuName = "Items/Material/Prefab Placeable Material Item")]
 public sealed class PrefabPlaceableMaterialItemData : MaterialItemData, IPrefabPlaceableItem
 {

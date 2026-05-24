@@ -1,6 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Coordinates main menu button actions, settings panel visibility, and menu music startup.
+/// </summary>
 public sealed class MainMenuController : MonoBehaviour
 {
     [Header("Buttons")]

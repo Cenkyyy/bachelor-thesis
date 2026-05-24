@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Authored narrative intro data for pre-game dialogue text, background visuals, timing, and input.
+/// </summary>
 [CreateAssetMenu(menuName = "Game/Dialogue/Dialogue Data", fileName = "DialogueData")]
 public sealed class NarrativeIntroductionData : ScriptableObject
 {

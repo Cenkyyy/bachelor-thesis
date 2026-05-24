@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Main key bindings used by gameplay core systems, like the interaction, placement, mining, consuming, and dropping.
+/// </summary>
 [CreateAssetMenu(menuName = "Game/Input/Gameplay Input Bindings", fileName = "GameplayInputBindings")]
 public sealed class GameplayInputBindingsData : ScriptableObject
 {

@@ -7,6 +7,9 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public sealed class MiningProgressBarController : MonoBehaviour
 {
+    /// <summary>
+    /// Tracks a progress bar instance and whether this controller created it.
+    /// </summary>
     private sealed class MiningBarRuntimeHandle
     {
         public MiningProgressBarView MiningProgressBar;

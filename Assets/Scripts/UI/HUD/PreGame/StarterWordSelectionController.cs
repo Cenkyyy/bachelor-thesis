@@ -4,9 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Runs the pre-game starter word selection flow and applies confirmed words to the player.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class StarterWordSelectionController : MonoBehaviour
 {
+    /// <summary>
+    /// Selected starter words grouped by spell word category.
+    /// </summary>
     [Serializable]
     public sealed class StarterWordSelectionResult
     {

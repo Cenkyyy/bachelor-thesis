@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Displays and validates the selectable starter words for one word category.
+/// </summary>
 public sealed class StarterWordCategoryPanel : MonoBehaviour
 {
     private struct ButtonOptionData

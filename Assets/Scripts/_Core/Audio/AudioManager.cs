@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Persistent audio service for master volume, menu and gameplay music, and shared UI sound effects.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class AudioManager : MonoBehaviour
 {

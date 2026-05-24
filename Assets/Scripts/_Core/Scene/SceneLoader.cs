@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Persistent scene navigation service for menu, gameplay, transitions, and quitting.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class SceneLoader : MonoBehaviour
 {

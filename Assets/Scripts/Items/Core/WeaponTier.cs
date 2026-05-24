@@ -1,3 +1,6 @@
+/// <summary>
+/// Defines weapon progression tiers used for balancing and presentation.
+/// </summary>
 public enum WeaponTier
 {
     Wooden = 0,

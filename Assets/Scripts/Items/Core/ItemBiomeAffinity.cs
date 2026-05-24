@@ -1,3 +1,6 @@
+/// <summary>
+/// Defines the biome association used to group or theme item data.
+/// </summary>
 public enum ItemBiomeAffinity
 {
     None = 0,

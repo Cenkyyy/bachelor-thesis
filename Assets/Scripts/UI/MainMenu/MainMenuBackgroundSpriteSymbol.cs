@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Runtime visual symbol that rises and fades in the animated main menu background.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class MainMenuBackgroundSpriteSymbol : MonoBehaviour
 {

@@ -1,5 +1,8 @@
 using System;
 
+/// <summary>
+/// Defines equipment progression tier flags used by equipment item data.
+/// </summary>
 [Flags]
 public enum EquipmentTier
 {

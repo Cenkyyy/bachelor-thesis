@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Coordinates major HUD panels, panel groups, input toggles, and pause behavior.
+/// </summary>
 public sealed class PanelManager : MonoBehaviour
 {
     public static PanelManager Instance { get; private set; }

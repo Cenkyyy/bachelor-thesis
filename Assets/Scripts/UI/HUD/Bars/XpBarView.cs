@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// HUD bar view for player XP that switches between level and progress text on hover.
+/// </summary>
 public class XpBarView : StatBarViewBase, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("View References")]

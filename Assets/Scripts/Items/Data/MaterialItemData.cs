@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Item data for materials used by crafting, drops, placement, and resource systems.
+/// </summary>
 [CreateAssetMenu(menuName = "Items/Material Item")]
 public class MaterialItemData : ItemData
 {

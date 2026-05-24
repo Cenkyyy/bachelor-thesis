@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Shared runtime contract for anything the mining system can damage and harvest.
+/// </summary>
 public interface IMineableTarget
 {
     Vector3 WorldPosition { get; }

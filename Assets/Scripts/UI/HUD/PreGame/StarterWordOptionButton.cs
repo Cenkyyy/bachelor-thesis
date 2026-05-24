@@ -3,6 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Selectable UI button for one starter spell word option.
+/// </summary>
 public sealed class StarterWordOptionButton : MonoBehaviour
 {
     [SerializeField] private Button _button;

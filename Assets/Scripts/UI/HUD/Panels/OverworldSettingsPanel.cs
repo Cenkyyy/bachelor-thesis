@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// In-game settings panel for pausing, returning to menu, quitting, and editing runtime settings.
+/// </summary>
 public sealed class OverworldSettingsPanel : MonoBehaviour, IMajorPanel
 {
     [Header("Root")]

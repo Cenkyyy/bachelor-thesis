@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Persistent display service for UI scaling and camera size setting.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class DisplaySettingsManager : MonoBehaviour
 {

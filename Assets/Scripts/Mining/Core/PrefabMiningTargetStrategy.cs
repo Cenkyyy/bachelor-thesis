@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Resolves mineable targets from prefab objects using a 2D overlap query.
+/// </summary>
 public sealed class PrefabMiningTargetStrategy : IMiningTargetStrategy
 {
     private readonly LayerMask _mineableMask;

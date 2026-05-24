@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Main menu settings view that edits world seed, audio volume, and cursor color.
+/// </summary>
 public sealed class MainMenuSettingsPanel : MonoBehaviour
 {
     [Header("World Seed")]

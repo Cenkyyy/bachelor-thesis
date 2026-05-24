@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Contract for placement implementations that validate, preview, and place a specific kind of placeable item.
+/// </summary>
 public interface IPlacementStrategy
 {
     bool CanPlace(IPlaceableItem placeableItem);
