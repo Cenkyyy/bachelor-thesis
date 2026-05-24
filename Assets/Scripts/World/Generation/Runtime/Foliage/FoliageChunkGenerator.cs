@@ -121,7 +121,7 @@ public sealed class FoliageChunkGenerator : WorldChunkGeneratorBase
             int worldY = startY + localY;
 
             var worldTile = data.GetTile(worldX, worldY);
-            if (worldTile.TileType == WorldTileType.Void)
+            if (worldTile.TileType == WorldTileType.BorderBase)
                 continue;
 
             if (!_entriesByBiome.TryGetValue(worldTile.Biome, out var biomeEntries) || biomeEntries == null || biomeEntries.Count == 0)
@@ -211,7 +211,7 @@ public sealed class FoliageChunkGenerator : WorldChunkGeneratorBase
             return null;
 
         var tile = data.GetTile(tileX, tileY);
-        if (tile.TileType == WorldTileType.Void)
+        if (tile.TileType == WorldTileType.BorderBase)
             return null;
 
         if (!WorldObjectPlacementUtility.IsBiomeAllowed(entry.AllowedBiomes, tile.Biome))

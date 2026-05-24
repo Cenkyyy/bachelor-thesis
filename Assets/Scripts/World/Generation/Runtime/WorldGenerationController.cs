@@ -56,7 +56,8 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
     [Header("Player")]
     [SerializeField] private Transform _playerTransform;
 
-    [Header("Minimap")]
+    [Header("Map")]
+    [SerializeField] private MapTextureController _mapTexture;
     [SerializeField] private MinimapController _minimap;
 
     public int CurrentSeed => _runtimeState.Seed;
@@ -174,7 +175,9 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
         PositionPlayer(data);
         GenerateInitialWorldData(data);
 
-        if (_minimap != null)
+        if (_mapTexture != null)
+            yield return _mapTexture.InitializeCoroutine(data);
+        else if (_minimap != null)
             yield return _minimap.InitializeCoroutine(data);
 
         IsReadyForSceneReveal = true;
@@ -505,7 +508,7 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
     {
         switch (tileType)
         {
-            case WorldTileType.Void:
+            case WorldTileType.BorderBase:
                 return _voidTile;
             case WorldTileType.GrasslandBase:
                 return _grasslandBaseTile;
@@ -513,7 +516,7 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
                 return _iceTundraBaseTile;
             case WorldTileType.DesertBase:
                 return _desertBaseTile;
-            case WorldTileType.AmethystRift:
+            case WorldTileType.AmethystRiftBase:
                 return _amethystRiftBaseTile;
             default:
                 return null;

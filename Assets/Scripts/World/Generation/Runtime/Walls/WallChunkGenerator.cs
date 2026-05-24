@@ -420,7 +420,7 @@ public sealed class WallChunkGenerator : WorldChunkGeneratorBase
             if (!withinChunk || plannedTiles.ContainsKey(candidate))
                 continue;
 
-            if (data.GetTile(candidate.x, candidate.y).TileType == WorldTileType.Void)
+            if (data.GetTile(candidate.x, candidate.y).TileType == WorldTileType.BorderBase)
                 continue;
 
             if (rng.NextDouble() > biomeSettings.ExpansionChance)
@@ -439,7 +439,7 @@ public sealed class WallChunkGenerator : WorldChunkGeneratorBase
                     branchTile.x >= startX && branchTile.x < startX + width &&
                     branchTile.y >= startY && branchTile.y < startY + height;
 
-                if (branchWithinChunk && !plannedTiles.ContainsKey(branchTile) && data.GetTile(branchTile.x, branchTile.y).TileType != WorldTileType.Void)
+                if (branchWithinChunk && !plannedTiles.ContainsKey(branchTile) && data.GetTile(branchTile.x, branchTile.y).TileType != WorldTileType.BorderBase)
                 {
                     if (TryPlanTile(data, branchTile, wallData, plannedTiles))
                         clusterTiles.Add(branchTile);
@@ -477,7 +477,7 @@ public sealed class WallChunkGenerator : WorldChunkGeneratorBase
             int x = startX + rng.Next(0, width);
             int y = startY + rng.Next(0, height);
 
-            if (data.GetTile(x, y).TileType == WorldTileType.Void)
+            if (data.GetTile(x, y).TileType == WorldTileType.BorderBase)
                 continue;
 
             if (IsInsideDefaultSpawnExclusionRadius(data, x, y))
@@ -554,7 +554,7 @@ public sealed class WallChunkGenerator : WorldChunkGeneratorBase
                     continue;
 
                 bool inBounds = tile.x >= 0 && tile.x < data.Width && tile.y >= 0 && tile.y < data.Height;
-                if (!inBounds || data.GetTile(tile.x, tile.y).TileType == WorldTileType.Void)
+                if (!inBounds || data.GetTile(tile.x, tile.y).TileType == WorldTileType.BorderBase)
                     continue;
 
                 if (plannedTiles.ContainsKey(tile))

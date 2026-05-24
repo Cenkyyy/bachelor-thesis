@@ -1,4 +1,3 @@
-using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,7 +70,7 @@ public sealed class TerrainChunkGenerator : WorldChunkGeneratorBase
         if (!data.IsInside(x, y))
             return false;
 
-        if (data.GetTile(x, y).TileType != WorldTileType.Void)
+        if (data.GetTile(x, y).TileType != WorldTileType.BorderBase)
             return false;
 
         for (int i = -1; i <= 1; i++)
@@ -94,7 +93,7 @@ public sealed class TerrainChunkGenerator : WorldChunkGeneratorBase
         if (!data.IsInside(x, y))
             return false;
 
-        return data.GetTile(x, y).TileType != WorldTileType.Void;
+        return data.GetTile(x, y).TileType != WorldTileType.BorderBase;
     }
 
     private IEnumerator GenerateChunkTiles(WorldRuntimeData data, Vector2Int chunkCoord, int yieldEveryOperations, YieldInstruction yieldInstruction)
@@ -116,12 +115,9 @@ public sealed class TerrainChunkGenerator : WorldChunkGeneratorBase
 
         // build ground and border tile arrays from the world data
         int tileCount = width * height;
-        var groundTiles = ArrayPool<TileBase>.Shared.Rent(tileCount);
-        var borderTiles = ArrayPool<TileBase>.Shared.Rent(tileCount);
-        var borderCollisionTiles = ArrayPool<TileBase>.Shared.Rent(tileCount);
-        System.Array.Clear(groundTiles, 0, tileCount);
-        System.Array.Clear(borderTiles, 0, tileCount);
-        System.Array.Clear(borderCollisionTiles, 0, tileCount);
+        var groundTiles = new TileBase[tileCount];
+        var borderTiles = new TileBase[tileCount];
+        var borderCollisionTiles = new TileBase[tileCount];
 
         var borderTileAsset = worldGenerator.GetBorderTileAsset();
         var borderCollisionTileAsset = worldGenerator.GetBorderCollisionTileAsset();
@@ -136,7 +132,7 @@ public sealed class TerrainChunkGenerator : WorldChunkGeneratorBase
                 int index = x + (y * width);
                 var tile = data.GetTile(dataX, dataY);
 
-                if (tile.TileType == WorldTileType.Void)
+                if (tile.TileType == WorldTileType.BorderBase)
                 {
                     borderTiles[index] = borderTileAsset;
 
@@ -172,10 +168,6 @@ public sealed class TerrainChunkGenerator : WorldChunkGeneratorBase
         if (worldGenerator.BorderCollisionTilemap != null)
             worldGenerator.BorderCollisionTilemap.SetTilesBlock(chunkBounds, borderCollisionTiles);
 
-        ArrayPool<TileBase>.Shared.Return(groundTiles, clearArray: false);
-        ArrayPool<TileBase>.Shared.Return(borderTiles, clearArray: false);
-        ArrayPool<TileBase>.Shared.Return(borderCollisionTiles, clearArray: false);
-
         _renderedChunks.Add(chunkCoord);
     }
 
@@ -200,18 +192,7 @@ public sealed class TerrainChunkGenerator : WorldChunkGeneratorBase
             yield break;
 
         int tileCount = width * height;
-        var emptyTiles = ArrayPool<TileBase>.Shared.Rent(tileCount);
-        int clearedTiles = 0;
-        int clearBatchSize = yieldEveryOperations <= 0 ? tileCount : Mathf.Max(1, yieldEveryOperations);
-        while (clearedTiles < tileCount)
-        {
-            int length = Mathf.Min(clearBatchSize, tileCount - clearedTiles);
-            System.Array.Clear(emptyTiles, clearedTiles, length);
-            clearedTiles += length;
-
-            if (yieldEveryOperations > 0 && clearedTiles < tileCount)
-                yield return yieldInstruction ?? null;
-        }
+        var emptyTiles = new TileBase[tileCount];
 
         // write empty tile arrays to clear the chunk and remove it from rendered chunks
         var chunkOriginCell = data.DataToCell(startX, startY);
@@ -226,7 +207,6 @@ public sealed class TerrainChunkGenerator : WorldChunkGeneratorBase
         if (worldGenerator.BorderCollisionTilemap != null)
             worldGenerator.BorderCollisionTilemap.SetTilesBlock(chunkBounds, emptyTiles);
 
-        ArrayPool<TileBase>.Shared.Return(emptyTiles, clearArray: false);
         _renderedChunks.Remove(chunkCoord);
     }
 }

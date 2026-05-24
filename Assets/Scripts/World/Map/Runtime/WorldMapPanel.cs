@@ -1,120 +1,116 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
+/// <summary>
+/// Full-screen world map panel that displays the shared map texture with pan, zoom, and markers.
+/// </summary>
 public sealed class WorldMapPanel : MonoBehaviour, IMajorPanel, IMapMarkerView
 {
-    [Header("UI")]
+    [Header("Panel Root")]
     [SerializeField] private GameObject _root;
+
+    [Header("View References")]
     [SerializeField] private RectTransform _mapContent;
     [SerializeField] private RawImage _terrainImage;
     [SerializeField] private RectTransform _playerMarker;
     [SerializeField] private RectTransform _markerContainer;
     [SerializeField] private RectTransform _markerPrefab;
 
-    [Header("Refs")]
-    [SerializeField] private MinimapController _minimap;
-    [SerializeField] private Tilemap _groundTilemap;
-    [SerializeField] private Transform _playerTransform;
+    [Header("Dependencies")]
+    [SerializeField] private MapTextureController _mapTexture;
     [SerializeField] private WorldMapPanelZoomController _zoom;
 
     public PanelId Id => PanelId.Map;
-    public bool IsOpen => _root.gameObject.activeSelf;
+    public bool IsOpen => _root != null && _root.activeSelf;
     public bool PausesGame => false;
     public bool BlocksGameplayInput => true;
 
     private bool _texturesBound;
     private bool _fitAppliedThisOpen;
-    private readonly Dictionary<string, MapMarkerRuntimeState> _markerDataById = new Dictionary<string, MapMarkerRuntimeState>();
-    private readonly Dictionary<string, RectTransform> _markerViewById = new Dictionary<string, RectTransform>();
+    private MapMarkerViewController _markerViews;
+
+    private void Awake()
+    {
+        _markerViews = new MapMarkerViewController(this, _markerContainer, _mapContent, _markerPrefab);
+
+        if (_root != null)
+            _root.SetActive(false);
+    }
 
     private void LateUpdate()
     {
         if (!IsOpen)
             return;
 
-        TryBindTextures();
+        TryBindTexture();
 
-        if (!_minimap.IsInitialized)
+        if (_mapTexture == null || !_mapTexture.IsInitialized)
             return;
 
         UpdatePlayerMarker();
-        UpdateMarkers();
+        RefreshMarkers();
     }
 
+    /// <summary>
+    /// Adds a marker to the full world map view.
+    /// </summary>
     public void AddMarker(MapMarkerRuntimeState marker)
     {
-        if (string.IsNullOrEmpty(marker.Id))
-            return;
-
-        _markerDataById[marker.Id] = marker;
-
-        if (!_markerViewById.ContainsKey(marker.Id))
-            _markerViewById[marker.Id] = CreateMarkerView();
-
-        if (_minimap == null || !_minimap.IsInitialized)
-            return;
-
-        UpdateMarkerView(marker.Id);
+        _markerViews.AddMarker(marker);
+        RefreshMarkers();
     }
 
+    /// <summary>
+    /// Updates a marker on the full world map view.
+    /// </summary>
     public void UpdateMarker(MapMarkerRuntimeState marker)
     {
-        AddMarker(marker);
+        _markerViews.UpdateMarker(marker);
+        RefreshMarkers();
     }
 
+    /// <summary>
+    /// Removes a marker from the full world map view.
+    /// </summary>
     public void RemoveMarker(string markerId)
     {
-        if (string.IsNullOrEmpty(markerId))
-            return;
-
-        _markerDataById.Remove(markerId);
-
-        if (_markerViewById.TryGetValue(markerId, out var markerView))
-        {
-            if (markerView != null)
-                Destroy(markerView.gameObject);
-
-            _markerViewById.Remove(markerId);
-        }
+        _markerViews.RemoveMarker(markerId);
     }
 
     public void Open()
     {
-        _root.gameObject.SetActive(true);
+        if (_root != null)
+            _root.SetActive(true);
+
         _texturesBound = false;
         _fitAppliedThisOpen = false;
-        TryBindTextures();
+        TryBindTexture();
     }
 
     public void Close()
     {
-        _root.gameObject.SetActive(false);
+        if (_root != null)
+            _root.SetActive(false);
     }
 
-    private void TryBindTextures()
+    private void TryBindTexture()
     {
-        if (_texturesBound)
+        if (_texturesBound || _mapTexture == null || !_mapTexture.IsInitialized || _terrainImage == null || _mapContent == null)
             return;
 
-        if (!_minimap.IsInitialized)
-            return;
-
-        _terrainImage.texture = _minimap.TerrainTexture;
+        _terrainImage.texture = _mapTexture.TerrainTexture;
         _terrainImage.uvRect = new Rect(0f, 0f, 1f, 1f);
 
-        _mapContent.sizeDelta = new Vector2(_terrainImage.texture.width, _terrainImage.texture.height);
+        if (_terrainImage.texture != null)
+            _mapContent.sizeDelta = new Vector2(_terrainImage.texture.width, _terrainImage.texture.height);
 
         _texturesBound = true;
-
         ApplyInitialFit();
     }
 
     private void ApplyInitialFit()
     {
-        if (_fitAppliedThisOpen)
+        if (_fitAppliedThisOpen || _zoom == null)
             return;
 
         Canvas.ForceUpdateCanvases();
@@ -125,71 +121,34 @@ public sealed class WorldMapPanel : MonoBehaviour, IMajorPanel, IMapMarkerView
 
     private void CenterMapOnPlayer()
     {
-        Vector2 normalizedPos = GetPlayerDataPositionNormalized();
-        _zoom.CenterOnNormalizedPosition(normalizedPos);
+        if (_mapTexture == null || _zoom == null)
+            return;
+
+        _zoom.CenterOnNormalizedPosition(_mapTexture.GetPlayerPositionNormalized());
     }
 
     private void UpdatePlayerMarker()
     {
-        Vector2 normalizedPos = GetPlayerDataPositionNormalized();
+        if (_playerMarker == null || _mapContent == null || _mapTexture == null)
+            return;
 
+        Vector2 normalizedPos = _mapTexture.GetPlayerPositionNormalized();
         var contentSize = _mapContent.rect.size;
         var contentPivot = _mapContent.pivot;
-
         float localX = (normalizedPos.x - contentPivot.x) * contentSize.x;
         float localY = (normalizedPos.y - contentPivot.y) * contentSize.y;
 
-        _playerMarker.anchorMin = _playerMarker.anchorMax = new Vector2(0.5f, 0.5f);
+        _playerMarker.anchorMin = new Vector2(0.5f, 0.5f);
+        _playerMarker.anchorMax = new Vector2(0.5f, 0.5f);
         _playerMarker.anchoredPosition = new Vector2(localX, localY);
-
-        float z = _playerTransform.eulerAngles.z;
-        _playerMarker.localRotation = Quaternion.Euler(0f, 0f, z);
+        _playerMarker.localRotation = Quaternion.Euler(0f, 0f, _mapTexture.PlayerRotationZ);
     }
 
-    private Vector2 GetPlayerDataPositionNormalized()
+    private void RefreshMarkers()
     {
-        return MapCoordinateUtility.WorldToDataNormalized(_groundTilemap, _minimap.WorldData, _playerTransform.position);
-    }
-
-    private RectTransform CreateMarkerView()
-    {
-        if (_markerPrefab == null)
-            return null;
-
-        var container = _markerContainer != null ? _markerContainer : _mapContent;
-        if (container == null)
-            return null;
-
-        var marker = Instantiate(_markerPrefab, container);
-        marker.anchorMin = marker.anchorMax = new Vector2(0.5f, 0.5f);
-        return marker;
-    }
-
-    private void UpdateMarkers()
-    {
-        foreach (var markerId in _markerDataById.Keys)
-            UpdateMarkerView(markerId);
-    }
-
-    private void UpdateMarkerView(string markerId)
-    {
-        if (!_markerDataById.TryGetValue(markerId, out var markerData))
+        if (_mapTexture == null || !_mapTexture.IsInitialized)
             return;
 
-        if (_minimap == null || !_minimap.IsInitialized)
-            return;
-
-        if (!_markerViewById.TryGetValue(markerId, out var markerView) || markerView == null)
-            return;
-
-        var normalizedPos = MapCoordinateUtility.WorldToDataNormalized(_groundTilemap, _minimap.WorldData, markerData.WorldPosition);
-
-        var contentSize = _mapContent.rect.size;
-        var contentPivot = _mapContent.pivot;
-
-        float localX = (normalizedPos.x - contentPivot.x) * contentSize.x;
-        float localY = (normalizedPos.y - contentPivot.y) * contentSize.y;
-
-        markerView.anchoredPosition = new Vector2(localX, localY);
+        _markerViews.RefreshMarkers(_mapTexture.GroundTilemap, _mapTexture.WorldData, new Rect(0f, 0f, 1f, 1f), hideOutsideVisibleRect: false);
     }
 }

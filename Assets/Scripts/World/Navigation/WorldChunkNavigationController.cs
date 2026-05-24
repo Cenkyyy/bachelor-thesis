@@ -153,7 +153,7 @@ public sealed class WorldChunkNavigationController : MonoBehaviour
         if (!_worldGenerator.CurrentWorldData.IsInside(dataTile.x, dataTile.y))
             return false;
 
-        return _worldGenerator.CurrentWorldData.GetTile(dataTile.x, dataTile.y).TileType != WorldTileType.Void;
+        return _worldGenerator.CurrentWorldData.GetTile(dataTile.x, dataTile.y).TileType != WorldTileType.BorderBase;
     }
 
     private void RegisterWallEvents()

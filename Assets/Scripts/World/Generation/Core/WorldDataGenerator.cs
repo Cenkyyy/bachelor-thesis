@@ -88,7 +88,7 @@ public class WorldDataGenerator
                 if (!_settings.WorldShape.IsInsidePlayable(tileCenter))
                 {
                     // Border ring: void tiles
-                    data.SetTile(x, y, new WorldTile(WorldBiomeType.None, WorldTileType.Void));
+                    data.SetTile(x, y, new WorldTile(WorldBiomeType.None, WorldTileType.BorderBase));
                     continue;
                 }
 
@@ -183,9 +183,9 @@ public class WorldDataGenerator
             case WorldBiomeType.Desert:
                 return WorldTileType.DesertBase;
             case WorldBiomeType.AmethystRift:
-                return WorldTileType.AmethystRift;
+                return WorldTileType.AmethystRiftBase;
             default:
-                return WorldTileType.Void;
+                return WorldTileType.BorderBase;
         }
     }
 }

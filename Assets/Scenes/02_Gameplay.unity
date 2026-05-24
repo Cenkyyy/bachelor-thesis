@@ -1833,6 +1833,7 @@ GameObject:
   m_Component:
   - component: {fileID: 185817030}
   - component: {fileID: 185817031}
+  - component: {fileID: 185817032}
   m_Layer: 5
   m_Name: WorldMapController
   m_TagString: Untagged
@@ -1877,10 +1878,54 @@ MonoBehaviour:
   _playerMarker: {fileID: 296437675}
   _markerContainer: {fileID: 1248015685}
   _markerPrefab: {fileID: 1117304301412245839, guid: b201a6a1f78541c4787e1054605a840f, type: 3}
-  _minimap: {fileID: 503899696}
+  _mapTexture: {fileID: 185817032}
+  _zoom: {fileID: 855455274}
+--- !u!114 &185817032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185817029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f911dd78c94cba95ec1f5b3b5c7eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _groundTilemap: {fileID: 188757767}
   _playerTransform: {fileID: 2010244813}
-  _zoom: {fileID: 855455274}
+  _wallChunkGenerator: {fileID: 1097722633}
+  _revealRadiusTiles: 8
+  _wallRevealDepthBehindOuterTile: 3
+  _chunkSizeTiles: 32
+  _maxChunkUpdatesPerFrame: 2
+  _initializationChunkRadiusAroundPlayer: 4
+  _initializationRowsPerFrame: 250
+  _maxInitializationMillisecondsPerFrame: 7
+  _unexploredColor:
+    serializedVersion: 2
+    rgba: 0
+  _tileColors:
+  - TileType: 0
+    Color:
+      serializedVersion: 2
+      rgba: 4280098077
+  - TileType: 1
+    Color:
+      serializedVersion: 2
+      rgba: 4281226789
+  - TileType: 2
+    Color:
+      serializedVersion: 2
+      rgba: 4290416463
+  - TileType: 3
+    Color:
+      serializedVersion: 2
+      rgba: 4281027464
+  - TileType: 4
+    Color:
+      serializedVersion: 2
+      rgba: 4283508544
 --- !u!1 &188757764
 GameObject:
   m_ObjectHideFlags: 0
@@ -4738,41 +4783,8 @@ MonoBehaviour:
   _playerMarker: {fileID: 1801179216}
   _markerContainer: {fileID: 494402211}
   _markerPrefab: {fileID: 1117304301412245839, guid: b201a6a1f78541c4787e1054605a840f, type: 3}
-  _groundTilemap: {fileID: 188757767}
-  _playerTransform: {fileID: 2010244813}
-  _wallChunkGenerator: {fileID: 1097722633}
+  _mapTexture: {fileID: 185817032}
   _minimapHalfSizeTiles: 18
-  _revealRadiusTiles: 8
-  _wallRevealDepthBehindOuterTile: 3
-  _chunkSizeTiles: 32
-  _maxChunkUpdatesPerFrame: 2
-  _initializationChunkRadiusAroundPlayer: 4
-  _initializationRowsPerFrame: 250
-  _maxInitializationMillisecondsPerFrame: 7
-  _unexploredColor:
-    serializedVersion: 2
-    rgba: 0
-  _tileColors:
-  - TileType: 0
-    Color:
-      serializedVersion: 2
-      rgba: 4280098077
-  - TileType: 1
-    Color:
-      serializedVersion: 2
-      rgba: 4281226789
-  - TileType: 2
-    Color:
-      serializedVersion: 2
-      rgba: 4290416463
-  - TileType: 3
-    Color:
-      serializedVersion: 2
-      rgba: 4281027464
-  - TileType: 4
-    Color:
-      serializedVersion: 2
-      rgba: 4283508544
 --- !u!1 &517984390
 GameObject:
   m_ObjectHideFlags: 0
@@ -9933,6 +9945,7 @@ MonoBehaviour:
   _biomeTransitionNoiseScale: 0.6
   _biomeTransitionDisplacementTiles: 4
   _playerTransform: {fileID: 2010244813}
+  _mapTexture: {fileID: 185817032}
   _minimap: {fileID: 503899696}
 --- !u!114 &1097722630
 MonoBehaviour:

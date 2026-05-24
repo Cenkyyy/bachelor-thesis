@@ -140,7 +140,7 @@ public sealed class DecorationChunkGenerator : WorldChunkGeneratorBase
             int worldY = startY + localY;
 
             var worldTile = data.GetTile(worldX, worldY);
-            if (worldTile.TileType == WorldTileType.Void)
+            if (worldTile.TileType == WorldTileType.BorderBase)
                 continue;
 
             if (IsInsideDefaultSpawnExclusionRadius(data, worldX, worldY))
@@ -236,7 +236,7 @@ public sealed class DecorationChunkGenerator : WorldChunkGeneratorBase
             return null;
 
         var tile = data.GetTile(tileX, tileY);
-        if (tile.TileType == WorldTileType.Void)
+        if (tile.TileType == WorldTileType.BorderBase)
             return null;
 
         if (IsInsideDefaultSpawnExclusionRadius(data, tileX, tileY))
