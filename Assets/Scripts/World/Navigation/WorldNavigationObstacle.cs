@@ -23,12 +23,12 @@ public sealed class WorldNavigationObstacle : MonoBehaviour
     private void OnEnable()
     {
         EnsureColliders();
-        ChunkWorldNavigationController.Instance?.RegisterObstacle(this);
+        WorldChunkNavigationController.Instance?.RegisterObstacle(this);
     }
 
     private void OnDisable()
     {
-        ChunkWorldNavigationController.Instance?.UnregisterObstacle(this);
+        WorldChunkNavigationController.Instance?.UnregisterObstacle(this);
     }
 
     public static void AttachTo(GameObject instance)
@@ -46,7 +46,7 @@ public sealed class WorldNavigationObstacle : MonoBehaviour
     public void Refresh()
     {
         EnsureColliders();
-        ChunkWorldNavigationController.Instance?.RefreshObstacle(this);
+        WorldChunkNavigationController.Instance?.RefreshObstacle(this);
     }
 
     private void EnsureColliders()

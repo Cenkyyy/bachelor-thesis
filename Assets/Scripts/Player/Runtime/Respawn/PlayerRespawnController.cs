@@ -11,7 +11,7 @@ public sealed class PlayerRespawnController : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private Rigidbody2D _playerBody;
-    [SerializeField] private DeathDropController _deathDropController;
+    [SerializeField] private PlayerDeathChestDropController _deathDropController;
     [SerializeField] private PlayerItemCooldownController _itemCooldownController;
     [SerializeField] private PlayerRegenerationController _regenerationController;
     [SerializeField] private PlayerStatusEffectController _statusEffectController;

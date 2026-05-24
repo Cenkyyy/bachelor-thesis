@@ -4,12 +4,12 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public sealed class DeathChestRegistry : MonoBehaviour
 {
-    private readonly Dictionary<string, DeathChestHandle> _byId = new Dictionary<string, DeathChestHandle>();
-    private readonly Dictionary<IInventory, DeathChestHandle> _byInventory = new Dictionary<IInventory, DeathChestHandle>();
+    private readonly Dictionary<string, DeathChestRuntimeData> _byId = new Dictionary<string, DeathChestRuntimeData>();
+    private readonly Dictionary<IInventory, DeathChestRuntimeData> _byInventory = new Dictionary<IInventory, DeathChestRuntimeData>();
 
-    public IReadOnlyCollection<DeathChestHandle> ActiveChests => _byId.Values;
+    public IReadOnlyCollection<DeathChestRuntimeData> ActiveChests => _byId.Values;
 
-    public void Register(DeathChestHandle handle)
+    public void Register(DeathChestRuntimeData handle)
     {
         if (handle == null || string.IsNullOrEmpty(handle.DeathChestId) || handle.Inventory == null || handle.Inventory.Inventory == null)
             return;
@@ -32,7 +32,7 @@ public sealed class DeathChestRegistry : MonoBehaviour
             _byInventory.Remove(handle.Inventory.Inventory);
     }
 
-    public bool TryGetByInventory(IInventory inventory, out DeathChestHandle handle)
+    public bool TryGetByInventory(IInventory inventory, out DeathChestRuntimeData handle)
     {
         return _byInventory.TryGetValue(inventory, out handle);
     }

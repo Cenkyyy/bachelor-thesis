@@ -40,7 +40,7 @@ public sealed class EntityNavigationController : MonoBehaviour
 
     public bool CanUsePathPosition(Vector2 worldPosition, float pathProbeRadius)
     {
-        return ChunkWorldNavigationController.Instance.IsWorldAreaWalkable(worldPosition, pathProbeRadius);
+        return WorldChunkNavigationController.Instance.IsWorldAreaWalkable(worldPosition, pathProbeRadius);
     }
 
     public Vector2 MoveTo(
@@ -92,7 +92,7 @@ public sealed class EntityNavigationController : MonoBehaviour
         _hasLastRepathTarget = true;
         _pathIndex = 0;
 
-        var success = ChunkWorldNavigationController.Instance.TryBuildPath(
+        var success = WorldChunkNavigationController.Instance.TryBuildPath(
             startWorld: transform.position,
             targetWorld: worldTarget,
             nodeStep: pathNodeStep,
@@ -115,7 +115,7 @@ public sealed class EntityNavigationController : MonoBehaviour
         if (toTarget.sqrMagnitude <= _movement.ArrivalEpsilon * _movement.ArrivalEpsilon)
             return true;
 
-        return ChunkWorldNavigationController.Instance.CanMoveDirectly(from, worldTarget, pathProbeRadius);
+        return WorldChunkNavigationController.Instance.CanMoveDirectly(from, worldTarget, pathProbeRadius);
     }
 
     private bool TryMoveToDetour(Vector2 worldTarget, float pathProbeRadius, out Vector2 desiredDirection)

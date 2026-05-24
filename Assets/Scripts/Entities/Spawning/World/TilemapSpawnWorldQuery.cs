@@ -40,19 +40,19 @@ public sealed class TilemapSpawnWorldQuery : ISpawnWorldQuery
         return biome != ItemBiomeAffinity.None;
     }
 
-    private static ItemBiomeAffinity MapBiome(BiomeType biomeType)
+    private static ItemBiomeAffinity MapBiome(WorldBiomeType biomeType)
     {
         switch (biomeType)
         {
-            case BiomeType.Grassland:
+            case WorldBiomeType.Grassland:
                 return ItemBiomeAffinity.Grassland;
-            case BiomeType.IceTundra:
+            case WorldBiomeType.IceTundra:
                 return ItemBiomeAffinity.IceTundra;
-            case BiomeType.Desert:
+            case WorldBiomeType.Desert:
                 return ItemBiomeAffinity.Desert;
-            case BiomeType.AmethystRift:
+            case WorldBiomeType.AmethystRift:
                 return ItemBiomeAffinity.AmethystRift;
-            case BiomeType.None:
+            case WorldBiomeType.None:
             default:
                 return ItemBiomeAffinity.None;
         }

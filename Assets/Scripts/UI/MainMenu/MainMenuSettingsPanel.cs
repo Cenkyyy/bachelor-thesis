@@ -54,7 +54,7 @@ public sealed class MainMenuSettingsPanel : MonoBehaviour
         if (_worldSeedInputField == null)
             return;
 
-        _worldSeedInputField.SetTextWithoutNotify(WorldSeedUtils.SeedText);
+        _worldSeedInputField.SetTextWithoutNotify(WorldSeedUtility.SeedText);
         _worldSeedInputField.onEndEdit.AddListener(OnWorldSeedEndEdit);
     }
 
@@ -68,7 +68,7 @@ public sealed class MainMenuSettingsPanel : MonoBehaviour
         if (_worldSeedInputField == null)
             return;
 
-        WorldSeedUtils.SetSeedText(_worldSeedInputField.text);
+        WorldSeedUtility.SetSeedText(_worldSeedInputField.text);
     }
 
     private void OnAudioChanged(float volume)

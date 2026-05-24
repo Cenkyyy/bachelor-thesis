@@ -13,7 +13,7 @@ public sealed class DeathChestFactory : MonoBehaviour
     [SerializeField, Min(0.05f)] private float _placementStepDistance = 0.25f;
     [SerializeField, Min(0)] private int _placementSearchRadius = 3;
 
-    public DeathChestHandle Create(string deathChestId, Vector3 worldPosition)
+    public DeathChestRuntimeData Create(string deathChestId, Vector3 worldPosition)
     {
         if (_deathChestPrefab == null)
         {
@@ -31,11 +31,11 @@ public sealed class DeathChestFactory : MonoBehaviour
             return null;
         }
 
-        var deathChestController = deathChestObject.GetComponent<TemporaryDeathChestController>();
+        var deathChestController = deathChestObject.GetComponent<DeathChestLifecycleController>();
         if (deathChestController == null)
-            deathChestController = deathChestObject.AddComponent<TemporaryDeathChestController>();
+            deathChestController = deathChestObject.AddComponent<DeathChestLifecycleController>();
 
-        return new DeathChestHandle(deathChestId, deathChestObject.transform.position, deathChestInventory, deathChestController);
+        return new DeathChestRuntimeData(deathChestId, deathChestObject.transform.position, deathChestInventory, deathChestController);
     }
 
     private Vector3 ResolveSpawnPosition(Vector3 desiredPosition)
