@@ -419,7 +419,7 @@ MonoBehaviour:
     m_Bits: 128
   _spellObstructionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2304
   _wordEffectivenessData: {fileID: 11400000, guid: 3a8b4fc74c636fe499555877dc976ff7, type: 2}
   _damagePopupFeedbackSettings:
     _effectiveColor: {r: 0.1, g: 1, b: 0.85, a: 1}

@@ -123,7 +123,7 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
                 break;
 
             case FormWordType.Wave:
-                SpawnProjectiles(castState, CreateFullRangeTravelDistances(castState), runtimeData);
+                SpawnProjectiles(castState, CreateObstructedTravelDistances(castState), runtimeData);
                 break;
 
             case FormWordType.Barrage:
@@ -370,7 +370,9 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
             return SpellProjectile.HitMode.BeamTick;
 
         if (spell.Form.Type == FormWordType.Wave)
-            return SpellProjectile.HitMode.AreaOnce;
+            return spell.Modifier.Type == ModifierWordType.Piercing
+                ? SpellProjectile.HitMode.PiercingWave
+                : SpellProjectile.HitMode.WaveWall;
 
         return spell.Modifier.Type == ModifierWordType.Piercing
             ? SpellProjectile.HitMode.Piercing
@@ -395,15 +397,6 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
             copiedDirections[i] = directions[i];
 
         return copiedDirections;
-    }
-
-    private static float[] CreateFullRangeTravelDistances(CastState castState)
-    {
-        float[] travelDistances = new float[castState.Directions.Count];
-        for (int i = 0; i < travelDistances.Length; i++)
-            travelDistances[i] = castState.Form.Range;
-
-        return travelDistances;
     }
 
     private float[] CreateObstructedTravelDistances(CastState castState)

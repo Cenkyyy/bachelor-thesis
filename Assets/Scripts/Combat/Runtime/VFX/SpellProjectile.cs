@@ -10,7 +10,8 @@ public sealed class SpellProjectile : MonoBehaviour
     {
         SingleImpact,
         Piercing,
-        AreaOnce,
+        WaveWall,
+        PiercingWave,
         BeamTick
     }
 
@@ -20,7 +21,9 @@ public sealed class SpellProjectile : MonoBehaviour
 
     private readonly HashSet<ICombatTarget> _hitTargets = new();
     private readonly HashSet<ICombatTarget> _beamTickTargets = new();
+    private readonly HashSet<Rigidbody2D> _piercingWaveTargets = new();
     private readonly List<Collider2D> _beamTargetBuffer = new(32);
+    private readonly List<Rigidbody2D> _piercingWaveRemovalBuffer = new(16);
 
     private Vector2 _direction;
     private float _speed;
@@ -35,6 +38,7 @@ public sealed class SpellProjectile : MonoBehaviour
     private ContactFilter2D _beamTargetFilter;
     private float _beamTickInterval;
     private float _beamTickAccumulator;
+    private bool _singleImpactConsumed;
 
     private void Awake()
     {
@@ -58,9 +62,14 @@ public sealed class SpellProjectile : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void FixedUpdate()
+    {
+        PushTrackedPiercingWaveTargets();
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if ((_obstructionMask.value & (1 << other.gameObject.layer)) != 0)
+        if (IsObstruction(other.gameObject.layer))
         {
             Destroy(gameObject);
             return;
@@ -69,9 +78,58 @@ public sealed class SpellProjectile : MonoBehaviour
         if (_spellCombatController == null || _runtimeData == null || _hitMode == HitMode.BeamTick)
             return;
 
+        if (_singleImpactConsumed)
+            return;
+
+        TrackAndPushPiercingWaveTarget(other);
+
         bool hit = _spellCombatController.TryApplyProjectileHit(_runtimeData, other, _hitTargets);
         if (hit && _hitMode == HitMode.SingleImpact)
+        {
+            _singleImpactConsumed = true;
             Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        TrackAndPushPiercingWaveTarget(other);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other == null)
+            return;
+
+        Rigidbody2D targetBody = other.attachedRigidbody;
+        if (targetBody != null)
+            _piercingWaveTargets.Remove(targetBody);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision == null || collision.collider == null)
+            return;
+
+        Collider2D other = collision.collider;
+        if (IsObstruction(other.gameObject.layer))
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        if (_spellCombatController == null || _runtimeData == null || _hitMode == HitMode.BeamTick)
+            return;
+
+        if (_singleImpactConsumed)
+            return;
+
+        bool hit = _spellCombatController.TryApplyProjectileHit(_runtimeData, other, _hitTargets);
+        if (hit && _hitMode == HitMode.SingleImpact)
+        {
+            _singleImpactConsumed = true;
+            Destroy(gameObject);
+        }
     }
 
     public void Initialize(
@@ -97,7 +155,9 @@ public sealed class SpellProjectile : MonoBehaviour
         _traveledDistance = 0f;
         _hitTargets.Clear();
         _beamTickTargets.Clear();
+        _piercingWaveTargets.Clear();
         _beamTickAccumulator = ResolveInitialBeamTickAccumulator();
+        _singleImpactConsumed = false;
 
         transform.up = _direction;
 
@@ -114,9 +174,10 @@ public sealed class SpellProjectile : MonoBehaviour
         if (_hitboxColliders == null)
             _hitboxColliders = new Collider2D[0];
 
+        bool shouldForceTriggers = _hitMode != HitMode.WaveWall;
         for (var i = 0; i < _hitboxColliders.Length; i++)
         {
-            if (_hitboxColliders[i] != null)
+            if (_hitboxColliders[i] != null && shouldForceTriggers)
                 _hitboxColliders[i].isTrigger = true;
         }
 
@@ -125,6 +186,7 @@ public sealed class SpellProjectile : MonoBehaviour
 
         _rigidbody.bodyType = RigidbodyType2D.Kinematic;
         _rigidbody.gravityScale = 0f;
+        _rigidbody.useFullKinematicContacts = true;
         _rigidbody.linearVelocity = _direction * _speed;
     }
 
@@ -196,5 +258,59 @@ public sealed class SpellProjectile : MonoBehaviour
             for (var targetIndex = 0; targetIndex < _beamTargetBuffer.Count; targetIndex++)
                 _spellCombatController.TryApplyProjectileHit(_runtimeData, _beamTargetBuffer[targetIndex], _beamTickTargets);
         }
+    }
+
+    private bool IsObstruction(int layer)
+    {
+        return (_obstructionMask.value & (1 << layer)) != 0;
+    }
+
+    private void PushTrackedPiercingWaveTargets()
+    {
+        if (_hitMode != HitMode.PiercingWave || _piercingWaveTargets.Count == 0)
+            return;
+
+        _piercingWaveRemovalBuffer.Clear();
+
+        foreach (Rigidbody2D targetBody in _piercingWaveTargets)
+        {
+            if (targetBody == null || targetBody.bodyType != RigidbodyType2D.Dynamic)
+            {
+                _piercingWaveRemovalBuffer.Add(targetBody);
+                continue;
+            }
+
+            PushPiercingWaveBody(targetBody);
+        }
+
+        for (var i = 0; i < _piercingWaveRemovalBuffer.Count; i++)
+            _piercingWaveTargets.Remove(_piercingWaveRemovalBuffer[i]);
+    }
+
+    private void TrackAndPushPiercingWaveTarget(Collider2D other)
+    {
+        if (_hitMode != HitMode.PiercingWave || other == null || _spellCombatController == null)
+            return;
+
+        if ((_spellCombatController.TargetMask.value & (1 << other.gameObject.layer)) == 0)
+            return;
+
+        Rigidbody2D targetBody = other.attachedRigidbody;
+        if (targetBody == null || targetBody.bodyType != RigidbodyType2D.Dynamic)
+            return;
+
+        _piercingWaveTargets.Add(targetBody);
+        PushPiercingWaveBody(targetBody);
+    }
+
+    private void PushPiercingWaveBody(Rigidbody2D targetBody)
+    {
+        Vector2 currentVelocity = targetBody.linearVelocity;
+        float currentForwardSpeed = Vector2.Dot(currentVelocity, _direction);
+        if (currentForwardSpeed >= _speed)
+            return;
+
+        Vector2 lateralVelocity = currentVelocity - _direction * currentForwardSpeed;
+        targetBody.linearVelocity = lateralVelocity + _direction * _speed;
     }
 }
