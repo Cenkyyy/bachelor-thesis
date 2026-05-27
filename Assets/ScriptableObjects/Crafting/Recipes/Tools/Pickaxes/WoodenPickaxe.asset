@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <OutputItem>k__BackingField: {fileID: 11400000, guid: 060efcd3a6a82654b95f4712b362e893, type: 2}
   <OutputAmount>k__BackingField: 1
-  <Description>k__BackingField: Tool that helps player mine copper
   <Category>k__BackingField: 0
-  _ingredients: []
   _displayName: Wooden Pickaxe
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: 75e51e12b24343f4b5e11d487dcb5cd4, type: 2}
+    <Amount>k__BackingField: 4
+  - <Item>k__BackingField: {fileID: 11400000, guid: dc81539009754fa9bcb91c2c41c4424f, type: 2}
+    <Amount>k__BackingField: 2

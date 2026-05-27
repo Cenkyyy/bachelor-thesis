@@ -17,5 +17,9 @@ MonoBehaviour:
   <Category>k__BackingField: 0
   _displayName: Copper Pickaxe
   _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: 75e51e12b24343f4b5e11d487dcb5cd4, type: 2}
+    <Amount>k__BackingField: 3
   - <Item>k__BackingField: {fileID: 11400000, guid: 454d9a3282a1dad439c8064255e7761b, type: 2}
     <Amount>k__BackingField: 4
+  - <Item>k__BackingField: {fileID: 11400000, guid: dc81539009754fa9bcb91c2c41c4424f, type: 2}
+    <Amount>k__BackingField: 2

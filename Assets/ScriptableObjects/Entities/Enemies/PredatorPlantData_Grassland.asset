@@ -20,7 +20,19 @@ MonoBehaviour:
   <RoleTags>k__BackingField: 4
   <SpawnWeight>k__BackingField: 1
   <XpReward>k__BackingField: 100
-  _drops: []
+  _drops:
+  - _item: {fileID: 11400000, guid: dc81539009754fa9bcb91c2c41c4424f, type: 2}
+    _dropChance: 1
+    _minAmount: 1
+    _maxAmount: 3
+  - _item: {fileID: 11400000, guid: e1f3e383990342eb8ac04363d2da2fa3, type: 2}
+    _dropChance: 0.75
+    _minAmount: 1
+    _maxAmount: 2
+  - _item: {fileID: 11400000, guid: 04b69ff7a72b40fe895a00feb268c64e, type: 2}
+    _dropChance: 0.55
+    _minAmount: 1
+    _maxAmount: 2
   <MoveSpeed>k__BackingField: 2.2
   <ArrivalEpsilon>k__BackingField: 0.12
   <RepathIntervalSeconds>k__BackingField: 0.7

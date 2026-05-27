@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8760f91d0fa4674995063a3f37b49e3, type: 3}
   m_Name: ManaRegenerationPotion_II
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Mana Regeneration Potion III
+  <ItemName>k__BackingField: Mana Regeneration Potion II
   <Icon>k__BackingField: {fileID: -6174964796124462361, guid: c3f66a183b90c384bb8f7b8b8eab4a9d, type: 3}
   <Description>k__BackingField: Grants Mana regeneration
   <Category>k__BackingField: 4

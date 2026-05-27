@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88c623f404c9cc428b917a762222950, type: 3}
+  m_Name: StaffOfBeginning
+  m_EditorClassIdentifier: 
+  <OutputItem>k__BackingField: {fileID: 11400000, guid: 277f53f4a2fb6ee45bd69c23abdc00dc, type: 2}
+  <OutputAmount>k__BackingField: 1
+  <Category>k__BackingField: 0
+  _displayName: Staff of Beginning
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: 75e51e12b24343f4b5e11d487dcb5cd4, type: 2}
+    <Amount>k__BackingField: 5
+  - <Item>k__BackingField: {fileID: 11400000, guid: 106d1ca5a8944fd68309efd217fd5f65, type: 2}
+    <Amount>k__BackingField: 1
+  - <Item>k__BackingField: {fileID: 11400000, guid: dc81539009754fa9bcb91c2c41c4424f, type: 2}
+    <Amount>k__BackingField: 2

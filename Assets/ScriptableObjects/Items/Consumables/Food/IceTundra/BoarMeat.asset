@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8760f91d0fa4674995063a3f37b49e3, type: 3}
+  m_Name: BoarMeat
+  m_EditorClassIdentifier: 
+  <ItemName>k__BackingField: Boar Meat
+  <Icon>k__BackingField: {fileID: 0}
+  <Category>k__BackingField: 4
+  <Rarity>k__BackingField: 0
+  <BiomeAffinity>k__BackingField: 2
+  <MaxStackSize>k__BackingField: 9999
+  <HeldPresentationMode>k__BackingField: 0
+  <HeldScale>k__BackingField: {x: 0.3, y: 0.3}
+  <Kind>k__BackingField: 0
+  <RestoreHealth>k__BackingField: 0
+  <RestoreMana>k__BackingField: 0
+  <RestoreHunger>k__BackingField: 12
+  <CooldownSeconds>k__BackingField: 0
+  _cooldownBlockedItems: []
+  <EffectDurationSeconds>k__BackingField: 0
+  _timedStatusEffects: []

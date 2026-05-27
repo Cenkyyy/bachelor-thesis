@@ -16,4 +16,10 @@ MonoBehaviour:
   <OutputAmount>k__BackingField: 1
   <Category>k__BackingField: 0
   _displayName: Necklace of the Violet Shard
-  _ingredients: []
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: ce861eb6d827ac741aab7bb05003f31a, type: 2}
+    <Amount>k__BackingField: 5
+  - <Item>k__BackingField: {fileID: 11400000, guid: a32204ad7b421c84cb9fc6248609b8ea, type: 2}
+    <Amount>k__BackingField: 5
+  - <Item>k__BackingField: {fileID: 11400000, guid: 8760bdfa8ac54a56bab9d3ecf236cadb, type: 2}
+    <Amount>k__BackingField: 1

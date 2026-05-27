@@ -16,4 +16,10 @@ MonoBehaviour:
   <OutputAmount>k__BackingField: 1
   <Category>k__BackingField: 0
   _displayName: Amulet of the Shattered Hour
-  _ingredients: []
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: cb484d165f7a91644b7bd8bc03387680, type: 2}
+    <Amount>k__BackingField: 5
+  - <Item>k__BackingField: {fileID: 11400000, guid: 106d1ca5a8944fd68309efd217fd5f65, type: 2}
+    <Amount>k__BackingField: 1
+  - <Item>k__BackingField: {fileID: 11400000, guid: a61704736eb34ffca4c930231fd44709, type: 2}
+    <Amount>k__BackingField: 1

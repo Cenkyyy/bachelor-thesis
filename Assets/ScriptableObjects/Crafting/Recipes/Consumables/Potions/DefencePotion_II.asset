@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <OutputItem>k__BackingField: {fileID: 11400000, guid: ea1c8677eebbaf54aa6a8945812d32eb, type: 2}
   <OutputAmount>k__BackingField: 1
-  <Description>k__BackingField: 
   <Category>k__BackingField: 2
-  _ingredients: []
   _displayName: Defence Potion II
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: a30f1899df8a4c7886cc59aa79d13270, type: 2}
+    <Amount>k__BackingField: 4
+  - <Item>k__BackingField: {fileID: 11400000, guid: 72576c15f21b407390c7d5c006462143, type: 2}
+    <Amount>k__BackingField: 2
+  - <Item>k__BackingField: {fileID: 11400000, guid: 1f1a43e12bbd47c09957be3cf39375e3, type: 2}
+    <Amount>k__BackingField: 1

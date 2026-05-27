@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <OutputItem>k__BackingField: {fileID: 11400000, guid: 00bfcc5993d6ef44ab44ed43516679c3, type: 2}
   <OutputAmount>k__BackingField: 1
-  <Description>k__BackingField: 
   <Category>k__BackingField: 0
-  _ingredients: []
   _displayName: Amethyst Chestplate
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: ce861eb6d827ac741aab7bb05003f31a, type: 2}
+    <Amount>k__BackingField: 10
+  - <Item>k__BackingField: {fileID: 11400000, guid: 72576c15f21b407390c7d5c006462143, type: 2}
+    <Amount>k__BackingField: 4
+  - <Item>k__BackingField: {fileID: 11400000, guid: e72a1e6739824da3b09bbaa0523c6519, type: 2}
+    <Amount>k__BackingField: 3

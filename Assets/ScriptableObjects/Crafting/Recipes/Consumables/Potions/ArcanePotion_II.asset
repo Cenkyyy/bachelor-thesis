@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <OutputItem>k__BackingField: {fileID: 11400000, guid: 43530c622d4c01e4b90e374e846a135e, type: 2}
   <OutputAmount>k__BackingField: 1
-  <Description>k__BackingField: 
   <Category>k__BackingField: 2
-  _ingredients: []
   _displayName: Arcane Potion II
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: 6499b2edcb5041c491b2839953934e62, type: 2}
+    <Amount>k__BackingField: 3
+  - <Item>k__BackingField: {fileID: 11400000, guid: 05d39376d056425eb9015be81ac970a3, type: 2}
+    <Amount>k__BackingField: 3
+  - <Item>k__BackingField: {fileID: 11400000, guid: 467379bb36454c8bb9d7f7076b8927a8, type: 2}
+    <Amount>k__BackingField: 3
+  - <Item>k__BackingField: {fileID: 11400000, guid: 8760bdfa8ac54a56bab9d3ecf236cadb, type: 2}
+    <Amount>k__BackingField: 1

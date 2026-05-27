@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <OutputItem>k__BackingField: {fileID: 11400000, guid: 865731ea6f9f9d543a5971a2cdd971ba, type: 2}
   <OutputAmount>k__BackingField: 1
-  <Description>k__BackingField: 
   <Category>k__BackingField: 2
-  _ingredients: []
   _displayName: Speed Potion III
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: 467379bb36454c8bb9d7f7076b8927a8, type: 2}
+    <Amount>k__BackingField: 5
+  - <Item>k__BackingField: {fileID: 11400000, guid: 4fcd6eb5259d45a18e1c191ca58acef1, type: 2}
+    <Amount>k__BackingField: 4
+  - <Item>k__BackingField: {fileID: 11400000, guid: 333441c54f7c42afb49338026f73b3f9, type: 2}
+    <Amount>k__BackingField: 1

@@ -16,4 +16,10 @@ MonoBehaviour:
   <OutputAmount>k__BackingField: 1
   <Category>k__BackingField: 0
   _displayName: Ring of the First Growth
-  _ingredients: []
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: 75e51e12b24343f4b5e11d487dcb5cd4, type: 2}
+    <Amount>k__BackingField: 2
+  - <Item>k__BackingField: {fileID: 11400000, guid: 106d1ca5a8944fd68309efd217fd5f65, type: 2}
+    <Amount>k__BackingField: 1
+  - <Item>k__BackingField: {fileID: 11400000, guid: dc81539009754fa9bcb91c2c41c4424f, type: 2}
+    <Amount>k__BackingField: 2

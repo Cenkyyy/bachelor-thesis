@@ -16,4 +16,8 @@ MonoBehaviour:
   <OutputAmount>k__BackingField: 1
   <Category>k__BackingField: 0
   _displayName: Ring of Sun and Rift
-  _ingredients: []
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: ce861eb6d827ac741aab7bb05003f31a, type: 2}
+    <Amount>k__BackingField: 4
+  - <Item>k__BackingField: {fileID: 11400000, guid: a32204ad7b421c84cb9fc6248609b8ea, type: 2}
+    <Amount>k__BackingField: 4

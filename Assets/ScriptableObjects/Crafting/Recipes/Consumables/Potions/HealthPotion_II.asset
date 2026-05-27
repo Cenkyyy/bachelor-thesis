@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <OutputItem>k__BackingField: {fileID: 11400000, guid: a48bb03e16f283b41856d64cb365c220, type: 2}
   <OutputAmount>k__BackingField: 1
-  <Description>k__BackingField: 
   <Category>k__BackingField: 2
-  _ingredients: []
   _displayName: Health Potion II
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: aec789e7161d4e9d81ffce342380c6f3, type: 2}
+    <Amount>k__BackingField: 2
+  - <Item>k__BackingField: {fileID: 11400000, guid: 66bf1a835b71410bb6aedac9f7ecd4e2, type: 2}
+    <Amount>k__BackingField: 2
+  - <Item>k__BackingField: {fileID: 11400000, guid: 467379bb36454c8bb9d7f7076b8927a8, type: 2}
+    <Amount>k__BackingField: 2

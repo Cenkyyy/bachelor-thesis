@@ -17,6 +17,10 @@ MonoBehaviour:
   <AllowHandMining>k__BackingField: 0
   <MaxDurability>k__BackingField: 10
   <ToolPowerMultiplier>k__BackingField: 1
-  _drops: []
+  _drops:
+  - _item: {fileID: 11400000, guid: b1f38c13c49246f9b4f2a4a8b0a268c0, type: 2}
+    _dropChance: 1
+    _minAmount: 2
+    _maxAmount: 5
   <GrantsMemoryXP>k__BackingField: 0
   <MemoryXpAmount>k__BackingField: 0

@@ -16,4 +16,10 @@ MonoBehaviour:
   <OutputAmount>k__BackingField: 1
   <Category>k__BackingField: 0
   _displayName: Riftheart Amulet
-  _ingredients: []
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: ce861eb6d827ac741aab7bb05003f31a, type: 2}
+    <Amount>k__BackingField: 5
+  - <Item>k__BackingField: {fileID: 11400000, guid: 454d9a3282a1dad439c8064255e7761b, type: 2}
+    <Amount>k__BackingField: 5
+  - <Item>k__BackingField: {fileID: 11400000, guid: aec789e7161d4e9d81ffce342380c6f3, type: 2}
+    <Amount>k__BackingField: 3

@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <OutputItem>k__BackingField: {fileID: 11400000, guid: b881277c6ff2bdd4f92dac1a788f27b7, type: 2}
   <OutputAmount>k__BackingField: 1
-  <Description>k__BackingField: 
   <Category>k__BackingField: 2
-  _ingredients: []
   _displayName: Mana Regeneration Potion III
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: 04b69ff7a72b40fe895a00feb268c64e, type: 2}
+    <Amount>k__BackingField: 4
+  - <Item>k__BackingField: {fileID: 11400000, guid: a32204ad7b421c84cb9fc6248609b8ea, type: 2}
+    <Amount>k__BackingField: 5
+  - <Item>k__BackingField: {fileID: 11400000, guid: 333441c54f7c42afb49338026f73b3f9, type: 2}
+    <Amount>k__BackingField: 1

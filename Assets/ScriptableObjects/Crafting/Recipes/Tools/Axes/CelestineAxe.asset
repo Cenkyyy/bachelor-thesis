@@ -17,5 +17,9 @@ MonoBehaviour:
   <Category>k__BackingField: 0
   _displayName: Celestine Axe
   _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: 6ae88c7cd9c14d2eb273eb69bbc0d734, type: 2}
+    <Amount>k__BackingField: 3
   - <Item>k__BackingField: {fileID: 11400000, guid: cb484d165f7a91644b7bd8bc03387680, type: 2}
     <Amount>k__BackingField: 6
+  - <Item>k__BackingField: {fileID: 11400000, guid: bb169f4bfcce4cd899f0186e97efb5a2, type: 2}
+    <Amount>k__BackingField: 2
