@@ -234,7 +234,7 @@ public sealed class WallChunkGenerator : WorldChunkGeneratorBase
         OnWallTileChanged?.Invoke(dataTile);
 
         if (miner != null && runtimeData.WallData.MineableData != null)
-            MiningDropUtility.ResolveDrops(runtimeData.WallData.MineableData.Drops, miner, dropSpawner, GetTileCenterWorld(dataTile));
+            LootDropUtility.AddToPlayerInventoryOrSpawnLeftovers(runtimeData.WallData.MineableData.Drops, miner, dropSpawner, GetTileCenterWorld(dataTile));
     }
 
     private IEnumerator GenerateChunkTiles(WorldRuntimeData data, Vector2Int chunkCoord, int yieldEveryOperations, YieldInstruction yieldInstruction)

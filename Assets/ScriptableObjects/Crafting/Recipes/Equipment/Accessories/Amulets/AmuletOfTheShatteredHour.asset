@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f88c623f404c9cc428b917a762222950, type: 3}
-  m_Name: CelestineRing
+  m_Name: AmuletOfTheShatteredHour
   m_EditorClassIdentifier: 
-  <OutputItem>k__BackingField: {fileID: 11400000, guid: 4573945bca4c70c4aa01ef4615c58e56, type: 2}
+  <OutputItem>k__BackingField: {fileID: 11400000, guid: c42ce2887b04b97489b7235ae8f8dae7, type: 2}
   <OutputAmount>k__BackingField: 1
   <Category>k__BackingField: 0
-  _displayName: Celestine Ring
+  _displayName: Amulet of the Shattered Hour
   _ingredients: []

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2cc6a19b30c5dd24a8b4b7b09ae95ff0, type: 3}
-  m_Name: CelestineStaff
+  m_Name: FrostfangStaff
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Celestine Staff
+  <ItemName>k__BackingField: Frostfang Staff
   <Icon>k__BackingField: {fileID: -851508080, guid: 7150e356b9a2aef40820f5e0c9889678, type: 3}
   <Category>k__BackingField: 1
   <Rarity>k__BackingField: 2

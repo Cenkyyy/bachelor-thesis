@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f88c623f404c9cc428b917a762222950, type: 3}
-  m_Name: CelestineWand
+  m_Name: StaffOfBeginning
   m_EditorClassIdentifier: 
-  <OutputItem>k__BackingField: {fileID: 11400000, guid: b56b21ef1301b4044a03e186a9261162, type: 2}
+  <OutputItem>k__BackingField: {fileID: 11400000, guid: 277f53f4a2fb6ee45bd69c23abdc00dc, type: 2}
   <OutputAmount>k__BackingField: 1
   <Category>k__BackingField: 0
-  _displayName: Celestine Wand
-  _ingredients:
-  - <Item>k__BackingField: {fileID: 11400000, guid: cb484d165f7a91644b7bd8bc03387680, type: 2}
-    <Amount>k__BackingField: 10
+  _displayName: Staff of Beginning
+  _ingredients: []

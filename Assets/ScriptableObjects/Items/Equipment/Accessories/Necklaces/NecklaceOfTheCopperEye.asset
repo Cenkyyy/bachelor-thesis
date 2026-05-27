@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ba0adafdd511b47930cdf4105e6d46, type: 3}
-  m_Name: AmethystTopazRing
+  m_Name: NecklaceOfTheCopperEye
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Amethyst Topaz Ring
-  <Icon>k__BackingField: {fileID: -1802211656, guid: 7150e356b9a2aef40820f5e0c9889678, type: 3}
+  <ItemName>k__BackingField: Necklace of the Copper Eye
+  <Icon>k__BackingField: {fileID: 1305533935, guid: 7150e356b9a2aef40820f5e0c9889678, type: 3}
   <Category>k__BackingField: 5
-  <Rarity>k__BackingField: 3
-  <BiomeAffinity>k__BackingField: 4
+  <Rarity>k__BackingField: 2
+  <BiomeAffinity>k__BackingField: 2
   <MaxStackSize>k__BackingField: 1
   <HeldPresentationMode>k__BackingField: 0
   <HeldScale>k__BackingField: {x: 0.3, y: 0.3}
-  <Slot>k__BackingField: 96
-  <Tier>k__BackingField: 24
+  <Slot>k__BackingField: 16
+  <Tier>k__BackingField: 6
   _statusEffects: []

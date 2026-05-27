@@ -57,23 +57,8 @@ public sealed class EnemyDeathRewards : MonoBehaviour
         if (_entityCore == null || _entityCore.Data is not EnemyData enemyData || _dropSpawner == null)
             return;
 
-        var lootTable = enemyData.Drops;
-        if (lootTable == null || lootTable.Count == 0)
-            return;
-
         var dropPosition = _dropAnchor != null ? _dropAnchor.position : transform.position;
-        dropPosition.z = 0f;
-
-        for (var i = 0; i < lootTable.Count; i++)
-        {
-            var entry = lootTable[i];
-            var amount = entry.RollAmount();
-            if (amount <= 0 || entry.Item == null)
-                continue;
-
-            var stack = new InventoryItem(entry.Item, amount);
-            _dropSpawner.Spawn(stack, dropPosition);
-        }
+        LootDropUtility.SpawnInWorld(enemyData.Drops, _dropSpawner, dropPosition);
     }
 
     private static Player ResolvePlayer(object damageSource)

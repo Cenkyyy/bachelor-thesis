@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f88c623f404c9cc428b917a762222950, type: 3}
-  m_Name: AmethystTopazRing
+  m_Name: MechanicalEyeOfTheRift
   m_EditorClassIdentifier: 
-  <OutputItem>k__BackingField: {fileID: 11400000, guid: e899222a17729e841b93839f401b2588, type: 2}
+  <OutputItem>k__BackingField: {fileID: 11400000, guid: 8a06a48dc1ceda942bb7a3a07221fe7a, type: 2}
   <OutputAmount>k__BackingField: 1
   <Category>k__BackingField: 0
-  _displayName: Amethyst Topaz Ring
-  _ingredients: []
+  _displayName: Mechanical Eye of the Rift
+  _ingredients:
+  - <Item>k__BackingField: {fileID: 11400000, guid: ce861eb6d827ac741aab7bb05003f31a, type: 2}
+    <Amount>k__BackingField: 20

@@ -17,8 +17,8 @@ public class EnemyData : EntityData
     [field: SerializeField] public int XpReward { get; private set; } = 15;
 
     [Header("Loot")]
-    [SerializeField] private List<EntityLootDrop> _drops = new();
-    public IReadOnlyList<EntityLootDrop> Drops => _drops;
+    [SerializeField] private List<DropEntry> _drops = new();
+    public IReadOnlyList<DropEntry> Drops => _drops;
 
     [field: Header("Movement")]
     [field: SerializeField] public float MoveSpeed { get; private set; } = 2.2f;

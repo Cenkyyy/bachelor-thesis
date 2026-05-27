@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ba0adafdd511b47930cdf4105e6d46, type: 3}
-  m_Name: AmethystNecklace
+  m_Name: RingOfTheFirstGrowth
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Amethyst Necklace
-  <Icon>k__BackingField: {fileID: 1575565915, guid: 7150e356b9a2aef40820f5e0c9889678, type: 3}
+  <ItemName>k__BackingField: Ring of the First Growth
+  <Icon>k__BackingField: {fileID: -692070564, guid: 7150e356b9a2aef40820f5e0c9889678, type: 3}
   <Category>k__BackingField: 5
-  <Rarity>k__BackingField: 3
-  <BiomeAffinity>k__BackingField: 4
+  <Rarity>k__BackingField: 0
+  <BiomeAffinity>k__BackingField: 1
   <MaxStackSize>k__BackingField: 1
   <HeldPresentationMode>k__BackingField: 0
   <HeldScale>k__BackingField: {x: 0.3, y: 0.3}
-  <Slot>k__BackingField: 16
-  <Tier>k__BackingField: 16
+  <Slot>k__BackingField: 96
+  <Tier>k__BackingField: 1
   _statusEffects: []

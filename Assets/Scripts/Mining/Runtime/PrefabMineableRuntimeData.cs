@@ -142,7 +142,7 @@ public sealed class PrefabMineableRuntimeData : MonoBehaviour, IMineableTarget
     private void TryDropLoot(Player player, WorldItemSpawner dropSpawner)
     {
         var dropPosition = _dropAnchor ? _dropAnchor.position : transform.position;
-        MiningDropUtility.ResolveDrops(_data.Drops, player, dropSpawner, dropPosition);
+        LootDropUtility.AddToPlayerInventoryOrSpawnLeftovers(_data.Drops, player, dropSpawner, dropPosition);
     }
 
     private void ResetDurability()

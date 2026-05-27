@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,33 +18,10 @@ public sealed class MineableNodeData : ScriptableObject
     [field: SerializeField, Min(0f)] public float ReplenishDurationSeconds { get; private set; } = 4f;
 
     [field: Header("Drops")]
-    [SerializeField] private List<MiningDropEntry> _drops = new List<MiningDropEntry>();
-    public IReadOnlyList<MiningDropEntry> Drops => _drops;
+    [SerializeField] private List<DropEntry> _drops = new();
+    public IReadOnlyList<DropEntry> Drops => _drops;
 
     [field: Header("Memory Ore")]
     [field: SerializeField] public bool GrantsMemoryXP { get; private set; } = false;
     [field: SerializeField] public int MemoryXpAmount { get; private set; } = 0;
-}
-
-/// <summary>
-/// Defines a potential item drop from mining a node, including the item reference and the range of possible amounts that can drop.
-/// </summary>
-[Serializable]
-public struct MiningDropEntry
-{
-    [SerializeField] private ItemData _item;
-    [SerializeField] private int _minAmount;
-    [SerializeField] private int _maxAmount;
-
-    public ItemData Item => _item;
-
-    public int RollAmount()
-    {
-        if (_item == null)
-            return 0;
-
-        var min = Mathf.Max(0, _minAmount);
-        var max = Mathf.Max(min, _maxAmount);
-        return UnityEngine.Random.Range(min, max + 1);
-    }
 }
