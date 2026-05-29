@@ -19,8 +19,8 @@ MonoBehaviour:
   _ingredients:
   - <Item>k__BackingField: {fileID: 11400000, guid: 8f9a4677e57346b199ee3fd0471270fa, type: 2}
     <Amount>k__BackingField: 4
-  - <Item>k__BackingField: {fileID: 11400000, guid: 1f1a43e12bbd47c09957be3cf39375e3, type: 2}
-    <Amount>k__BackingField: 2
+  - <Item>k__BackingField: {fileID: 11400000, guid: 04b69ff7a72b40fe895a00feb268c64e, type: 2}
+    <Amount>k__BackingField: 1
   - <Item>k__BackingField: {fileID: 11400000, guid: a30f1899df8a4c7886cc59aa79d13270, type: 2}
     <Amount>k__BackingField: 3
   - <Item>k__BackingField: {fileID: 11400000, guid: 333441c54f7c42afb49338026f73b3f9, type: 2}

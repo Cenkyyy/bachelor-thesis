@@ -17,7 +17,7 @@ MonoBehaviour:
   <Category>k__BackingField: 2
   _displayName: Defence Potion I
   _ingredients:
-  - <Item>k__BackingField: {fileID: 11400000, guid: a30f1899df8a4c7886cc59aa79d13270, type: 2}
-    <Amount>k__BackingField: 2
   - <Item>k__BackingField: {fileID: 11400000, guid: 72576c15f21b407390c7d5c006462143, type: 2}
+    <Amount>k__BackingField: 1
+  - <Item>k__BackingField: {fileID: 11400000, guid: 1f1a43e12bbd47c09957be3cf39375e3, type: 2}
     <Amount>k__BackingField: 1

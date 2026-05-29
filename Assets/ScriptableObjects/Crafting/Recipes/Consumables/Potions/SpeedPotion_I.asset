@@ -17,8 +17,6 @@ MonoBehaviour:
   <Category>k__BackingField: 2
   _displayName: Speed Potion I
   _ingredients:
-  - <Item>k__BackingField: {fileID: 11400000, guid: 467379bb36454c8bb9d7f7076b8927a8, type: 2}
-    <Amount>k__BackingField: 2
   - <Item>k__BackingField: {fileID: 11400000, guid: 66bf1a835b71410bb6aedac9f7ecd4e2, type: 2}
     <Amount>k__BackingField: 1
   - <Item>k__BackingField: {fileID: 11400000, guid: 4fcd6eb5259d45a18e1c191ca58acef1, type: 2}
