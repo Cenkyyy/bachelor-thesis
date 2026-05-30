@@ -143,6 +143,22 @@ public class PlayerRuntimeData
     // Health API
 
     /// <summary>
+    /// Applies a signed health change. Positive values heal, negative values deal direct damage.
+    /// </summary>
+    /// <param name="amount">Signed health change to apply.</param>
+    public void ApplyHealthDelta(int amount)
+    {
+        if (amount > 0)
+        {
+            Heal(amount);
+            return;
+        }
+
+        if (amount < 0)
+            TakeDamage(Mathf.Abs(amount));
+    }
+
+    /// <summary>
     /// Applies damage, clamping to zero, and raises OnHealthChanged event.
     /// </summary>
     /// <param name="amount">Damage to be taken.</param>
@@ -167,6 +183,9 @@ public class PlayerRuntimeData
     /// <param name="amount">Amount to be healed.</param>
     public void Heal(int amount)
     {
+        if (amount <= 0)
+            return;
+
         CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
@@ -210,6 +229,9 @@ public class PlayerRuntimeData
     /// <param name="amount">Mana to be recovered</param>
     public void RecoverMana(int amount)
     {
+        if (amount <= 0)
+            return;
+
         CurrentMana = Mathf.Min(MaxMana, CurrentMana + amount);
         OnManaChanged?.Invoke(CurrentMana, MaxMana);
     }

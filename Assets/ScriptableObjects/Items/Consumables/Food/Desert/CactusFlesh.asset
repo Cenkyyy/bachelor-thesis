@@ -21,9 +21,9 @@ MonoBehaviour:
   <HeldPresentationMode>k__BackingField: 0
   <HeldScale>k__BackingField: {x: 0.3, y: 0.3}
   <Kind>k__BackingField: 0
-  <RestoreHealth>k__BackingField: 0
+  <RestoreHealth>k__BackingField: -3
   <RestoreMana>k__BackingField: 0
-  <RestoreHunger>k__BackingField: 4
+  <RestoreHunger>k__BackingField: 8
   <CooldownSeconds>k__BackingField: 0
   _cooldownBlockedItems: []
   <EffectDurationSeconds>k__BackingField: 0

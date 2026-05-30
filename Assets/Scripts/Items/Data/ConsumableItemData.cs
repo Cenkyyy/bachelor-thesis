@@ -31,9 +31,6 @@ public class ConsumableItemData : ItemData, ICooldownItem
     {
         base.OnValidate();
 
-        if (RestoreHealth < 0)
-            RestoreHealth = 0;
-
         if (RestoreMana < 0)
             RestoreMana = 0;
 

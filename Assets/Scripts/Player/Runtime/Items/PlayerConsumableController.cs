@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// Consumes hotbar consumables and applies their instant and timed player effects.
@@ -45,7 +44,7 @@ public sealed class PlayerConsumableController : MonoBehaviour
 
     private void ApplyConsumable(ConsumableItemData consumable)
     {
-        _player.Data.Heal(consumable.RestoreHealth);
+        _player.Data.ApplyHealthDelta(consumable.RestoreHealth);
         _player.Data.RecoverMana(consumable.RestoreMana);
         _player.Data.EatFood(consumable.RestoreHunger);
         _statusEffectController.ApplyTimedConsumableStatusEffect(consumable);

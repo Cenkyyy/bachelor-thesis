@@ -19,6 +19,8 @@ public sealed class ConsumableTooltipProvider : IItemTooltipProvider
 
         if (consumable.RestoreHealth > 0)
             lines.Add(new ItemTooltipLineRuntimeData("Restore Health", ItemTooltipFormatter.FormatInt(consumable.RestoreHealth)));
+        else if (consumable.RestoreHealth < 0)
+            lines.Add(new ItemTooltipLineRuntimeData("Damage", ItemTooltipFormatter.FormatInt(System.Math.Abs(consumable.RestoreHealth))));
 
         if (consumable.RestoreMana > 0)
             lines.Add(new ItemTooltipLineRuntimeData("Restore Mana", ItemTooltipFormatter.FormatInt(consumable.RestoreMana)));
