@@ -23,18 +23,18 @@ MonoBehaviour:
   <Kind>k__BackingField: 0
   <RestoreHealth>k__BackingField: -18
   <RestoreMana>k__BackingField: 20
-  <RestoreHunger>k__BackingField: 45
+  <RestoreHunger>k__BackingField: 35
   <CooldownSeconds>k__BackingField: 0
   _cooldownBlockedItems: []
   <EffectDurationSeconds>k__BackingField: 60
   _timedStatusEffects:
   - <StatusEffectType>k__BackingField: 4
-    <Value>k__BackingField: 12
+    <Value>k__BackingField: 4
   - <StatusEffectType>k__BackingField: 5
     <Value>k__BackingField: 10
   - <StatusEffectType>k__BackingField: 6
     <Value>k__BackingField: 4
   - <StatusEffectType>k__BackingField: 2
-    <Value>k__BackingField: 20
+    <Value>k__BackingField: 15
   - <StatusEffectType>k__BackingField: 3
-    <Value>k__BackingField: 2
+    <Value>k__BackingField: 1.2

@@ -32,10 +32,10 @@ public class WorldGenerationController : MonoBehaviour, ISceneTransitionReadines
     [SerializeField] private WorldBiomeType[] _centerBiomes = { WorldBiomeType.Grassland, WorldBiomeType.IceTundra, WorldBiomeType.Desert, WorldBiomeType.AmethystRift };
 
     [Header("Radial Biome Distribution")]
-    [SerializeField, Range(0f, 1f)] private float _innerRingMaxNormalizedRadius = 0.35f;
-    [SerializeField, Range(0f, 1f)] private float _middleRingMaxNormalizedRadius = 0.70f;
-    [SerializeField] private RadialBiomeWeights _middleRingWeights = RadialBiomeWeights.Create(25f, 37.5f, 37.5f, 0f);
-    [SerializeField] private RadialBiomeWeights _outerRingWeights = RadialBiomeWeights.Create(10f, 17.5f, 17.5f, 55f);
+    [SerializeField, Range(0f, 1f)] private float _innerRingMaxNormalizedRadius = 0.33f;
+    [SerializeField, Range(0f, 1f)] private float _middleRingMaxNormalizedRadius = 0.67f;
+    [SerializeField] private RadialBiomeWeights _middleRingWeights = RadialBiomeWeights.Create(10f, 45f, 45f, 0f);
+    [SerializeField] private RadialBiomeWeights _outerRingWeights = RadialBiomeWeights.Create(10f, 21.25f, 21.25f, 47.5f);
 
     [Header("Deferred World Data Generation")]
     [SerializeField, Min(1)] private int _worldDataGenerationChunkSize = DefaultWorldDataGenerationChunkSize;

@@ -155,15 +155,10 @@ public class InventoryItemInteractionController : MonoBehaviour
         // Place from cursor into this slot
         if (!HeldItem.IsEmpty)
         {
-            // Only EquipmentItem can go into equipment slots
-            if (!(HeldItem.Item is EquipmentItemData))
+            if (HeldItem.Item is not EquipmentItemData)
                 return;
 
-            // Try to place exactly 1 into this specific slot
-            if (equipment.TryMergeInto(new InventoryItem(HeldItem.Item, 1), index, out _))
-            {
-                HeldItem = HeldItem.WithAmount(HeldItem.Amount - 1);
-            }
+            PlaceOrSwapHeldEquipment(equipment, index);
             return;
         }
 
@@ -193,12 +188,21 @@ public class InventoryItemInteractionController : MonoBehaviour
 
         // Holding something: allow quick place of ONE equipment item if compatible
         if (HeldItem.Item is EquipmentItemData)
-        {
-            if (equipment.TryMergeInto(new InventoryItem(HeldItem.Item, 1), index, out _))
-            {
-                HeldItem = HeldItem.WithAmount(HeldItem.Amount - 1);
-            }
-        }
+            PlaceOrSwapHeldEquipment(equipment, index);
+    }
+
+    private void PlaceOrSwapHeldEquipment(EquipmentInventory equipment, int index)
+    {
+        var itemToEquip = new InventoryItem(HeldItem.Item, 1);
+        if (!equipment.CanAcceptItemAt(itemToEquip, index))
+            return;
+
+        var equippedItem = equipment.GetItemAt(index);
+        if (!equippedItem.IsEmpty && HeldItem.Amount > 1)
+            return;
+
+        equipment.SetItemAt(index, itemToEquip);
+        HeldItem = equippedItem.IsEmpty ? HeldItem.WithAmount(HeldItem.Amount - 1) : equippedItem;
     }
 
     /// <summary>

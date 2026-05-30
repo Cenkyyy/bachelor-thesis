@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: WaveFormWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Wave
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 3
   <Type>k__BackingField: 2
-  <ManaCost>k__BackingField: 12
+  <ManaCost>k__BackingField: 13
   <CooldownSeconds>k__BackingField: 0.6
   <BaseDamage>k__BackingField: 14
   <Range>k__BackingField: 3

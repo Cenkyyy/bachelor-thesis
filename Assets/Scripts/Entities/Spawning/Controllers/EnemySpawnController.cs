@@ -122,7 +122,13 @@ public class EnemySpawnController : MonoBehaviour
         if (_settings == null || _settings.IgnoreFirstSpawnDay)
             return true;
 
-        return DayNightSystem.Instance.CurrentDay >= _settings.FirstSpawnDay;
+        if (DayNightSystem.Instance.CurrentDay < _settings.FirstSpawnDay)
+            return false;
+
+        if (_settings.RequireNightOnFirstSpawnDay && DayNightSystem.Instance.CurrentDay == _settings.FirstSpawnDay)
+            return DayNightSystem.Instance.IsNight;
+
+        return true;
     }
 
     private int GetMaxAliveEnemies()

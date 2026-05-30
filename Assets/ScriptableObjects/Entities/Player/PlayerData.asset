@@ -16,11 +16,16 @@ MonoBehaviour:
   <BaseMaxMana>k__BackingField: 100
   <BaseDefence>k__BackingField: 0
   <BaseHealthRegeneration>k__BackingField: 0
-  <BaseManaRegeneration>k__BackingField: 0
-  <BaseMaxXP>k__BackingField: 100
-  <MaxLevel>k__BackingField: 200
-  <BaseMaxMemoryXP>k__BackingField: 100
-  <MemoryMaxLevel>k__BackingField: 200
+  <BaseManaRegeneration>k__BackingField: 1.5
+  <BaseMaxXP>k__BackingField: 80
+  <MaxLevel>k__BackingField: 40
+  <MaxHealthGainPerLevel>k__BackingField: 4
+  <MaxManaGainPerLevel>k__BackingField: 2
+  <ManaRegenerationGainPerFiveLevels>k__BackingField: 0.2
+  <XpGrowthPerLevel>k__BackingField: 50
+  <BaseMaxMemoryXP>k__BackingField: 80
+  <MemoryMaxLevel>k__BackingField: 40
+  <MemoryXpGrowthPerLevel>k__BackingField: 10
   <BaseMaxHunger>k__BackingField: 100
   _startingHotbarItems:
   - <Item>k__BackingField: {fileID: 11400000, guid: 277f53f4a2fb6ee45bd69c23abdc00dc, type: 2}

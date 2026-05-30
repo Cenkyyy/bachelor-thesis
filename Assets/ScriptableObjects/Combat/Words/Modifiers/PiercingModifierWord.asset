@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PiercingModifierWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Piercing
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 1
   <Type>k__BackingField: 0
   <AdditionalManaCost>k__BackingField: 2
   <AdditionalCooldownSeconds>k__BackingField: 0.1

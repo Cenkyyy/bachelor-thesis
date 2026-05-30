@@ -21,13 +21,12 @@ MonoBehaviour:
   <MaxStackSize>k__BackingField: 9999
   <Kind>k__BackingField: 1
   <RestoreHealth>k__BackingField: 0
-  <RestoreMana>k__BackingField: 40
+  <RestoreMana>k__BackingField: 25
   <RestoreHunger>k__BackingField: 0
-  <CooldownSeconds>k__BackingField: 10
+  <CooldownSeconds>k__BackingField: 9
   _cooldownBlockedItems:
   - {fileID: 11400000, guid: e19c621a2a902c545a35a26f421445f3, type: 2}
   - {fileID: 11400000, guid: b6f084d3c1e200845b4541f46590537f, type: 2}
   <EffectDurationSeconds>k__BackingField: 0
-  _timedStatusEffects:
-  - <StatusEffectType>k__BackingField: 2
-    <Value>k__BackingField: 15
+  _timedStatusEffects: []
+ 15

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: BeamFormWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Beam
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 5
   <Type>k__BackingField: 1
-  <ManaCost>k__BackingField: 14
+  <ManaCost>k__BackingField: 18
   <CooldownSeconds>k__BackingField: 0.9
-  <BaseDamage>k__BackingField: 8
+  <BaseDamage>k__BackingField: 5
   <Range>k__BackingField: 8
   <HitRadius>k__BackingField: 0.5
   <WaveArcAngle>k__BackingField: -1

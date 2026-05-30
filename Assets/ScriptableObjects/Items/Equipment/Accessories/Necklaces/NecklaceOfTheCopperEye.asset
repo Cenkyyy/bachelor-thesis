@@ -22,4 +22,8 @@ MonoBehaviour:
   <HeldScale>k__BackingField: {x: 0.3, y: 0.3}
   <Slot>k__BackingField: 16
   <Tier>k__BackingField: 6
-  _statusEffects: []
+  _statusEffects:
+  - <StatusEffectType>k__BackingField: 6
+    <Value>k__BackingField: 3
+  - <StatusEffectType>k__BackingField: 2
+    <Value>k__BackingField: 5

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 /// <summary>
-/// Adds equipment tier and equipment-specific stat lines to item tooltips.
+/// Adds equipment-specific lines to item tooltips.
 /// </summary>
 public sealed class EquipmentTooltipProvider : IItemTooltipProvider
 {
@@ -20,18 +20,5 @@ public sealed class EquipmentTooltipProvider : IItemTooltipProvider
         if (equipment.HasProgressionTier)
             lines.Add(new ItemTooltipLineRuntimeData("Tier", ItemTooltipFormatter.FormatEnumValue(equipment.Tier)));
 
-        AppendStatusEffects(equipment.StatusEffect, lines);
-    }
-
-    private static void AppendStatusEffects(IReadOnlyList<ItemStatusEffect> statusEffects, List<ItemTooltipLineRuntimeData> lines)
-    {
-        if (statusEffects == null)
-            return;
-
-        for (int i = 0; i < statusEffects.Count; i++)
-        {
-            var modifier = statusEffects[i];
-            lines.Add(new ItemTooltipLineRuntimeData(ItemTooltipFormatter.FormatStatName(modifier.StatusEffectType), ItemTooltipFormatter.FormatModifierValue(modifier.Value)));
-        }
     }
 }

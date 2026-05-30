@@ -20,14 +20,13 @@ MonoBehaviour:
   <BiomeAffinity>k__BackingField: 0
   <MaxStackSize>k__BackingField: 9999
   <Kind>k__BackingField: 1
-  <RestoreHealth>k__BackingField: 40
+  <RestoreHealth>k__BackingField: 30
   <RestoreMana>k__BackingField: 0
   <RestoreHunger>k__BackingField: 0
-  <CooldownSeconds>k__BackingField: 8
+  <CooldownSeconds>k__BackingField: 9
   _cooldownBlockedItems:
   - {fileID: 11400000, guid: a48bb03e16f283b41856d64cb365c220, type: 2}
   - {fileID: 11400000, guid: c574a3d915b21c244b60268aa30163c4, type: 2}
   <EffectDurationSeconds>k__BackingField: 0
-  _timedStatusEffects:
-  - <StatusEffectType>k__BackingField: 0
-    <Value>k__BackingField: 15
+  _timedStatusEffects: []
+ 15

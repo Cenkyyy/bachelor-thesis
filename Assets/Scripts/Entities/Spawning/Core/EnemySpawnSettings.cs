@@ -7,6 +7,7 @@ public sealed class EnemySpawnSettings
     [field: Header("Progression gating")]
     [field: SerializeField, Min(1)] public int FirstSpawnDay { get; private set; } = 2;
     [field: SerializeField] public bool IgnoreFirstSpawnDay { get; private set; } = false;
+    [field: SerializeField] public bool RequireNightOnFirstSpawnDay { get; private set; } = true;
 
     [field: Header("Spawning cycle settings")]
     [field: SerializeField, Min(0.5f)] public float SpawnIntervalSeconds { get; private set; } = 3f;

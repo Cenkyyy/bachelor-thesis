@@ -23,7 +23,7 @@ MonoBehaviour:
   <Kind>k__BackingField: 0
   <RestoreHealth>k__BackingField: 0
   <RestoreMana>k__BackingField: 0
-  <RestoreHunger>k__BackingField: 28
+  <RestoreHunger>k__BackingField: 26
   <CooldownSeconds>k__BackingField: 0
   _cooldownBlockedItems: []
   <EffectDurationSeconds>k__BackingField: 0

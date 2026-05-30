@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ReclaimingModifierWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Reclaiming
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 1
   <Type>k__BackingField: 3
   <AdditionalManaCost>k__BackingField: 2
   <AdditionalCooldownSeconds>k__BackingField: 0.1
@@ -21,7 +21,7 @@ MonoBehaviour:
   <StunDurationMax>k__BackingField: -1
   <ExplosionRadius>k__BackingField: -1
   <ExplosionDamageMultiplier>k__BackingField: -1
-  <ReclaimManaPerHit>k__BackingField: 2
+  <ReclaimManaPerHit>k__BackingField: 3
   <MaxReclaimsPerCast>k__BackingField: 2
   <SplitAngleDegrees>k__BackingField: -1
   <SplitDamageMultiplier>k__BackingField: -1

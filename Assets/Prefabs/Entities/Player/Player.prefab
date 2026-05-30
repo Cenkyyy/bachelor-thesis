@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _body: {fileID: 6067396949842947324}
-  _speed: 4
+  _speed: 3.3
   _externalSpeedMultiplier: 1
   _itemSpeedMultiplier: 1
 --- !u!114 &5402159747806690286
@@ -508,8 +508,8 @@ MonoBehaviour:
   _blockingLayerMask:
     serializedVersion: 2
     m_Bits: 2432
-  _safePlacementRadius: 0.55
-  _placementRadius: 1
+  _safePlacementRadius: 0.8
+  _placementRadius: 1.75
   _placementParent: {fileID: 0}
   _previewAlpha: 0.55
   _validPlacementPreviewColor: {r: 0, g: 0, b: 1, a: 1}
@@ -528,7 +528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 8120486794298343527}
   _respawnController: {fileID: 2737436318412507732}
-  _defenceCoefficient: 100
+  _defenceCoefficient: 70
   _minimumDamageTaken: 1
   _damagePopupFeedbackSettings:
     _effectiveColor: {r: 0.9433962, g: 0.12904951, b: 0.12904951, a: 1}

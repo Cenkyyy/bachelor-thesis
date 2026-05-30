@@ -17,10 +17,15 @@ public class PlayerData : ScriptableObject
     [field: Header("Experience")]
     [field: SerializeField] public int BaseMaxXP { get; private set; } = 100;
     [field: SerializeField] public int MaxLevel { get; private set; } = 200;
+    [field: SerializeField, Min(0)] public int MaxHealthGainPerLevel { get; private set; } = 4;
+    [field: SerializeField, Min(0)] public int MaxManaGainPerLevel { get; private set; } = 2;
+    [field: SerializeField, Min(0f)] public float ManaRegenerationGainPerFiveLevels { get; private set; } = 0.2f;
+    [field: SerializeField, Min(0)] public int XpGrowthPerLevel { get; private set; } = 50;
 
     [field: Header("Memory Experience")]
     [field: SerializeField] public int BaseMaxMemoryXP { get; private set; } = 100;
     [field: SerializeField] public int MemoryMaxLevel { get; private set; } = 200;
+    [field: SerializeField, Min(0)] public int MemoryXpGrowthPerLevel { get; private set; } = 10;
 
     [field: Header("Needs")]
     [field: SerializeField] public int BaseMaxHunger { get; private set; } = 100;

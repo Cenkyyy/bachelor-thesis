@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: BarrageFormWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Barrage
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 4
   <Type>k__BackingField: 3
-  <ManaCost>k__BackingField: 15
+  <ManaCost>k__BackingField: 16
   <CooldownSeconds>k__BackingField: 0.7
-  <BaseDamage>k__BackingField: 8
+  <BaseDamage>k__BackingField: 7
   <Range>k__BackingField: 8
   <HitRadius>k__BackingField: 0.5
   <WaveArcAngle>k__BackingField: -1

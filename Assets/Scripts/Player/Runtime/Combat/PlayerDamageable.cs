@@ -11,7 +11,7 @@ public sealed class PlayerDamageable : MonoBehaviour, IDamageable
     [SerializeField] private PlayerRespawnController _respawnController;
 
     [Header("Defence Damage Reduction")]
-    [SerializeField, Min(0.01f)] private float _defenceCoefficient = 100f;
+    [SerializeField, Min(0.01f)] private float _defenceCoefficient = 70f;
     [SerializeField, Min(0)] private int _minimumDamageTaken = 1;
 
     [Header("Damage Feedback")]

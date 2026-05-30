@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -13,45 +13,45 @@ MonoBehaviour:
   m_Name: TrollData_AmethystRift
   m_EditorClassIdentifier: 
   <Prefab>k__BackingField: {fileID: 2304351662522366803, guid: 50972f3d9f52397409a27cdbe74f970a, type: 3}
-  <MaxHealth>k__BackingField: 40
+  <MaxHealth>k__BackingField: 190
   <HomeBiome>k__BackingField: 4
   <Species>k__BackingField: 8
   <Archetype>k__BackingField: 0
   <RoleTags>k__BackingField: 1
-  <SpawnWeight>k__BackingField: 1
-  <XpReward>k__BackingField: 15
+  <SpawnWeight>k__BackingField: 0.85
+  <XpReward>k__BackingField: 110
   _drops:
   - _item: {fileID: 11400000, guid: 342b4a24c940445aa921556e818d33ef, type: 2}
-    _dropChance: 1
+    _dropChance: 0.85
     _minAmount: 1
-    _maxAmount: 2
+    _maxAmount: 1
   - _item: {fileID: 11400000, guid: aec789e7161d4e9d81ffce342380c6f3, type: 2}
-    _dropChance: 0.45
+    _dropChance: 0.3
     _minAmount: 1
     _maxAmount: 1
   - _item: {fileID: 11400000, guid: 05d39376d056425eb9015be81ac970a3, type: 2}
-    _dropChance: 0.65
-    _minAmount: 1
-    _maxAmount: 2
-  - _item: {fileID: 11400000, guid: 333441c54f7c42afb49338026f73b3f9, type: 2}
-    _dropChance: 0.2
+    _dropChance: 0.45
     _minAmount: 1
     _maxAmount: 1
-  <MoveSpeed>k__BackingField: 2.2
+  - _item: {fileID: 11400000, guid: 333441c54f7c42afb49338026f73b3f9, type: 2}
+    _dropChance: 0.15
+    _minAmount: 1
+    _maxAmount: 1
+  <MoveSpeed>k__BackingField: 1.75
   <ArrivalEpsilon>k__BackingField: 0.12
   <RepathIntervalSeconds>k__BackingField: 0.7
   <PathNodeStep>k__BackingField: 0.5
   <MaxPathIterations>k__BackingField: 200
-  <DetectionRadius>k__BackingField: 4.5
+  <DetectionRadius>k__BackingField: 6
   <RetargetIntervalSeconds>k__BackingField: 0.2
-  <LeashRadius>k__BackingField: 10
+  <LeashRadius>k__BackingField: 13
   <InvestigationDurationMin>k__BackingField: 2.5
   <InvestigationDurationMax>k__BackingField: 4
   <HomeRadius>k__BackingField: 5
   <IdleDurationMin>k__BackingField: 0.8
   <IdleDurationMax>k__BackingField: 1.6
-  <AttackDamage>k__BackingField: 5
-  <AttackRange>k__BackingField: 1
-  <AttackWindupSeconds>k__BackingField: 0.6
+  <AttackDamage>k__BackingField: 42
+  <AttackRange>k__BackingField: 1.15
+  <AttackWindupSeconds>k__BackingField: 0.82
   <AttackHitWindowSeconds>k__BackingField: 0.15
-  <AttackRecoverySeconds>k__BackingField: 0.8
+  <AttackRecoverySeconds>k__BackingField: 1.15

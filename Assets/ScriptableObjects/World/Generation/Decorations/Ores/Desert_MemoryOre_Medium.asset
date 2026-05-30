@@ -15,7 +15,7 @@ MonoBehaviour:
   <DecorationId>k__BackingField: Desert_MemoryOre_Medium
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 77929e118b0d3114494160afb2eedc1b, type: 3}
   _allowedBiomes: 03000000
-  <SpawnWeight>k__BackingField: 0.4
+  <SpawnWeight>k__BackingField: 0.20
   <MinimumSpacingTiles>k__BackingField: 1
   <AllowCluster>k__BackingField: 1
   <MinClusterCount>k__BackingField: 1

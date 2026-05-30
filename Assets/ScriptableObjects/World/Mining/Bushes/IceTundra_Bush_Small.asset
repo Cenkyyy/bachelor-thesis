@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,7 +15,7 @@ MonoBehaviour:
   <RequiredToolType>k__BackingField: 0
   <MinimumTier>k__BackingField: 0
   <AllowHandMining>k__BackingField: 1
-  <MaxDurability>k__BackingField: 10
+  <MaxDurability>k__BackingField: 3
   <ToolPowerMultiplier>k__BackingField: 1
   _drops:
   - _item: {fileID: 11400000, guid: bb169f4bfcce4cd899f0186e97efb5a2, type: 2}

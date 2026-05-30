@@ -59,13 +59,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1408
   _spawnProbeRadius: 0.25
-  _spawnSearchRadius: 3
+  _spawnSearchRadius: 4
   _requireNight: 1
-  _allowDaytimeTesting: 1
+  _allowDaytimeTesting: 0
   _enemyLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  _enemyCheckRadius: 2
+  _enemyCheckRadius: 7
   _feedbackPopup: {fileID: 6707003018897083608}
   _spawnPointSetMessage: New spawn point has been set
   _cannotSleepMessage: Cannot sleep, enemies nearby

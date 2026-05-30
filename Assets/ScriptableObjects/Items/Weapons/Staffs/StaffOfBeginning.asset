@@ -21,8 +21,8 @@ MonoBehaviour:
   <HeldPresentationMode>k__BackingField: 1
   <HeldScale>k__BackingField: {x: 0.35, y: 0.35}
   <Archetype>k__BackingField: 0
-  <ProgressionTier>k__BackingField: 0
-  <Damage>k__BackingField: 5
+  <Tier>k__BackingField: 0
+  <Damage>k__BackingField: 0
   <Range>k__BackingField: 4
   <AttackSpeed>k__BackingField: 1
-  <ManaCost>k__BackingField: 10
+  <ManaCost>k__BackingField: 0

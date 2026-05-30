@@ -62,6 +62,11 @@ public sealed class EquipmentInventory : IInventory
         return false;
     }
 
+    public bool CanAcceptItemAt(InventoryItem item, int index)
+    {
+        return IsValidIndex(index) && (item.IsEmpty || IsItemAllowedAtIndex(item, index));
+    }
+
     /// <summary>
     /// Directly sets the item at index if valid for the equipment slot type.
     /// </summary>

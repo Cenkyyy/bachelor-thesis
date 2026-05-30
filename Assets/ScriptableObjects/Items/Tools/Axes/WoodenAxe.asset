@@ -20,8 +20,8 @@ MonoBehaviour:
   <MaxStackSize>k__BackingField: 1
   <HeldPresentationMode>k__BackingField: 1
   <HeldScale>k__BackingField: {x: 0.35, y: 0.35}
-  <MaxDurability>k__BackingField: 25
+  <MaxDurability>k__BackingField: 60
   <ToolType>k__BackingField: 2
   <Tier>k__BackingField: 1
-  <MiningPower>k__BackingField: 3
+  <MiningPower>k__BackingField: 2.5
   <DurabilityLossPerSecond>k__BackingField: 1

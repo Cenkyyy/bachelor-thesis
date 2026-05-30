@@ -23,10 +23,10 @@ MonoBehaviour:
   <RestoreHealth>k__BackingField: 0
   <RestoreMana>k__BackingField: 0
   <RestoreHunger>k__BackingField: 0
-  <CooldownSeconds>k__BackingField: 20
+  <CooldownSeconds>k__BackingField: 25
   _cooldownBlockedItems:
   - {fileID: 11400000, guid: 7b7f38921bfee2c45a38ae933ee2a6b6, type: 2}
-  <EffectDurationSeconds>k__BackingField: 35
+  <EffectDurationSeconds>k__BackingField: 30
   _timedStatusEffects:
   - <StatusEffectType>k__BackingField: 6
-    <Value>k__BackingField: 10
+    <Value>k__BackingField: 12

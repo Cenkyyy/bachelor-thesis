@@ -22,7 +22,7 @@ MonoBehaviour:
   <HeldScale>k__BackingField: {x: 0.35, y: 0.35}
   <Archetype>k__BackingField: 1
   <Tier>k__BackingField: 4
-  <Damage>k__BackingField: 5
-  <Range>k__BackingField: 4
+  <Damage>k__BackingField: 12
+  <Range>k__BackingField: 6
   <AttackSpeed>k__BackingField: 1
-  <ManaCost>k__BackingField: 0
+  <ManaCost>k__BackingField: 4

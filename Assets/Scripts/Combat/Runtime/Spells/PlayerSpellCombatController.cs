@@ -79,7 +79,7 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
         if (modifierData == null || elementData == null || formData == null)
             return;
 
-        int manaCost = Mathf.Max(0, formData.ManaCost) + Mathf.Max(0, modifierData.AdditionalManaCost);
+        int manaCost = Mathf.Max(0, formData.ManaCost) + Mathf.Max(0, modifierData.AdditionalManaCost) + GetCurrentWeaponManaCost();
         float cooldown = Mathf.Max(0f, formData.CooldownSeconds) + Mathf.Max(0f, modifierData.AdditionalCooldownSeconds);
 
         if (_player.Data.CurrentMana < manaCost)
@@ -105,7 +105,25 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
         if (_player == null || _player.Data == null)
             return Mathf.Max(0f, baseDamage);
 
-        return Mathf.Max(0f, baseDamage + _player.Data.SpellDamageBonus);
+        return Mathf.Max(0f, baseDamage + _player.Data.SpellDamageBonus + GetCurrentWeaponDamageBonus());
+    }
+
+    private float GetCurrentWeaponDamageBonus()
+    {
+        if (_player == null || _player.Inventory == null)
+            return 0f;
+
+        var selectedItem = _player.Inventory.GetItemAt(_player.Inventory.SelectedHotbarIndex);
+        return selectedItem.Item is WeaponItemData weapon ? Mathf.Max(0, weapon.Damage) : 0f;
+    }
+
+    private int GetCurrentWeaponManaCost()
+    {
+        if (_player == null || _player.Inventory == null)
+            return 0;
+
+        var selectedItem = _player.Inventory.GetItemAt(_player.Inventory.SelectedHotbarIndex);
+        return selectedItem.Item is WeaponItemData weapon ? Mathf.Max(0, weapon.ManaCost) : 0;
     }
 
     private IEnumerator ExecuteCast(CastState castState)

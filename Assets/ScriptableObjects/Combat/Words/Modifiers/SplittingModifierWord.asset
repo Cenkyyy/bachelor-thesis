@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SplittingModifierWord
   m_EditorClassIdentifier: 
   <DisplayName>k__BackingField: Splitting
-  <MemoryCost>k__BackingField: 0
+  <MemoryCost>k__BackingField: 4
   <Type>k__BackingField: 4
-  <AdditionalManaCost>k__BackingField: 3
+  <AdditionalManaCost>k__BackingField: 5
   <AdditionalCooldownSeconds>k__BackingField: 0.2
   <StunDurationMin>k__BackingField: -1
   <StunDurationMax>k__BackingField: -1

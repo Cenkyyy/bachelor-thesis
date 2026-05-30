@@ -15,7 +15,7 @@ MonoBehaviour:
   <DecorationId>k__BackingField: IceTundra_MemoryOre_ExtraLarge
   <Prefab>k__BackingField: {fileID: 8538597346553268886, guid: 48e195236f4736a4d8b5ecc8bb393721, type: 3}
   _allowedBiomes: 02000000
-  <SpawnWeight>k__BackingField: 0.2
+  <SpawnWeight>k__BackingField: 0.08
   <MinimumSpacingTiles>k__BackingField: 2
   <AllowCluster>k__BackingField: 0
   <MinClusterCount>k__BackingField: 1

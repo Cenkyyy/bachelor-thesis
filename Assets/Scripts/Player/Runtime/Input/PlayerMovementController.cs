@@ -10,7 +10,7 @@ public sealed class PlayerMovementController : MonoBehaviour
     [SerializeField] private Rigidbody2D _body;
 
     [Header("Movement")]
-    [SerializeField] private float _speed = 4f;
+    [SerializeField] private float _speed = 3.3f;
     [SerializeField] private float _externalSpeedMultiplier = 1f;
     [SerializeField] private float _itemSpeedMultiplier = 1f;
 

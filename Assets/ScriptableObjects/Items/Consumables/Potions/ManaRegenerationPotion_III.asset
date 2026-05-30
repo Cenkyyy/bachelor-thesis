@@ -27,7 +27,7 @@ MonoBehaviour:
   _cooldownBlockedItems:
   - {fileID: 11400000, guid: 3886a0cbeea229a49aa7b6c5927047d1, type: 2}
   - {fileID: 11400000, guid: f123fea76fe551a4ea3a45ca5d358355, type: 2}
-  <EffectDurationSeconds>k__BackingField: 40
+  <EffectDurationSeconds>k__BackingField: 45
   _timedStatusEffects:
   - <StatusEffectType>k__BackingField: 3
-    <Value>k__BackingField: 1
+    <Value>k__BackingField: 1.8

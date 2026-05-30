@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -13,41 +13,41 @@ MonoBehaviour:
   m_Name: PredatorPlantData_Grassland
   m_EditorClassIdentifier: 
   <Prefab>k__BackingField: {fileID: 2304351662522366803, guid: fedfd6fc1005cf147a2c41cf98f2b497, type: 3}
-  <MaxHealth>k__BackingField: 100
+  <MaxHealth>k__BackingField: 45
   <HomeBiome>k__BackingField: 1
   <Species>k__BackingField: 1
   <Archetype>k__BackingField: 2
   <RoleTags>k__BackingField: 4
-  <SpawnWeight>k__BackingField: 1
-  <XpReward>k__BackingField: 100
+  <SpawnWeight>k__BackingField: 0.9
+  <XpReward>k__BackingField: 20
   _drops:
   - _item: {fileID: 11400000, guid: dc81539009754fa9bcb91c2c41c4424f, type: 2}
-    _dropChance: 1
+    _dropChance: 0.8
     _minAmount: 1
-    _maxAmount: 3
+    _maxAmount: 2
   - _item: {fileID: 11400000, guid: e1f3e383990342eb8ac04363d2da2fa3, type: 2}
-    _dropChance: 0.75
+    _dropChance: 0.45
     _minAmount: 1
-    _maxAmount: 2
+    _maxAmount: 1
   - _item: {fileID: 11400000, guid: 04b69ff7a72b40fe895a00feb268c64e, type: 2}
-    _dropChance: 0.55
+    _dropChance: 0.3
     _minAmount: 1
-    _maxAmount: 2
-  <MoveSpeed>k__BackingField: 2.2
+    _maxAmount: 1
+  <MoveSpeed>k__BackingField: 1.75
   <ArrivalEpsilon>k__BackingField: 0.12
   <RepathIntervalSeconds>k__BackingField: 0.7
   <PathNodeStep>k__BackingField: 0.5
   <MaxPathIterations>k__BackingField: 200
   <DetectionRadius>k__BackingField: 4.5
   <RetargetIntervalSeconds>k__BackingField: 0.2
-  <LeashRadius>k__BackingField: 10
+  <LeashRadius>k__BackingField: 9
   <InvestigationDurationMin>k__BackingField: 2.5
   <InvestigationDurationMax>k__BackingField: 4
   <HomeRadius>k__BackingField: 5
   <IdleDurationMin>k__BackingField: 0.8
   <IdleDurationMax>k__BackingField: 1.6
-  <AttackDamage>k__BackingField: 5
+  <AttackDamage>k__BackingField: 11
   <AttackRange>k__BackingField: 1
-  <AttackWindupSeconds>k__BackingField: 0.4
+  <AttackWindupSeconds>k__BackingField: 0.5
   <AttackHitWindowSeconds>k__BackingField: 0.15
-  <AttackRecoverySeconds>k__BackingField: 0.8
+  <AttackRecoverySeconds>k__BackingField: 0.85

@@ -23,8 +23,8 @@ MonoBehaviour:
   <RestoreHealth>k__BackingField: 0
   <RestoreMana>k__BackingField: 0
   <RestoreHunger>k__BackingField: 0
-  <CooldownSeconds>k__BackingField: 20
+  <CooldownSeconds>k__BackingField: 25
   <EffectDurationSeconds>k__BackingField: 25
   _timedStatusEffects:
   - <StatusEffectType>k__BackingField: 6
-    <Value>k__BackingField: 10
+    <Value>k__BackingField: 6

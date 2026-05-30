@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -13,37 +13,37 @@ MonoBehaviour:
   m_Name: SlimeData_IceTundra
   m_EditorClassIdentifier: 
   <Prefab>k__BackingField: {fileID: 2304351662522366803, guid: eeb9ef08aeba99c4191964b48f2bb19d, type: 3}
-  <MaxHealth>k__BackingField: 100
+  <MaxHealth>k__BackingField: 70
   <HomeBiome>k__BackingField: 2
   <Species>k__BackingField: 4
   <Archetype>k__BackingField: 2
   <RoleTags>k__BackingField: 4
-  <SpawnWeight>k__BackingField: 1
-  <XpReward>k__BackingField: 100
+  <SpawnWeight>k__BackingField: 0.8
+  <XpReward>k__BackingField: 35
   _drops:
   - _item: {fileID: 11400000, guid: a30f1899df8a4c7886cc59aa79d13270, type: 2}
-    _dropChance: 1
+    _dropChance: 0.85
     _minAmount: 1
-    _maxAmount: 3
+    _maxAmount: 2
   - _item: {fileID: 11400000, guid: aec789e7161d4e9d81ffce342380c6f3, type: 2}
-    _dropChance: 0.35
+    _dropChance: 0.25
     _minAmount: 1
     _maxAmount: 1
-  <MoveSpeed>k__BackingField: 2.2
+  <MoveSpeed>k__BackingField: 1.8
   <ArrivalEpsilon>k__BackingField: 0.12
   <RepathIntervalSeconds>k__BackingField: 0.7
   <PathNodeStep>k__BackingField: 0.5
   <MaxPathIterations>k__BackingField: 200
-  <DetectionRadius>k__BackingField: 4.5
+  <DetectionRadius>k__BackingField: 5
   <RetargetIntervalSeconds>k__BackingField: 0.2
-  <LeashRadius>k__BackingField: 10
+  <LeashRadius>k__BackingField: 11
   <InvestigationDurationMin>k__BackingField: 2.5
   <InvestigationDurationMax>k__BackingField: 4
   <HomeRadius>k__BackingField: 5
   <IdleDurationMin>k__BackingField: 0.8
   <IdleDurationMax>k__BackingField: 1.6
-  <AttackDamage>k__BackingField: 5
+  <AttackDamage>k__BackingField: 18
   <AttackRange>k__BackingField: 0.9
-  <AttackWindupSeconds>k__BackingField: 0.4
+  <AttackWindupSeconds>k__BackingField: 0.5
   <AttackHitWindowSeconds>k__BackingField: 0.15
-  <AttackRecoverySeconds>k__BackingField: 0.8
+  <AttackRecoverySeconds>k__BackingField: 0.9

@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,12 +15,12 @@ MonoBehaviour:
   <RequiredToolType>k__BackingField: 2
   <MinimumTier>k__BackingField: 2
   <AllowHandMining>k__BackingField: 0
-  <MaxDurability>k__BackingField: 10
+  <MaxDurability>k__BackingField: 11
   <ToolPowerMultiplier>k__BackingField: 1
   _drops:
   - _item: {fileID: 11400000, guid: b1f38c13c49246f9b4f2a4a8b0a268c0, type: 2}
     _dropChance: 1
-    _minAmount: 2
-    _maxAmount: 5
+    _minAmount: 4
+    _maxAmount: 6
   <GrantsMemoryXP>k__BackingField: 0
   <MemoryXpAmount>k__BackingField: 0

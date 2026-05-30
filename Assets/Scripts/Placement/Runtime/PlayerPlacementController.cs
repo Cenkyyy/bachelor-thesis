@@ -21,8 +21,8 @@ public sealed class PlayerPlacementController : MonoBehaviour
 
     [Header("Placement Rules")]
     [SerializeField] private LayerMask _blockingLayerMask = ~0;
-    [SerializeField, Min(0f)] private float _safePlacementRadius = 0.4f;
-    [SerializeField, Min(0f)] private float _placementRadius = 1f;
+    [SerializeField, Min(0f)] private float _safePlacementRadius = 0.8f;
+    [SerializeField, Min(0f)] private float _placementRadius = 1.75f;
     [SerializeField] private Transform _placementParent;
 
     [Header("Preview")]

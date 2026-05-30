@@ -651,16 +651,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a8bdc6f4d77bbab4facbacbbbd83a8c1, type: 2}
   _spawnStrategyType: 0
   _settings:
-    <FirstSpawnDay>k__BackingField: 2
-    <IgnoreFirstSpawnDay>k__BackingField: 1
-    <SpawnIntervalSeconds>k__BackingField: 3
-    <NightSpawnAccelerationMultiplier>k__BackingField: 0.9
+    <FirstSpawnDay>k__BackingField: 1
+    <IgnoreFirstSpawnDay>k__BackingField: 0
+    <RequireNightOnFirstSpawnDay>k__BackingField: 1
+    <SpawnIntervalSeconds>k__BackingField: 5
+    <NightSpawnAccelerationMultiplier>k__BackingField: 0.8
     <AttemptsPerCycle>k__BackingField: 3
-    <MaxAliveEntities>k__BackingField: 8
+    <MaxAliveEntities>k__BackingField: 9
     <NightMaxAliveEntitiesMultiplier>k__BackingField: 1.25
-    <SpawnRadius>k__BackingField: 20
-    <MinSpawnDistance>k__BackingField: 9
-    <DespawnRadius>k__BackingField: 38
+    <SpawnRadius>k__BackingField: 23
+    <MinSpawnDistance>k__BackingField: 12
+    <DespawnRadius>k__BackingField: 32
     <MinSpacingFromEntities>k__BackingField: 2
     <WalkableProbeRadius>k__BackingField: 0.2
     <MaxSamplesPerAttempt>k__BackingField: 6
@@ -9910,18 +9911,18 @@ MonoBehaviour:
   _centerSamplingCandidates: 128
   _centerJitter: 6
   _centerBiomes: 01000000020000000300000004000000
-  _innerRingMaxNormalizedRadius: 0.35
-  _middleRingMaxNormalizedRadius: 0.7
+  _innerRingMaxNormalizedRadius: 0.33
+  _middleRingMaxNormalizedRadius: 0.67
   _middleRingWeights:
-    Grassland: 25
-    IceTundra: 37.5
-    Desert: 37.5
+    Grassland: 10
+    IceTundra: 45
+    Desert: 45
     AmethystRift: 0
   _outerRingWeights:
     Grassland: 10
-    IceTundra: 17.5
-    Desert: 17.5
-    AmethystRift: 55
+    IceTundra: 21.25
+    Desert: 21.25
+    AmethystRift: 47.5
   _worldDataGenerationChunkSize: 32
   _initialWorldDataGenerationRadiusInChunks: 4
   _worldDataGenerationChunksPerFrame: 32
@@ -13137,7 +13138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941ccdeb7ccec9249bb2dde3a33a4d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _secondsPerGameDay: 600
+  _secondsPerGameDay: 420
   _initialTime01: 0.25
   _startDay: 1
   _minBrightnessAtMidnight: 0.15
@@ -18427,7 +18428,7 @@ PrefabInstance:
       objectReference: {fileID: 2031400805}
     - target: {fileID: 6858055649506359506, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _speed
-      value: 4
+      value: 3.3
       objectReference: {fileID: 0}
     - target: {fileID: 9105410004459439549, guid: 7998bc0df66461f41b18e80565be354d, type: 3}
       propertyPath: _barsContainer

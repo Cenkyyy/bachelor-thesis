@@ -88,6 +88,14 @@ public class PlayerRuntimeData
     private int _baseDefence;
     private float _baseHealthRegeneration;
     private float _baseManaRegeneration;
+    private int _maxHealthGainPerLevel;
+    private int _maxManaGainPerLevel;
+    private float _manaRegenerationGainPerFiveLevels;
+    private int _xpGrowthPerLevel;
+    private int _baseMaxMemoryXP;
+    private int _memoryXpGrowthPerLevel;
+    private float _levelManaRegenerationBonus;
+    private float _appliedItemManaRegenerationBonus;
     private int _appliedItemMaxHealthBonus;
     private int _appliedItemMaxManaBonus;
 
@@ -116,6 +124,8 @@ public class PlayerRuntimeData
         CurrentMemoryXP = 0;
         MaxMemoryLevel = defaultData.MemoryMaxLevel;
         CurrentMemoryLevel = 0;
+        _baseMaxMemoryXP = defaultData.BaseMaxMemoryXP;
+        _memoryXpGrowthPerLevel = defaultData.MemoryXpGrowthPerLevel;
 
         MaxHunger = defaultData.BaseMaxHunger;
         CurrentHunger = MaxHunger;
@@ -123,6 +133,12 @@ public class PlayerRuntimeData
         _baseDefence = defaultData.BaseDefence;
         _baseHealthRegeneration = defaultData.BaseHealthRegeneration;
         _baseManaRegeneration = defaultData.BaseManaRegeneration;
+        _maxHealthGainPerLevel = defaultData.MaxHealthGainPerLevel;
+        _maxManaGainPerLevel = defaultData.MaxManaGainPerLevel;
+        _manaRegenerationGainPerFiveLevels = defaultData.ManaRegenerationGainPerFiveLevels;
+        _xpGrowthPerLevel = defaultData.XpGrowthPerLevel;
+        _levelManaRegenerationBonus = 0f;
+        _appliedItemManaRegenerationBonus = 0f;
 
         Defence = _baseDefence;
         HealthRegeneration = _baseHealthRegeneration;
@@ -266,7 +282,8 @@ public class PlayerRuntimeData
     {
         Defence = Mathf.RoundToInt(_baseDefence + defenceAdditive);
         HealthRegeneration = _baseHealthRegeneration + healthRegenAdditive;
-        ManaRegeneration = _baseManaRegeneration + manaRegenAdditive;
+        ManaRegeneration = _baseManaRegeneration + _levelManaRegenerationBonus + manaRegenAdditive;
+        _appliedItemManaRegenerationBonus = manaRegenAdditive;
         SpellDamageBonus = spellDamageAdditive;
 
         int targetHealthBonus = Mathf.RoundToInt(maxHealthAdditive);
@@ -352,10 +369,13 @@ public class PlayerRuntimeData
             CurrentXP -= MaxXP;
             CurrentLevel++;
 
-            // TODO: Modify next level stats upgrades
-            MaxXP += 50;
-            ModifyMaxHealth(10, healWithIncrease: false);
-            ModifyMaxMana(5, restoreWithIncrease: false);
+            MaxXP += _xpGrowthPerLevel;
+            ModifyMaxHealth(_maxHealthGainPerLevel, healWithIncrease: false);
+            ModifyMaxMana(_maxManaGainPerLevel, restoreWithIncrease: false);
+
+            var manaRegenMilestones = CurrentLevel / 5;
+            _levelManaRegenerationBonus = manaRegenMilestones * _manaRegenerationGainPerFiveLevels;
+            ManaRegeneration = _baseManaRegeneration + _levelManaRegenerationBonus + _appliedItemManaRegenerationBonus;
         }
 
         if (CurrentLevel >= MaxLevel)
@@ -366,7 +386,7 @@ public class PlayerRuntimeData
         OnXPChanged?.Invoke(CurrentXP, MaxXP, CurrentLevel);
     }
 
-    public void GainMemoryXP(int amount, int growthPerLevel = 25)
+    public void GainMemoryXP(int amount)
     {
         if (amount <= 0) return;
 
@@ -376,7 +396,7 @@ public class PlayerRuntimeData
         {
             CurrentMemoryXP -= MaxMemoryXP;
             CurrentMemoryLevel++;
-            MaxMemoryXP += growthPerLevel;
+            MaxMemoryXP += _memoryXpGrowthPerLevel;
         }
 
         if (CurrentMemoryLevel >= MaxMemoryLevel)
@@ -385,14 +405,14 @@ public class PlayerRuntimeData
         OnMemoryXPChanged?.Invoke(CurrentMemoryXP, MaxMemoryXP, CurrentMemoryLevel);
     }
 
-    public bool TrySpendMemoryLevels(int levels, int baseMax = 100, int growthPerLevel = 25)
+    public bool TrySpendMemoryLevels(int levels)
     {
         if (levels <= 0) return true;
         if (CurrentMemoryLevel < levels) return false;
 
         CurrentMemoryLevel -= levels;
 
-        MaxMemoryXP = baseMax + growthPerLevel * CurrentMemoryLevel;
+        MaxMemoryXP = _baseMaxMemoryXP + _memoryXpGrowthPerLevel * CurrentMemoryLevel;
 
         CurrentMemoryXP = Mathf.Min(CurrentMemoryXP, MaxMemoryXP - 1);
 
