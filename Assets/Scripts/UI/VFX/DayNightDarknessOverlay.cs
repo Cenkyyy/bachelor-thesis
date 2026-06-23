@@ -12,7 +12,7 @@ public sealed class DayNightDarknessOverlay : MonoBehaviour
     [SerializeField] private Image _uiImage; 
 
     [Header("Appearance")]
-    [SerializeField, Range(0f, 1f)] private float _maxAlpha = 0.65f;
+    [SerializeField, Range(0f, 1f)] private float _maxAlpha = 0.9f;
     [SerializeField] private Color _tint = Color.black;
 
     private void OnEnable()

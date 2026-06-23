@@ -20,7 +20,7 @@ public sealed class DayNightSystem : MonoBehaviour
     private const float SunsetTime01 = 0.75f; // ~18:00
 
     [Header("Time")]
-    [SerializeField, Min(1f)] private float _secondsPerGameDay = 420f; // 7 mins per day
+    [SerializeField, Min(1f)] private float _secondsPerGameDay = 300f; // 5 mins per day
     [SerializeField, Range(0f, 1f)] private float _initialTime01 = 0.25f; // ~06:00
     [SerializeField, Min(1)] private int _startDay = 1;
 
