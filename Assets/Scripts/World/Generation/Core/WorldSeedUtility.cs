@@ -19,7 +19,7 @@ public static class WorldSeedUtility
     public static int CreateRandomSeed()
     {
         var bytes = Guid.NewGuid().ToByteArray();
-        return BitConverter.ToInt32(bytes, 0);
+        return BitConverter.ToInt32(bytes, 0) & int.MaxValue;
     }
 
     public static void SetSeedText(string seedText)
@@ -33,7 +33,7 @@ public static class WorldSeedUtility
         if (!HasCustomSeed)
             return false;
 
-        return int.TryParse(SeedText, out seed);
+        return int.TryParse(SeedText, out seed) && seed >= 0;
     }
 
     /// <summary>
