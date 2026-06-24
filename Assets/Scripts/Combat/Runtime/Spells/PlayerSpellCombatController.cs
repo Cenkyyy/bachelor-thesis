@@ -423,7 +423,6 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
             projectile.Initialize(
                 spell.Directions[i],
                 ResolveProjectileSpeed(spell.Form),
-                ResolveProjectileLifetime(spell.Form, travelDistance),
                 travelDistance,
                 _spellObstructionMask,
                 spell.Element.Material,
@@ -431,17 +430,6 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
                 runtimeData,
                 ResolveHitMode(spell));
         }
-    }
-
-    private static float ResolveProjectileLifetime(FormWordData form, float travelDistance)
-    {
-        if (form.Type == FormWordType.Beam)
-            return form.BeamDuration;
-
-        if (form.VfxSpeed <= 0f)
-            return form.VfxLifetime;
-
-        return Mathf.Max(form.VfxLifetime, travelDistance / form.VfxSpeed);
     }
 
     private static float ResolveProjectileSpeed(FormWordData form)

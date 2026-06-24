@@ -27,7 +27,6 @@ public sealed class SpellProjectile : MonoBehaviour
 
     private Vector2 _direction;
     private float _speed;
-    private float _lifetime;
     private float _maxDistance;
     private float _elapsed;
     private float _traveledDistance;
@@ -58,7 +57,7 @@ public sealed class SpellProjectile : MonoBehaviour
         if (_hitMode == HitMode.BeamTick)
             TickBeamTargets();
 
-        if (_traveledDistance >= _maxDistance || _elapsed >= _lifetime)
+        if (ShouldExpire())
             Destroy(gameObject);
     }
 
@@ -135,7 +134,6 @@ public sealed class SpellProjectile : MonoBehaviour
     public void Initialize(
         Vector2 direction,
         float speed,
-        float lifetime,
         float maxDistance,
         LayerMask obstructionMask,
         Material elementMaterial,
@@ -145,7 +143,6 @@ public sealed class SpellProjectile : MonoBehaviour
     {
         _direction = direction.sqrMagnitude > Mathf.Epsilon ? direction.normalized : Vector2.right;
         _speed = Mathf.Max(0f, speed);
-        _lifetime = Mathf.Max(0.01f, lifetime);
         _maxDistance = Mathf.Max(0.01f, maxDistance);
         _obstructionMask = obstructionMask;
         _spellCombatController = spellCombatController;
@@ -167,6 +164,17 @@ public sealed class SpellProjectile : MonoBehaviour
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null && elementMaterial != null)
             spriteRenderer.material = elementMaterial;
+    }
+
+    private bool ShouldExpire()
+    {
+        if (_runtimeData != null && _runtimeData.Form.Type == FormWordType.Beam)
+            return _elapsed >= _runtimeData.Form.BeamDuration;
+
+        if (_speed <= 0f)
+            return true;
+
+        return _traveledDistance >= _maxDistance;
     }
 
     private void ConfigurePhysics()

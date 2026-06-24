@@ -18,7 +18,7 @@ MonoBehaviour:
   <ManaCost>k__BackingField: 8
   <CooldownSeconds>k__BackingField: 0.25
   <BaseDamage>k__BackingField: 18
-  <Range>k__BackingField: 8
+  <Range>k__BackingField: 6
   <HitRadius>k__BackingField: 0.5
   <WaveArcAngle>k__BackingField: -1
   <BeamDuration>k__BackingField: -1
@@ -26,6 +26,5 @@ MonoBehaviour:
   <BarrageProjectileCount>k__BackingField: -1
   <BarrageInterval>k__BackingField: -1
   <ProjectilePrefab>k__BackingField: {fileID: 6381046162596957270, guid: 48048d9fd167b9b47aa47fbb6d9d026a, type: 3}
-  _vfxLifetime: 0.35
-  _vfxSpeed: 8
+  _vfxSpeed: 7
   _vfxScale: {x: 0.5, y: 0.5, z: 1}

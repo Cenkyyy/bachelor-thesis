@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Defines one form word and the shape, timing, cost, damage, targeting, and VFX data for that spell form.
+/// Defines one form word and the shape, timing, cost, damage, targeting, and projectile VFX data for that spell form.
 /// </summary>
 [CreateAssetMenu(menuName = "Combat/Words/Form Word", fileName = "FormWordData")]
 public sealed class FormWordData : WordData
@@ -31,13 +31,11 @@ public sealed class FormWordData : WordData
     [field: SerializeField] public GameObject ProjectilePrefab { get; private set; }
 
     [Header("VFX")]
-    [SerializeField, Min(0.01f)] private float _vfxLifetime = 0.35f;
     [SerializeField, Min(0f)] private float _vfxSpeed = 14f;
     [SerializeField] private Vector3 _vfxScale = new(0.35f, 0.35f, 1f);
 
     public override WordCategory Category => WordCategory.Form;
     public override bool IsValid => System.Enum.IsDefined(typeof(FormWordType), Type);
-    public float VfxLifetime => _vfxLifetime;
     public float VfxSpeed => _vfxSpeed;
     public Vector3 VfxScale => _vfxScale;
 
@@ -57,7 +55,6 @@ public sealed class FormWordData : WordData
         BarrageProjectileCount = Type == FormWordType.Barrage ? Mathf.Max(0, BarrageProjectileCount) : -1;
         BarrageInterval = Type == FormWordType.Barrage ? Mathf.Max(0f, BarrageInterval) : -1f;
 
-        _vfxLifetime = Mathf.Max(0.01f, _vfxLifetime);
         _vfxSpeed = Mathf.Max(0f, _vfxSpeed);
     }
 }
