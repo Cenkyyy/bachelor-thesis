@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MeatStew
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Meat Stew
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: 5897031574916963884, guid: 6aa72c62d135e0649981c5f1dc2db10f, type: 3}
   <Category>k__BackingField: 4
   <Rarity>k__BackingField: 1
   <BiomeAffinity>k__BackingField: 1

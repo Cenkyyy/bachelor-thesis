@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Leather
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Leather
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: -6312632274152794278, guid: 6aa72c62d135e0649981c5f1dc2db10f, type: 3}
   <Category>k__BackingField: 3
   <Rarity>k__BackingField: 1
   <BiomeAffinity>k__BackingField: 2

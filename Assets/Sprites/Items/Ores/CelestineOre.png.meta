@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Icon1_0
+      name: CelestineOre
       rect:
         serializedVersion: 2
-        x: 7
-        y: 2
-        width: 19
-        height: 29
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: abfa504ce7dd00e00800000000000000
-      internalID: 1009049853055315898
+      spriteID: 36c66acf859e543498c1817626c39c0c
+      internalID: -669332240
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: fd704aa13086a094abf1c9434c8a28ae
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Icon1_0: 1009049853055315898
+      CelestineOre: -669332240
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Icon25_0
+      name: CopperOre
       rect:
         serializedVersion: 2
-        x: 7
-        y: 1
-        width: 17
-        height: 29
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 03b72b6e28cc2d720800000000000000
-      internalID: 2869580775176698672
+      spriteID: df6f679005ecdef46aa2d4401e4a1cf6
+      internalID: 1866348374
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 1a7207da9c6c7884880db0be2277b6bc
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Icon25_0: 2869580775176698672
+      CopperOre: 1866348374
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

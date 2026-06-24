@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlantSap
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Plant Sap
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: -6600695180056089464, guid: 6aa72c62d135e0649981c5f1dc2db10f, type: 3}
   <Category>k__BackingField: 3
   <Rarity>k__BackingField: 0
   <BiomeAffinity>k__BackingField: 1

@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: AmethystOre
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Amethyst Ore
-  <Icon>k__BackingField: {fileID: 6505026738284537468, guid: 67ba7e2613fc7664b996fde98ffb0fe7, type: 3}
+  <Icon>k__BackingField: {fileID: 285659880, guid: 67ba7e2613fc7664b996fde98ffb0fe7, type: 3}
   <Category>k__BackingField: 3
   <Rarity>k__BackingField: 3
   <BiomeAffinity>k__BackingField: 4
   <MaxStackSize>k__BackingField: 9999
+  <HeldPresentationMode>k__BackingField: 0
+  <HeldScale>k__BackingField: {x: 0.3, y: 0.3}
   <Kind>k__BackingField: 1
-  <TierTag>k__BackingField: 4

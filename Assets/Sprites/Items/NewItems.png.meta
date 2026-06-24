@@ -501,7 +501,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DesertFiber
+      name: SunbakedFiber
       rect:
         serializedVersion: 2
         x: 64
@@ -655,7 +655,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_12
+      name: SeedStew
       rect:
         serializedVersion: 2
         x: 32
@@ -677,7 +677,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_13
+      name: MeatStew
       rect:
         serializedVersion: 2
         x: 64
@@ -699,7 +699,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_14
+      name: BoarStew
       rect:
         serializedVersion: 2
         x: 96
@@ -721,7 +721,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_15
+      name: DeathlyStew
       rect:
         serializedVersion: 2
         x: 128
@@ -743,7 +743,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_16
+      name: FrostberryJam_0
       rect:
         serializedVersion: 2
         x: 160
@@ -765,7 +765,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_17
+      name: FrostberryJam_1
       rect:
         serializedVersion: 2
         x: 192
@@ -787,7 +787,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_18
+      name: Apple
       rect:
         serializedVersion: 2
         x: 224
@@ -809,7 +809,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_19
+      name: TrollMeat
       rect:
         serializedVersion: 2
         x: 256
@@ -831,7 +831,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_20
+      name: CookedTrollMeat
       rect:
         serializedVersion: 2
         x: 288
@@ -853,7 +853,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_21
+      name: ApplePie
       rect:
         serializedVersion: 2
         x: 320
@@ -875,7 +875,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_22
+      name: BoarMeat_0
       rect:
         serializedVersion: 2
         x: 352
@@ -897,7 +897,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_23
+      name: BoarMeat_1
       rect:
         serializedVersion: 2
         x: 384
@@ -919,7 +919,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_24
+      name: CookedBoarMeat
       rect:
         serializedVersion: 2
         x: 416
@@ -941,7 +941,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_25
+      name: Berries_0
       rect:
         serializedVersion: 2
         x: 0
@@ -963,7 +963,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_26
+      name: Frostberries_0
       rect:
         serializedVersion: 2
         x: 32
@@ -985,7 +985,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_27
+      name: Frostberries_1
       rect:
         serializedVersion: 2
         x: 64
@@ -1007,7 +1007,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_28
+      name: Frostberries_2
       rect:
         serializedVersion: 2
         x: 96
@@ -1029,7 +1029,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_29
+      name: Berries_1
       rect:
         serializedVersion: 2
         x: 128
@@ -1051,7 +1051,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_30
+      name: Berries_2
       rect:
         serializedVersion: 2
         x: 160
@@ -1073,7 +1073,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_31
+      name: DuneSeedWrap_0
       rect:
         serializedVersion: 2
         x: 192
@@ -1095,7 +1095,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_32
+      name: DuneSeedWrap_1
       rect:
         serializedVersion: 2
         x: 224
@@ -1117,7 +1117,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_33
+      name: DuneSeedWrap_2
       rect:
         serializedVersion: 2
         x: 256
@@ -1139,7 +1139,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_34
+      name: GrasslandSeeds
       rect:
         serializedVersion: 2
         x: 288
@@ -1161,7 +1161,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_35
+      name: DuneSeeds
       rect:
         serializedVersion: 2
         x: 320
@@ -1183,7 +1183,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_36
+      name: RiftSeeds
       rect:
         serializedVersion: 2
         x: 352
@@ -1205,7 +1205,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_37
+      name: CactusFlesh
       rect:
         serializedVersion: 2
         x: 384
@@ -1227,7 +1227,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_38
+      name: CorruptedHeart_0
       rect:
         serializedVersion: 2
         x: 0
@@ -1249,7 +1249,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_39
+      name: CorruptedHeart_1
       rect:
         serializedVersion: 2
         x: 32
@@ -1271,7 +1271,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_40
+      name: CorruptedHeart_2
       rect:
         serializedVersion: 2
         x: 64
@@ -1293,7 +1293,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_41
+      name: CorruptedHeart_3
       rect:
         serializedVersion: 2
         x: 96
@@ -1315,7 +1315,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_42
+      name: CorruptedHeart_4
       rect:
         serializedVersion: 2
         x: 128
@@ -1337,7 +1337,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_43
+      name: GlowNectar_0
       rect:
         serializedVersion: 2
         x: 192
@@ -1359,7 +1359,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_44
+      name: GlowNectar_1
       rect:
         serializedVersion: 2
         x: 224
@@ -1381,7 +1381,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_45
+      name: GlowNectar_2
       rect:
         serializedVersion: 2
         x: 256
@@ -1403,7 +1403,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_46
+      name: GlowNectar_3
       rect:
         serializedVersion: 2
         x: 288
@@ -1425,7 +1425,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_47
+      name: GlowNectar_4
       rect:
         serializedVersion: 2
         x: 320
@@ -1447,7 +1447,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_48
+      name: FrostEssence
       rect:
         serializedVersion: 2
         x: 0
@@ -1469,7 +1469,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_49
+      name: LifeEssence_0
       rect:
         serializedVersion: 2
         x: 32
@@ -1491,7 +1491,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_50
+      name: LifeEssence_1
       rect:
         serializedVersion: 2
         x: 64
@@ -1513,7 +1513,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_51
+      name: PlantSap
       rect:
         serializedVersion: 2
         x: 96
@@ -1535,7 +1535,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_52
+      name: AmethystSap
       rect:
         serializedVersion: 2
         x: 128
@@ -1557,7 +1557,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_53
+      name: SandSlimeGel
       rect:
         serializedVersion: 2
         x: 160
@@ -1579,7 +1579,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_54
+      name: FrostSlimeGel
       rect:
         serializedVersion: 2
         x: 192
@@ -1601,7 +1601,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_55
+      name: GreenAmber_0
       rect:
         serializedVersion: 2
         x: 224
@@ -1623,7 +1623,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_56
+      name: GreenAmber_1
       rect:
         serializedVersion: 2
         x: 256
@@ -1645,7 +1645,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_57
+      name: GreenAmber_2
       rect:
         serializedVersion: 2
         x: 288
@@ -1667,7 +1667,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_58
+      name: FrostslimeGel_1
       rect:
         serializedVersion: 2
         x: 320
@@ -1689,7 +1689,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_59
+      name: SandslimeGel_1
       rect:
         serializedVersion: 2
         x: 352
@@ -1711,7 +1711,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_60
+      name: BoneShards
       rect:
         serializedVersion: 2
         x: 384
@@ -1733,7 +1733,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_61
+      name: FrozenClockwork_0
       rect:
         serializedVersion: 2
         x: 0
@@ -1755,7 +1755,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_62
+      name: FrozenClockwork_1
       rect:
         serializedVersion: 2
         x: 32
@@ -1777,7 +1777,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_63
+      name: FrozenClockwork_2
       rect:
         serializedVersion: 2
         x: 64
@@ -1799,7 +1799,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_64
+      name: AmethystJewel_0
       rect:
         serializedVersion: 2
         x: 96
@@ -1821,7 +1821,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_65
+      name: AmethystJewel_1
       rect:
         serializedVersion: 2
         x: 128
@@ -1843,7 +1843,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_66
+      name: AmethystDust
       rect:
         serializedVersion: 2
         x: 160
@@ -1865,7 +1865,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_67
+      name: AmethystJewel_2
       rect:
         serializedVersion: 2
         x: 192
@@ -1887,7 +1887,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_68
+      name: Leather
       rect:
         serializedVersion: 2
         x: 224
@@ -1909,7 +1909,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_69
+      name: Seeds_0
       rect:
         serializedVersion: 2
         x: 256
@@ -1931,7 +1931,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewItems_70
+      name: Seeds_1
       rect:
         serializedVersion: 2
         x: 288
@@ -1966,75 +1966,75 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      AmethystDust: -4694767178077623680
       AmethystFiber: -8861520235440157900
+      AmethystJewel_0: 3408383374403925857
+      AmethystJewel_1: 5830918451057814704
+      AmethystJewel_2: -7194860429552542899
+      AmethystSap: 2192393349699268137
+      Apple: -7618932792364192790
+      ApplePie: 1063817770059960409
+      Berries_0: 3055233580374921317
+      Berries_1: -6154652115938713786
+      Berries_2: -2023412526983123965
+      BoarMeat_0: 7400360318934807344
+      BoarMeat_1: -2923844637824317687
+      BoarStew: -7911268712368886502
+      BoneShards: -5094909394162479183
       Bowl: 8695328845500094684
-      DesertFiber: -5870999165499645946
+      CactusFlesh: -5527095357329244120
+      CookedBoarMeat: 4026224339918358431
+      CookedTrollMeat: 7618028441140798157
+      CorruptedHeart_0: -6262390145449273411
+      CorruptedHeart_1: 2033913572178754624
+      CorruptedHeart_2: 4591748894854185316
+      CorruptedHeart_3: 393791388229506138
+      CorruptedHeart_4: 4486079972100502399
+      DeathlyStew: 3307859003446039851
       DesertWood: 6864177145965880480
+      DuneSeedWrap_0: -7946657580476714749
+      DuneSeedWrap_1: 4692863497501683420
+      DuneSeedWrap_2: 5207752102585715865
+      DuneSeeds: -7771823879475489086
+      FrostEssence: 1287343864339308454
+      FrostSlimeGel: -966483126562710588
+      Frostberries_0: 4998300473351262277
+      Frostberries_1: 4823780185322551602
+      Frostberries_2: -4364733734287632974
+      FrostberryJam_0: -1980156823054710826
+      FrostberryJam_1: 3997681976197306256
+      FrostslimeGel_1: -1064608200324871422
       FroststoneOre: 2538031814334513553
+      FrozenClockwork_0: 8080519136803558690
+      FrozenClockwork_1: -6574601549411353449
+      FrozenClockwork_2: 4900300729051918496
+      GlowNectar_0: -5376890304824536367
+      GlowNectar_1: 8511399821724347272
+      GlowNectar_2: -3495174349922935747
+      GlowNectar_3: 933445984547014594
+      GlowNectar_4: 8228607213799561813
       GrasslandFiber: 1717460745158258430
+      GrasslandSeeds: -2240402719624993390
       GrasslandWood: -5993221964768025139
-      NewItems_12: -2446209532349003572
-      NewItems_13: 5897031574916963884
-      NewItems_14: -7911268712368886502
-      NewItems_15: 3307859003446039851
-      NewItems_16: -1980156823054710826
-      NewItems_17: 3997681976197306256
-      NewItems_18: -7618932792364192790
-      NewItems_19: -4491978270171731515
-      NewItems_20: 7618028441140798157
-      NewItems_21: 1063817770059960409
-      NewItems_22: 7400360318934807344
-      NewItems_23: -2923844637824317687
-      NewItems_24: 4026224339918358431
-      NewItems_25: 3055233580374921317
-      NewItems_26: 4998300473351262277
-      NewItems_27: 4823780185322551602
-      NewItems_28: -4364733734287632974
-      NewItems_29: -6154652115938713786
-      NewItems_30: -2023412526983123965
-      NewItems_31: -7946657580476714749
-      NewItems_32: 4692863497501683420
-      NewItems_33: 5207752102585715865
-      NewItems_34: -2240402719624993390
-      NewItems_35: -7771823879475489086
-      NewItems_36: -6226749879353443860
-      NewItems_37: -5527095357329244120
-      NewItems_38: -6262390145449273411
-      NewItems_39: 2033913572178754624
-      NewItems_40: 4591748894854185316
-      NewItems_41: 393791388229506138
-      NewItems_42: 4486079972100502399
-      NewItems_43: -5376890304824536367
-      NewItems_44: 8511399821724347272
-      NewItems_45: -3495174349922935747
-      NewItems_46: 933445984547014594
-      NewItems_47: 8228607213799561813
-      NewItems_48: 1287343864339308454
-      NewItems_49: -5651581812295411172
-      NewItems_50: -1081169135861329016
-      NewItems_51: -6600695180056089464
-      NewItems_52: 2192393349699268137
-      NewItems_53: -7151503233250691609
-      NewItems_54: -966483126562710588
-      NewItems_55: -1611384066614670200
-      NewItems_56: 6270577973377150278
-      NewItems_57: -5719187306829889603
-      NewItems_58: -1064608200324871422
-      NewItems_59: -5843864290533733529
-      NewItems_60: -5094909394162479183
-      NewItems_61: 8080519136803558690
-      NewItems_62: -6574601549411353449
-      NewItems_63: 4900300729051918496
-      NewItems_64: 3408383374403925857
-      NewItems_65: 5830918451057814704
-      NewItems_66: -4694767178077623680
-      NewItems_67: -7194860429552542899
-      NewItems_68: -6312632274152794278
-      NewItems_69: -1255621167750026000
-      NewItems_70: 5975179095532966262
+      GreenAmber_0: -1611384066614670200
+      GreenAmber_1: 6270577973377150278
+      GreenAmber_2: -5719187306829889603
+      Leather: -6312632274152794278
+      LifeEssence_0: -5651581812295411172
+      LifeEssence_1: -1081169135861329016
+      MeatStew: 5897031574916963884
+      PlantSap: -6600695180056089464
+      RiftSeeds: -6226749879353443860
       RiftstoneOre: -4508949321610508396
+      SandSlimeGel: -7151503233250691609
+      SandslimeGel_1: -5843864290533733529
       SandstoneOre: -5416770625512055775
+      SeedStew: -2446209532349003572
+      Seeds_0: -1255621167750026000
+      Seeds_1: 5975179095532966262
       StoneOre: 5367753294962327426
+      SunbakedFiber: -5870999165499645946
+      TrollMeat: -4491978270171731515
       TundraFiber: -1434307129310993265
       TundraWood: -1145474552162409682
   mipmapLimitGroupName: 

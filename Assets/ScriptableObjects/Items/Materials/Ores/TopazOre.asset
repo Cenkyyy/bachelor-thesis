@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: TopazOre
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Topaz Ore
-  <Icon>k__BackingField: {fileID: 8982652330240798638, guid: f2fa09e03f355b147bf701e27485c63c, type: 3}
+  <Icon>k__BackingField: {fileID: -617058339, guid: f2fa09e03f355b147bf701e27485c63c, type: 3}
   <Category>k__BackingField: 3
   <Rarity>k__BackingField: 2
   <BiomeAffinity>k__BackingField: 3
   <MaxStackSize>k__BackingField: 9999
+  <HeldPresentationMode>k__BackingField: 0
+  <HeldScale>k__BackingField: {x: 0.3, y: 0.3}
   <Kind>k__BackingField: 1
-  <TierTag>k__BackingField: 0

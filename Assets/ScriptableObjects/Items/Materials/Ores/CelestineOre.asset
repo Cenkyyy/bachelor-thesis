@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: CelestineOre
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Celestine Ore
-  <Icon>k__BackingField: {fileID: 1009049853055315898, guid: 1c4380b4144981144bfecf5df811fc1c, type: 3}
+  <Icon>k__BackingField: {fileID: -669332240, guid: 1c4380b4144981144bfecf5df811fc1c, type: 3}
   <Category>k__BackingField: 3
   <Rarity>k__BackingField: 2
   <BiomeAffinity>k__BackingField: 2
   <MaxStackSize>k__BackingField: 9999
+  <HeldPresentationMode>k__BackingField: 0
+  <HeldScale>k__BackingField: {x: 0.3, y: 0.3}
   <Kind>k__BackingField: 1
-  <TierTag>k__BackingField: 3
