@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager Instance { get; private set; }
     public static bool IsGamePaused { get; private set; }
+    public static event Action<bool> PauseChanged;
 
     /// <summary>
     /// This field tracks whether a manual pause has been requested (e.g., via a settings menu), independent of anything related to scene transitions and their possible blockers.
@@ -67,5 +69,6 @@ public class GameStateManager : MonoBehaviour
 
         IsGamePaused = shouldPause;
         Time.timeScale = IsGamePaused ? 0f : 1f;
+        PauseChanged?.Invoke(IsGamePaused);
     }
 }

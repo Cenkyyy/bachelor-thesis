@@ -7,6 +7,7 @@ public class EnemySpawnController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform _player;
     [SerializeField] private Transform _spawnParent;
+    [SerializeField] private Transform _projectileParent;
     [SerializeField] private WorldGenerationController _worldGenerator;
     [SerializeField] private LayerMask _obstacleMask;
 
@@ -87,7 +88,7 @@ public class EnemySpawnController : MonoBehaviour
         var worldQuery = new TilemapSpawnWorldQuery(_worldGenerator.GroundTilemap, _worldGenerator.CurrentWorldData, _obstacleMask);
         var registry = new SpawnedEntityRegistry<EnemyCore>();
 
-        _enemySpawner = new EnemySpawner(factory, strategy, selection, worldQuery, registry, _settings, _spawnParent);
+        _enemySpawner = new EnemySpawner(factory, strategy, selection, worldQuery, registry, _settings, _spawnParent, _projectileParent);
         return true;
     }
 

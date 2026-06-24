@@ -55,14 +55,34 @@ public sealed class AudioManager : MonoBehaviour
     {
         if (shouldFadeOut)
         {
-            FadeOutAllAudio(fadeDuration);
+            FadeOutMusic(fadeDuration);
             return;
         }
 
-        PlayMusic(_menuMusicClip, shouldLoop, shouldFadeIn);
+        bool shouldStartFade = shouldFadeIn && ShouldStartNewMusic(_menuMusicClip);
+        PlayMusic(_menuMusicClip, shouldLoop, shouldStartFade);
 
-        if (shouldFadeIn)
-            FadeInAllAudio(fadeDuration);
+        if (shouldStartFade)
+            FadeInMusic(fadeDuration);
+    }
+
+    public void PlayGameplayMusic(AudioClip clip, bool shouldFadeIn, float fadeDuration, bool shouldLoop = false)
+    {
+        bool shouldStartFade = shouldFadeIn && ShouldStartNewMusic(clip);
+        PlayMusic(clip, shouldLoop, shouldStartFade);
+
+        if (shouldStartFade)
+            FadeInMusic(fadeDuration);
+    }
+
+    public bool IsCurrentMusic(AudioClip clip)
+    {
+        return clip != null && _musicSource != null && _musicSource.clip == clip;
+    }
+
+    public bool IsPlayingMusic(AudioClip clip)
+    {
+        return IsCurrentMusic(clip) && _musicSource != null && _musicSource.isPlaying;
     }
 
     public void PlayUiHoverSfx()
@@ -82,17 +102,42 @@ public sealed class AudioManager : MonoBehaviour
         _musicSource.volume = _musicSourceDefaultVolume;
     }
 
-    public void FadeOutAllAudio(float fadeDuration)
+    public void PauseMusic()
     {
-        FadeAllAudio(0f, fadeDuration, true);
+        StopFadeCoroutineIfRunning();
+        _musicSource.Pause();
     }
 
-    public void FadeInAllAudio(float fadeDuration)
+    public void ResumeMusic()
+    {
+        _musicSource.volume = _musicSourceDefaultVolume;
+        _musicSource.UnPause();
+    }
+
+    public void FadeOutAllAudio(float fadeDuration)
+    {
+        FadeOutMusic(fadeDuration);
+    }
+
+    public void FadeOutMusic(float fadeDuration)
+    {
+        FadeMusic(0f, fadeDuration, true);
+    }
+
+    private void FadeInMusic(float fadeDuration)
     {
         if (_musicSource.isPlaying && fadeDuration > 0f)
             _musicSource.volume = 0f;
 
-        FadeAllAudio(_musicSourceDefaultVolume, fadeDuration, false);
+        FadeMusic(_musicSourceDefaultVolume, fadeDuration, false);
+    }
+
+    private bool ShouldStartNewMusic(AudioClip clip)
+    {
+        if (clip == null)
+            return false;
+
+        return _musicSource.clip != clip || !_musicSource.isPlaying;
     }
 
     private void PlayMusic(AudioClip clip, bool shouldLoop, bool startSilent)
@@ -122,16 +167,19 @@ public sealed class AudioManager : MonoBehaviour
         _uiSfxSource.Play();
     }
 
-    private void FadeAllAudio(float targetVolume, float fadeDuration, bool stopMusicOnComplete)
+    private void FadeMusic(float targetVolume, float fadeDuration, bool stopMusicOnComplete)
     {
         StopFadeCoroutineIfRunning();
-        _fadeCoroutine = StartCoroutine(FadeAllAudioCoroutine(targetVolume, fadeDuration, stopMusicOnComplete));
+        _fadeCoroutine = StartCoroutine(FadeMusicCoroutine(targetVolume, fadeDuration, stopMusicOnComplete));
     }
 
-    private IEnumerator FadeAllAudioCoroutine(float targetVolume, float fadeDuration, bool stopMusicOnComplete)
+    private IEnumerator FadeMusicCoroutine(float targetVolume, float fadeDuration, bool stopMusicOnComplete)
     {
         if (!_musicSource.isPlaying)
+        {
+            _fadeCoroutine = null;
             yield break;
+        }
 
         if (fadeDuration <= 0f)
         {

@@ -8,6 +8,7 @@ public sealed class RangedEnemyCore : EnemyCore
     [SerializeField] private Transform _projectileSpawnDown;
     [SerializeField] private Transform _projectileSpawnLeft;
     [SerializeField] private Transform _projectileSpawnRight;
+    [SerializeField] private Transform _projectileParent;
 
     private RangedEnemyData RangedData => (RangedEnemyData)Data;
 
@@ -35,10 +36,15 @@ public sealed class RangedEnemyCore : EnemyCore
         var origin = spawnPoint != null ? (Vector2)spawnPoint.position : (Vector2)transform.position;
         var direction = ((Vector2)Target.position - origin).normalized;
 
-        var projectileObject = Instantiate(RangedData.ProjectilePrefab, origin, Quaternion.identity);
+        var projectileObject = Instantiate(RangedData.ProjectilePrefab, origin, Quaternion.identity, _projectileParent);
         var projectile = projectileObject.GetComponent<EnemyProjectile>();
         projectile.Launch(this, origin, direction, Data.AttackDamage, RangedData.ProjectileSpeed, RangedData.ProjectileLifetimeSeconds);
         return true;
+    }
+
+    public void SetProjectileParent(Transform projectileParent)
+    {
+        _projectileParent = projectileParent;
     }
 
     public bool IsTargetTooCloseForRanged()

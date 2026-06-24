@@ -201,8 +201,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Padding:
     m_Left: 0
     m_Right: 0
@@ -634,6 +634,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 2010244813}
   _spawnParent: {fileID: 814563175}
+  _projectileParent: {fileID: 2222222011}
   _worldGenerator: {fileID: 1097722629}
   _obstacleMask:
     serializedVersion: 2
@@ -652,7 +653,7 @@ MonoBehaviour:
   _spawnStrategyType: 0
   _settings:
     <FirstSpawnDay>k__BackingField: 1
-    <IgnoreFirstSpawnDay>k__BackingField: 0
+    <IgnoreFirstSpawnDay>k__BackingField: 1
     <RequireNightOnFirstSpawnDay>k__BackingField: 1
     <SpawnIntervalSeconds>k__BackingField: 5
     <NightSpawnAccelerationMultiplier>k__BackingField: 0.8
@@ -9843,6 +9844,7 @@ GameObject:
   - component: {fileID: 1097722630}
   - component: {fileID: 1097722631}
   - component: {fileID: 1097722633}
+  - component: {fileID: 1097722634}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -9906,7 +9908,7 @@ MonoBehaviour:
   _worldHeight: 2048
   _borderThickness: 32
   _defaultSeed: 12345
-  _randomizeSeedOnPlay: 0
+  _randomizeSeedOnPlay: 1
   _biomeCenterCount: 48
   _centerSamplingCandidates: 128
   _centerJitter: 6
@@ -10057,6 +10059,37 @@ MonoBehaviour:
   _maxClustersPerChunk: 1
   _maxSeedSearchAttempts: 24
   _defaultSpawnExclusionRadiusTiles: 5
+--- !u!114 &1097722634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097722626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c7a0f0e9d1f45e2a4f8c6b3d7e91a52, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  _worldGenerator: {fileID: 1097722629}
+  _player: {fileID: 2010244819}
+  _playerTransform: {fileID: 2010244813}
+  _biomeTracks:
+  - Biome: 1
+    Clip: {fileID: 8300000, guid: 1681e1a56e1504648ae0f964993b2254, type: 3}
+  - Biome: 2
+    Clip: {fileID: 8300000, guid: 0293f83beb150924c897a1d3337d29da, type: 3}
+  - Biome: 3
+    Clip: {fileID: 8300000, guid: 73f1460901dd26344984d042b0001372, type: 3}
+  - Biome: 4
+    Clip: {fileID: 8300000, guid: 475f2550c48a4f54cad765dffcf4cb83, type: 3}
+  _biomeCheckIntervalSeconds: 0.5
+  _minStartDelaySeconds: 12
+  _maxStartDelaySeconds: 25
+  _fadeInSeconds: 1.5
+  _loopBiomeTracks: 0
+  _minFadeOutSeconds: 1
+  _maxFadeOutSeconds: 4
 --- !u!1 &1114828489
 GameObject:
   m_ObjectHideFlags: 0
@@ -11201,7 +11234,39 @@ Transform:
   - {fileID: 325433512}
   - {fileID: 1087975137}
   - {fileID: 2222222002}
+  - {fileID: 2222222011}
   m_Father: {fileID: 174293338}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2222222010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2222222011}
+  m_Layer: 0
+  m_Name: EnemyProjectilesContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2222222011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2222222010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1327090048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1362542294
 GameObject:
@@ -13138,11 +13203,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941ccdeb7ccec9249bb2dde3a33a4d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _secondsPerGameDay: 420
+  _secondsPerGameDay: 300
   _initialTime01: 0.25
   _startDay: 1
   _minBrightnessAtMidnight: 0.15
-  _twilightBoost: 0.08
+  _twilightBoost: 0.04
 --- !u!1 &1611478415
 GameObject:
   m_ObjectHideFlags: 0
@@ -16927,7 +16992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _time: {fileID: 1592801025}
   _uiImage: {fileID: 2009648770}
-  _maxAlpha: 0.7
+  _maxAlpha: 0.9
   _tint: {r: 0, g: 0, b: 0, a: 1}
 --- !u!4 &2010244813 stripped
 Transform:

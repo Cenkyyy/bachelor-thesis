@@ -9,6 +9,7 @@ public sealed class EnemySpawner
     private readonly ISpawnRegistry<EnemyCore> _registry;
     private readonly EnemySpawnSettings _settings;
     private readonly Transform _spawnParent;
+    private readonly Transform _projectileParent;
 
     public EnemySpawner(
         IEntityFactory<EnemyData, EnemyCore> factory,
@@ -17,7 +18,8 @@ public sealed class EnemySpawner
         ISpawnWorldQuery worldQuery,
         ISpawnRegistry<EnemyCore> registry,
         EnemySpawnSettings settings,
-        Transform spawnParent)
+        Transform spawnParent,
+        Transform projectileParent)
     {
         _factory = factory;
         _spawnStrategy = spawnStrategy;
@@ -26,6 +28,7 @@ public sealed class EnemySpawner
         _registry = registry;
         _settings = settings;
         _spawnParent = spawnParent;
+        _projectileParent = projectileParent;
     }
 
     public void RunSpawnCycle(Vector2 playerPosition, int maxAliveEnemies)
@@ -77,6 +80,9 @@ public sealed class EnemySpawner
             var enemy = _factory.Create(enemyData, spawnPoint, _spawnParent);
             if (enemy == null)
                 return false;
+
+            if (enemy is RangedEnemyCore rangedEnemy)
+                rangedEnemy.SetProjectileParent(_projectileParent);
 
             _registry.Register(enemy);
             return true;
