@@ -19,5 +19,5 @@ MonoBehaviour:
   <StatusDuration>k__BackingField: 3
   <DamageOverTimePerSecond>k__BackingField: 5
   <LightningBonusMultiplier>k__BackingField: -1
-  <PoisonCloudRadius>k__BackingField: -1
   <PoisonCloudDuration>k__BackingField: -1
+  <PoisonCloudPrefab>k__BackingField: {fileID: 0}

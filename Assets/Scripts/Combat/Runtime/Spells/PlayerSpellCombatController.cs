@@ -214,7 +214,7 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
         switch (runtimeData.Element.Type)
         {
             case ElementWordType.Poison:
-                if (runtimeData.TryConsumePoisonCloud())
+                if (runtimeData.TryConsumePoisonCloud(target))
                     SpawnPoisonCloud(runtimeData.Element, hitPosition);
                 break;
             case ElementWordType.Frost:
@@ -381,13 +381,19 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
 
     private void SpawnPoisonCloud(ElementWordData element, Vector2 position)
     {
-        GameObject cloud = new("PoisonCloud");
-        cloud.transform.position = position;
-        if (_spellContainer != null)
-            cloud.transform.SetParent(_spellContainer);
+        if (element == null || element.PoisonCloudPrefab == null)
+            return;
 
-        PoisonCloudZone zone = cloud.AddComponent<PoisonCloudZone>();
-        zone.Initialize(element.PoisonCloudRadius, element.PoisonCloudDuration, element.DamageOverTimePerSecond, _targetMask, _player);
+        GameObject cloud = Instantiate(element.PoisonCloudPrefab, position, Quaternion.identity, _spellContainer);
+
+        PoisonCloudZone zone = cloud.GetComponent<PoisonCloudZone>();
+        if (zone == null)
+        {
+            Destroy(cloud);
+            return;
+        }
+
+        zone.Initialize(element.PoisonCloudDuration, element.DamageOverTimePerSecond, _targetMask, _player, element.Material, _damagePopupFeedbackSettings);
     }
 
     private float ResolveLineSpellTravelDistance(Vector2 origin, Vector2 direction, float maxRange)

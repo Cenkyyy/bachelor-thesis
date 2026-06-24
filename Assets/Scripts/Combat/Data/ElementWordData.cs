@@ -20,8 +20,8 @@ public sealed class ElementWordData : WordData
     [field: SerializeField, Min(-1f)] public float LightningBonusMultiplier { get; private set; }
 
     [Header("Poison")]
-    [field: SerializeField, Min(-1f)] public float PoisonCloudRadius { get; private set; }
     [field: SerializeField, Min(-1f)] public float PoisonCloudDuration { get; private set; }
+    [field: SerializeField] public GameObject PoisonCloudPrefab { get; private set; }
 
     public override WordCategory Category => WordCategory.Element;
     public override bool IsValid => System.Enum.IsDefined(typeof(ElementWordType), Type);
@@ -33,8 +33,8 @@ public sealed class ElementWordData : WordData
         StatusDuration = UsesStatusDuration() ? Mathf.Max(0f, StatusDuration) : -1f;
         DamageOverTimePerSecond = UsesDamageOverTime() ? Mathf.Max(0f, DamageOverTimePerSecond) : -1f;
         LightningBonusMultiplier = Type == ElementWordType.Lightning ? Mathf.Max(0f, LightningBonusMultiplier) : -1f;
-        PoisonCloudRadius = Type == ElementWordType.Poison ? Mathf.Max(0f, PoisonCloudRadius) : -1f;
         PoisonCloudDuration = Type == ElementWordType.Poison ? Mathf.Max(0f, PoisonCloudDuration) : -1f;
+        PoisonCloudPrefab = Type == ElementWordType.Poison ? PoisonCloudPrefab : null;
     }
 
     private bool UsesStatusDuration()
