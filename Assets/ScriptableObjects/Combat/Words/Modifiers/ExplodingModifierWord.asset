@@ -19,10 +19,9 @@ MonoBehaviour:
   <AdditionalCooldownSeconds>k__BackingField: 0.25
   <StunDurationMin>k__BackingField: -1
   <StunDurationMax>k__BackingField: -1
-  <ExplosionRadius>k__BackingField: 1.8
   <ExplosionDamageMultiplier>k__BackingField: 0.7
+  <ExplosionPrefab>k__BackingField: {fileID: 6381046162596957270, guid: 2e161987ee518d84883a58691046253d, type: 3}
   <ReclaimManaPerHit>k__BackingField: -1
   <MaxReclaimsPerCast>k__BackingField: -1
   <SplitAngleDegrees>k__BackingField: -1
   <SplitDamageMultiplier>k__BackingField: -1
-  <OptionalPrefab>k__BackingField: {fileID: 6381046162596957270, guid: 2e161987ee518d84883a58691046253d, type: 3}

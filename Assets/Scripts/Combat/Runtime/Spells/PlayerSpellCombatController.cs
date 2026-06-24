@@ -28,7 +28,6 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
     [SerializeField] private SpellWordEffectivenessData _wordEffectivenessData;
     [SerializeField] private DamagePopupFeedbackSettings _damagePopupFeedbackSettings = new();
 
-    private readonly List<Collider2D> _targetBuffer = new(32);
     private ContactFilter2D _targetFilter;
     private float _nextCastAllowedAt;
 
@@ -257,21 +256,95 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
 
     private void ApplyExplosion(SpellCastRuntimeData runtimeData, Vector2 center, ICombatTarget directHitTarget)
     {
-        QueryTargetsInRadius(center, runtimeData.Modifier.ExplosionRadius);
-        for (var i = 0; i < _targetBuffer.Count; i++)
+        if (runtimeData.Modifier.ExplosionPrefab == null)
+            return;
+
+        StartCoroutine(RunExplosion(runtimeData, center, directHitTarget));
+    }
+
+    private IEnumerator RunExplosion(SpellCastRuntimeData runtimeData, Vector2 center, ICombatTarget directHitTarget)
+    {
+        GameObject explosion = Instantiate(runtimeData.Modifier.ExplosionPrefab, center, Quaternion.identity, _spellContainer);
+        ApplyExplosionVisuals(explosion, runtimeData.Element);
+
+        CircleCollider2D hitbox = explosion.GetComponent<CircleCollider2D>();
+        if (hitbox == null)
         {
-            ICombatTarget target = _targetBuffer[i].GetComponentInParent<ICombatTarget>();
-            if (target == null || !target.IsAlive)
-                continue;
-
-            if (ReferenceEquals(target, directHitTarget))
-                continue;
-
-            float effectivenessMultiplier = ResolveWordEffectivenessMultiplier(runtimeData, target);
-            float damage = runtimeData.BaseDamage * runtimeData.Modifier.ExplosionDamageMultiplier * effectivenessMultiplier;
-            if (SpellCombatTargetUtility.TryApplyDamage(target, damage, _player, out int displayedDamage))
-                DamagePopupFeedbackUtility.ShowForTarget(target, displayedDamage, effectivenessMultiplier, _damagePopupFeedbackSettings);
+            Destroy(explosion);
+            yield break;
         }
+
+        hitbox.isTrigger = true;
+
+        float lifetime = ResolveExplosionLifetime(explosion);
+        float elapsed = 0f;
+        HashSet<ICombatTarget> damagedTargets = new();
+        List<Collider2D> overlappingTargets = new(32);
+
+        while (elapsed < lifetime && explosion != null)
+        {
+            overlappingTargets.Clear();
+            hitbox.Overlap(_targetFilter, overlappingTargets);
+
+            for (var i = 0; i < overlappingTargets.Count; i++)
+            {
+                ApplyExplosionHit(runtimeData, overlappingTargets[i], directHitTarget, damagedTargets);
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        if (explosion != null)
+            Destroy(explosion);
+    }
+
+    private static void ApplyExplosionVisuals(GameObject explosion, ElementWordData element)
+    {
+        if (explosion == null || element == null)
+            return;
+
+        SpriteRenderer spriteRenderer = explosion.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null && element.Material != null)
+            spriteRenderer.material = element.Material;
+    }
+
+    private void ApplyExplosionHit(
+        SpellCastRuntimeData runtimeData,
+        Collider2D collider,
+        ICombatTarget directHitTarget,
+        ISet<ICombatTarget> damagedTargets)
+    {
+        if (!SpellCombatTargetUtility.TryGetCombatTarget(collider, out ICombatTarget target))
+            return;
+
+        if (target == null || !target.IsAlive || ReferenceEquals(target, directHitTarget) || damagedTargets.Contains(target))
+            return;
+
+        float effectivenessMultiplier = ResolveWordEffectivenessMultiplier(runtimeData, target);
+        float damage = runtimeData.BaseDamage * runtimeData.Modifier.ExplosionDamageMultiplier * effectivenessMultiplier;
+        if (SpellCombatTargetUtility.TryApplyDamage(target, damage, _player, out int displayedDamage))
+            DamagePopupFeedbackUtility.ShowForTarget(target, displayedDamage, effectivenessMultiplier, _damagePopupFeedbackSettings);
+
+        damagedTargets.Add(target);
+    }
+
+    private static float ResolveExplosionLifetime(GameObject explosion)
+    {
+        const float FallbackLifetime = 0.75f;
+
+        if (explosion == null || !explosion.TryGetComponent(out Animator animator) || animator.layerCount == 0)
+            return FallbackLifetime;
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.length > 0f)
+            return Mathf.Max(0.01f, stateInfo.length);
+
+        AnimatorClipInfo[] clipInfo = animator.GetCurrentAnimatorClipInfo(0);
+        if (clipInfo.Length == 0 || clipInfo[0].clip == null)
+            return FallbackLifetime;
+
+        return Mathf.Max(0.01f, clipInfo[0].clip.length);
     }
 
     private IEnumerator ApplyBurnDamageTicks(ICombatTarget target, float damagePerSecond, float durationSeconds, float effectivenessMultiplier, object source)
@@ -304,12 +377,6 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
             if (elapsed < durationSeconds)
                 yield return new WaitForSeconds(Mathf.Min(DamageOverTimeTickIntervalSeconds, durationSeconds - elapsed));
         }
-    }
-
-    private void QueryTargetsInRadius(Vector2 center, float radius)
-    {
-        _targetBuffer.Clear();
-        Physics2D.OverlapCircle(center, radius, _targetFilter, _targetBuffer);
     }
 
     private void SpawnPoisonCloud(ElementWordData element, Vector2 position)

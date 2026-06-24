@@ -19,7 +19,6 @@ MonoBehaviour:
   <AdditionalCooldownSeconds>k__BackingField: 0.1
   <StunDurationMin>k__BackingField: -1
   <StunDurationMax>k__BackingField: -1
-  <ExplosionRadius>k__BackingField: -1
   <ExplosionDamageMultiplier>k__BackingField: -1
   <ReclaimManaPerHit>k__BackingField: 3
   <MaxReclaimsPerCast>k__BackingField: 2

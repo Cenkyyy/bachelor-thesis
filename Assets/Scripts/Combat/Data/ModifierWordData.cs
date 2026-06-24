@@ -18,8 +18,8 @@ public sealed class ModifierWordData : WordData
     [field: SerializeField, Min(-1f)] public float StunDurationMax { get; private set; }
 
     [Header("Exploding")]
-    [field: SerializeField, Min(-1f)] public float ExplosionRadius { get; private set; }
     [field: SerializeField, Min(-1f)] public float ExplosionDamageMultiplier { get; private set; }
+    [field: SerializeField] public GameObject ExplosionPrefab { get; private set; }
 
     [Header("Reclaiming")]
     [field: SerializeField, Min(-1)] public int ReclaimManaPerHit { get; private set; }
@@ -53,8 +53,8 @@ public sealed class ModifierWordData : WordData
             StunDurationMax = -1f;
         }
 
-        ExplosionRadius = Type == ModifierWordType.Exploding ? Mathf.Max(0f, ExplosionRadius) : -1f;
         ExplosionDamageMultiplier = Type == ModifierWordType.Exploding ? Mathf.Max(0f, ExplosionDamageMultiplier) : -1f;
+        ExplosionPrefab = Type == ModifierWordType.Exploding ? ExplosionPrefab : null;
 
         ReclaimManaPerHit = Type == ModifierWordType.Reclaiming ? Mathf.Max(0, ReclaimManaPerHit) : -1;
         MaxReclaimsPerCast = Type == ModifierWordType.Reclaiming ? Mathf.Max(0, MaxReclaimsPerCast) : -1;
