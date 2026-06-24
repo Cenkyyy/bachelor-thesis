@@ -67,19 +67,23 @@ public sealed class NarrativeIntroductionController : MonoBehaviour
         if (_introMessageText == null)
             yield break;
 
-        _introMessageText.text = string.Empty;
+        _introMessageText.text = message;
+        _introMessageText.maxVisibleCharacters = 0;
 
         if (string.IsNullOrEmpty(message))
             yield break;
 
-        int characterCount = 0;
+        _introMessageText.ForceMeshUpdate();
+
+        int totalCharacterCount = _introMessageText.textInfo.characterCount;
+        int visibleCharacterCount = 0;
         float progress = 0f;
 
-        while (characterCount < message.Length)
+        while (visibleCharacterCount < totalCharacterCount)
         {
             if (Input.GetKeyDown(_introDialogueData.AdvanceKey))
             {
-                _introMessageText.text = message;
+                ShowFullMessage();
                 _currentMessageWasCompletedByAdvanceKey = true;
                 yield break;
             }
@@ -87,17 +91,25 @@ public sealed class NarrativeIntroductionController : MonoBehaviour
             float delta = Mathf.Min(Time.unscaledDeltaTime, _introDialogueData.MaxDeltaTime);
             progress += delta * _introDialogueData.CharactersPerSecond;
 
-            int targetCount = Mathf.Clamp(Mathf.FloorToInt(progress), 0, message.Length);
-            if (targetCount != characterCount)
+            int targetCount = Mathf.Clamp(Mathf.FloorToInt(progress), 0, totalCharacterCount);
+            if (targetCount != visibleCharacterCount)
             {
-                characterCount = targetCount;
-                _introMessageText.text = message.Substring(0, characterCount);
+                visibleCharacterCount = targetCount;
+                _introMessageText.maxVisibleCharacters = visibleCharacterCount;
             }
 
             yield return null;
         }
 
-        _introMessageText.text = message;
+        ShowFullMessage();
+    }
+
+    private void ShowFullMessage()
+    {
+        if (_introMessageText == null)
+            return;
+
+        _introMessageText.maxVisibleCharacters = int.MaxValue;
     }
 
     private IEnumerator WaitForMessageAdvanceCoroutine()
