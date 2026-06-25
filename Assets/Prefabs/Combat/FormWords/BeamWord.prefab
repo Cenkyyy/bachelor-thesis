@@ -44,12 +44,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6381046162596957270}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 064dd2078278fb542ba4ef4afb6e7b60, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d8f3c54b2e14e4b8adf55c7e813a6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 504120000000000001}
-  _hitboxColliders:
-  - {fileID: 614120000000000001}
+  _hitbox: {fileID: 614120000000000001}
+  _tileTemplate: {fileID: 2693141567778314685}
+  _tileAnimatorController: {fileID: 9100000, guid: fadc28c99509872489ece5a318c6dec4, type: 2}
+  _tileLength: 1
+  _startStateName: Start
+  _middleStateName: Middle
+  _endStateName: End
 --- !u!212 &2693141567778314685
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -94,7 +98,7 @@ SpriteRenderer:
   m_SortingLayerID: -1669280003
   m_SortingLayer: 9
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -4419447314740828559, guid: f08ad0e81bbd0a246b66167ed208324c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -166,15 +170,15 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0018247068, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.2, y: 0.2}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.28107578, y: 1}
   m_EdgeRadius: 0

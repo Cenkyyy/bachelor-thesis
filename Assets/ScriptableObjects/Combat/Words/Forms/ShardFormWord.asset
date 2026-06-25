@@ -18,7 +18,7 @@ MonoBehaviour:
   <ManaCost>k__BackingField: 8
   <CooldownSeconds>k__BackingField: 0.25
   <BaseDamage>k__BackingField: 18
-  <Range>k__BackingField: 6
+  <Range>k__BackingField: 5
   <HitRadius>k__BackingField: 0.5
   <WaveArcAngle>k__BackingField: -1
   <BeamDuration>k__BackingField: -1

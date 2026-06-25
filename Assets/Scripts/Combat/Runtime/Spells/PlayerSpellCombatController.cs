@@ -18,6 +18,7 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
 
     [Header("Feedback")]
     [SerializeField] private string _castOnCooldownMessage = "Spell is recharging";
+    [SerializeField] private string _castInProgressMessage = "Already casting";
     [SerializeField] private string _insufficientManaMessage = "Need to restore mana";
 
     [Header("Targeting")]
@@ -30,6 +31,7 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
 
     private ContactFilter2D _targetFilter;
     private float _nextCastAllowedAt;
+    private float _castLockedUntil;
 
     public LayerMask TargetMask => _targetMask;
 
@@ -62,6 +64,12 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
 
         if (PanelManager.Instance != null && PanelManager.Instance.BlocksGameplayInput)
             return;
+
+        if (Time.time < _castLockedUntil)
+        {
+            _feedbackPopup.ShowMessage(_castInProgressMessage);
+            return;
+        }
 
         if (Time.time < _nextCastAllowedAt)
         {
@@ -136,7 +144,7 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
                 break;
 
             case FormWordType.Beam:
-                SpawnProjectiles(castState, CreateObstructedTravelDistances(castState), runtimeData);
+                SpawnBeams(castState, runtimeData);
                 break;
 
             case FormWordType.Wave:
@@ -435,6 +443,38 @@ public sealed class PlayerSpellCombatController : MonoBehaviour
                 this,
                 runtimeData,
                 ResolveHitMode(spell));
+        }
+    }
+
+    private void SpawnBeams(CastState castState, SpellCastRuntimeData runtimeData)
+    {
+        SpellPhrase spell = castState.Spell;
+        spell.SetCastContext(_playerHeldItemVisual.CurrentHandAnchor.position, CopyDirections(castState.Directions));
+
+        if (!spell.IsCommitted || spell.Form.ProjectilePrefab == null || spell.Directions.Count == 0)
+            return;
+
+        _castLockedUntil = Mathf.Max(_castLockedUntil, Time.time + spell.Form.BeamDuration);
+
+        Vector2 baseDirection = spell.Directions[0];
+        for (int i = 0; i < spell.Directions.Count; i++)
+        {
+            GameObject spellObject = Instantiate(spell.Form.ProjectilePrefab, spell.Origin, Quaternion.identity, _spellContainer);
+            spellObject.transform.localScale = spell.Form.VfxScale;
+
+            SpellBeam beam = spellObject.GetComponent<SpellBeam>();
+            if (beam == null)
+                beam = spellObject.AddComponent<SpellBeam>();
+
+            beam.Initialize(
+                _playerHeldItemVisual,
+                spell.Origin,
+                Vector2.SignedAngle(baseDirection, spell.Directions[i]),
+                _targetMask,
+                _spellObstructionMask,
+                spell.Element.Material,
+                this,
+                runtimeData);
         }
     }
 

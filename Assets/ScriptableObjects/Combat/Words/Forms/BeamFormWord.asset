@@ -16,15 +16,15 @@ MonoBehaviour:
   <MemoryCost>k__BackingField: 5
   <Type>k__BackingField: 1
   <ManaCost>k__BackingField: 18
-  <CooldownSeconds>k__BackingField: 0.9
+  <CooldownSeconds>k__BackingField: 2.5
   <BaseDamage>k__BackingField: 5
-  <Range>k__BackingField: 6
+  <Range>k__BackingField: 5
   <HitRadius>k__BackingField: 0.5
   <WaveArcAngle>k__BackingField: -1
-  <BeamDuration>k__BackingField: 1
-  <BeamTickInterval>k__BackingField: 0.2
+  <BeamDuration>k__BackingField: 2.5
+  <BeamTickInterval>k__BackingField: 0.5
   <BarrageProjectileCount>k__BackingField: -1
   <BarrageInterval>k__BackingField: -1
   <ProjectilePrefab>k__BackingField: {fileID: 6381046162596957270, guid: 2f7c266d8c80bc247adeeaae6442a74c, type: 3}
-  _vfxSpeed: 2
+  _vfxSpeed: 10
   _vfxScale: {x: 1, y: 1, z: 1}
