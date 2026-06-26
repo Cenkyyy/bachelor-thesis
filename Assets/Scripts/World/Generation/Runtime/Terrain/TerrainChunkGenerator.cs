@@ -6,6 +6,9 @@ using UnityEngine.Tilemaps;
 [DisallowMultipleComponent]
 public sealed class TerrainChunkGenerator : WorldChunkGeneratorBase
 {
+    [Header("Border Ground")]
+    [SerializeField] private TileBase _borderGroundTile;
+
     [Header("Terrain Streaming")]
     [SerializeField] private bool _enableChunkUnloading;
 
@@ -134,6 +137,7 @@ public sealed class TerrainChunkGenerator : WorldChunkGeneratorBase
 
                 if (tile.TileType == WorldTileType.BorderBase)
                 {
+                    groundTiles[index] = _borderGroundTile;
                     borderTiles[index] = borderTileAsset;
 
                     if (IsInnerBorderTile(data, dataX, dataY))

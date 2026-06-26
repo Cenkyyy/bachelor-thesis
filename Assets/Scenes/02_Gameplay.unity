@@ -10023,6 +10023,7 @@ MonoBehaviour:
   chunksUnloadedPerFrame: 1
   loadOperationsPerFrame: 512
   unloadOperationsPerFrame: 512
+  _borderGroundTile: {fileID: 11400000, guid: 2338bd3061057b1419c8a04c4c675237, type: 2}
   _enableChunkUnloading: 1
 --- !u!114 &1097722633
 MonoBehaviour:
