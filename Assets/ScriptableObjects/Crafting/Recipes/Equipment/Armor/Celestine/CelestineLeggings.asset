@@ -18,6 +18,6 @@ MonoBehaviour:
   _displayName: Celestine Leggings
   _ingredients:
   - <Item>k__BackingField: {fileID: 11400000, guid: cb484d165f7a91644b7bd8bc03387680, type: 2}
-    <Amount>k__BackingField: 8
+    <Amount>k__BackingField: 9
   - <Item>k__BackingField: {fileID: 11400000, guid: 72576c15f21b407390c7d5c006462143, type: 2}
-    <Amount>k__BackingField: 3
+    <Amount>k__BackingField: 4

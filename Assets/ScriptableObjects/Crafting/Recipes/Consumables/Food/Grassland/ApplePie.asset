@@ -18,7 +18,7 @@ MonoBehaviour:
   _displayName: Apple Pie
   _ingredients:
   - <Item>k__BackingField: {fileID: 11400000, guid: 60a70f0a95d8469aa4221f7b9bc15a16, type: 2}
-    <Amount>k__BackingField: 3
+    <Amount>k__BackingField: 2
   - <Item>k__BackingField: {fileID: 11400000, guid: e1f3e383990342eb8ac04363d2da2fa3, type: 2}
     <Amount>k__BackingField: 2
   - <Item>k__BackingField: {fileID: 11400000, guid: 20498d5ff4bd4bb78175c3ff1bb122a5, type: 2}

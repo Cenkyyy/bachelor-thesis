@@ -18,6 +18,6 @@ MonoBehaviour:
   _displayName: Ring of Sun and Rift
   _ingredients:
   - <Item>k__BackingField: {fileID: 11400000, guid: ce861eb6d827ac741aab7bb05003f31a, type: 2}
-    <Amount>k__BackingField: 4
+    <Amount>k__BackingField: 9
   - <Item>k__BackingField: {fileID: 11400000, guid: a32204ad7b421c84cb9fc6248609b8ea, type: 2}
-    <Amount>k__BackingField: 4
+    <Amount>k__BackingField: 9

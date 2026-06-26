@@ -18,8 +18,8 @@ MonoBehaviour:
   _displayName: Mechanical Eye of the Rift
   _ingredients:
   - <Item>k__BackingField: {fileID: 11400000, guid: ce861eb6d827ac741aab7bb05003f31a, type: 2}
-    <Amount>k__BackingField: 12
+    <Amount>k__BackingField: 18
   - <Item>k__BackingField: {fileID: 11400000, guid: a32204ad7b421c84cb9fc6248609b8ea, type: 2}
-    <Amount>k__BackingField: 8
+    <Amount>k__BackingField: 10
   - <Item>k__BackingField: {fileID: 11400000, guid: 8760bdfa8ac54a56bab9d3ecf236cadb, type: 2}
     <Amount>k__BackingField: 1

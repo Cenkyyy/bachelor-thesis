@@ -22,6 +22,6 @@ MonoBehaviour:
   - _item: {fileID: 11400000, guid: e6a9d08e5f6b4ed4acee7fc88cdd724e, type: 2}
     _dropChance: 1
     _minAmount: 1
-    _maxAmount: 2
+    _maxAmount: 1
   <GrantsMemoryXP>k__BackingField: 0
   <MemoryXpAmount>k__BackingField: 0

@@ -18,8 +18,8 @@ MonoBehaviour:
   _displayName: Necklace of the Copper Eye
   _ingredients:
   - <Item>k__BackingField: {fileID: 11400000, guid: 454d9a3282a1dad439c8064255e7761b, type: 2}
-    <Amount>k__BackingField: 5
+    <Amount>k__BackingField: 8
   - <Item>k__BackingField: {fileID: 11400000, guid: cb484d165f7a91644b7bd8bc03387680, type: 2}
-    <Amount>k__BackingField: 5
+    <Amount>k__BackingField: 8
   - <Item>k__BackingField: {fileID: 11400000, guid: 72576c15f21b407390c7d5c006462143, type: 2}
-    <Amount>k__BackingField: 2
+    <Amount>k__BackingField: 4

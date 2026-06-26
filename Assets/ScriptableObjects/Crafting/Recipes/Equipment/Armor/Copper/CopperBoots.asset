@@ -18,6 +18,6 @@ MonoBehaviour:
   _displayName: Copper Boots
   _ingredients:
   - <Item>k__BackingField: {fileID: 11400000, guid: 454d9a3282a1dad439c8064255e7761b, type: 2}
-    <Amount>k__BackingField: 6
+    <Amount>k__BackingField: 5
   - <Item>k__BackingField: {fileID: 11400000, guid: dc81539009754fa9bcb91c2c41c4424f, type: 2}
     <Amount>k__BackingField: 2

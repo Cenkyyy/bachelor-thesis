@@ -27,19 +27,5 @@ MonoBehaviour:
   <MemoryMaxLevel>k__BackingField: 40
   <MemoryXpGrowthPerLevel>k__BackingField: 10
   <BaseMaxHunger>k__BackingField: 100
-  _startingHotbarItems:
-  - <Item>k__BackingField: {fileID: 11400000, guid: 277f53f4a2fb6ee45bd69c23abdc00dc, type: 2}
-    <Amount>k__BackingField: 1
-  - <Item>k__BackingField: {fileID: 11400000, guid: 060efcd3a6a82654b95f4712b362e893, type: 2}
-    <Amount>k__BackingField: 1
-  - <Item>k__BackingField: {fileID: 11400000, guid: 4183219e1d68b954bb6a5a7414b07b18, type: 2}
-    <Amount>k__BackingField: 1
-  - <Item>k__BackingField: {fileID: 11400000, guid: 4183219e1d68b954bb6a5a7414b07b18, type: 2}
-    <Amount>k__BackingField: 1
-  - <Item>k__BackingField: {fileID: 11400000, guid: c574a3d915b21c244b60268aa30163c4, type: 2}
-    <Amount>k__BackingField: 200
-  - <Item>k__BackingField: {fileID: 11400000, guid: b6f084d3c1e200845b4541f46590537f, type: 2}
-    <Amount>k__BackingField: 200
-  - <Item>k__BackingField: {fileID: 11400000, guid: 3a27e91b57c643cb9b0fb24ccc11daea, type: 2}
-    <Amount>k__BackingField: 200
+  _startingHotbarItems: []
   _startingBackpackItems: []

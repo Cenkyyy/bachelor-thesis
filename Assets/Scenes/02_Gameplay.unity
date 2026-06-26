@@ -653,7 +653,7 @@ MonoBehaviour:
   _spawnStrategyType: 0
   _settings:
     <FirstSpawnDay>k__BackingField: 1
-    <IgnoreFirstSpawnDay>k__BackingField: 1
+    <IgnoreFirstSpawnDay>k__BackingField: 0
     <RequireNightOnFirstSpawnDay>k__BackingField: 1
     <SpawnIntervalSeconds>k__BackingField: 5
     <NightSpawnAccelerationMultiplier>k__BackingField: 0.8

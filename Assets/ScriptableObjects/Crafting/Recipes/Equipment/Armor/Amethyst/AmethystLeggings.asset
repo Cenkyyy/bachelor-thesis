@@ -18,6 +18,6 @@ MonoBehaviour:
   _displayName: Amethyst Leggings
   _ingredients:
   - <Item>k__BackingField: {fileID: 11400000, guid: ce861eb6d827ac741aab7bb05003f31a, type: 2}
-    <Amount>k__BackingField: 10
+    <Amount>k__BackingField: 11
   - <Item>k__BackingField: {fileID: 11400000, guid: e72a1e6739824da3b09bbaa0523c6519, type: 2}
-    <Amount>k__BackingField: 3
+    <Amount>k__BackingField: 7

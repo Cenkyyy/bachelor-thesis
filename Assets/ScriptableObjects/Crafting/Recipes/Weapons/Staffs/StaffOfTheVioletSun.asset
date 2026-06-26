@@ -18,8 +18,8 @@ MonoBehaviour:
   _displayName: Staff of the Violet Sun
   _ingredients:
   - <Item>k__BackingField: {fileID: 11400000, guid: ce861eb6d827ac741aab7bb05003f31a, type: 2}
-    <Amount>k__BackingField: 10
+    <Amount>k__BackingField: 16
   - <Item>k__BackingField: {fileID: 11400000, guid: a32204ad7b421c84cb9fc6248609b8ea, type: 2}
-    <Amount>k__BackingField: 6
+    <Amount>k__BackingField: 12
   - <Item>k__BackingField: {fileID: 11400000, guid: 6499b2edcb5041c491b2839953934e62, type: 2}
-    <Amount>k__BackingField: 3
+    <Amount>k__BackingField: 7
