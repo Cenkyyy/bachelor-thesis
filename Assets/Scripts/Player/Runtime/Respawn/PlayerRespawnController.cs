@@ -32,6 +32,9 @@ public sealed class PlayerRespawnController : MonoBehaviour
     [SerializeField, Min(0f)] private float _fadeOutDuration = 0.6f;
     [SerializeField, Min(0.001f)] private float _maxFadeDeltaTime = 0.05f;
 
+    [Header("Death Audio")]
+    [SerializeField] private bool _fadeOutMusicDuringDeath = true;
+
     [Header("Respawn Reveal Readiness")]
     [SerializeField] private DecorationChunkGenerator _decorationChunkGenerator;
     [SerializeField, Min(0)] private int _respawnGenerationRadiusInChunks = 1;
@@ -110,6 +113,7 @@ public sealed class PlayerRespawnController : MonoBehaviour
     {
         PanelManager.Instance.CloseCurrentMajorPanel(force: true);
         GameStateManager.AcquirePauseLock(this);
+        FadeOutMusicDuringDeath();
 
         SetDeathFadeVisible(true);
         yield return _fadeService.FadeIn(_fadeInDuration);
@@ -125,6 +129,14 @@ public sealed class PlayerRespawnController : MonoBehaviour
 
         GameStateManager.ReleasePauseLock(this);
         _deathSequenceRoutine = null;
+    }
+
+    private void FadeOutMusicDuringDeath()
+    {
+        if (!_fadeOutMusicDuringDeath || AudioManager.Instance == null)
+            return;
+
+        AudioManager.Instance.FadeOutMusic(_fadeInDuration + _fadeOutDuration);
     }
 
     private IEnumerator WaitForRespawnDecorationsToBeGenerated()

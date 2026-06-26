@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -114,11 +114,6 @@ public sealed class AudioManager : MonoBehaviour
         _musicSource.UnPause();
     }
 
-    public void FadeOutAllAudio(float fadeDuration)
-    {
-        FadeOutMusic(fadeDuration);
-    }
-
     public void FadeOutMusic(float fadeDuration)
     {
         FadeMusic(0f, fadeDuration, true);
@@ -175,7 +170,7 @@ public sealed class AudioManager : MonoBehaviour
 
     private IEnumerator FadeMusicCoroutine(float targetVolume, float fadeDuration, bool stopMusicOnComplete)
     {
-        if (!_musicSource.isPlaying)
+        if (!TryPrepareMusicSourceForFade())
         {
             _fadeCoroutine = null;
             yield break;
@@ -209,6 +204,17 @@ public sealed class AudioManager : MonoBehaviour
             StopMusic();
 
         _fadeCoroutine = null;
+    }
+
+    private bool TryPrepareMusicSourceForFade()
+    {
+        if (_musicSource == null || _musicSource.clip == null)
+            return false;
+
+        if (!_musicSource.isPlaying)
+            _musicSource.UnPause();
+
+        return _musicSource.isPlaying;
     }
 
     private void StopFadeCoroutineIfRunning()

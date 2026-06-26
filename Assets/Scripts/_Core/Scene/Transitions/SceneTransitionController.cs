@@ -115,7 +115,7 @@ public sealed class SceneTransitionController : MonoBehaviour
         _activeTargetSceneName = sceneName;
 
         if (AudioManager.Instance != null)
-            AudioManager.Instance.FadeOutAllAudio(_audioFadeOutDuration);
+            AudioManager.Instance.FadeOutMusic(_audioFadeOutDuration);
 
         // Show the transition root, pause the game, assign the overlay image and hide the loading text until the fade in is done
         SetTransitionRootVisible(true);
